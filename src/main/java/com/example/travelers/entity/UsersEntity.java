@@ -26,6 +26,7 @@ public class UsersEntity {
     private String nickname;
     private String email;
     private String password;
+    private Double temperature;
 
     @Column(length = 4)
     private String mbti;
@@ -53,10 +54,6 @@ public class UsersEntity {
 
     @Column(name = "deleted_at")
     private LocalDateTime deleteAt;
-
-    @ManyToOne
-    @JoinColumn(name = "temperature_id")
-    private TemperaturesEntity temperature;
 
     @OneToMany(mappedBy = "user")
     private final List<BoardsEntity> boards = new ArrayList<>();
