@@ -22,11 +22,11 @@ public class SenderRequestsEntity {
     @Column
     private String message;
 
-    @Column(columnDefinition = "TINYINT")
-    private Integer status;
+    @Column(columnDefinition = "TINYINT(1)")
+    private Boolean status;
 
-    @Column(name = "final_status", columnDefinition = "TINYINT")
-    private Integer finalStatus;
+    @Column(name = "final_status", columnDefinition = "TINYINT(2)")
+    private Boolean finalStatus;
     // 0 : 요청 비활성화
     // 1 : 요청 수락
     // 2 : 요청 거절
