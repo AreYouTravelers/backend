@@ -23,9 +23,9 @@ public class UsersEntity {
     private Long id;
 
     @Column
-    private String nickname;
-    private String email;
+    private String username;
     private String password;
+    private String email;
     private Double temperature;
 
     @Column(length = 4)
@@ -50,10 +50,10 @@ public class UsersEntity {
     private String profileImg;
 
     @Column(name = "created_at")
-    private LocalDateTime createAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "deleted_at")
-    private LocalDateTime deleteAt;
+    private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "user")
     private final List<BoardsEntity> boards = new ArrayList<>();
