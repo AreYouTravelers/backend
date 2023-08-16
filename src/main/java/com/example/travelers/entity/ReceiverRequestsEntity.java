@@ -22,8 +22,8 @@ public class ReceiverRequestsEntity {
     @Column
     private String message;
 
-    @Column(columnDefinition = "TINYINT")
-    private Integer status;
+    @Column(columnDefinition = "TINYINT(1)")
+    private Boolean status;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
