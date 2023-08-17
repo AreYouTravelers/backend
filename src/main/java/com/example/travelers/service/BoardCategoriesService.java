@@ -1,5 +1,6 @@
 package com.example.travelers.service;
 
+import com.example.travelers.dto.BoardCategoryDto;
 import com.example.travelers.entity.BoardCategoriesEntity;
 import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.repos.BoardCategoriesRepository;
@@ -30,6 +31,19 @@ public class BoardCategoriesService {
                 boardCategoriesRepository.save(newBoardCategory);
             } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect password");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+    }
+
+    public BoardCategoryDto readBoardCategory(Long id, String username, String password) {
+        Optional<BoardCategoriesEntity> boardCategory = boardCategoriesRepository.findById(id);
+        Optional<UsersEntity> user = usersRepository.findByUsername(username);
+        if (boardCategory.isPresent()) {
+            if (user.isPresent()) {
+                UsersEntity usersEntity = user.get();
+                if (passwordEncoder.matches(password, usersEntity.getPassword())) {
+                    return BoardCategoryDto.fromEntity(boardCategory.get());
+                } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect password");
+            } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found");
     }
 
     public void updateBoardCategory(Long id, String username, String password, String category) {
