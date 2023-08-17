@@ -7,19 +7,38 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class JpaUserDetailsManager implements UserDetailsManager {
 
     private final UsersRepository userRepository;
+
+    public JpaUserDetailsManager (UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
+        this.userRepository = usersRepository;
+        createUser(CustomUserDetails.builder()
+                .username("dohun")
+                .password(passwordEncoder.encode("1234"))
+                .profileImg("image.png")
+                .email("dohun@gmail.com")
+                .temperature(36.5)
+                .mbti("ESTJ")
+                .gender("남")
+                .role("회원")
+                .firstName("김")
+                .lastName("도훈")
+                .birthDate(LocalDate.of(1999, 9, 6))
+                .createdAt(LocalDateTime.now()).build());
+    }
 
     // 사용자 이름을 통해 사용자 정보를 불러옴
     // 사용자 이름에 해당하는 사용자를 찾을 수 없는 경우 예외 발생

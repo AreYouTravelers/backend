@@ -24,8 +24,10 @@ public class CustomUserDetails implements UserDetails {
     private String password;         // 사용자의 암호화된 비밀번호
     private String profileImg;       // 사용자의 프로필 이미지 경로
     private String email;            // 사용자의 이메일
+    private Double temperature;      // 사용자의 여행온도
     private String mbti;             // 사용자의 mbti
     private String gender;           // 사용자의 성별
+    private String role;             // 사용자의 역할
     private String firstName;        // 사용자의 성씨
     private String lastName;         // 사용자의 이름
     private LocalDate birthDate;     // 사용자의 생년월일
@@ -86,8 +88,10 @@ public class CustomUserDetails implements UserDetails {
         details.password = entity.getPassword();
         details.profileImg = entity.getProfileImg();
         details.email = entity.getEmail();
+        details.temperature = entity.getTemperature();
         details.mbti = entity.getMbti();
         details.gender = entity.getGender();
+        details.role = entity.getRole();
         details.firstName = entity.getFirstName();
         details.lastName = entity.getLastName();
         details.birthDate = entity.getBirthDate();
@@ -103,8 +107,10 @@ public class CustomUserDetails implements UserDetails {
         entity.setPassword(password);
         entity.setProfileImg(profileImg);
         entity.setEmail(email);
+        entity.setTemperature(temperature);
         entity.setMbti(mbti);
         entity.setGender(gender);
+        entity.setRole(role);
         entity.setFirstName(firstName);
         entity.setLastName(lastName);
         entity.setBirthDate(birthDate);
@@ -115,21 +121,24 @@ public class CustomUserDetails implements UserDetails {
 
     // CustomUserDetails 객체의 문자열 표현을 반환하는 메서드
     // 디버깅 or 로깅
+
     @Override
     public String toString() {
         return "CustomUserDetails{" +
-               "id=" + id +
-               ", username='" + username + '\'' +
-               ", password='" + password + '\'' +
-               ", profileImg='" + profileImg + '\'' +
-               ", email='" + email + '\'' +
-               ", mbti='" + mbti + '\'' +
-               ", gender='" + gender + '\'' +
-               ", firstName='" + firstName + '\'' +
-               ", lastName='" + lastName + '\'' +
-               ", birthDate=" + birthDate +
-               ", createdAt=" + createdAt +
-               ", deletedAt=" + deletedAt +
-               '}';
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", profileImg='" + profileImg + '\'' +
+                ", email='" + email + '\'' +
+                ", temperature=" + temperature +
+                ", mbti='" + mbti + '\'' +
+                ", gender='" + gender + '\'' +
+                ", role='" + role + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate=" + birthDate +
+                ", createdAt=" + createdAt +
+                ", deletedAt=" + deletedAt +
+                '}';
     }
 }
