@@ -25,6 +25,10 @@ public class ReviewsEntity {
     private String content;
 
     @ManyToOne
+    @JoinColumn(name = "board_id")
+    private BoardsEntity boardId;
+
+    @ManyToOne
     @JoinColumn(name = "sender_id")
     private UsersEntity sender;
 
