@@ -1,10 +1,10 @@
 package com.example.travelers.service;
 
 import com.example.travelers.dto.BoardCategoryDto;
+import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.entity.BoardCategoriesEntity;
 import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.repos.BoardCategoriesRepository;
-import com.example.travelers.repos.BoardsRepository;
 import com.example.travelers.repos.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,16 +21,17 @@ public class BoardCategoriesService {
     private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public void createBoardCategory(String username, String password, String category) {
+    public MessageResponseDto createBoardCategory(String username, String password, BoardCategoryDto dto) {
         Optional<UsersEntity> user = usersRepository.findByUsername(username);
         if (user.isPresent()) {
             UsersEntity usersEntity = user.get();
             if (passwordEncoder.matches(password, usersEntity.getPassword())) {
                 BoardCategoriesEntity newBoardCategory = BoardCategoriesEntity.builder()
-                        .category(category).build();
+                        .category(dto.getCategory()).build();
                 boardCategoriesRepository.save(newBoardCategory);
             } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect password");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        return new MessageResponseDto("카테고리를 생성했습니다.");
     }
 
     public BoardCategoryDto readBoardCategory(Long id, String username, String password) {
@@ -46,7 +47,7 @@ public class BoardCategoriesService {
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found");
     }
 
-    public void updateBoardCategory(Long id, String username, String password, String category) {
+    public MessageResponseDto updateBoardCategory(Long id, String username, String password, BoardCategoryDto dto) {
         Optional<BoardCategoriesEntity> boardCategory = boardCategoriesRepository.findById(id);
         Optional<UsersEntity> user = usersRepository.findByUsername(username);
         if (boardCategory.isPresent()) {
@@ -54,14 +55,15 @@ public class BoardCategoriesService {
                 UsersEntity usersEntity = user.get();
                 if (passwordEncoder.matches(password, usersEntity.getPassword())) {
                     BoardCategoriesEntity boardCategoriesEntity = boardCategory.get();
-                    boardCategoriesEntity.setCategory(category);
+                    boardCategoriesEntity.setCategory(dto.getCategory());
                     boardCategoriesRepository.save(boardCategoriesEntity);
                 } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect password");
             } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found");
+        return new MessageResponseDto("카테고리를 업데이트했습니다.");
     }
 
-    public void deleteBoardCategory(Long id, String username, String password) {
+    public MessageResponseDto deleteBoardCategory(Long id, String username, String password) {
         Optional<BoardCategoriesEntity> boardCategory = boardCategoriesRepository.findById(id);
         Optional<UsersEntity> user = usersRepository.findByUsername(username);
         if (boardCategory.isPresent()) {
@@ -73,5 +75,6 @@ public class BoardCategoriesService {
                 } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect password");
             } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found");
+        return new MessageResponseDto("카테고리를 삭제했습니다.");
     }
 }
