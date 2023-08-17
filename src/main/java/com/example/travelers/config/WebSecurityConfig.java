@@ -13,11 +13,11 @@ import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 @Configuration
 public class WebSecurityConfig {
-//    private final JwtTokenFilter jwtTokenFilter;
-//
-//    public WebSecurityConfig(JwtTokenFilter jwtTokenFilter) {
-//        this.jwtTokenFilter = jwtTokenFilter;
-//    }
+    private final JwtTokenFilter jwtTokenFilter;
+
+    public WebSecurityConfig(JwtTokenFilter jwtTokenFilter) {
+        this.jwtTokenFilter = jwtTokenFilter;
+    }
 
     // 애플리케이션의 보안 필터와 인증 설정을 구성
     @Bean
@@ -32,20 +32,24 @@ public class WebSecurityConfig {
                                         "/users/login",
                                         "/users/register"
                                 )
-                                .permitAll()
+                                .permitAll() // 모든 사용자 허용
+                                .requestMatchers(
+                                        "/users/update-image"
+                                )
+                                .authenticated() // 인증된 사용자만 접근 허용
                                 .anyRequest()
                                 .authenticated()
+                )
+                // 세션 관리를 stateless (JWT 인증)으로 설정
+                .sessionManagement(
+                        sessionManagement -> sessionManagement
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                )
+                // 커스텀한 JWT 토큰 필터를 AuthorizationFilter 클래스 앞에 추가
+                .addFilterBefore(
+                        jwtTokenFilter,
+                        AuthorizationFilter.class
                 );
-//                // 세션 관리를 stateless (JWT 인증)으로 설정
-//                .sessionManagement(
-//                        sessionManagement -> sessionManagement
-//                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                )
-//                // 커스텀한 JWT 토큰 필터를 AuthorizationFilter 클래스 앞에 추가
-//                .addFilterBefore(
-//                        jwtTokenFilter,
-//                        AuthorizationFilter.class
-//                );
         return http.build();
     }
 
