@@ -10,11 +10,13 @@ import java.util.List;
 public class BoardCategoryDto {
     private Long id;
     private String category;
-    private List<BoardsEntity> boardsList;
+    private List<BoardDto> boardsList;
     
-//    public static BoardCategoryDto fromEntity(BoardCategoriesEntity entity) {
-//        BoardCategoryDto dto = new BoardCategoryDto();
-//        dto.setId(entity.getId());
-//        dto.setCategory(entity.getCategory());
-//    }
+    public static BoardCategoryDto fromEntity(BoardCategoriesEntity entity) {
+        BoardCategoryDto dto = new BoardCategoryDto();
+        dto.setId(entity.getId());
+        dto.setCategory(entity.getCategory());
+        dto.setBoardsList(BoardDto.dtoList(entity.getBoards()));
+        return dto;
+    }
 }
