@@ -17,10 +17,10 @@ import java.time.LocalDateTime;
 public class ReceiverRequestsEntity {
     @Id // 해당 엔티티의 PK가 될 값을 지정해주는 어노테이션
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK가 자동으로 1씩 증가하는 형태로 생성될지 등을 결정해주는 어노테이션
-    private Long id;
+    private Long id; // 동행 요청 받은 ID
 
     @Column
-    private String message;
+    private String message; // 받은 메세지
 
     @Column(columnDefinition = "TINYINT(1)")
     private Boolean status;
