@@ -3,6 +3,7 @@ package com.example.travelers.controller;
 import com.example.travelers.dto.LoginRequestDto;
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.RegisterRequestDto;
+import com.example.travelers.dto.UserProfileDto;
 import com.example.travelers.jwt.JwtTokenDto;
 import com.example.travelers.service.UsersService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,7 +46,13 @@ public class UsersController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // TODO 회원 정보 조회 (본인)
+    // 회원 정보 조회 (본인) endpoint
+    // userId 가 아닌 본인 Jwt 를 사용해서 조회
+    @GetMapping("/my-profile")
+    public ResponseEntity<UserProfileDto> getMyProfile() {
+        UserProfileDto user = usersService.getMyProfile();
+        return ResponseEntity.ok(user);
+    }
 
     // TODO 회원 정보 리스트 조회 (관리자용)
 

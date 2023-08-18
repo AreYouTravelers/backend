@@ -3,6 +3,7 @@ package com.example.travelers.service;
 import com.example.travelers.dto.LoginRequestDto;
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.RegisterRequestDto;
+import com.example.travelers.dto.UserProfileDto;
 import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.jwt.JwtTokenDto;
 import com.example.travelers.jwt.JwtTokenUtils;
@@ -88,6 +89,24 @@ public class UsersService {
         manager.createUser(user);
 
         return new MessageResponseDto("회원가입을 성공했습니다.");
+    }
+
+    // 회원 정보 (본인 단일) 조회 기능
+    public UserProfileDto getMyProfile() {
+        UsersEntity usersEntity = authService.getUser();
+        UserProfileDto userProfileDto = new UserProfileDto();
+        userProfileDto.setUsername(usersEntity.getUsername());
+        userProfileDto.setEmail(usersEntity.getEmail());
+        userProfileDto.setProfileImg(usersEntity.getProfileImg());
+        userProfileDto.setMbti(usersEntity.getMbti());
+        userProfileDto.setGender(usersEntity.getGender());
+        userProfileDto.setRole(usersEntity.getRole());
+        userProfileDto.setFullName(usersEntity.getFirstName() + usersEntity.getLastName());
+        userProfileDto.setTemperature(usersEntity.getTemperature());
+        userProfileDto.setBirthDate(usersEntity.getBirthDate());
+        userProfileDto.setCreatedAt(usersEntity.getCreatedAt());
+
+        return userProfileDto;
     }
 
     // 프로필 이미지 업로드 기능
