@@ -6,7 +6,6 @@ import com.example.travelers.entity.CommentsEntity;
 import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.repos.BoardsRepository;
 import com.example.travelers.repos.CommentsRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CommentsService {
@@ -26,6 +26,10 @@ public class CommentsService {
         this.commentsRepository = commentsRepository;
         this.boardsRepository = boardsRepository;
         this.authService = authService;
+    }
+
+    public boolean isCommentRelatedToBoard(Long boardId, Long commentId) {
+        return commentsRepository.existsByIdAndBoardId(commentId, boardId);
     }
 
     public CommentsDto createComment(CommentsDto commentsDto) {
@@ -46,14 +50,17 @@ public class CommentsService {
 
         return CommentsDto.fromEntity(savedComment);
     }
-
-    public List<CommentsEntity> getCommentsByBoardId(Long boardId) {
-        return commentsRepository.findByBoardId(boardId);
+//  특정 게시글에 있는 모든 댓글 불러오기
+    public List<CommentsDto> getCommentsByBoardId(Long boardId) {
+        List<CommentsEntity> commentsEntities = commentsRepository.findByBoardId(boardId);
+        return commentsEntities.stream()
+                .map(CommentsDto::fromEntity)
+                .collect(Collectors.toList());
     }
 
     public CommentsDto getComment(Long id) {
         CommentsEntity commentEntity = commentsRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다."));
 
         return CommentsDto.fromEntity(commentEntity);
     }
@@ -62,10 +69,10 @@ public class CommentsService {
         UsersEntity currentUser = authService.getUser();
 
         CommentsEntity commentEntity = commentsRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다."));
 
         if (!commentEntity.getUser().getId().equals(currentUser.getId())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized to update this comment");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 댓글이 아닙니다.");
         }
 
         commentEntity.setContent(commentsDto.getContent());
