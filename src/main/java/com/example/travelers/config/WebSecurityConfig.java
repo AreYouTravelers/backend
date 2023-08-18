@@ -34,6 +34,7 @@ public class WebSecurityConfig {
                                 )
                                 .permitAll() // 모든 사용자 허용
                                 .requestMatchers(
+                                        "/users/logout",
                                         "/users/update-image",
                                         "/boards/categories"
                                 )

@@ -5,6 +5,7 @@ import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.RegisterRequestDto;
 import com.example.travelers.jwt.JwtTokenDto;
 import com.example.travelers.service.UsersService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,15 @@ public class UsersController {
         return ResponseEntity.ok(jwtTokenDto);
     }
 
+    // 로그아웃 endpoint
+    @PostMapping("/logout")
+    public ResponseEntity<MessageResponseDto> logout(
+            HttpServletRequest request
+    ) {
+        MessageResponseDto responseDto = usersService.logoutUser(request);
+        return ResponseEntity.ok(responseDto);
+    }
+
     // 회원가입 endpoint
     @PostMapping("/register")
     public ResponseEntity<MessageResponseDto> register(
@@ -34,6 +44,10 @@ public class UsersController {
         MessageResponseDto responseDto = usersService.registerUser(registerRequestDto);
         return ResponseEntity.ok(responseDto);
     }
+
+    // TODO 회원 정보 조회 (본인)
+
+    // TODO 회원 정보 리스트 조회 (관리자용)
 
     // 프로필 이미지 업데이트 엔드포인트
     @PutMapping(value = "/update-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -46,9 +60,16 @@ public class UsersController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // TODO 사용자 정보 수정 PUT 엔드포인트
-    // 수정할 수 있는 정보는 어떤거로? password, mbti
+    // TODO 사용자 정보 Password 수정 PUT 엔드포인트
 
-    // TODO 사용자 삭제 DELETE 엔드포인트
+    // TODO 사용자 정보 email 수정 PUT 엔드포인트
+
+    // TODO 사용자 정보 mbti 수정 PUT 엔드포인트
+
+
+    // TODO 사용자 탈퇴 ( role = 회원 ) DELETE 엔드포인트
+
+    // TODO 사용자 삭제 ( role = 관리자 ) DELETE 엔드포인트
+
 
 }
