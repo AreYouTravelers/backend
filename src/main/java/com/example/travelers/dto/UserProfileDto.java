@@ -1,5 +1,6 @@
 package com.example.travelers.dto;
 
+import com.example.travelers.entity.UsersEntity;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -17,4 +18,19 @@ public class UserProfileDto {
     private Double temperature;       // 여행 온도
     private LocalDate birthDate;      // 생년월일
     private LocalDateTime createdAt;  // 사용자 생성일
+
+    public static UserProfileDto fromEntity(UsersEntity entity) {
+        UserProfileDto dto = new UserProfileDto();
+        dto.setUsername(entity.getUsername());
+        dto.setEmail(entity.getEmail());
+        dto.setProfileImg(entity.getProfileImg());
+        dto.setMbti(entity.getMbti());
+        dto.setGender(entity.getGender());
+        dto.setRole(entity.getRole());
+        dto.setFullName(entity.getFirstName() + entity.getLastName());
+        dto.setTemperature(entity.getTemperature());
+        dto.setBirthDate(entity.getBirthDate());
+        dto.setCreatedAt(entity.getCreatedAt());
+        return dto;
+    }
 }

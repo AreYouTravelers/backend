@@ -25,6 +25,7 @@ public class JpaUserDetailsManager implements UserDetailsManager {
 
     public JpaUserDetailsManager (UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = usersRepository;
+        // 회원 Test
         createUser(CustomUserDetails.builder()
                 .username("dohun")
                 .password(passwordEncoder.encode("1234"))
@@ -37,7 +38,17 @@ public class JpaUserDetailsManager implements UserDetailsManager {
                 .firstName("김")
                 .lastName("도훈")
                 .birthDate(LocalDate.of(1999, 9, 6))
-                .createdAt(LocalDateTime.now()).build());
+                .createdAt(LocalDateTime.now())
+                .build()
+        );
+        // 관리자 Test
+        createUser(CustomUserDetails.builder()
+                .username("admin")
+                .password(passwordEncoder.encode("123"))
+                .role("관리자")
+                .createdAt(LocalDateTime.now())
+                .build()
+        );
     }
 
     // 사용자 이름을 통해 사용자 정보를 불러옴
