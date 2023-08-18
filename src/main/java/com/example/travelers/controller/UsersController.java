@@ -8,6 +8,7 @@ import com.example.travelers.jwt.JwtTokenDto;
 import com.example.travelers.service.UsersService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,7 +55,18 @@ public class UsersController {
         return ResponseEntity.ok(user);
     }
 
-    // TODO 회원 정보 리스트 조회 (관리자용)
+    // 회원 정보 리스트 조회 (관리자용)
+    @GetMapping("/profile-list")
+    public ResponseEntity<Page<UserProfileDto>> getProfileList(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        // 페이지 번호를 1부터 시작하도록 조정
+        page = Math.max(1, page);
+
+        Page<UserProfileDto> userList = usersService.getProfileList(page - 1, size);
+        return ResponseEntity.ok(userList);
+    }
 
     // 프로필 이미지 업데이트 엔드포인트
     @PutMapping(value = "/update-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

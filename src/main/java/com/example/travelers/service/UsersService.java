@@ -11,6 +11,10 @@ import com.example.travelers.repos.UsersRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,6 +27,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -94,19 +100,26 @@ public class UsersService {
     // 회원 정보 (본인 단일) 조회 기능
     public UserProfileDto getMyProfile() {
         UsersEntity usersEntity = authService.getUser();
-        UserProfileDto userProfileDto = new UserProfileDto();
-        userProfileDto.setUsername(usersEntity.getUsername());
-        userProfileDto.setEmail(usersEntity.getEmail());
-        userProfileDto.setProfileImg(usersEntity.getProfileImg());
-        userProfileDto.setMbti(usersEntity.getMbti());
-        userProfileDto.setGender(usersEntity.getGender());
-        userProfileDto.setRole(usersEntity.getRole());
-        userProfileDto.setFullName(usersEntity.getFirstName() + usersEntity.getLastName());
-        userProfileDto.setTemperature(usersEntity.getTemperature());
-        userProfileDto.setBirthDate(usersEntity.getBirthDate());
-        userProfileDto.setCreatedAt(usersEntity.getCreatedAt());
+        return UserProfileDto.fromEntity(usersEntity);
+    }
 
-        return userProfileDto;
+    // 회원 정보 리스트 조회 (관리자용)
+    public Page<UserProfileDto> getProfileList(int page, int size) {
+        // 관리자 인지 검증
+        UsersEntity currentUser = authService.getUser();
+        String currentUserRole = currentUser.getRole();
+
+        if (!currentUserRole.equals("관리자"))
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "관리자만 사용 가능합니다.");
+
+        // 회원, 가이드만 조회되도록 리스트 추가
+        List<String> allowedRolesList = Arrays.asList("회원", "가이드");
+
+        Pageable pageable = PageRequest.of(page, size,
+                Sort.by("id")
+        );
+        return usersRepository.findAllByRoleIn(allowedRolesList, pageable)
+                .map(UserProfileDto::fromEntity);
     }
 
     // 프로필 이미지 업로드 기능
