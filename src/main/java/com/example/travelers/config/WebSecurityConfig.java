@@ -30,12 +30,12 @@ public class WebSecurityConfig {
                                 // 인증을 필요로 하지 않는 공개 엔드포인트를 정의
                                 .requestMatchers(
                                         "/users/login",
-                                        "/users/register",
-                                        "/boards/categories", "/boards/categories/**"
+                                        "/users/register"
                                 )
                                 .permitAll() // 모든 사용자 허용
                                 .requestMatchers(
-                                        "/users/update-image"
+                                        "/users/update-image",
+                                        "/boards/categories"
                                 )
                                 .authenticated() // 인증된 사용자만 접근 허용
                                 .anyRequest()
