@@ -7,8 +7,10 @@ import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.jwt.JwtTokenDto;
 import com.example.travelers.jwt.JwtTokenUtils;
 import com.example.travelers.repos.UsersRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,6 +50,17 @@ public class UsersService {
         JwtTokenDto tokenDto = new JwtTokenDto();
         tokenDto.setToken(jwtTokenUtils.generateToken(userDetails));
         return tokenDto;
+    }
+
+    // 로그아웃 기능
+    public MessageResponseDto logoutUser(HttpServletRequest request) {
+        // 사용자 token 추출
+        String token = authService.extractTokenFromHeader(request.getHeader(HttpHeaders.AUTHORIZATION));
+
+        // 토큰 무효화
+        jwtTokenUtils.invalidateToken(token);
+
+        return new MessageResponseDto("로그아웃 되었습니다.");
     }
 
     // 회원가입 기능

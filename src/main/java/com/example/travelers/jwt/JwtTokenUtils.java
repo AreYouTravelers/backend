@@ -6,18 +6,25 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Key;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Slf4j
 @Component
 public class JwtTokenUtils {
     private final Key signingKey;
     private final JwtParser jwtParser;
+
+    // 무효화된 토큰을 저장할 Set
+    private final Set<String> invalidatedTokens = new HashSet<>();
 
     public JwtTokenUtils(
             @Value("${jwt.secret}")
@@ -37,7 +44,7 @@ public class JwtTokenUtils {
         try {
             // 암호화된 JWT 를 해석하기 위한 메서드
             jwtParser.parseClaimsJws(token);
-            return true;
+            return !invalidatedTokens.contains(token); // 무효화된 토큰 검사 추가 (이미 무효화된것도 처리 됨)
         } catch (Exception e) {
             log.warn("invalid jwt: {}", e.getClass());
             return false;
@@ -57,10 +64,16 @@ public class JwtTokenUtils {
         Claims jwtClaims = Jwts.claims()
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(Date.from(Instant.now()))
-                .setExpiration(Date.from(Instant.now().plusSeconds(3600)));
+                .setExpiration(Date.from(Instant.now().plusSeconds(3600))); // 1시간
         return Jwts.builder()
                 .setClaims(jwtClaims)
                 .signWith(signingKey)
                 .compact();
+    }
+
+    // 로그아웃을 위해 토큰을 무효화하는 메서드
+    public void invalidateToken(String token) {
+        invalidatedTokens.add(token);
+        log.info("Token invalidated: {}", token);
     }
 }

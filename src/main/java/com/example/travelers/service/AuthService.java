@@ -36,7 +36,7 @@ public class AuthService {
     }
 
     // 헤더에서 토큰 추출
-    private String extractTokenFromHeader(String authHeader) {
+    public String extractTokenFromHeader(String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
