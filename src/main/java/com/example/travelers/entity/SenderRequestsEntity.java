@@ -23,7 +23,7 @@ public class SenderRequestsEntity {
     private String message;
 
     @Column(columnDefinition = "TINYINT(1)")
-    private Boolean status;
+    private Boolean status; // 요청 상태 (수락 or 거절)
 
     @Column(name = "final_status", columnDefinition = "TINYINT(2)")
     private Boolean finalStatus;
