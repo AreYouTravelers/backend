@@ -1,9 +1,6 @@
 package com.example.travelers.service;
 
-import com.example.travelers.dto.LoginRequestDto;
-import com.example.travelers.dto.MessageResponseDto;
-import com.example.travelers.dto.RegisterRequestDto;
-import com.example.travelers.dto.UserProfileDto;
+import com.example.travelers.dto.*;
 import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.jwt.JwtTokenDto;
 import com.example.travelers.jwt.JwtTokenUtils;
@@ -154,7 +151,32 @@ public class UsersService {
         return new MessageResponseDto("이미지가 등록되었습니다.");
     }
 
-    // TODO 사용자 정보 수정 PUT 엔드포인트
+    // 사용자 정보 Password 수정 PUT 엔드포인트
+    public MessageResponseDto updatePassword(UpdatePasswordDto updatePasswordDto) {
+        UsersEntity currentUser = authService.getUser();
+
+        // 현재 비밀번호 확인
+        if (!passwordEncoder.matches(updatePasswordDto.getCurrentPassword(), currentUser.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "현재 비밀번호가 일치하지 않습니다.");
+        }
+
+        // 변경할 비밀번호 확인
+        if (!updatePasswordDto.getChangePassword().equals(updatePasswordDto.getChangePasswordCheck())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "새로운 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+        }
+
+        // 변경할 비밀번호
+        String encodedPassword = passwordEncoder.encode(updatePasswordDto.getChangePassword());
+
+        currentUser.setPassword(encodedPassword);
+        usersRepository.save(currentUser);
+
+        return new MessageResponseDto("비밀번호 변경이 완료되었습니다.");
+    }
+
+    // TODO 사용자 정보 email 수정 PUT 엔드포인트
+
+    // TODO 사용자 정보 mbti 수정 PUT 엔드포인트
 
     // TODO 사용자 삭제 DELETE 엔드포인트
 }

@@ -1,9 +1,6 @@
 package com.example.travelers.controller;
 
-import com.example.travelers.dto.LoginRequestDto;
-import com.example.travelers.dto.MessageResponseDto;
-import com.example.travelers.dto.RegisterRequestDto;
-import com.example.travelers.dto.UserProfileDto;
+import com.example.travelers.dto.*;
 import com.example.travelers.jwt.JwtTokenDto;
 import com.example.travelers.service.UsersService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -55,7 +52,7 @@ public class UsersController {
         return ResponseEntity.ok(user);
     }
 
-    // 회원 정보 리스트 조회 (관리자용)
+    // 회원 정보 리스트 조회 (관리자용) endpoint
     @GetMapping("/profile-list")
     public ResponseEntity<Page<UserProfileDto>> getProfileList(
             @RequestParam(defaultValue = "1") int page,
@@ -68,7 +65,7 @@ public class UsersController {
         return ResponseEntity.ok(userList);
     }
 
-    // 프로필 이미지 업데이트 엔드포인트
+    // 프로필 이미지 업데이트 endpoint
     @PutMapping(value = "/update-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MessageResponseDto> userUpdateImage(
             @RequestParam(value = "image") MultipartFile multipartFile
@@ -79,16 +76,25 @@ public class UsersController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // TODO 사용자 정보 Password 수정 PUT 엔드포인트
+    // 사용자 정보 Password 수정 endpoint
+    @PutMapping("/update-password")
+    public ResponseEntity<MessageResponseDto> updatePassword(
+            @RequestBody UpdatePasswordDto updatePasswordDto
+    ) {
+        MessageResponseDto responseDto = usersService.updatePassword(updatePasswordDto);
+        return ResponseEntity.ok(responseDto);
+    }
 
-    // TODO 사용자 정보 email 수정 PUT 엔드포인트
+    // TODO 사용자 정보 email 수정 endpoint
+//    @PutMapping("/update-email")
 
-    // TODO 사용자 정보 mbti 수정 PUT 엔드포인트
+    // TODO 사용자 정보 mbti 수정 endpoint
+//    @PutMapping("/update-mbti")
 
 
-    // TODO 사용자 탈퇴 ( role = 회원 ) DELETE 엔드포인트
+    // TODO 사용자 탈퇴 ( role = 회원 ) endpoint
 
-    // TODO 사용자 삭제 ( role = 관리자 ) DELETE 엔드포인트
+    // TODO 사용자 삭제 ( role = 관리자 ) endpoint
 
 
 }
