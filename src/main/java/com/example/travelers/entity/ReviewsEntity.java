@@ -19,6 +19,8 @@ public class ReviewsEntity {
 
     @Column
     private String destination;
+
+    @Column
     private Integer rating;
 
     @Column(columnDefinition = "TEXT")
@@ -26,7 +28,7 @@ public class ReviewsEntity {
 
     @ManyToOne
     @JoinColumn(name = "board_id")
-    private BoardsEntity boardId;
+    private BoardsEntity board;
 
     @ManyToOne
     @JoinColumn(name = "sender_id")

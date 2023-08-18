@@ -36,7 +36,8 @@ public class WebSecurityConfig {
                                 .requestMatchers(
                                         "/users/logout",
                                         "/users/update-image",
-                                        "/boards/categories"
+                                        "/boards/categories",
+                                        "/board/{boardId}/reviews/**"
                                 )
                                 .authenticated() // 인증된 사용자만 접근 허용
                                 .anyRequest()
