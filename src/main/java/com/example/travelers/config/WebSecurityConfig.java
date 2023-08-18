@@ -38,6 +38,7 @@ public class WebSecurityConfig {
                                         "/users/my-profile",
                                         "/users/profile-list",
                                         "/users/update-image",
+                                        "/users/update-password",
 
                                         "/boards/categories",
                                         "/board/{boardId}/reviews/**"
