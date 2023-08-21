@@ -36,9 +36,13 @@ public class WebSecurityConfig {
                                 .requestMatchers(
                                         "/users/logout",
                                         "/users/my-profile",
-                                        "/users/profile-list",
-                                        "/users/update-image",
-                                        "/users/update-password",
+                                        "/admin/profile-list",
+                                        "/users/image",
+                                        "/users/password",
+                                        "/users/email",
+                                        "/users/mbti",
+                                        "/users/deactivate",
+                                        "/admin/deactivate",
 
                                         "/boards/categories",
                                         "/board/{boardId}/reviews/**"
