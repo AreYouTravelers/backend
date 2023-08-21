@@ -15,37 +15,29 @@ public class BoardCategoriesController {
 
     @PostMapping
     public ResponseEntity<MessageResponseDto> create(
-            @RequestParam("username") String username,
-            @RequestParam("password") String password,
             @RequestBody BoardCategoryDto dto) {
-        MessageResponseDto responseDto = boardCategoriesService.createBoardCategory(username, password, dto);
+        MessageResponseDto responseDto = boardCategoriesService.createBoardCategory(dto);
         return ResponseEntity.ok(responseDto);
     }
 
     @GetMapping("/{id}")
     public BoardCategoryDto read(
-            @PathVariable("id") Long id,
-            @RequestParam("username") String username,
-            @RequestParam("password") String password) {
-        return boardCategoriesService.readBoardCategory(id, username, password);
+            @PathVariable("id") Long id) {
+        return boardCategoriesService.readBoardCategory(id);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponseDto> update(
             @PathVariable("id") Long id,
-            @RequestParam("username") String username,
-            @RequestParam("password") String password,
             @RequestBody BoardCategoryDto dto) {
-        MessageResponseDto responseDto = boardCategoriesService.updateBoardCategory(id, username, password, dto);
+        MessageResponseDto responseDto = boardCategoriesService.updateBoardCategory(id, dto);
         return ResponseEntity.ok(responseDto);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MessageResponseDto> delete(
-            @PathVariable("id") Long id,
-            @RequestParam("username") String username,
-            @RequestParam("password") String password) {
-        MessageResponseDto responseDto = boardCategoriesService.deleteBoardCategory(id, username, password);
+            @PathVariable("id") Long id) {
+        MessageResponseDto responseDto = boardCategoriesService.deleteBoardCategory(id);
         return ResponseEntity.ok(responseDto);
     }
 }
