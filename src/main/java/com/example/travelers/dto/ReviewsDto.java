@@ -3,9 +3,12 @@ package com.example.travelers.dto;
 import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.entity.ReviewsEntity;
 import com.example.travelers.entity.UsersEntity;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReviewsDto {
     private Long id;
     private String destination;

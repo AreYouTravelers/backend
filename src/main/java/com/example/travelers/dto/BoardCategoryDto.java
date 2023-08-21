@@ -2,11 +2,14 @@ package com.example.travelers.dto;
 
 import com.example.travelers.entity.BoardCategoriesEntity;
 import com.example.travelers.entity.BoardsEntity;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class BoardCategoryDto {
     private Long id;
     private String category;

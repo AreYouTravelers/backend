@@ -4,13 +4,16 @@ import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.entity.ReceiverRequestsEntity;
 import com.example.travelers.entity.SenderRequestsEntity;
 import com.example.travelers.entity.UsersEntity;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReceiverRequestsDto {
     private Long id;
     private String message;

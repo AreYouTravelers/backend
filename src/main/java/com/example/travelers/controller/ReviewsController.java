@@ -31,24 +31,24 @@ public class ReviewsController {
     }
 
     // GET /board/{boardId}/reviews/{id}
-//    @GetMapping("/{id}")
-//    public ReviewsDto read(
-//            @PathVariable("boardId") Long boardId,
-//            @PathVariable("id") Long id
-//    ) {
-//        ReviewsDto response = service.readReview(boardId, id);
-//        return response;
-//    }
+    @GetMapping("/{id}")
+    public ReviewsDto read(
+            @PathVariable("boardId") Long boardId,
+            @PathVariable("id") Long id
+    ) {
+        ReviewsDto response = service.readReview(boardId, id);
+        return response;
+    }
 
     // GET /board/{boardid}/reviews
-//    @GetMapping
-//    public List<ReviewsDto> readAll(
-//            @PathVariable("boardId") Long boardId
-//    ) {
-//        log.info("readAll controller 실행");
-////        List<ReviewsDto> list = service.readReviewsAll(boardId);
-//        return service.readReviewsAll(boardId);
-//    }
+    @GetMapping
+    public List<ReviewsDto> readAll(
+            @PathVariable("boardId") Long boardId
+    ) {
+        log.info("readAll controller 실행");
+        List<ReviewsDto> list = service.readReviewsAll(boardId);
+        return service.readReviewsAll(boardId);
+    }
 
     // PUT /board/{boardId}/reviews{id}
     @PutMapping("/{id}")
