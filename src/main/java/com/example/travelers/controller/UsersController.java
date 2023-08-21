@@ -6,7 +6,6 @@ import com.example.travelers.service.UsersService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -53,19 +52,6 @@ public class UsersController {
         return ResponseEntity.ok(user);
     }
 
-    // 회원 정보 리스트 조회 (관리자용) endpoint
-    @GetMapping("/profile-list")
-    public ResponseEntity<Page<UserProfileDto>> getProfileList(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "10") int size
-    ) {
-        // 페이지 번호를 1부터 시작하도록 조정
-        page = Math.max(1, page);
-
-        Page<UserProfileDto> userList = usersService.getProfileList(page - 1, size);
-        return ResponseEntity.ok(userList);
-    }
-
     // 프로필 이미지 업데이트 endpoint
     @PutMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MessageResponseDto> userUpdateImage(
@@ -104,10 +90,13 @@ public class UsersController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // TODO 사용자 탈퇴 ( role = 회원 ) endpoint
-//    @DeleteMapping("/")
-
-    // TODO 사용자 삭제 ( role = 관리자 ) endpoint
-
-
+    // 사용자 탈퇴 endpoint
+    @DeleteMapping("/deactivate")
+    public ResponseEntity<MessageResponseDto> deleteUser(
+            HttpServletRequest request,
+            @RequestBody DeleteUserDto deleteUserDto
+    ) {
+        MessageResponseDto responseDto = usersService.deleteUser(request, deleteUserDto);
+        return ResponseEntity.ok(responseDto);
+    }
 }
