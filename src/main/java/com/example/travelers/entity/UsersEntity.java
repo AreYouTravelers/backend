@@ -60,11 +60,9 @@ public class UsersEntity {
     @OneToMany(mappedBy = "user")
     private final List<BlacklistEntity> blacklists = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "sender")
     private final List<ReviewsEntity> senderReviews = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "receiver")
     private final List<ReviewsEntity> receiverReviews = new ArrayList<>();
 

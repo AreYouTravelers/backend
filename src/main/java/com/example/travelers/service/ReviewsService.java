@@ -33,14 +33,13 @@ public class ReviewsService {
         if (boardsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-        // TODO 연관관계까지 저장하도록 수정
         repository.save(ReviewsEntity.builder()
                 .destination(dto.getDestination())
                 .rating(dto.getRating())
                 .content(dto.getContent())
-//                .board(boardsEntity.get())
-//                .sender(sender)
-//                .receiver(boardsEntity.get().getUser())
+                .board(boardsEntity.get())
+                .sender(sender)
+                .receiver(boardsEntity.get().getUser())
                 .build());
     }
 
@@ -49,12 +48,12 @@ public class ReviewsService {
 
         // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
         if (!boardsRepository.existsById(boardId))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
 
         // id에 해당하는 review 존재하지 않을 경우 예외 처리
         Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
         if (optionalReviewsEntity.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
 
         ReviewsDto response = ReviewsDto.fromEntity(optionalReviewsEntity.get());
         return response;
