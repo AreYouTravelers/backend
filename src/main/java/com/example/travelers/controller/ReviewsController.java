@@ -40,12 +40,11 @@ public class ReviewsController {
         return response;
     }
 
-    // GET /board/{boardid}/reviews
+    // GET /board/{boardId}/reviews
     @GetMapping
     public List<ReviewsDto> readAll(
             @PathVariable("boardId") Long boardId
     ) {
-        log.info("readAll controller 실행");
         List<ReviewsDto> list = service.readReviewsAll(boardId);
         return service.readReviewsAll(boardId);
     }
