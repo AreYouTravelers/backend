@@ -67,7 +67,7 @@ public class UsersController {
     }
 
     // 프로필 이미지 업데이트 endpoint
-    @PutMapping(value = "/update-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MessageResponseDto> userUpdateImage(
             @RequestParam(value = "image") MultipartFile multipartFile
     ) {
@@ -78,7 +78,7 @@ public class UsersController {
     }
 
     // 사용자 정보 Password 수정 endpoint
-    @PutMapping("/update-password")
+    @PutMapping("/password")
     public ResponseEntity<MessageResponseDto> updatePassword(
             @RequestBody UpdatePasswordDto updatePasswordDto
     ) {
@@ -87,7 +87,7 @@ public class UsersController {
     }
 
     // 사용자 정보 email 수정 endpoint
-    @PutMapping("/update-email")
+    @PutMapping("/email")
     public ResponseEntity<MessageResponseDto> updateEmail(
             @Valid @RequestBody UpdateEmailDto updateEmailDto
     ) {
@@ -96,7 +96,7 @@ public class UsersController {
     }
 
     // 사용자 정보 mbti 수정 endpoint
-    @PutMapping("/update-mbti")
+    @PutMapping("/mbti")
     public ResponseEntity<MessageResponseDto> updateMbti(
             @Valid @RequestBody UpdateMbtiDto updateMbtiDto
     ) {
