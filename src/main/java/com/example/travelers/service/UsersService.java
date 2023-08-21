@@ -175,9 +175,25 @@ public class UsersService {
         return new MessageResponseDto("비밀번호 변경이 완료되었습니다.");
     }
 
-    // TODO 사용자 정보 email 수정 PUT 엔드포인트
+    // 사용자 정보 email 수정 PUT 엔드포인트
+    public MessageResponseDto updateEmail(UpdateEmailDto updateEmailDto) {
+        UsersEntity currentUser = authService.getUser();
 
-    // TODO 사용자 정보 mbti 수정 PUT 엔드포인트
+        currentUser.setEmail(updateEmailDto.getEmail());
+        usersRepository.save(currentUser);
+
+        return new MessageResponseDto("이메일 변경이 완료되었습니다.");
+    }
+
+    // 사용자 정보 mbti 수정 PUT 엔드포인트
+    public MessageResponseDto updateMbti(UpdateMbtiDto updateMbtiDto) {
+        UsersEntity currentUser = authService.getUser();
+
+        currentUser.setMbti(updateMbtiDto.getMbti());
+        usersRepository.save(currentUser);
+
+        return new MessageResponseDto("MBTI 변경이 완료되었습니다.");
+    }
 
     // TODO 사용자 삭제 DELETE 엔드포인트
 }

@@ -4,6 +4,7 @@ import com.example.travelers.dto.*;
 import com.example.travelers.jwt.JwtTokenDto;
 import com.example.travelers.service.UsersService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -85,14 +86,26 @@ public class UsersController {
         return ResponseEntity.ok(responseDto);
     }
 
-    // TODO 사용자 정보 email 수정 endpoint
-//    @PutMapping("/update-email")
+    // 사용자 정보 email 수정 endpoint
+    @PutMapping("/update-email")
+    public ResponseEntity<MessageResponseDto> updateEmail(
+            @Valid @RequestBody UpdateEmailDto updateEmailDto
+    ) {
+        MessageResponseDto responseDto = usersService.updateEmail(updateEmailDto);
+        return ResponseEntity.ok(responseDto);
+    }
 
-    // TODO 사용자 정보 mbti 수정 endpoint
-//    @PutMapping("/update-mbti")
-
+    // 사용자 정보 mbti 수정 endpoint
+    @PutMapping("/update-mbti")
+    public ResponseEntity<MessageResponseDto> updateMbti(
+            @Valid @RequestBody UpdateMbtiDto updateMbtiDto
+    ) {
+        MessageResponseDto responseDto = usersService.updateMbti(updateMbtiDto);
+        return ResponseEntity.ok(responseDto);
+    }
 
     // TODO 사용자 탈퇴 ( role = 회원 ) endpoint
+//    @DeleteMapping("/")
 
     // TODO 사용자 삭제 ( role = 관리자 ) endpoint
 
