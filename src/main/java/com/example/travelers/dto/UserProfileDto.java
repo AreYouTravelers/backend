@@ -1,12 +1,15 @@
 package com.example.travelers.dto;
 
 import com.example.travelers.entity.UsersEntity;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserProfileDto {
     private String username;          // 사용자 명
     private String email;             // 이메일

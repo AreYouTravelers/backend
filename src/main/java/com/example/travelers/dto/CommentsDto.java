@@ -1,11 +1,14 @@
 package com.example.travelers.dto;
 
 import com.example.travelers.entity.CommentsEntity;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class CommentsDto {
     private Long id;
     private String content;

@@ -1,8 +1,10 @@
 package com.example.travelers.dto;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class MessageResponseDto {
     private String message; // API 응답 메시지를 저장하는 클래스
 
