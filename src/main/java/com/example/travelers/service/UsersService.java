@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -27,6 +26,7 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -45,6 +45,8 @@ public class UsersService {
         if (!manager.userExists(username)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "올바른 Username 이 아닙니다");
         }
+
+        // TODO 삭제된 사용자 로그인 안되도록
 
         UserDetails userDetails = manager.loadUserByUsername(username);
 
@@ -195,5 +197,56 @@ public class UsersService {
         return new MessageResponseDto("MBTI 변경이 완료되었습니다.");
     }
 
-    // TODO 사용자 삭제 DELETE 엔드포인트
+    // 사용자 탈퇴 DELETE 엔드포인트
+    public MessageResponseDto deleteUser(HttpServletRequest request, DeleteUserDto deleteUserDto) {
+        UsersEntity currentUser = authService.getUser();
+
+        // 비밀번호 확인
+        if (!passwordEncoder.matches(deleteUserDto.getPassword(), currentUser.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다.");
+        }
+
+        // 이미 삭제된 사용자인 경우 Bad Request 반환
+        if (currentUser.getDeletedAt() != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 삭제된 사용자입니다.");
+        }
+
+        // 토큰 무효화
+        String token = authService.extractTokenFromHeader(request.getHeader(HttpHeaders.AUTHORIZATION));
+        jwtTokenUtils.invalidateToken(token);
+
+        // 사용자 삭제 처리 (소프트 delete)
+        currentUser.setDeletedAt(LocalDateTime.now());
+        usersRepository.save(currentUser);
+
+        return new MessageResponseDto("사용자가 성공적으로 삭제되었습니다.");
+    }
+
+    // 관리자에 의한 사용자 탈퇴 처리 endpoint
+    public MessageResponseDto deleteUserByAdmin(DeleteUserByAdminDto deleteUserByAdminDto) {
+        // 관리자 인지 검증
+        UsersEntity currentUser = authService.getUser();
+        String currentUserRole = currentUser.getRole();
+
+        if (!currentUserRole.equals("관리자")) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "관리자만 사용 가능합니다.");
+        }
+
+        Optional<UsersEntity> targetEntity = usersRepository.findByUsername(deleteUserByAdminDto.getUsername());
+        if (targetEntity.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제하려는 User가 존재하지 않습니다.");
+        }
+
+        UsersEntity target = targetEntity.get();
+
+        // 이미 삭제된 사용자인 경우 Bad Request 반환
+        if (target.getDeletedAt() != null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 삭제된 사용자입니다.");
+        }
+
+        target.setDeletedAt(LocalDateTime.now());
+        usersRepository.save(target);
+
+        return new MessageResponseDto("사용자가 성공적으로 삭제되었습니다.");
+    }
 }
