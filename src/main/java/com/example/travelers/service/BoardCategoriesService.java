@@ -6,10 +6,13 @@ import com.example.travelers.entity.BoardCategoriesEntity;
 import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.repos.BoardCategoriesRepository;
 import com.example.travelers.repos.UsersRepository;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
@@ -20,61 +23,46 @@ public class BoardCategoriesService {
     private final BoardCategoriesRepository boardCategoriesRepository;
     private final UsersRepository usersRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthService authService;
+    private final PlatformTransactionManager transactionManager;
 
-    public MessageResponseDto createBoardCategory(String username, String password, BoardCategoryDto dto) {
-        Optional<UsersEntity> user = usersRepository.findByUsername(username);
-        if (user.isPresent()) {
-            UsersEntity usersEntity = user.get();
-            if (passwordEncoder.matches(password, usersEntity.getPassword())) {
-                BoardCategoriesEntity newBoardCategory = BoardCategoriesEntity.builder()
-                        .category(dto.getCategory()).build();
-                boardCategoriesRepository.save(newBoardCategory);
-            } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect password");
-        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+    @Transactional // 메서드가 실행될 때 자동으로 트랜잭션을 시작하고, 메서드가 끝날 때 해당 트랜잭션을 커밋하거나 롤백 -> 데이터 일관성, 안정성 보장
+    public MessageResponseDto createBoardCategory(BoardCategoryDto dto) {
+        UsersEntity userEntity = authService.getUser();
+        BoardCategoriesEntity newBoardCategory = BoardCategoriesEntity.builder()
+                .category(dto.getCategory()).build();
+        boardCategoriesRepository.save(newBoardCategory);
         return new MessageResponseDto("카테고리를 생성했습니다.");
     }
 
-    public BoardCategoryDto readBoardCategory(Long id, String username, String password) {
+    public BoardCategoryDto readBoardCategory(Long id) {
+        UsersEntity userEntity = authService.getUser();
         Optional<BoardCategoriesEntity> boardCategory = boardCategoriesRepository.findById(id);
-        Optional<UsersEntity> user = usersRepository.findByUsername(username);
         if (boardCategory.isPresent()) {
-            if (user.isPresent()) {
-                UsersEntity usersEntity = user.get();
-                if (passwordEncoder.matches(password, usersEntity.getPassword())) {
-                    return BoardCategoryDto.fromEntity(boardCategory.get());
-                } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect password");
-            } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            return BoardCategoryDto.fromEntity(boardCategory.get());
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found");
     }
 
-    public MessageResponseDto updateBoardCategory(Long id, String username, String password, BoardCategoryDto dto) {
+    @Transactional
+    public MessageResponseDto updateBoardCategory(Long id, BoardCategoryDto dto) {
+        UsersEntity userEntity = authService.getUser();
         Optional<BoardCategoriesEntity> boardCategory = boardCategoriesRepository.findById(id);
-        Optional<UsersEntity> user = usersRepository.findByUsername(username);
         if (boardCategory.isPresent()) {
-            if (user.isPresent()) {
-                UsersEntity usersEntity = user.get();
-                if (passwordEncoder.matches(password, usersEntity.getPassword())) {
-                    BoardCategoriesEntity boardCategoriesEntity = boardCategory.get();
-                    boardCategoriesEntity.setCategory(dto.getCategory());
-                    boardCategoriesRepository.save(boardCategoriesEntity);
-                } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect password");
-            } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            BoardCategoriesEntity boardCategoriesEntity = boardCategory.get();
+            boardCategoriesEntity.setCategory(dto.getCategory());
+            boardCategoriesRepository.save(boardCategoriesEntity);
+            return new MessageResponseDto("카테고리를 업데이트했습니다.");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found");
-        return new MessageResponseDto("카테고리를 업데이트했습니다.");
     }
 
-    public MessageResponseDto deleteBoardCategory(Long id, String username, String password) {
+    @Transactional
+    public MessageResponseDto deleteBoardCategory(Long id) {
+        UsersEntity userEntity = authService.getUser();
         Optional<BoardCategoriesEntity> boardCategory = boardCategoriesRepository.findById(id);
-        Optional<UsersEntity> user = usersRepository.findByUsername(username);
         if (boardCategory.isPresent()) {
-            if (user.isPresent()) {
-                UsersEntity usersEntity = user.get();
-                if (passwordEncoder.matches(password, usersEntity.getPassword())) {
-                    BoardCategoriesEntity boardCategoriesEntity = boardCategory.get();
-                    boardCategoriesRepository.delete(boardCategoriesEntity);
-                } else throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect password");
-            } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            BoardCategoriesEntity boardCategoriesEntity = boardCategory.get();
+            boardCategoriesRepository.delete(boardCategoriesEntity);
+            return new MessageResponseDto("카테고리를 삭제했습니다.");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found");
-        return new MessageResponseDto("카테고리를 삭제했습니다.");
     }
 }
