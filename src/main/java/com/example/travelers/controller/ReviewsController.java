@@ -62,13 +62,14 @@ public class ReviewsController {
         return response;
     }
 
-//    // DELETE /board/{boardId}/reviews/{id}
-//    @DeleteMapping("/{id}")
-//    public void delete(
-//            @PathVariable("boardId") Long boardId,
-//            @RequestParam Long id
-//    ) {
-//        service.deleteReview(boardId, id);
-//        log.info("delete review success");
-//    }
+    // DELETE /board/{boardId}/reviews/{id}
+    @DeleteMapping("/{id}")
+    public MessageResponseDto delete(
+            @PathVariable("boardId") Long boardId,
+            @PathVariable("id") Long id
+    ) {
+        service.deleteReview(boardId, id);
+        MessageResponseDto response = new MessageResponseDto("후기 삭제 완료");
+        return response;
+    }
 }

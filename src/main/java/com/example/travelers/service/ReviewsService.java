@@ -90,13 +90,14 @@ public class ReviewsService {
         repository.save(entity);
     }
 
-//    public void deleteReview(Long boardId, Long id) {
-//        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
-//        if (!boardsRepository.existsById(boardId))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        // id에 해당하는
-//        if (repository.existsById(id))
-//            repository.deleteById(id);
-//        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//    }
+    public void deleteReview(Long boardId, Long id) {
+        // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
+        if (!boardsRepository.existsById(boardId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        // id에 해당하는 review 존재하지 않을 경우 예외 처리
+        if (repository.existsById(id))
+            repository.deleteById(id);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
 }
