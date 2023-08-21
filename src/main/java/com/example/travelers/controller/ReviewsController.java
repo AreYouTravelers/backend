@@ -18,7 +18,7 @@ import java.util.List;
 public class ReviewsController {
     private final ReviewsService service;
 
-    // POST /board/{boardid}/reviews
+    // POST /board/{boardId}/reviews
     @PostMapping
     public MessageResponseDto create(
             @PathVariable("boardId") Long boardId,
@@ -30,6 +30,16 @@ public class ReviewsController {
         return response;
     }
 
+    // GET /board/{boardId}/reviews/{id}
+//    @GetMapping("/{id}")
+//    public ReviewsDto read(
+//            @PathVariable("boardId") Long boardId,
+//            @PathVariable("id") Long id
+//    ) {
+//        ReviewsDto response = service.readReview(boardId, id);
+//        return response;
+//    }
+
     // GET /board/{boardid}/reviews
 //    @GetMapping
 //    public List<ReviewsDto> readAll(
@@ -38,16 +48,6 @@ public class ReviewsController {
 //        log.info("readAll controller 실행");
 ////        List<ReviewsDto> list = service.readReviewsAll(boardId);
 //        return service.readReviewsAll(boardId);
-//    }
-//
-//    // GET /board/{boardid}/reviews/{id}
-//    @GetMapping("/{id}")
-//    public ReviewsDto read(
-//            @PathVariable("boardId") Long boardId,
-//            @PathVariable("id") Long id
-//    ) {
-//        ReviewsDto response = service.readReview(boardId, id);
-//        return response;
 //    }
 
     // PUT /board/{boardId}/reviews{id}

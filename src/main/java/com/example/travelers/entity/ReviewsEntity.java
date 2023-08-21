@@ -1,13 +1,12 @@
 package com.example.travelers.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,14 +25,17 @@ public class ReviewsEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "board_id")
     private BoardsEntity board;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "sender_id")
     private UsersEntity sender;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "receiver_id")
     private UsersEntity receiver;
