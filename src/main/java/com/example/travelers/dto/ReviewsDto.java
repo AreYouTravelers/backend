@@ -14,9 +14,7 @@ public class ReviewsDto {
     private String destination;
     private Integer rating;
     private String content;
-    private BoardsEntity boardId;
-    private UsersEntity sender;
-    private UsersEntity receiver;
+    private String senderUsername;
 
     public static ReviewsDto fromEntity(ReviewsEntity entity) {
         ReviewsDto dto = new ReviewsDto();
@@ -24,8 +22,7 @@ public class ReviewsDto {
         dto.setDestination(entity.getDestination());
         dto.setRating(entity.getRating());
         dto.setContent(entity.getContent());
-        dto.setSender(entity.getSender());
-        dto.setReceiver(entity.getReceiver());
+        dto.setSenderUsername(entity.getSender().getUsername());
         return dto;
     }
 

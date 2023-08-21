@@ -49,7 +49,7 @@ public class ReviewsController {
         return service.readReviewsAll(boardId);
     }
 
-    // PUT /board/{boardId}/reviews{id}
+    // PUT /board/{boardId}/reviews/{id}
     @PutMapping("/{id}")
     public MessageResponseDto update(
             @PathVariable("boardId") Long boardId,

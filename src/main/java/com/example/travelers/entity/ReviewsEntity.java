@@ -25,17 +25,14 @@ public class ReviewsEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "board_id")
     private BoardsEntity board;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "sender_id")
     private UsersEntity sender;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "receiver_id")
     private UsersEntity receiver;
