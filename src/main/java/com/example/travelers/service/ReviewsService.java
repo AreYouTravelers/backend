@@ -44,53 +44,60 @@ public class ReviewsService {
                 .build());
     }
 
-//    public ReviewsDto readReview(Long boardId, Long id) {
-//        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
-//        if (!boardsRepository.existsById(boardId))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
-//        if (optionalReviewsEntity.isEmpty())
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        return ReviewsDto.fromEntity(optionalReviewsEntity.get());
-//    }
-//
-//    public List<ReviewsDto> readReviewsAll(Long boardId) {
-//        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
-//        if (!boardsRepository.existsById(boardId))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        List<ReviewsDto> reviewsDtoList = new ArrayList<>();
-//        List<ReviewsEntity> reviewsEntityList = repository.findAll();
-//        for (ReviewsEntity entity : reviewsEntityList)
-//            reviewsDtoList.add(ReviewsDto.fromEntity(entity));
-//        return reviewsDtoList;
-//    }
-//
-//
-//    public ReviewsDto updateReview(Long boardId, Long id, ReviewsDto dto) {
-//        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
-//        if (!boardsRepository.existsById(boardId))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
-//        // 전달받은 id에 해당하는 리뷰가 존재하지 않을 경우 예외 처리
-//        if (optionalReviewsEntity.isEmpty())
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        ReviewsEntity entity = optionalReviewsEntity.get();
-//        entity.setId(dto.getId());
-//        entity.setDestination(dto.getDestination());
-//        entity.setRating(dto.getRating());
-//        entity.setContent(dto.getContent());
-//        entity.setSender(dto.getSender());
-//        entity.setReceiver(dto.getReceiver());
-//        return ReviewsDto.fromEntity(entity);
-//    }
-//
-//    public void deleteReview(Long boardId, Long id) {
-//        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
-//        if (!boardsRepository.existsById(boardId))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        // id에 해당하는
-//        if (repository.existsById(id))
-//            repository.deleteById(id);
-//        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//    }
+    public ReviewsDto readReview(Long boardId, Long id) {
+        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
+        if (!boardsRepository.existsById(boardId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
+        if (optionalReviewsEntity.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        log.info("레포에서 가져오는 부분까지 성공");
+        ReviewsDto response = ReviewsDto.fromEntity(optionalReviewsEntity.get());
+        return response;
+    }
+
+    public List<ReviewsDto> readReviewsAll(Long boardId) {
+        log.info("readReviewsAll service 실행 시작");
+        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
+        if (!boardsRepository.existsById(boardId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        List<ReviewsDto> reviewsDtoList = new ArrayList<>();
+        List<ReviewsEntity> reviewsEntityList = repository.findAllByBoardId(boardId);
+        log.info("findAllByBoardId 실행완료");
+        System.out.println(reviewsEntityList.size());
+        for (ReviewsEntity entity : reviewsEntityList)
+            reviewsDtoList.add(ReviewsDto.fromEntity(entity));
+        for (ReviewsDto dto: reviewsDtoList)
+            System.out.println(dto);
+        return reviewsDtoList;
+    }
+
+    public void updateReview(Long boardId, Long id, ReviewsDto dto) {
+        // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
+        if (!boardsRepository.existsById(boardId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        // 전달받은 id에 해당하는 review 존재하지 않을 경우 예외 처리
+        Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
+        if (optionalReviewsEntity.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        // 전달받은 dto 토대로 수정
+        ReviewsEntity entity = optionalReviewsEntity.get();
+        entity.setDestination(dto.getDestination());
+        entity.setRating(dto.getRating());
+        entity.setContent(dto.getContent());
+        repository.save(entity);
+    }
+
+    public void deleteReview(Long boardId, Long id) {
+        // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
+        if (!boardsRepository.existsById(boardId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        // id에 해당하는 review 존재하지 않을 경우 예외 처리
+        if (repository.existsById(id))
+            repository.deleteById(id);
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
 }

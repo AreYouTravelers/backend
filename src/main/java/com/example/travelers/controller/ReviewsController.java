@@ -2,10 +2,14 @@ package com.example.travelers.controller;
 
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.ReviewsDto;
+import com.example.travelers.entity.ReviewsEntity;
 import com.example.travelers.service.ReviewsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.message.Message;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -14,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class ReviewsController {
     private final ReviewsService service;
 
-    // POST /board/{id}/reviews
+    // POST /board/{boardid}/reviews
     @PostMapping
     public MessageResponseDto create(
             @PathVariable("boardId") Long boardId,
@@ -26,43 +30,46 @@ public class ReviewsController {
         return response;
     }
 
-    // GET /board/{id}/reviews
+    // GET /board/{boardid}/reviews
 //    @GetMapping
-//    public void readAll(
+//    public List<ReviewsDto> readAll(
 //            @PathVariable("boardId") Long boardId
 //    ) {
-//        service.readReviewsAll(boardId);
-//        log.info("readAll review success");
+//        log.info("readAll controller 실행");
+////        List<ReviewsDto> list = service.readReviewsAll(boardId);
+//        return service.readReviewsAll(boardId);
 //    }
 //
-//    // GET /board/{id}/reviews/{id}
+//    // GET /board/{boardid}/reviews/{id}
 //    @GetMapping("/{id}")
-//    public void read(
+//    public ReviewsDto read(
 //            @PathVariable("boardId") Long boardId,
-//            @RequestParam Long id
+//            @PathVariable("id") Long id
 //    ) {
-//        service.readReview(boardId, id);
-//        log.info("read review success");
+//        ReviewsDto response = service.readReview(boardId, id);
+//        return response;
 //    }
-//
-//    // PUT /board/{id}/reviews{id}
-//    @PutMapping("/{id}")
-//    public void update(
-//            @PathVariable("boardId") Long boardId,
-//            @RequestParam Long id,
-//            @RequestParam ReviewsDto dto
-//    ) {
-//        service.updateReview(boardId, id, dto);
-//        log.info("update review success");
-//    }
-//
-//    // DELETE /board/{id}/reviews/{id}
-//    @DeleteMapping("/{id}")
-//    public void delete(
-//            @PathVariable("boardId") Long boardId,
-//            @RequestParam Long id
-//    ) {
-//        service.deleteReview(boardId, id);
-//        log.info("delete review success");
-//    }
+
+    // PUT /board/{boardId}/reviews{id}
+    @PutMapping("/{id}")
+    public MessageResponseDto update(
+            @PathVariable("boardId") Long boardId,
+            @PathVariable("id") Long id,
+            @RequestBody ReviewsDto dto
+    ) {
+        service.updateReview(boardId, id, dto);
+        MessageResponseDto response = new MessageResponseDto("후기 수정 완료");
+        return response;
+    }
+
+    // DELETE /board/{boardId}/reviews/{id}
+    @DeleteMapping("/{id}")
+    public MessageResponseDto delete(
+            @PathVariable("boardId") Long boardId,
+            @PathVariable("id") Long id
+    ) {
+        service.deleteReview(boardId, id);
+        MessageResponseDto response = new MessageResponseDto("후기 삭제 완료");
+        return response;
+    }
 }
