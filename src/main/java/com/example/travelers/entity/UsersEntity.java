@@ -1,10 +1,8 @@
 package com.example.travelers.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -12,7 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -61,9 +60,11 @@ public class UsersEntity {
     @OneToMany(mappedBy = "user")
     private final List<BlacklistEntity> blacklists = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "sender")
     private final List<ReviewsEntity> senderReviews = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "receiver")
     private final List<ReviewsEntity> receiverReviews = new ArrayList<>();
 

@@ -1,17 +1,16 @@
 package com.example.travelers.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,6 +35,7 @@ public class BoardsEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deleteAt;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UsersEntity user;
