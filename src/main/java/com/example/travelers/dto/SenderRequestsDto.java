@@ -21,14 +21,18 @@ public class SenderRequestsDto {
     private Boolean finalStatus;
     private LocalDateTime createdAt;
     private LocalDateTime rejectedAt;
+    private Long receiverId;
+    private Long boardId;
+
     public static SenderRequestsDto fromEntity(SenderRequestsEntity entity) {
         SenderRequestsDto dto = new SenderRequestsDto();
         dto.setId(entity.getId());
         dto.setMessage(entity.getMessage());
-        dto.setStatus(entity.getStatus());
-        dto.setFinalStatus(entity.getFinalStatus());
+        dto.setStatus(entity.getStatus()); // 요청: 1동의 0거절
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setRejectedAt(entity.getRejectedAt());
+        dto.setReceiverId(entity.getBoard().getUser().getId());
+        dto.setBoardId(entity.getBoard().getId());
         return dto;
     }
 

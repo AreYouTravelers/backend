@@ -20,14 +20,8 @@ public class SenderRequestsEntity {
     @Column
     private String message;
 
-    @Column(columnDefinition = "TINYINT(1)")
+    @Column
     private Boolean status; // 요청 상태 (수락 or 거절)
-
-    @Column(name = "final_status", columnDefinition = "TINYINT(2)")
-    private Boolean finalStatus;
-    // 0 : 요청 비활성화
-    // 1 : 요청 수락
-    // 2 : 요청 거절
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
