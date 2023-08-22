@@ -10,6 +10,6 @@ import java.util.Optional;
 
 public interface BoardsRepository extends JpaRepository<BoardsEntity, Long> {
     Optional<BoardsEntity> findById(Long id);
-    Optional<BoardsEntity> findByIdAndBoardCategoryId(Long Id, Long boardCategoryId);
+    Page<BoardsEntity> findAll(Pageable pageable);
     Page<BoardsEntity> findAllByUser(Optional<UsersEntity> usersEntity, Pageable pageable);
 }

@@ -17,7 +17,7 @@ import java.util.List;
 public class BoardDto {
     private Long id;
     private Long categoryId;
-    private String categoryName;
+    private String category;
     private String username;
     private String title;
     private String content;
@@ -30,7 +30,7 @@ public class BoardDto {
     public static BoardDto fromEntity(BoardsEntity entity) {
         BoardDto dto = new BoardDto();
         dto.setId(entity.getId());
-        dto.setCategoryName(entity.getBoardCategory().getCategory());
+        dto.setCategory(entity.getBoardCategory().getCategory());
         dto.setUsername(entity.getUser().getUsername());
         dto.setTitle(entity.getTitle());
         dto.setContent(entity.getContent());

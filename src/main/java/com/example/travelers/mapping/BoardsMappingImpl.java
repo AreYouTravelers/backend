@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 public class BoardsMappingImpl implements BoardsMapping {
     private final BoardsEntity boards;
     private Long id;
-    private Long categoryId;
-    private Long userId;
+    private String category;
+    private String username;
     private String title;
     private String content;
     private Integer people;
@@ -22,13 +22,13 @@ public class BoardsMappingImpl implements BoardsMapping {
     }
 
     @Override
-    public Long getCategoryId() {
-        return boards.getBoardCategory().getId();
+    public String getCategory() {
+        return boards.getBoardCategory().getCategory();
     }
 
     @Override
-    public Long getUserId() {
-        return boards.getUser().getId();
+    public String getUsername() {
+        return boards.getUser().getUsername();
     }
 
     @Override

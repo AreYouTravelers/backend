@@ -33,7 +33,6 @@ public class BoardsService {
     private final BoardsRepository boardsRepository;
     private final BoardCategoriesRepository boardCategoriesRepository;
     private final UsersRepository usersRepository;
-    private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
 
     @Transactional
@@ -58,11 +57,23 @@ public class BoardsService {
         UsersEntity userEntity = authService.getUser();
         Optional<BoardsEntity> board = boardsRepository.findById(id);
         if (board.isPresent()) {
-            return BoardDto.fromEntity(board.get());
+            if (board.get().getUser().getId().equals(userEntity.getId())) {
+                return BoardDto.fromEntity(board.get());
+            } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
     }
 
     public Page<BoardsMapping> readBoardsAll(Integer pageNumber) {
+        UsersEntity userEntity = authService.getUser();
+        Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
+        Page<BoardsEntity> boardsPage = boardsRepository.findAll(pageable);
+        List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
+                .map(this::createBoardsMapping)
+                .collect(Collectors.toList());
+        return new PageImpl<>(boardsMappings, pageable, boardsPage.getTotalElements());
+    }
+
+    public Page<BoardsMapping> readBoardsAllByUser(Integer pageNumber) {
         UsersEntity userEntity = authService.getUser();
         Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
         if (user.isPresent()) {
@@ -85,14 +96,16 @@ public class BoardsService {
         UsersEntity userEntity = authService.getUser();
         Optional<BoardsEntity> board = boardsRepository.findById(id);
         if (board.isPresent()) {
-            BoardsEntity boardsEntity = board.get();
-            boardsEntity.getBoardCategory().setId(dto.getCategoryId());
-            boardsEntity.setTitle(dto.getTitle());
-            boardsEntity.setContent(dto.getContent());
-            boardsEntity.setPeople(dto.getPeople());
-            boardsEntity.setCreatedAt(LocalDateTime.now());
-            boardsRepository.save(boardsEntity);
-            return new MessageResponseDto("게시물을 업데이트했습니다.");
+            if (board.get().getUser().getId().equals(userEntity.getId())) {
+                BoardsEntity boardsEntity = board.get();
+                boardsEntity.getBoardCategory().setId(dto.getCategoryId());
+                boardsEntity.setTitle(dto.getTitle());
+                boardsEntity.setContent(dto.getContent());
+                boardsEntity.setPeople(dto.getPeople());
+                boardsEntity.setCreatedAt(LocalDateTime.now());
+                boardsRepository.save(boardsEntity);
+                return new MessageResponseDto("게시물을 업데이트했습니다.");
+            } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
     }
 
@@ -101,9 +114,11 @@ public class BoardsService {
         UsersEntity userEntity = authService.getUser();
         Optional<BoardsEntity> board = boardsRepository.findById(id);
         if (board.isPresent()) {
-            BoardsEntity boardsEntity = board.get();
-            boardsRepository.delete(boardsEntity);
-            return new MessageResponseDto("게시물을 삭제했습니다.");
+            if (board.get().getUser().getId().equals(userEntity.getId())) {
+                BoardsEntity boardsEntity = board.get();
+                boardsRepository.delete(boardsEntity);
+                return new MessageResponseDto("게시물을 삭제했습니다.");
+            } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
     }
 }
