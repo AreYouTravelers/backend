@@ -43,11 +43,11 @@ public class SenderRequestsController {
 
     // 동행 요청 전체 조회
     // GET /board/{boardId}/senderRequests
-//    @GetMapping
-//    public List<SenderRequestsDto> readAll(
-//            @PathVariable("boardId") Long boardId
-//    ) {
-//        List<SenderRequestsDto> list = service.readAllSenderRequests(boardId);
-//        return service.readAllSenderRequests(boardId);
-//    }
+    @GetMapping
+    public List<SenderRequestsDto> readAll(
+            @PathVariable("boardId") Long boardId
+    ) {
+        List<SenderRequestsDto> list = service.readAllSenderRequests(boardId);
+        return service.readAllSenderRequests(boardId);
+    }
 }
