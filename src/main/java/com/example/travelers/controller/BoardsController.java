@@ -35,6 +35,12 @@ public class BoardsController {
         return boardsService.readBoardsAll(pageNumber);
     }
 
+    @GetMapping("/myboard")
+    public Page<BoardsMapping> readAllByUser(
+            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
+        return boardsService.readBoardsAllByUser(pageNumber);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<MessageResponseDto> update(
             @PathVariable("id") Long id,
