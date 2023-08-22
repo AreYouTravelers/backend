@@ -43,7 +43,7 @@ public class WebSecurityConfig {
                                         "/users/mbti",
                                         "/users/deactivate",
                                         "/admin/deactivate",
-
+                                        "/boards/**",
                                         "/boards/categories",
                                         "/board/{boardId}/reviews/**"
                                 )
