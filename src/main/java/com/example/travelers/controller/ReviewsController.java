@@ -13,7 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/board/{boardId}/reviews")
+@RequestMapping("/boards/{boardId}/reviews")
 @RequiredArgsConstructor
 public class ReviewsController {
     private final ReviewsService service;

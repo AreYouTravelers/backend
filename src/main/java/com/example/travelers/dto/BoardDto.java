@@ -16,9 +16,12 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BoardDto {
     private Long id;
+    private Long categoryId;
+    private String categoryName;
+    private String username;
     private String title;
-    private Integer people;
     private String content;
+    private Integer people;
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
     private List<ReceiverRequestsDto> receiverRequestsList;
@@ -27,11 +30,13 @@ public class BoardDto {
     public static BoardDto fromEntity(BoardsEntity entity) {
         BoardDto dto = new BoardDto();
         dto.setId(entity.getId());
+        dto.setCategoryName(entity.getBoardCategory().getCategory());
+        dto.setUsername(entity.getUser().getUsername());
         dto.setTitle(entity.getTitle());
-        dto.setPeople(entity.getPeople());
         dto.setContent(entity.getContent());
+        dto.setPeople(entity.getPeople());
         dto.setCreatedAt(entity.getCreatedAt());
-        dto.setDeletedAt(entity.getDeleteAt());
+        dto.setDeletedAt(entity.getDeletedAt());
         dto.setReceiverRequestsList(ReceiverRequestsDto.dtoList(entity.getReceiverRequests()));
         dto.setSenderRequestsList(SenderRequestsDto.dtoList(entity.getSenderRequests()));
         return dto;
