@@ -25,12 +25,4 @@ public class ReviewsDto {
         dto.setSenderUsername(entity.getSender().getUsername());
         return dto;
     }
-
-    public ReviewsEntity newEntity() {
-        ReviewsEntity entity = new ReviewsEntity();
-        entity.setDestination(destination);
-        entity.setRating(rating);
-        entity.setContent(content);
-        return entity;
-    }
 }
