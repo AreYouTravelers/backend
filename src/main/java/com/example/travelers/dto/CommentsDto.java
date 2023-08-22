@@ -14,9 +14,9 @@ public class CommentsDto {
     private String content;
     private Boolean status;
     private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
+//    private LocalDateTime deletedAt;
     private Long boardId;
-    private Long userId;
+    private String username;
 
     public static CommentsDto fromEntity(CommentsEntity entity) {
         CommentsDto dto = new CommentsDto();
@@ -24,9 +24,9 @@ public class CommentsDto {
         dto.setContent(entity.getContent());
         dto.setStatus(entity.getStatus());
         dto.setCreatedAt(entity.getCreatedAt());
-        dto.setDeletedAt(entity.getDeletedAt());
+//        dto.setDeletedAt(entity.getDeletedAt());
         dto.setBoardId(entity.getBoard().getId());
-        dto.setUserId(entity.getUser().getId());
+        dto.setUsername(entity.getUser().getUsername());
         return dto;
     }
 

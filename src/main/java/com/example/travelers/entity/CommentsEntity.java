@@ -2,9 +2,13 @@ package com.example.travelers.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
+@SQLDelete(sql = "UPDATE comments SET deleted_at = current_timestamp WHERE id = ?")
+@Where(clause = "deleted_at is null")
 @Entity
 @Getter
 @Setter

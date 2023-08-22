@@ -244,8 +244,9 @@ public class UsersService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 삭제된 사용자입니다.");
         }
 
-        target.setDeletedAt(LocalDateTime.now());
-        usersRepository.save(target);
+//        target.setDeletedAt(LocalDateTime.now());
+//        usersRepository.save(target);
+        usersRepository.delete(target);
 
         return new MessageResponseDto("사용자가 성공적으로 삭제되었습니다.");
     }

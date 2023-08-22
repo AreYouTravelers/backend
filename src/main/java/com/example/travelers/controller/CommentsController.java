@@ -2,6 +2,7 @@ package com.example.travelers.controller;
 
 
 import com.example.travelers.dto.CommentsDto;
+import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,11 +61,11 @@ public class CommentsController {
     // 댓글 삭제
     // DELETE /boards/{boardId}/comments/{commentId}
     @DeleteMapping("{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long boardId, @PathVariable Long commentId) {
+    public ResponseEntity<MessageResponseDto> deleteComment(@PathVariable Long boardId, @PathVariable Long commentId) {
         if (!commentsService.isCommentRelatedToBoard(boardId, commentId)) {
             return ResponseEntity.badRequest().build();
         }
-        commentsService.deleteComment(commentId);
-        return ResponseEntity.noContent().build();
+        MessageResponseDto responseDto = commentsService.deleteComment(commentId);
+        return ResponseEntity.ok(responseDto);
     }
 }
