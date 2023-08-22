@@ -62,4 +62,16 @@ public class SenderRequestsController {
         MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청을 수정했습니다.");
         return messageResponseDto;
     }
+
+    // 동행 요청 삭제
+    // DELETE /boards/{boardId}/senderRequests/{senderRequestId}
+    @DeleteMapping("/{senderRequestId}")
+    public MessageResponseDto delete(
+            @PathVariable("boardId") Long boardId,
+            @PathVariable("senderRequestId") Long senderRequestId
+    ) {
+        service.deleteSenderRequests(boardId, senderRequestId);
+        MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청을 삭제했습니다.");
+        return messageResponseDto;
+    }
 }
