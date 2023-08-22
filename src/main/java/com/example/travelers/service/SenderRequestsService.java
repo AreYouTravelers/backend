@@ -63,19 +63,19 @@ public class SenderRequestsService {
     }
 
     // 동행 요청 전체 조회
-//    public List<SenderRequestsDto> readAllSenderRequests(Long boardId) {
-//        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
-//        if (!boardsRepository.existsById(boardId))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//
-//        List<SenderRequestsDto> senderRequestsDtoList = new ArrayList<>();
-//        List<SenderRequestsEntity> senderRequestsEntityList = repository.findAllByBoardId(boardId);
-//
-//        for (SenderRequestsEntity entity : senderRequestsEntityList)
-//            senderRequestsDtoList.add(SenderRequestsDto.fromEntity(entity));
-//        for (SenderRequestsDto dto : senderRequestsDtoList)
-//            System.out.println(dto);
-//
-//        return senderRequestsDtoList;
-//    }
+    public List<SenderRequestsDto> readAllSenderRequests(Long boardId) {
+        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
+        if (!boardsRepository.existsById(boardId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        List<SenderRequestsDto> senderRequestsDtoList = new ArrayList<>();
+        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllByBoardId(boardId);
+
+        for (SenderRequestsEntity entity : senderRequestsEntityList)
+            senderRequestsDtoList.add(SenderRequestsDto.fromEntity(entity));
+        for (SenderRequestsDto dto : senderRequestsDtoList)
+            System.out.println(dto);
+
+        return senderRequestsDtoList;
+    }
 }
