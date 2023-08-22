@@ -1,7 +1,5 @@
 package com.example.travelers.service;
 
-import com.example.travelers.dto.MessageResponseDto;
-import com.example.travelers.dto.ReceiverRequestsDto;
 import com.example.travelers.dto.SenderRequestsDto;
 import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.entity.SenderRequestsEntity;
@@ -28,13 +26,13 @@ public class SenderRequestsService {
     private final AuthService authService;
 
     // 동행 요청 생성
-    public void createSenderRequests(Long boardId, ReceiverRequestsDto dto) {
+    public void createSenderRequests(Long boardId, SenderRequestsDto dto) {
         UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
         Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
         if (boardsEntity.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.");
 
         SenderRequestsEntity newSenderRequests = SenderRequestsEntity.builder()
                 .sender(usersEntity) // sender_id
@@ -52,12 +50,12 @@ public class SenderRequestsService {
     public SenderRequestsDto readSenderRequests(Long boardId, Long id) {
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
         if (!boardsRepository.existsById(boardId))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.");
 
-        // id에 해당하는 review 존재하지 않을 경우 예외 처리
+        // id에 해당하는 동행 요청이 존재하지 않을 경우 예외 처리
         Optional<SenderRequestsEntity> optionalSenderRequestsEntity = senderRequestsRepository.findById(id);
         if (optionalSenderRequestsEntity.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "동행 요청이 존재하지 않습니다");
 
         return SenderRequestsDto.fromEntity(optionalSenderRequestsEntity.get());
     }
@@ -66,7 +64,7 @@ public class SenderRequestsService {
     public List<SenderRequestsDto> readAllSenderRequests(Long boardId) {
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
         if (!boardsRepository.existsById(boardId))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.");
 
         List<SenderRequestsDto> senderRequestsDtoList = new ArrayList<>();
         List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllByBoardId(boardId);
@@ -77,5 +75,23 @@ public class SenderRequestsService {
             System.out.println(dto);
 
         return senderRequestsDtoList;
+    }
+
+    // 동행 요청 수정
+    public void updateSenderRequests(Long boardId, Long id, SenderRequestsDto dto) {
+        UsersEntity usersEntity = authService.getUser();
+
+        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
+        if (!boardsRepository.existsById(boardId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.");
+
+        // id에 해당하는 동행 요청이 존재하지 않을 경우 예외 처리
+        Optional<SenderRequestsEntity> optionalSenderRequestsEntity = senderRequestsRepository.findById(id);
+        if (optionalSenderRequestsEntity.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "동행 요청이 존재하지 않습니다");
+
+        SenderRequestsEntity entity = optionalSenderRequestsEntity.get();
+        entity.setMessage(dto.getMessage());
+        senderRequestsRepository.save(entity);
     }
 }
