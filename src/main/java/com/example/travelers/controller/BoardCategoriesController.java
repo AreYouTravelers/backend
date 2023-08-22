@@ -4,6 +4,7 @@ import com.example.travelers.dto.BoardCategoryDto;
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.service.BoardCategoriesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,6 +25,12 @@ public class BoardCategoriesController {
     public BoardCategoryDto read(
             @PathVariable("id") Long id) {
         return boardCategoriesService.readBoardCategory(id);
+    }
+
+    @GetMapping
+    public Page<BoardCategoryDto> readAll(
+            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
+        return boardCategoriesService.readBoardCategoryAll(pageNumber);
     }
 
     @PutMapping("/{id}")
