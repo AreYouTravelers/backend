@@ -18,7 +18,6 @@ public class SenderRequestsDto {
     private Long id;
     private String message;
     private Boolean status;
-    private Boolean finalStatus;
     private LocalDateTime createdAt;
     private LocalDateTime rejectedAt;
     private Long receiverId;
