@@ -32,14 +32,14 @@ public class SenderRequestsController {
 
     // 동행 요청 단일 조회
     // GET /board/{boardId}/senderRequests/{senderRequestId}
-//    @GetMapping("/{senderRequestId}")
-//    public SenderRequestsDto read(
-//            @PathVariable("boardId") Long boardId,
-//            @PathVariable("senderRequestId") Long senderRequestId
-//    ) {
-//        SenderRequestsDto senderRequestsDto = service.readSenderRequests(boardId, senderRequestId);
-//        return senderRequestsDto;
-//    }
+    @GetMapping("/{senderRequestId}")
+    public SenderRequestsDto read(
+            @PathVariable("boardId") Long boardId,
+            @PathVariable("senderRequestId") Long senderRequestId
+    ) {
+        SenderRequestsDto senderRequestsDto = service.readSenderRequests(boardId, senderRequestId);
+        return senderRequestsDto;
+    }
 
     // 동행 요청 전체 조회
     // GET /board/{boardId}/senderRequests

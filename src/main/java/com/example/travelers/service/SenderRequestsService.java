@@ -49,18 +49,18 @@ public class SenderRequestsService {
     }
 
     // 동행 요청 단일 조회
-//    public SenderRequestsDto readSenderRequests(Long boardId, Long id) {
-//        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
-//        if (!boardsRepository.existsById(boardId))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//
-//        // id에 해당하는 review 존재하지 않을 경우 예외 처리
-//        Optional<SenderRequestsEntity> optionalSenderRequestsEntity = senderRequestsRepository.findById(id);
-//        if (optionalSenderRequestsEntity.isEmpty())
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//
-//        return SenderRequestsDto.fromEntity(optionalSenderRequestsEntity.get());
-//    }
+    public SenderRequestsDto readSenderRequests(Long boardId, Long id) {
+        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
+        if (!boardsRepository.existsById(boardId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        // id에 해당하는 review 존재하지 않을 경우 예외 처리
+        Optional<SenderRequestsEntity> optionalSenderRequestsEntity = senderRequestsRepository.findById(id);
+        if (optionalSenderRequestsEntity.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
+        return SenderRequestsDto.fromEntity(optionalSenderRequestsEntity.get());
+    }
 
     // 동행 요청 전체 조회
 //    public List<SenderRequestsDto> readAllSenderRequests(Long boardId) {
