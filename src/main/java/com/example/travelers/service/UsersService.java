@@ -216,8 +216,7 @@ public class UsersService {
         jwtTokenUtils.invalidateToken(token);
 
         // 사용자 삭제 처리 (소프트 delete)
-        currentUser.setDeletedAt(LocalDateTime.now());
-        usersRepository.save(currentUser);
+        usersRepository.delete(currentUser);
 
         return new MessageResponseDto("사용자가 성공적으로 삭제되었습니다.");
     }
