@@ -1,14 +1,22 @@
 package com.example.travelers.service;
 
+import com.example.travelers.dto.BoardCategoryDto;
 import com.example.travelers.dto.ReviewsDto;
+import com.example.travelers.entity.BoardCategoriesEntity;
 import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.entity.ReviewsEntity;
 import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.repos.BoardsRepository;
 import com.example.travelers.repos.ReviewsRepository;
+import com.example.travelers.repos.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 
@@ -21,8 +29,10 @@ import java.util.Optional;
 public class ReviewsService {
     private final ReviewsRepository repository;
     private final BoardsRepository boardsRepository;
+    private final UsersRepository usersRepository;
     private final AuthService authService;
 
+    @Transactional
     public void createReview(Long boardId, ReviewsDto dto) {
         UsersEntity sender = authService.getUser();
         Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
@@ -59,6 +69,16 @@ public class ReviewsService {
         return reviewsDtoList;
     }
 
+    public Page<ReviewsDto> readReviewsAllBySender(Integer pageNumber) {
+        UsersEntity userEntity = authService.getUser();
+        Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
+        Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
+        Page<ReviewsEntity> reviewsPage = repository.findAllBySender(user, pageable);
+        return reviewsPage.map(ReviewsDto::fromEntity);
+    }
+
+
+    @Transactional
     public void updateReview(Long boardId, Long id, ReviewsDto dto) {
         UsersEntity usersEntity = authService.getUser();
         if (!boardsRepository.existsById(boardId))
@@ -73,6 +93,7 @@ public class ReviewsService {
         repository.save(entity);
     }
 
+    @Transactional
     public void deleteReview(Long boardId, Long id) {
         UsersEntity usersEntity = authService.getUser();
         if (!boardsRepository.existsById(boardId))
