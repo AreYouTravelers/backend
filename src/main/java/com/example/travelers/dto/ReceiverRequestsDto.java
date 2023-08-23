@@ -20,14 +20,18 @@ public class ReceiverRequestsDto {
     private Boolean status;
     private LocalDateTime createdAt;
     private LocalDateTime rejectedAt;
+    private Long senderId;
+    private Long boardId;
 
     public static ReceiverRequestsDto fromEntity(ReceiverRequestsEntity entity) {
         ReceiverRequestsDto dto = new ReceiverRequestsDto();
         dto.setId(entity.getId());
-        dto.setMessage(entity.getMessage());
-        dto.setStatus(entity.getStatus());
+        dto.setMessage(entity.getMessage()); // 받은 메세지
+        dto.setStatus(entity.getStatus()); // 응답: 1수락 0거절
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setRejectedAt(entity.getRejectedAt());
+        dto.setSenderId(entity.getBoard().getUser().getId());
+        dto.setBoardId(entity.getBoard().getId());
         return dto;
     }
 

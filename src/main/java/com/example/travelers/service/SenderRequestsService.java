@@ -1,5 +1,6 @@
 package com.example.travelers.service;
 
+import com.example.travelers.dto.ReceiverRequestsDto;
 import com.example.travelers.dto.SenderRequestsDto;
 import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.entity.SenderRequestsEntity;
@@ -24,6 +25,7 @@ public class SenderRequestsService {
     private final SenderRequestsRepository senderRequestsRepository;
     private final BoardsRepository boardsRepository;
     private final AuthService authService;
+    private final ReceiverRequestsService receiverRequestsService;
 
     // 동행 요청 생성
     public void createSenderRequests(Long boardId, SenderRequestsDto dto) {
@@ -44,6 +46,12 @@ public class SenderRequestsService {
                 .board(boardsEntity.get()) // board_id
                 .build();
         senderRequestsRepository.save(newSenderRequests);
+
+        // 동행 요청시 receiver 테이블 생성
+        ReceiverRequestsDto newReceiverRequestsDto = new ReceiverRequestsDto();
+        newReceiverRequestsDto.setStatus(false); // 기본 값: 거절
+        newReceiverRequestsDto.setBoardId(boardId);
+        receiverRequestsService.createReceiverRequests(newReceiverRequestsDto);
     }
 
     // 동행 요청 단일 조회
