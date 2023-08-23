@@ -7,6 +7,7 @@ import com.example.travelers.service.ReviewsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.message.Message;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 public class ReviewsController {
     private final ReviewsService service;
 
-    // POST /board/{boardId}/reviews
+    // POST /boards/{boardId}/reviews
     @PostMapping
     public MessageResponseDto create(
             @PathVariable("boardId") Long boardId,
@@ -30,7 +31,7 @@ public class ReviewsController {
         return response;
     }
 
-    // GET /board/{boardId}/reviews/{id}
+    // GET /boards/{boardId}/reviews/{id}
     @GetMapping("/{id}")
     public ReviewsDto read(
             @PathVariable("boardId") Long boardId,
@@ -40,7 +41,7 @@ public class ReviewsController {
         return response;
     }
 
-    // GET /board/{boardId}/reviews
+    // GET /boards/{boardId}/reviews
     @GetMapping
     public List<ReviewsDto> readAll(
             @PathVariable("boardId") Long boardId
@@ -49,7 +50,14 @@ public class ReviewsController {
         return service.readReviewsAll(boardId);
     }
 
-    // PUT /board/{boardId}/reviews/{id}
+    // GET /boards/{boardId}/reviews/myreview
+    @GetMapping("/myreview")
+    public Page<ReviewsDto> readAllBySender(
+            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
+        return service.readReviewsAllBySender(pageNumber);
+    }
+
+    // PUT /boards/{boardId}/reviews/{id}
     @PutMapping("/{id}")
     public MessageResponseDto update(
             @PathVariable("boardId") Long boardId,
@@ -61,7 +69,7 @@ public class ReviewsController {
         return response;
     }
 
-    // DELETE /board/{boardId}/reviews/{id}
+    // DELETE /boards/{boardId}/reviews/{id}
     @DeleteMapping("/{id}")
     public MessageResponseDto delete(
             @PathVariable("boardId") Long boardId,
