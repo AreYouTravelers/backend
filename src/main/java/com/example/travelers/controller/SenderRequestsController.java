@@ -11,65 +11,59 @@ import java.util.List;
 
 @Slf4j // 로깅
 @RestController // JSON 응답, @Controller 의 역할을 하면서, 등록된 모든 메소드에 @ResponseBody 를 포함
-@RequestMapping("/boards/{boardId}/sender-requests") // 요청주소와 실제주소를 매핑하는 어노테이션
 @RequiredArgsConstructor
 public class SenderRequestsController {
     private final SenderRequestsService service;
 
     // 동행 요청 생성
-    // POST /boards/{boardId}/senderRequests
-    @PostMapping
+    // POST /boards/{boardId}/sender-requests
+    @PostMapping("/boards/{boardId}/sender-requests")
     public MessageResponseDto create(
-            @PathVariable("boardId") Long boardId,
             @RequestBody SenderRequestsDto dto
     ) {
-        service.createSenderRequests(boardId, dto);
+        service.createSenderRequests(dto);
         MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청을 생성했습니다.");
         return messageResponseDto;
     }
 
     // 동행 요청 단일 조회
-    // GET /boards/{boardId}/senderRequests/{senderRequestId}
-    @GetMapping("/{senderRequestId}")
+    // GET /boards/{boardId}/sender-requests/{id}
+    @GetMapping("/boards/{boardId}/sender-requests/{id}")
     public SenderRequestsDto read(
             @PathVariable("boardId") Long boardId,
-            @PathVariable("senderRequestId") Long senderRequestId
+            @PathVariable("id") Long id
     ) {
-        SenderRequestsDto senderRequestsDto = service.readSenderRequests(boardId, senderRequestId);
-        return senderRequestsDto;
+        return service.readSenderRequests(boardId, id);
     }
 
-    // 동행 요청 전체 조회
-    // GET /boards/{boardId}/senderRequests
-    @GetMapping
+    // 작성자 별 동행 요청 전체 조회
+    // GET /boards/sender-requests/{id}
+    @GetMapping("/boards/sender-requests/{id}")
     public List<SenderRequestsDto> readAll(
-            @PathVariable("boardId") Long boardId
+            @PathVariable("id") Long id
     ) {
-        List<SenderRequestsDto> list = service.readAllSenderRequests(boardId);
-        return service.readAllSenderRequests(boardId);
+        return service.readAllSenderRequests(id);
     }
     
-    // 동행 요청 수정
-    // PUT /boards/{boardId}/senderRequests/{senderRequestId}
-    @PutMapping("/{senderRequestId}")
+    // 동행 요청 수정 (메세지)
+    // PUT /boards/{boardId}/sender-requests/{id}
+    @PutMapping("/boards/{boardId}/sender-requests/{id}")
     public MessageResponseDto update(
-            @PathVariable("boardId") Long boardId,
-            @PathVariable("senderRequestId") Long senderRequestId,
             @RequestBody SenderRequestsDto dto
     ) {
-        service.updateSenderRequests(boardId, senderRequestId, dto);
-        MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청을 수정했습니다.");
+        service.updateSenderRequests(dto);
+        MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청 메세지를 수정했습니다.");
         return messageResponseDto;
     }
 
     // 동행 요청 삭제
-    // DELETE /boards/{boardId}/senderRequests/{senderRequestId}
-    @DeleteMapping("/{senderRequestId}")
+    // DELETE /boards/{boardId}/sender-requests/{id}
+    @DeleteMapping("/boards/{boardId}/sender-requests/{id}")
     public MessageResponseDto delete(
             @PathVariable("boardId") Long boardId,
-            @PathVariable("senderRequestId") Long senderRequestId
+            @PathVariable("id") Long id
     ) {
-        service.deleteSenderRequests(boardId, senderRequestId);
+        service.deleteSenderRequests(boardId, id);
         MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청을 삭제했습니다.");
         return messageResponseDto;
     }
