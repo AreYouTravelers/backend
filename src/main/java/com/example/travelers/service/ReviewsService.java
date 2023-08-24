@@ -80,13 +80,15 @@ public class ReviewsService {
 
     @Transactional
     public void updateReview(Long boardId, Long id, ReviewsDto dto) {
-        UsersEntity usersEntity = authService.getUser();
         if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
         Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
         if (optionalReviewsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
+        UsersEntity usersEntity = authService.getUser();
         ReviewsEntity entity = optionalReviewsEntity.get();
+        if (!entity.getSender().getId().equals(usersEntity.getId()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
         entity.setDestination(dto.getDestination());
         entity.setRating(dto.getRating());
         entity.setContent(dto.getContent());
@@ -98,8 +100,11 @@ public class ReviewsService {
         UsersEntity usersEntity = authService.getUser();
         if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        if (!repository.existsById(id))
+        Optional<ReviewsEntity> reviewsEntity = repository.findById(id);
+        if (reviewsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        if (!reviewsEntity.get().getSender().getId().equals(usersEntity.getId()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다.");
         repository.deleteById(id);
     }
 }

@@ -14,13 +14,12 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/boards/{boardId}/reviews")
 @RequiredArgsConstructor
 public class ReviewsController {
     private final ReviewsService service;
 
     // POST /boards/{boardId}/reviews
-    @PostMapping
+    @PostMapping("/boards/{boardId}/reviews")
     public MessageResponseDto create(
             @PathVariable("boardId") Long boardId,
             @RequestBody ReviewsDto dto
@@ -32,7 +31,7 @@ public class ReviewsController {
     }
 
     // GET /boards/{boardId}/reviews/{id}
-    @GetMapping("/{id}")
+    @GetMapping("/boards/{boardId}/reviews/{id}")
     public ReviewsDto read(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id
@@ -42,7 +41,7 @@ public class ReviewsController {
     }
 
     // GET /boards/{boardId}/reviews
-    @GetMapping
+    @GetMapping("/boards/{boardId}/reviews")
     public List<ReviewsDto> readAll(
             @PathVariable("boardId") Long boardId
     ) {
@@ -50,15 +49,15 @@ public class ReviewsController {
         return service.readReviewsAll(boardId);
     }
 
-    // GET /boards/{boardId}/reviews/myreview
-    @GetMapping("/myreview")
+    // GET /boards/reviews/myreview
+    @GetMapping("/boards/reviews/myreview")
     public Page<ReviewsDto> readAllBySender(
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
         return service.readReviewsAllBySender(pageNumber);
     }
 
     // PUT /boards/{boardId}/reviews/{id}
-    @PutMapping("/{id}")
+    @PutMapping("/boards/{boardId}/reviews/{id}")
     public MessageResponseDto update(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
@@ -70,7 +69,7 @@ public class ReviewsController {
     }
 
     // DELETE /boards/{boardId}/reviews/{id}
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/boards/{boardId}/reviews/{id}")
     public MessageResponseDto delete(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id
