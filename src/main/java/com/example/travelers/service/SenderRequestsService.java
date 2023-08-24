@@ -41,7 +41,7 @@ public class SenderRequestsService {
                 .message(dto.getMessage()) // 요청 메세지
                 .status(false) // 기본 값: 거절
                 .createdAt(LocalDateTime.now()) // 요청일
-                .rejectedAt(LocalDateTime.now()) // 거절일
+//                .rejectedAt(LocalDateTime.now()) // 거절일
                 .receiver(boardsEntity.get().getUser()) // receiver 기본 값: 거절
                 .board(boardsEntity.get()) // board_id
                 .build();
