@@ -19,9 +19,10 @@ public class SenderRequestsController {
     // POST /boards/{boardId}/sender-requests
     @PostMapping("/boards/{boardId}/sender-requests")
     public MessageResponseDto create(
+            @PathVariable("boardId") Long boardId,
             @RequestBody SenderRequestsDto dto
     ) {
-        service.createSenderRequests(dto);
+        service.createSenderRequests(boardId, dto);
         MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청을 생성했습니다.");
         return messageResponseDto;
     }
@@ -49,9 +50,11 @@ public class SenderRequestsController {
     // PUT /boards/{boardId}/sender-requests/{id}
     @PutMapping("/boards/{boardId}/sender-requests/{id}")
     public MessageResponseDto update(
+            @PathVariable("boardId") Long boardId,
+            @PathVariable("id") Long id,
             @RequestBody SenderRequestsDto dto
     ) {
-        service.updateSenderRequests(dto);
+        service.updateSenderRequests(boardId, id, dto);
         MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청 메세지를 수정했습니다.");
         return messageResponseDto;
     }
