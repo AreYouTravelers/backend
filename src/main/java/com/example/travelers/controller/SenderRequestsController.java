@@ -1,7 +1,6 @@
 package com.example.travelers.controller;
 
 import com.example.travelers.dto.MessageResponseDto;
-import com.example.travelers.dto.ReceiverRequestsDto;
 import com.example.travelers.dto.SenderRequestsDto;
 import com.example.travelers.service.SenderRequestsService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @Slf4j // 로깅
 @RestController // JSON 응답, @Controller 의 역할을 하면서, 등록된 모든 메소드에 @ResponseBody 를 포함
-@RequestMapping("/boards/{boardId}/senderRequests") // 요청주소와 실제주소를 매핑하는 어노테이션
+@RequestMapping("/boards/{boardId}/sender-requests") // 요청주소와 실제주소를 매핑하는 어노테이션
 @RequiredArgsConstructor
 public class SenderRequestsController {
     private final SenderRequestsService service;
