@@ -33,6 +33,9 @@ public class CommentsEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @Column(name = "parent_comment_id")
+    private Long parentCommentId;
+
     @ManyToOne
     @JoinColumn(name = "board_id")
     private BoardsEntity board;

@@ -30,6 +30,15 @@ public class CommentsController {
         commentsDto.setBoardId(boardId);
         return ResponseEntity.ok(commentsService.createComment(commentsDto));
     }
+    //대댓글 작성
+    // POST /boards/{boardId}/comments/{parentCommentId}
+    @PostMapping("{parentCommentId}")
+    public ResponseEntity<CommentsDto> createSubComment(@PathVariable Long boardId, @PathVariable Long parentCommentId, @RequestBody CommentsDto commentsDto) {
+        commentsDto.setBoardId(boardId);
+        commentsDto.setParentCommentId(parentCommentId);
+        CommentsDto createdComment = commentsService.createComment(commentsDto);
+        return ResponseEntity.ok(createdComment);
+    }
 
     // 특정 게시글의 댓글 조회
     // GET /boards/{boardId}/comments
