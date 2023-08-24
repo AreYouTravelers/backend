@@ -45,6 +45,7 @@ public class JpaUserDetailsManager implements UserDetailsManager {
         createUser(CustomUserDetails.builder()
                 .username("admin")
                 .password(passwordEncoder.encode("123"))
+                .temperature(36.5)
                 .role("관리자")
                 .createdAt(LocalDateTime.now())
                 .build()
