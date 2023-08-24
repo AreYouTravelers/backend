@@ -28,11 +28,11 @@ public class SenderRequestsService {
     private final ReceiverRequestsService receiverRequestsService;
 
     // 동행 요청 생성
-    public void createSenderRequests(SenderRequestsDto dto) {
+    public void createSenderRequests(Long boardId, SenderRequestsDto dto) {
         UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
-        Optional<BoardsEntity> boardsEntity = boardsRepository.findById(dto.getBoardId());
+        Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
         if (boardsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.");
 
@@ -63,7 +63,7 @@ public class SenderRequestsService {
         // 동행 요청시 receiver 테이블 생성
         ReceiverRequestsDto newReceiverRequestsDto = new ReceiverRequestsDto();
         newReceiverRequestsDto.setStatus(false); // 기본 값: 거절
-        newReceiverRequestsDto.setBoardId(dto.getBoardId());
+        newReceiverRequestsDto.setBoardId(boardId);
         receiverRequestsService.createReceiverRequests(newReceiverRequestsDto);
     }
 
@@ -102,19 +102,15 @@ public class SenderRequestsService {
     }
 
     // 동행 요청 수정 (메세지)
-    public void updateSenderRequests(SenderRequestsDto dto) {
+    public void updateSenderRequests(Long boardId, Long id, SenderRequestsDto dto) {
         UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
-        if (!boardsRepository.existsById(dto.getBoardId()))
+        if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 게시글이 존재하지 않습니다.");
 
-        if (dto.getId() == null) {
-            throw new IllegalArgumentException("동행 요청 ID가 없습니다.");
-        }
-
         // id에 해당하는 동행 요청이 존재하지 않을 경우 예외 처리
-        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findById(dto.getId());
+        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findById(id);
         if (senderRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 동행 요청이 존재하지 않습니다");
 
