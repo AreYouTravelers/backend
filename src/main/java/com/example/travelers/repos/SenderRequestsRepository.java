@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface SenderRequestsRepository extends JpaRepository<SenderRequestsEntity, Long> {
-    List<SenderRequestsEntity> findAllByBoardId(Long id);
+    List<SenderRequestsEntity> findAllBySenderId(Long id);
 }
