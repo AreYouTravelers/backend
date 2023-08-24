@@ -1,5 +1,6 @@
 package com.example.travelers.controller;
 
+import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.service.ReceiverRequestsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
