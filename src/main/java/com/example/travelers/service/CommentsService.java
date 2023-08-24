@@ -43,6 +43,7 @@ public class CommentsService {
 
         CommentsEntity commentEntity = CommentsEntity.builder()
                 .content(commentsDto.getContent())
+                .parentCommentId(commentsDto.getParentCommentId())
                 .status(true)
                 .createdAt(LocalDateTime.now())
                 .board(board)
