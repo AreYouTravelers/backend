@@ -20,7 +20,7 @@ public class ReviewsEntity {
     private String destination;
 
     @Column
-    private Integer rating;
+    private Double rating;
 
     @Column(columnDefinition = "TEXT")
     private String content;

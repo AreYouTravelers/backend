@@ -12,7 +12,7 @@ import lombok.*;
 public class ReviewsDto {
     private Long id;
     private String destination;
-    private Integer rating;
+    private Double rating;
     private String content;
     private String senderUsername;
 
