@@ -7,6 +7,7 @@ import com.example.travelers.entity.SenderRequestsEntity;
 import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.repos.BoardsRepository;
 import com.example.travelers.repos.ReceiverRequestsRepository;
+import com.example.travelers.repos.SenderRequestsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ReceiverRequestsService {
     private final ReceiverRequestsRepository receiverRequestsRepository;
+    private final SenderRequestsRepository senderRequestsRepository;
     private final BoardsRepository boardsRepository;
     private final AuthService authService;
 
@@ -38,10 +40,41 @@ public class ReceiverRequestsService {
                 .message(dto.getMessage()) // 요청 받은 메세지
                 .status(false) // 기본 값: 거절
                 .createdAt(LocalDateTime.now()) // 요청일
-                .rejectedAt(LocalDateTime.now()) // 거절일
+//                .rejectedAt(LocalDateTime.now()) // 거절일
                 .sender(boardsEntity.get().getUser()) // sender 기본 값: 거절
                 .board(boardsEntity.get()) // board_id
                 .build();
         receiverRequestsRepository.save(newReceiverRequests);
+    }
+
+    public void updateReceiverRequests(Long boardId, Long id, ReceiverRequestsDto dto) {
+        UsersEntity usersEntity = authService.getUser();
+
+        // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
+        Optional<BoardsEntity> boardsEntity = boardsRepository.findById(dto.getBoardId());
+        if (boardsEntity.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.");
+
+        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findById(id);
+        Optional<ReceiverRequestsEntity> receiverRequestsEntity = receiverRequestsRepository.findById(id);
+        if (senderRequestsEntity.isEmpty() && receiverRequestsEntity.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 동행 요청이 존재하지 않습니다");
+
+        SenderRequestsEntity sender = senderRequestsEntity.get();
+        ReceiverRequestsEntity receiver = receiverRequestsEntity.get();
+
+        if (dto.getStatus().equals(true)) { // Receiver가 요청을 수락한다면
+            sender.setStatus(true);
+            receiver.setStatus(true);
+            senderRequestsRepository.save(sender);
+            receiverRequestsRepository.save(receiver);
+        } else { // Receiver가 요청을 거절한다면
+            sender.setStatus(true);
+            sender.setRejectedAt(LocalDateTime.now());
+            receiver.setStatus(false);
+            receiver.setRejectedAt(LocalDateTime.now());
+            senderRequestsRepository.save(sender);
+            receiverRequestsRepository.save(receiver);
+        }
     }
 }
