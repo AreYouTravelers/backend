@@ -1,6 +1,7 @@
 package com.example.travelers.service;
 
 import com.example.travelers.dto.ReceiverRequestsDto;
+import com.example.travelers.dto.SenderRequestsDto;
 import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.entity.ReceiverRequestsEntity;
 import com.example.travelers.entity.SenderRequestsEntity;
@@ -15,6 +16,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -27,42 +30,63 @@ public class ReceiverRequestsService {
     private final AuthService authService;
 
     // 동행 요청 응답 생성
-    public void createReceiverRequests(ReceiverRequestsDto dto) {
+    public void createReceiverRequests(Long boardId, ReceiverRequestsDto dto) {
         UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
-        Optional<BoardsEntity> boardsEntity = boardsRepository.findById(dto.getBoardId());
+        Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
         if (boardsEntity.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청받은 게시글이 존재하지 않습니다.");
 
+        // repository 저장
         ReceiverRequestsEntity newReceiverRequests = ReceiverRequestsEntity.builder()
                 .receiver(usersEntity) // receiver_id
                 .message(dto.getMessage()) // 요청 받은 메세지
                 .status(false) // 기본 값: 거절
                 .createdAt(LocalDateTime.now()) // 요청일
-//                .rejectedAt(LocalDateTime.now()) // 거절일
                 .sender(boardsEntity.get().getUser()) // sender 기본 값: 거절
                 .board(boardsEntity.get()) // board_id
                 .build();
         receiverRequestsRepository.save(newReceiverRequests);
     }
 
+    // 동행 요청 응답 전체 조회
+    public List<SenderRequestsDto> readAllReceiverRequests(Long boardId) {
+        UsersEntity usersEntity = authService.getUser();
+
+        // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
+        if (!boardsRepository.existsById(boardId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "조회할 게시글이 존재하지 않습니다.");
+
+        List<SenderRequestsDto> senderRequestsDtoList = new ArrayList<>();
+        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllByBoardId(boardId);
+
+        for (SenderRequestsEntity entity : senderRequestsEntityList)
+            senderRequestsDtoList.add(SenderRequestsDto.fromEntity(entity));
+
+        return senderRequestsDtoList;
+    }
+
+    // 동행 요청 응답 수정 (status)
     public void updateReceiverRequests(Long boardId, Long id, ReceiverRequestsDto dto) {
         UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
-        Optional<BoardsEntity> boardsEntity = boardsRepository.findById(dto.getBoardId());
+        Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
         if (boardsEntity.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 게시글이 존재하지 않습니다.");
 
-        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findById(id);
+        // id에 해당하는 동행 요청이 존재하지 않을 경우 예외 처리
         Optional<ReceiverRequestsEntity> receiverRequestsEntity = receiverRequestsRepository.findById(id);
-        if (senderRequestsEntity.isEmpty() && receiverRequestsEntity.isEmpty())
+        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findById(receiverRequestsEntity.get().getSender().getId());
+        if (senderRequestsEntity.isEmpty() || receiverRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 동행 요청이 존재하지 않습니다");
 
+        // Optional에서 Entity 받아오기
         SenderRequestsEntity sender = senderRequestsEntity.get();
         ReceiverRequestsEntity receiver = receiverRequestsEntity.get();
 
+        // Receiver 응답(수락 or 거절) 시 Sender 상태 변경
         if (dto.getStatus().equals(true)) { // Receiver가 요청을 수락한다면
             sender.setStatus(true);
             receiver.setStatus(true);
