@@ -3,9 +3,11 @@ package com.example.travelers.service;
 import com.example.travelers.dto.ReceiverRequestsDto;
 import com.example.travelers.dto.SenderRequestsDto;
 import com.example.travelers.entity.BoardsEntity;
+import com.example.travelers.entity.ReceiverRequestsEntity;
 import com.example.travelers.entity.SenderRequestsEntity;
 import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.repos.BoardsRepository;
+import com.example.travelers.repos.ReceiverRequestsRepository;
 import com.example.travelers.repos.SenderRequestsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class SenderRequestsService {
     private final SenderRequestsRepository senderRequestsRepository;
+    private final ReceiverRequestsRepository receiverRequestsRepository;
     private final BoardsRepository boardsRepository;
     private final AuthService authService;
     private final ReceiverRequestsService receiverRequestsService;
@@ -48,10 +51,15 @@ public class SenderRequestsService {
         senderRequestsRepository.save(newSenderRequests);
 
         // 동행 요청시 receiver 테이블 생성
-        ReceiverRequestsDto newReceiverRequestsDto = new ReceiverRequestsDto();
-        newReceiverRequestsDto.setStatus(false); // 기본 값: 거절
-        newReceiverRequestsDto.setBoardId(boardId);
-        receiverRequestsService.createReceiverRequests(boardId, newReceiverRequestsDto);
+        // repository 저장
+        ReceiverRequestsEntity newReceiverRequests = ReceiverRequestsEntity.builder()
+                .receiver(boardsEntity.get().getUser()) // receiver_id
+                .status(false) // 기본 값: 거절
+                .createdAt(LocalDateTime.now()) // 요청일
+                .sender(usersEntity) // sender 기본 값: 거절
+                .board(boardsEntity.get()) // board_id
+                .build();
+        receiverRequestsRepository.save(newReceiverRequests);
     }
 
     // 동행 요청 단일 조회

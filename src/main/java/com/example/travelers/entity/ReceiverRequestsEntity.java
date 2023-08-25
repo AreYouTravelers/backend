@@ -18,9 +18,6 @@ public class ReceiverRequestsEntity {
     private Long id; // 동행 모집 ID
 
     @Column
-    private String message; // 받은 메세지
-
-    @Column
     private Boolean status;
 
     @Column(name = "created_at")
