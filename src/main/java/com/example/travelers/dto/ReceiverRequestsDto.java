@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ReceiverRequestsDto {
     private Long id;
-    private String message;
     private Boolean status;
     private LocalDateTime createdAt;
     private LocalDateTime rejectedAt;
@@ -26,7 +25,6 @@ public class ReceiverRequestsDto {
     public static ReceiverRequestsDto fromEntity(ReceiverRequestsEntity entity) {
         ReceiverRequestsDto dto = new ReceiverRequestsDto();
         dto.setId(entity.getId());
-        dto.setMessage(entity.getMessage()); // 받은 메세지
         dto.setStatus(entity.getStatus()); // 응답: 1수락 0거절
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setRejectedAt(entity.getRejectedAt());
