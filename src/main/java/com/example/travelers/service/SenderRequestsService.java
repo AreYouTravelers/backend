@@ -34,7 +34,7 @@ public class SenderRequestsService {
         // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
         Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
         if (boardsEntity.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "게시글이 존재하지 않습니다.");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
 
         // repository 저장
         SenderRequestsEntity newSenderRequests = SenderRequestsEntity.builder()
@@ -47,24 +47,11 @@ public class SenderRequestsService {
                 .build();
         senderRequestsRepository.save(newSenderRequests);
 
-        /*
-        ↓ 밑에처럼도 사용 가능
-        senderRequestsRepository.save(SenderRequestsEntity.builder()
-                .sender(usersEntity) // sender_id
-                .message(dto.getMessage()) // 요청 메세지
-                .status(false) // 기본 값: 거절
-                .createdAt(LocalDateTime.now()) // 요청일
-                .receiver(boardsEntity.get().getUser()) // receiver 기본 값: 거절
-                .board(boardsEntity.get()) // board_id
-                .build()
-        );
-        */
-
         // 동행 요청시 receiver 테이블 생성
         ReceiverRequestsDto newReceiverRequestsDto = new ReceiverRequestsDto();
         newReceiverRequestsDto.setStatus(false); // 기본 값: 거절
         newReceiverRequestsDto.setBoardId(boardId);
-        receiverRequestsService.createReceiverRequests(newReceiverRequestsDto);
+        receiverRequestsService.createReceiverRequests(boardId, newReceiverRequestsDto);
     }
 
     // 동행 요청 단일 조회
