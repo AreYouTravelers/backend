@@ -70,8 +70,9 @@ public class SenderRequestsService {
         if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "조회할 게시글이 존재하지 않습니다.");
 
-        // id에 해당하는 동행 요청이 존재하지 않을 경우 예외 처리
-        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findById(id);
+
+        // boardId, SenderId가 모두 존재할 때만 조회
+        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndId(boardId, id);
         if (senderRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "조회할 동행 요청이 존재하지 않습니다");
 
@@ -104,8 +105,8 @@ public class SenderRequestsService {
         if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 게시글이 존재하지 않습니다.");
 
-        // id에 해당하는 동행 요청이 존재하지 않을 경우 예외 처리
-        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findById(id);
+        // boardId, SenderId가 모두 존재할 때만 조회
+        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndId(boardId, id);
         if (senderRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 동행 요청이 존재하지 않습니다");
 
