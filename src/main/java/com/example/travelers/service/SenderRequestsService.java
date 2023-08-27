@@ -34,6 +34,11 @@ public class SenderRequestsService {
     public void createSenderRequests(Long boardId, SenderRequestsDto dto) {
         UsersEntity usersEntity = authService.getUser();
 
+        // 게시글 동행 요청 중복 방지
+        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndSenderId(boardId, usersEntity.getId());
+        if (senderRequestsEntity.isPresent())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "이미 동행 요청을 했습니다.");
+
         // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
         Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
         if (boardsEntity.isEmpty())
