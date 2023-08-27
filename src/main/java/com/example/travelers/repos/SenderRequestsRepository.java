@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface SenderRequestsRepository extends JpaRepository<SenderRequestsEntity, Long> {
+    Optional<SenderRequestsEntity> findByBoardIdAndId(Long boardId, Long id);
     List<SenderRequestsEntity> findAllBySenderId(Long id);
     List<SenderRequestsEntity> findAllByBoardId(Long boardId);
     Optional<SenderRequestsEntity> findByBoardIdAndSenderId(Long boardId, Long id);
