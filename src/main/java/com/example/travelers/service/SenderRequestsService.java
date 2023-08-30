@@ -111,16 +111,18 @@ public class SenderRequestsService {
 
         // boardId, SenderId가 모두 존재할 때만 조회
         Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndId(boardId, id);
-
         if (senderRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 동행 요청이 존재하지 않습니다");
 
-        Long senderId = senderRequestsEntity.get().getReceiver().getId();
-
-        Optional<ReceiverRequestsEntity> receiverRequestsEntity = receiverRequestsRepository.findByBoardIdAndId(boardId, senderId);
-
+        // recevierEntity 받아오기
+        Optional<ReceiverRequestsEntity> receiverRequestsEntity =
+                receiverRequestsRepository.findByBoardIdAndId(
+                        boardId,
+                        senderRequestsEntity.get().getReceiver().getId());
+        // Optional에서 Entity 받아오기
         ReceiverRequestsEntity receiver = receiverRequestsEntity.get();
-        // Receiver status가 0일 때만 수정 가능
+
+        // Receiver status가 0일 때만(응답하지 않았을 때) 수정 가능
         if (receiver.getStatus())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "응답된 요청에는 수정이 불가능합니다.");
 
@@ -138,19 +140,20 @@ public class SenderRequestsService {
         if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 게시글이 존재하지 않습니다.");
 
-        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndId(boardId, id);
-
         // repository에 존재하지 않을 경우 예외 처리
-        if (senderRequestsEntity.isEmpty()) {
+        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndId(boardId, id);
+        if (senderRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 동행 요청이 존재하지 않습니다");
-        }
 
-        Long senderId = senderRequestsEntity.get().getReceiver().getId();
-
-        Optional<ReceiverRequestsEntity> receiverRequestsEntity = receiverRequestsRepository.findByBoardIdAndId(boardId, senderId);
+        // recevierEntity 받아오기
+        Optional<ReceiverRequestsEntity> receiverRequestsEntity =
+                receiverRequestsRepository.findByBoardIdAndId(
+                        boardId,
+                        senderRequestsEntity.get().getReceiver().getId());
 
         // Optional에서 Entity 받아오기
         ReceiverRequestsEntity receiver = receiverRequestsEntity.get();
+
         // Receiver status가 0일 때만 삭제 가능
         if (receiver.getStatus())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "응답된 요청에는 삭제가 불가능합니다.");
