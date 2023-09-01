@@ -39,6 +39,12 @@ public class BoardsEntity {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
+
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UsersEntity user;
