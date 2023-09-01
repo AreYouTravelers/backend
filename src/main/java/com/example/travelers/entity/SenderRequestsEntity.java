@@ -29,6 +29,9 @@ public class SenderRequestsEntity {
     @Column(name = "rejected_at")
     private LocalDateTime rejectedAt;
 
+    @Column(name = "review_possible")
+    private Boolean reviewPossible;
+
     @ManyToOne
     @JoinColumn(name = "sender_id")
     private UsersEntity sender;
