@@ -17,6 +17,8 @@ public class BoardsMappingImpl implements BoardsMapping {
     private String content;
     private Integer people;
     private String status;
+    private LocalDate startDate;
+    private LocalDate endDate;
     private String username;
     private String mbti;
     private Integer age;
@@ -57,6 +59,12 @@ public class BoardsMappingImpl implements BoardsMapping {
         if (boards.getStatus() == true) return "모집완료";
         else return "모집중";
     }
+
+    @Override
+    public LocalDate getStartDate() { return boards.getStartDate(); }
+
+    @Override
+    public LocalDate getEndDate() { return boards.getEndDate(); }
 
     @Override
     public LocalDateTime getCreatedAt() {

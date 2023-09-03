@@ -1,10 +1,12 @@
 package com.example.travelers.dto;
 
+import com.example.travelers.config.LocalDateSerializer;
+import com.example.travelers.config.LocalDateTimeSerializer;
 import com.example.travelers.entity.BoardsEntity;
-import com.example.travelers.entity.ReceiverRequestsEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import lombok.*;
 
@@ -32,12 +34,18 @@ public class BoardDto implements Serializable {
     private String status;
     private Long views;
 
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate startDate;
+
+    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    private LocalDate endDate;
+
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
 
     private List<ReceiverRequestsDto> receiverRequestsList;
     private List<SenderRequestsDto> senderRequestsList;
@@ -52,11 +60,11 @@ public class BoardDto implements Serializable {
         dto.setPeople(entity.getPeople());
         if (entity.getStatus() == true) dto.setStatus("모집완료");
         else dto.setStatus("모집중");
+        dto.setStartDate(entity.getStartDate());
+        dto.setEndDate(entity.getEndDate());
         dto.setUsername(entity.getUser().getUsername());
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setDeletedAt(entity.getDeletedAt());
-        dto.setStartDate(entity.getStartDate());
-        dto.setEndDate(entity.getEndDate());
         dto.setReceiverRequestsList(ReceiverRequestsDto.dtoList(entity.getReceiverRequests()));
         dto.setSenderRequestsList(SenderRequestsDto.dtoList(entity.getSenderRequests()));
         return dto;
