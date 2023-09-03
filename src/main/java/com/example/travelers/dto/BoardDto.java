@@ -36,6 +36,8 @@ public class BoardDto implements Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
 
     private List<ReceiverRequestsDto> receiverRequestsList;
     private List<SenderRequestsDto> senderRequestsList;
@@ -53,6 +55,8 @@ public class BoardDto implements Serializable {
         dto.setUsername(entity.getUser().getUsername());
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setDeletedAt(entity.getDeletedAt());
+        dto.setStartDate(entity.getStartDate());
+        dto.setEndDate(entity.getEndDate());
         dto.setReceiverRequestsList(ReceiverRequestsDto.dtoList(entity.getReceiverRequests()));
         dto.setSenderRequestsList(SenderRequestsDto.dtoList(entity.getSenderRequests()));
         return dto;
