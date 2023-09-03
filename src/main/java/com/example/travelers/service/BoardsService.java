@@ -53,6 +53,8 @@ public class BoardsService {
                     .content(dto.getContent())
                     .people(dto.getPeople())
                     .status(false)
+                    .startDate(dto.getStartDate())
+                    .endDate(dto.getEndDate())
                     .createdAt(LocalDateTime.now()).build();
             BoardsEntity savedBoard = boardsRepository.save(newBoard);
             dto.setId(savedBoard.getId());
@@ -156,6 +158,8 @@ public class BoardsService {
                 boardsEntity.setTitle(dto.getTitle());
                 boardsEntity.setContent(dto.getContent());
                 boardsEntity.setPeople(dto.getPeople());
+                boardsEntity.setStartDate(dto.getStartDate());
+                boardsEntity.setEndDate(dto.getEndDate());
                 boardsEntity.setCreatedAt(LocalDateTime.now());
                 boardsRepository.save(boardsEntity);
                 return new MessageResponseDto("게시물을 업데이트했습니다.");

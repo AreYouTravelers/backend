@@ -46,10 +46,10 @@ public class BoardsEntity {
     private LocalDateTime deletedAt;
 
     @Column(name = "start_date")
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @Column(name = "end_date")
-    private LocalDateTime endDate;
+    private LocalDate endDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
