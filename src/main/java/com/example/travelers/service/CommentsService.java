@@ -31,8 +31,14 @@ public class CommentsService {
         this.authService = authService;
     }
 
-    public boolean isCommentRelatedToBoard(Long boardId, Long commentId) {
-        return commentsRepository.existsByIdAndBoardId(commentId, boardId);
+    public boolean isCommentExists(Long commentId) {
+        return commentsRepository.existsById(commentId);
+    }
+
+    private void ensureCommentRelatedToBoard(Long boardId, Long commentId) {
+        if (!commentsRepository.existsByIdAndBoardId(commentId, boardId)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "댓글이 해당 게시글과 연관되어 있지 않습니다.");
+        }
     }
 
     public CommentsDto createComment(CommentsDto commentsDto) {
@@ -67,41 +73,43 @@ public class CommentsService {
                 .collect(Collectors.toList());
     }
 
-    public CommentsDto getComment(Long id) {
-        Optional<CommentsEntity> commentEntity = Optional.ofNullable(commentsRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다.")));
-
-        return CommentsDto.fromEntity(commentEntity.get());
+    public CommentsDto getComment(Long boardId, Long commentId) {
+        BoardsEntity board = boardsRepository.findById(boardId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "없는 게시글입니다."));
+        CommentsEntity commentEntity = commentsRepository.findByIdAndBoard(commentId, board)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다."));
+        return CommentsDto.fromEntity(commentEntity);
     }
 
-    public CommentsDto updateComment(Long id, CommentsDto commentsDto) {
+    public CommentsDto updateComment(Long boardId, Long commentId, CommentsDto commentsDto) {
+        BoardsEntity board = boardsRepository.findById(boardId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "없는 게시글입니다."));
+        CommentsEntity commentEntity = commentsRepository.findByIdAndBoard(commentId, board)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다."));
+
         UsersEntity currentUser = authService.getUser();
-
-        Optional<CommentsEntity> commentEntity = Optional.ofNullable(commentsRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다.")));
-
-        if (!commentEntity.get().getUser().getId().equals(currentUser.getId())) {
+        if (!commentEntity.getUser().getId().equals(currentUser.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 댓글이 아닙니다.");
         }
 
-        commentEntity.get().setContent(commentsDto.getContent());
-        CommentsEntity updatedComment = commentsRepository.save(commentEntity.get());
+        commentEntity.setContent(commentsDto.getContent());
+        CommentsEntity updatedComment = commentsRepository.save(commentEntity);
         return CommentsDto.fromEntity(updatedComment);
     }
 
-    public MessageResponseDto deleteComment(Long id) {
-        UsersEntity currentUser = authService.getUser();
-
-        CommentsEntity commentEntity = commentsRepository.findById(id)
+    public MessageResponseDto deleteComment(Long boardId, Long commentId) {
+        BoardsEntity board = boardsRepository.findById(boardId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "없는 게시글입니다."));
+        CommentsEntity commentEntity = commentsRepository.findByIdAndBoard(commentId, board)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다."));
 
+        UsersEntity currentUser = authService.getUser();
         if (!commentEntity.getUser().getId().equals(currentUser.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 댓글이 아닙니다.");
         }
 
         commentEntity.setStatus(false);
         commentsRepository.save(commentEntity);
-//        commentEntity.setDeletedAt(LocalDateTime.now());
         commentsRepository.delete(commentEntity);
         return new MessageResponseDto("댓글을 삭제했습니다.");
     }

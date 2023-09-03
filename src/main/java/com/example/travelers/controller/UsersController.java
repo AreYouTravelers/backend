@@ -36,7 +36,7 @@ public class UsersController {
     }
 
     // 회원가입 endpoint
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<MessageResponseDto> register(
             @RequestBody RegisterRequestDto registerRequestDto
     ) {
@@ -53,7 +53,7 @@ public class UsersController {
     }
 
     // 프로필 이미지 업데이트 endpoint
-    @PutMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PatchMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MessageResponseDto> userUpdateImage(
             @RequestParam(value = "image") MultipartFile multipartFile
     ) {
@@ -64,7 +64,7 @@ public class UsersController {
     }
 
     // 사용자 정보 Password 수정 endpoint
-    @PutMapping("/password")
+    @PatchMapping("/password")
     public ResponseEntity<MessageResponseDto> updatePassword(
             @RequestBody UpdatePasswordDto updatePasswordDto
     ) {
@@ -73,7 +73,7 @@ public class UsersController {
     }
 
     // 사용자 정보 email 수정 endpoint
-    @PutMapping("/email")
+    @PatchMapping("/email")
     public ResponseEntity<MessageResponseDto> updateEmail(
             @Valid @RequestBody UpdateEmailDto updateEmailDto
     ) {
@@ -82,7 +82,7 @@ public class UsersController {
     }
 
     // 사용자 정보 mbti 수정 endpoint
-    @PutMapping("/mbti")
+    @PatchMapping("/mbti")
     public ResponseEntity<MessageResponseDto> updateMbti(
             @Valid @RequestBody UpdateMbtiDto updateMbtiDto
     ) {

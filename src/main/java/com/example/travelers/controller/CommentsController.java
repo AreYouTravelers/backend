@@ -22,7 +22,6 @@ public class CommentsController {
     public CommentsController(CommentsService commentsService) {
         this.commentsService = commentsService;
     }
-
     // 댓글 작성
     // POST /boards/{boardId}/comments
     @PostMapping
@@ -51,30 +50,21 @@ public class CommentsController {
     // GET /boards/{boardId}/comments/{commentId}
     @GetMapping("{commentId}")
     public ResponseEntity<CommentsDto> getComment(@PathVariable Long boardId, @PathVariable Long commentId) {
-        if (!commentsService.isCommentRelatedToBoard(boardId, commentId)) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(commentsService.getComment(commentId));
+        return ResponseEntity.ok(commentsService.getComment(boardId, commentId));
     }
 
     // 댓글 수정
     // PUT /boards/{boardId}/comments/{commentId}
     @PutMapping("{commentId}")
     public ResponseEntity<CommentsDto> updateComment(@PathVariable Long boardId, @PathVariable Long commentId, @RequestBody CommentsDto commentsDto) {
-        if (!commentsService.isCommentRelatedToBoard(boardId, commentId)) {
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(commentsService.updateComment(commentId, commentsDto));
+        return ResponseEntity.ok(commentsService.updateComment(boardId, commentId, commentsDto));
     }
 
     // 댓글 삭제
     // DELETE /boards/{boardId}/comments/{commentId}
     @DeleteMapping("{commentId}")
     public ResponseEntity<MessageResponseDto> deleteComment(@PathVariable Long boardId, @PathVariable Long commentId) {
-        if (!commentsService.isCommentRelatedToBoard(boardId, commentId)) {
-            return ResponseEntity.badRequest().build();
-        }
-        MessageResponseDto responseDto = commentsService.deleteComment(commentId);
+        MessageResponseDto responseDto = commentsService.deleteComment(boardId, commentId);
         return ResponseEntity.ok(responseDto);
     }
 }
