@@ -7,6 +7,7 @@ import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.repos.BoardCategoriesRepository;
 import com.example.travelers.repos.UsersRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,14 +28,12 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class BoardCategoriesService {
+    @Autowired
     private final BoardCategoriesRepository boardCategoriesRepository;
-    private final UsersRepository usersRepository;
-    private final PasswordEncoder passwordEncoder;
     private final AuthService authService;
-    private final PlatformTransactionManager transactionManager;
 
     @Transactional // 메서드가 실행될 때 자동으로 트랜잭션을 시작하고, 메서드가 끝날 때 해당 트랜잭션을 커밋하거나 롤백 -> 데이터 일관성, 안정성 보장
-    public MessageResponseDto createBoardCategory(BoardCategoryDto dto) {
+    public BoardCategoryDto createBoardCategory(BoardCategoryDto dto) {
         UsersEntity userEntity = authService.getUser();
         String userRole = userEntity.getRole();
         if (!userRole.equals("관리자"))
@@ -42,8 +41,10 @@ public class BoardCategoriesService {
 
         BoardCategoriesEntity newBoardCategory = BoardCategoriesEntity.builder()
                 .category(dto.getCategory()).build();
-        boardCategoriesRepository.save(newBoardCategory);
-        return new MessageResponseDto("카테고리를 생성했습니다.");
+
+        BoardCategoriesEntity savedBoardCategory = boardCategoriesRepository.save(newBoardCategory);
+        dto.setId(savedBoardCategory.getId());
+        return dto;
     }
 
     public BoardCategoryDto readBoardCategory(Long id) {
@@ -62,7 +63,7 @@ public class BoardCategoriesService {
     }
 
     @Transactional
-    public MessageResponseDto updateBoardCategory(Long id, BoardCategoryDto dto) {
+    public BoardCategoryDto updateBoardCategory(Long id, BoardCategoryDto dto) {
         UsersEntity userEntity = authService.getUser();
         String userRole = userEntity.getRole();
         if (!userRole.equals("관리자"))
@@ -72,8 +73,8 @@ public class BoardCategoriesService {
         if (boardCategory.isPresent()) {
             BoardCategoriesEntity boardCategoriesEntity = boardCategory.get();
             boardCategoriesEntity.setCategory(dto.getCategory());
-            boardCategoriesRepository.save(boardCategoriesEntity);
-            return new MessageResponseDto("카테고리를 업데이트했습니다.");
+            BoardCategoriesEntity savedBoardCategory = boardCategoriesRepository.save(boardCategoriesEntity);
+            return BoardCategoryDto.fromEntity(savedBoardCategory);
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found");
     }
 

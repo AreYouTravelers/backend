@@ -4,13 +4,14 @@ import com.example.travelers.entity.BoardCategoriesEntity;
 import com.example.travelers.entity.BoardsEntity;
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BoardCategoryDto {
+public class BoardCategoryDto implements Serializable {
     private Long id;
     private String category;
     private List<BoardDto> boardsList;

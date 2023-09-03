@@ -4,6 +4,8 @@ import com.example.travelers.dto.BoardCategoryDto;
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.service.BoardCategoriesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,16 +14,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/boards/categories")
 @RequiredArgsConstructor
 public class BoardCategoriesController {
+    @Autowired
     private final BoardCategoriesService boardCategoriesService;
 
     @PostMapping
-    public ResponseEntity<MessageResponseDto> create(
+    @CachePut(value = "boardCategories", key = "#dto.id")
+    public BoardCategoryDto create(
             @RequestBody BoardCategoryDto dto) {
-        MessageResponseDto responseDto = boardCategoriesService.createBoardCategory(dto);
-        return ResponseEntity.ok(responseDto);
+        return boardCategoriesService.createBoardCategory(dto);
     }
 
     @GetMapping("/{id}")
+    @Cacheable(value = "boardCategories", key = "#id")
     public BoardCategoryDto read(
             @PathVariable("id") Long id) {
         return boardCategoriesService.readBoardCategory(id);
@@ -34,14 +38,15 @@ public class BoardCategoriesController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MessageResponseDto> update(
+    @CachePut(value = "boardCategories", key = "#id")
+    public BoardCategoryDto update(
             @PathVariable("id") Long id,
             @RequestBody BoardCategoryDto dto) {
-        MessageResponseDto responseDto = boardCategoriesService.updateBoardCategory(id, dto);
-        return ResponseEntity.ok(responseDto);
+        return boardCategoriesService.updateBoardCategory(id, dto);
     }
 
     @DeleteMapping("/{id}")
+    @CacheEvict(value = "boardCategories", allEntries = true)
     public ResponseEntity<MessageResponseDto> delete(
             @PathVariable("id") Long id) {
         MessageResponseDto responseDto = boardCategoriesService.deleteBoardCategory(id);
