@@ -55,6 +55,7 @@ public class ReceiverRequestsService {
         Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
         if (boardsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 게시글이 존재하지 않습니다.");
+        BoardsEntity board = boardsEntity.get();
 
         // id에 해당하는 동행 요청이 존재하지 않을 경우 예외 처리
         Optional<ReceiverRequestsEntity> receiverRequestsEntity
@@ -75,8 +76,10 @@ public class ReceiverRequestsService {
         if (dto.getStatus().equals(true)) { // Receiver가 요청을 수락한다면
             sender.setStatus(true);
             receiver.setStatus(true);
+            board.setStatus(true);
             senderRequestsRepository.save(sender);
             receiverRequestsRepository.save(receiver);
+            boardsRepository.save(board);
         } else { // Receiver가 요청을 거절한다면
             sender.setStatus(true);
             sender.setRejectedAt(LocalDateTime.now());
