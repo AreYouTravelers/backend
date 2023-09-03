@@ -19,7 +19,7 @@ public class CountryEntity {
     private Long id;
 
     @Column
-    private String country;
+    private String name;
 
     @OneToMany(mappedBy = "country")
     private final List<BoardsEntity> boards = new ArrayList<>();
