@@ -1,4 +1,4 @@
-package com.example.travelers.dto;
+package com.example.travelers.config;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
