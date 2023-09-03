@@ -6,13 +6,19 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"id", "category", "username", "title", "content", "people", "createdAt"})
+@JsonPropertyOrder({"id", "country", "category", "title", "content", "people", "status", "username", "mbti", "age", "gender", "temperature", "createdAt"})
 public interface BoardsMapping {
     Long getId();
+    String getCountry();
     String getCategory();
-    String getUsername();
     String getTitle();
     String getContent();
     Integer getPeople();
+    String getStatus();
+    String getUsername();
+    String getMbti();
+    Integer getAge();
+    String getGender();
+    Double getTemperature();
     LocalDateTime getCreatedAt();
 }

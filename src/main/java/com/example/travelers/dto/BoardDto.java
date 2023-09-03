@@ -3,8 +3,13 @@ package com.example.travelers.dto;
 import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.entity.ReceiverRequestsEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import lombok.*;
 
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,29 +19,40 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BoardDto {
+public class BoardDto implements Serializable {
     private Long id;
+    private Long countryId;
     private Long categoryId;
+    private String country;
     private String category;
     private String username;
     private String title;
     private String content;
     private Integer people;
+    private String status;
+    private Long views;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
+
     private List<ReceiverRequestsDto> receiverRequestsList;
     private List<SenderRequestsDto> senderRequestsList;
 
     public static BoardDto fromEntity(BoardsEntity entity) {
         BoardDto dto = new BoardDto();
         dto.setId(entity.getId());
+        dto.setCountry(entity.getCountry().getName());
         dto.setCategory(entity.getBoardCategory().getCategory());
-        dto.setUsername(entity.getUser().getUsername());
         dto.setTitle(entity.getTitle());
         dto.setContent(entity.getContent());
         dto.setPeople(entity.getPeople());
+        if (entity.getStatus() == true) dto.setStatus("모집완료");
+        else dto.setStatus("모집중");
+        dto.setUsername(entity.getUser().getUsername());
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setDeletedAt(entity.getDeletedAt());
         dto.setStartDate(entity.getStartDate());
@@ -52,4 +68,5 @@ public class BoardDto {
         }
         return boardDtoList;
     }
+
 }

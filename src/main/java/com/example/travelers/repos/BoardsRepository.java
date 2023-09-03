@@ -11,8 +11,13 @@ import java.util.Optional;
 
 public interface BoardsRepository extends JpaRepository<BoardsEntity, Long> {
     Optional<BoardsEntity> findById(Long id);
+    List<BoardsEntity> findByUser_MbtiContaining(String mbtiCriteria);
+
+    Page<BoardsEntity> findAllByCountryIdAndBoardCategoryIdAndUser_MbtiContaining(Long countryId, Long categoryId, String mbtiCriteria, Pageable pageable);
+    Page<BoardsEntity> findAllByCountryIdAndBoardCategoryId(Long countryId, Long categoryId, Pageable pageable);
+
     Page<BoardsEntity> findAll(Pageable pageable);
     Page<BoardsEntity> findAllByUser(Optional<UsersEntity> usersEntity, Pageable pageable);
-    List<BoardsEntity> findByUser_MbtiContaining(String mbtiCriteria);
+
 
 }
