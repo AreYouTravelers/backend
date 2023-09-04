@@ -6,14 +6,15 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
-import java.time.Instant;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Component
@@ -21,13 +22,22 @@ public class JwtTokenUtils {
     private final Key signingKey;
     private final JwtParser jwtParser;
 
+    private final RedisTemplate<String, String> redisTemplate;
+
+    @Value("${jwt.token.access-expiration-time}")
+    private long accessExpirationTime;
+
+    @Value("${jwt.token.refresh-expiration-time}")
+    private long refreshExpirationTime;
+
     // 무효화된 토큰을 저장할 Set
     private final Set<String> invalidatedTokens = new HashSet<>();
 
     public JwtTokenUtils(
             @Value("${jwt.secret}")
-            String jwtSecret
-    ) {
+            String jwtSecret,
+            RedisTemplate<String, String> redisTemplate) {
+        this.redisTemplate = redisTemplate;
         // JWT 서명에 사용할 키를 생성
         this.signingKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
         // JWT 파서를 생성하여 서명 키로 설정
@@ -57,16 +67,42 @@ public class JwtTokenUtils {
     }
 
     // 주어진 사용자 정보를 바탕으로 JWT 를 문자열로 생성하는 메서드
-    public String generateToken(UserDetails userDetails) {
+    public String generateAccessToken(UserDetails userDetails) {
         // Claims : JWT 에 담기는 정보의 단위
-        Claims jwtClaims = Jwts.claims()
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(Date.from(Instant.now()))
-                .setExpiration(Date.from(Instant.now().plusSeconds(3600))); // 1시간
+        Claims jwtClaims = Jwts.claims().setSubject(userDetails.getUsername());
+        Date now = new Date();
+        Date expireDate = new Date(now.getTime() + accessExpirationTime);
+
         return Jwts.builder()
                 .setClaims(jwtClaims)
+                .setIssuedAt(now)
+                .setExpiration(expireDate)
                 .signWith(signingKey)
                 .compact();
+    }
+
+    // RefreshToken 생성하는 메서드 (redis 에 저장)
+    public String generateRefreshToken(UserDetails userDetails) {
+        Claims jwtClaims = Jwts.claims().setSubject(userDetails.getUsername());
+        Date now = new Date();
+        Date expireDate = new Date(now.getTime() + refreshExpirationTime);
+
+        String refreshToken = Jwts.builder()
+                .setClaims(jwtClaims)
+                .setIssuedAt(now)
+                .setExpiration(expireDate)
+                .signWith(signingKey)
+                .compact();
+
+        // redis 에 저장
+        redisTemplate.opsForValue().set(
+                userDetails.getUsername(),
+                refreshToken,
+                refreshExpirationTime,
+                TimeUnit.MILLISECONDS
+        );
+
+        return refreshToken;
     }
 
     // 로그아웃을 위해 토큰을 무효화하는 메서드

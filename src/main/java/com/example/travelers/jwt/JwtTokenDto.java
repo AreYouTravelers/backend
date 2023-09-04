@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class JwtTokenDto {
-    private String token; // JWT 토큰
+    private String accessToken; // Jwt Access Token
+    private String refreshToken; // Jwt Refresh Token
 }
