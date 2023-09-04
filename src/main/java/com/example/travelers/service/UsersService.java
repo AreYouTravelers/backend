@@ -46,8 +46,6 @@ public class UsersService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "올바른 Username 이 아닙니다");
         }
 
-        // TODO 삭제된 사용자 로그인 안되도록
-
         UserDetails userDetails = manager.loadUserByUsername(username);
 
         if (!passwordEncoder.matches(loginRequestDto.getPassword(), userDetails.getPassword())) {
@@ -55,7 +53,9 @@ public class UsersService {
         }
 
         JwtTokenDto tokenDto = new JwtTokenDto();
-        tokenDto.setToken(jwtTokenUtils.generateToken(userDetails));
+        tokenDto.setAccessToken(jwtTokenUtils.generateAccessToken(userDetails));
+        tokenDto.setRefreshToken(jwtTokenUtils.generateRefreshToken(userDetails));
+
         return tokenDto;
     }
 
