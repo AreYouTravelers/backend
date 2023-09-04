@@ -26,33 +26,33 @@ public class JpaUserDetailsManager implements UserDetailsManager {
     public JpaUserDetailsManager (UsersRepository usersRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = usersRepository;
         // 회원 Test
-        createUser(CustomUserDetails.builder()
-                .username("dohun")
-                .password(passwordEncoder.encode("1234"))
-                .profileImg("image.png")
-                .email("dohun@gmail.com")
-                .temperature(36.5)
-                .mbti("ESTJ")
-                .gender("남성")
-                .role("회원")
-                .firstName("김")
-                .lastName("도훈")
-                .birthDate(LocalDate.of(1999, 9, 6))
-                .createdAt(LocalDateTime.now())
-                .build()
-        );
-        // 관리자 Test
-        createUser(CustomUserDetails.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("123"))
-                .temperature(36.5)
-                .mbti("INFP")
-                .gender("여성")
-                .role("관리자")
-                .birthDate(LocalDate.of(1999, 7, 30))
-                .createdAt(LocalDateTime.now())
-                .build()
-        );
+//        createUser(CustomUserDetails.builder()
+//                .username("dohun")
+//                .password(passwordEncoder.encode("1234"))
+//                .profileImg("image.png")
+//                .email("dohun@gmail.com")
+//                .temperature(36.5)
+//                .mbti("ESTJ")
+//                .gender("남성")
+//                .role("회원")
+//                .firstName("김")
+//                .lastName("도훈")
+//                .birthDate(LocalDate.of(1999, 9, 6))
+//                .createdAt(LocalDateTime.now())
+//                .build()
+//        );
+//        // 관리자 Test
+//        createUser(CustomUserDetails.builder()
+//                .username("admin")
+//                .password(passwordEncoder.encode("123"))
+//                .temperature(36.5)
+//                .mbti("INFP")
+//                .gender("여성")
+//                .role("관리자")
+//                .birthDate(LocalDate.of(1999, 7, 30))
+//                .createdAt(LocalDateTime.now())
+//                .build()
+//        );
     }
 
     // 사용자 이름을 통해 사용자 정보를 불러옴
