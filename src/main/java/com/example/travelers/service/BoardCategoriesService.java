@@ -39,6 +39,9 @@ public class BoardCategoriesService {
         if (!userRole.equals("관리자"))
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "관리자만 사용 가능합니다.");
 
+        if (boardCategoriesRepository.findByCategory(dto.getCategory()).isPresent())
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미 카테고리가 존재합니다.");
+
         BoardCategoriesEntity newBoardCategory = BoardCategoriesEntity.builder()
                 .category(dto.getCategory()).build();
 
