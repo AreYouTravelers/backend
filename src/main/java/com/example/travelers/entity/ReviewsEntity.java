@@ -17,13 +17,14 @@ public class ReviewsEntity {
     private Long id;
 
     @Column
-    private String destination;
-
-    @Column
     private Double rating;
 
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private CountryEntity country;
 
     @ManyToOne
     @JoinColumn(name = "board_id")

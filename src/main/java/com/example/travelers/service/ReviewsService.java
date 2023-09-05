@@ -2,11 +2,9 @@ package com.example.travelers.service;
 
 import com.example.travelers.dto.BoardCategoryDto;
 import com.example.travelers.dto.ReviewsDto;
-import com.example.travelers.entity.BoardCategoriesEntity;
-import com.example.travelers.entity.BoardsEntity;
-import com.example.travelers.entity.ReviewsEntity;
-import com.example.travelers.entity.UsersEntity;
+import com.example.travelers.entity.*;
 import com.example.travelers.repos.BoardsRepository;
+import com.example.travelers.repos.CountryRepository;
 import com.example.travelers.repos.ReviewsRepository;
 import com.example.travelers.repos.UsersRepository;
 import lombok.RequiredArgsConstructor;
@@ -35,11 +33,11 @@ public class ReviewsService {
     public void createReview(Long boardId, ReviewsDto dto) {
         UsersEntity sender = authService.getUser();
         Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
-        UsersEntity receiver = boardsEntity.get().getUser();
         if (boardsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+        UsersEntity receiver = boardsEntity.get().getUser();
         repository.save(ReviewsEntity.builder()
-                .destination(dto.getDestination())
+                .country(boardsEntity.get().getCountry())
                 .rating(dto.getRating())
                 .content(dto.getContent())
                 .board(boardsEntity.get())
@@ -96,7 +94,6 @@ public class ReviewsService {
         if (!entity.getSender().getId().equals(usersEntity.getId()))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
 
-        entity.setDestination(dto.getDestination());
         entity.setRating(dto.getRating());
         entity.setContent(dto.getContent());
         repository.save(entity);
