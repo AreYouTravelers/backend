@@ -33,7 +33,7 @@ public class WebSecurityConfig {
                                         "/static/**",
                                         "/css/**",
                                         "/js/**",
-                                        "/assets/**",
+                                        "/images/**",
                                         "/users/login",
                                         "/users"
                                 )
