@@ -15,6 +15,7 @@ import com.example.travelers.repos.CountryRepository;
 import com.example.travelers.repos.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,9 @@ public class BoardsService {
     private final UsersRepository usersRepository;
     private final AuthService authService;
     private final RedisDao redisDao;
+
+    @Autowired
+    private MbtiFilter mbtiFilter;
 
     @Transactional
     public BoardDto createBoard(BoardDto dto) {
@@ -104,8 +108,12 @@ public class BoardsService {
         UsersEntity userEntity = authService.getUser();
         Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
         if (user.isPresent()) {
+            List<String> mbtiList = mbtiFilter.generateMbtiList(mbtiCriteria); // MBTI 리스트 생성
+
             Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
-            Page<BoardsEntity> boardsPage = boardsRepository.findAllByCountryIdAndBoardCategoryIdAndUser_MbtiContaining(countryId, categoryId, mbtiCriteria, pageable);
+
+            // 메서드 이름 및 매개변수 수정
+            Page<BoardsEntity> boardsPage = boardsRepository.findAllByCountryIdAndBoardCategoryIdAndUser_MbtiIn(countryId, categoryId, mbtiList, pageable);
 
             List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
                     .map(this::createBoardsMapping)
@@ -113,7 +121,6 @@ public class BoardsService {
             return new PageImpl<>(boardsMappings, pageable, boardsPage.getTotalElements());
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
-
     public Page<BoardsMapping> readBoardsAllByCountryAndCategory(Long countryId, Long categoryId, Integer pageNumber) {
         UsersEntity userEntity = authService.getUser();
         Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());

@@ -47,11 +47,12 @@ public class BoardsController {
     public Page<BoardsMapping> readAllByCountryAndCategoryAndMbti(
             @RequestParam(value = "country") Long countryId,
             @RequestParam(value = "category", defaultValue = "1") Long categoryId,
-            @RequestParam(value = "mbti") String mbtiCriteria,
+            @RequestParam(value = "mbti", required = false) String mbtiCriteria,
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
+
+        List<String> mbtiList = mbtiFilter.generateMbtiList(mbtiCriteria);
         return boardsService.readBoardsAllByCountryAndCategoryAndMbti(countryId, categoryId, mbtiCriteria, pageNumber);
     }
-
     @GetMapping("/myboard")
     public Page<BoardsMapping> readAllByUser(
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
