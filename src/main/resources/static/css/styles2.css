@@ -1,0 +1,34 @@
+/* common */
+body {overflow-x: hidden;}
+.href-none {color: inherit; text-decoration: none;}
+.href-none:hover {color: inherit;}
+.temp-3 {color: #3BD0FA;}
+
+/* header */
+.navbar-expand-lg .navbar-collapse a {font-weight: 700; font-size: 1.2rem;}
+.main-menu-icon {width: 40px; vertical-align: top; margin-right: 7px; margin-top: 3px; margin-bottom:2em;}
+.main-menu {display: inline-block; font-size: 1.2rem;}
+.main-banner {position: relative; width: 100%; padding-top: 7rem;}
+
+/* footer */
+.footer {margin-top: 7rem; padding-top: 4rem; padding-bottom: 3rem;}
+.footer img {margin-bottom: 3rem;}
+.footer p {font-weight: 300; font-size: 14px;}
+
+/* main */
+.board-item {min-height: 469px; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+.board-item-header {display: flex; justify-content: space-between; padding: 1.2em 1.2em 0 1.2em; font-size: 13px;}
+.board-item-header .min-num {margin-right: -2px;}
+.board-item-header .max-num {margin-left: -2px;}
+.board-item-bg {position: relative;}
+.board-item-bg .board-item-icon {position: absolute; right: 15px; bottom: 0; padding: 1px 9px 3px 6px; background-color: #3bd0fa; border-radius: 9px; color: #ffffff; font-size: 14px;}
+.board-item-bg .board-item-icon img {width: 18px;}
+.board-item-bg .board-item-img {overflow: hidden; height: 170px; border-radius: 17px;}
+.board-item-bg .board-item-img img {width: 100%;}
+.board-item-info {padding-bottom: 2rem; text-align: center;}
+.board-item-info .item-title {margin-bottom: 6px; font-weight: 700;}
+.board-item-info .user-name {margin-bottom: 0; font-size: 13px;}
+.board-item-info .user-profile {margin-bottom: 0; font-size: 13px;}
+.board-item-info .user-temp {margin-bottom: 14px; font-size: 13px;}
+.board-item-info .item-contents {min-height: 97px; margin: 0 25px; padding: 1.2rem; border-radius: 19px; font-size: 13px; box-shadow: 0px 0px 11px 3px #5c5c5c21; color: #606060;}
+

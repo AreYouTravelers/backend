@@ -101,6 +101,16 @@ public class SenderRequestsService {
         return senderRequestsDtoList;
     }
 
+    // 작성자 별 수락된 요청 '후기 작성하기' 전체 조회
+//    public List<SenderRequestsDto> readAllSenderRequestsReview() {
+//        UsersEntity usersEntity = authService.getUser();
+//
+//    }
+
+    // 작성자 별 수락된 요청 '후기 작성하기' 버튼 활성화 유무
+
+
+
     // 동행 요청 수정 (메세지)
     public void updateSenderRequests(Long boardId, Long id, SenderRequestsDto dto) {
         UsersEntity usersEntity = authService.getUser();
