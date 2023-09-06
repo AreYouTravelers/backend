@@ -1,7 +1,7 @@
 // 회원가입 페이지로 이동하는 함수
 function goToSignup() {
   // 페이지를 회원가입 페이지로 변경
-  document.location.href = "signup.html";
+  document.location.href = "signup";
 }
 
 // 회원가입 페이지로 이동하는 클릭 이벤트 처리

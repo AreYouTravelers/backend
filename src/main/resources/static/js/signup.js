@@ -1,7 +1,7 @@
 // 로그인 페이지로 이동하는 함수
 function goToLogin() {
   // 페이지를 로그인 페이지로 변경
-  document.location.href = "login.html";
+  document.location.href = "login";
 }
 
 // 로그인 페이지로 이동하는 클릭 이벤트 처리
