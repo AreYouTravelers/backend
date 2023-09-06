@@ -37,7 +37,8 @@ public class WebSecurityConfig {
                                         "/users/login",
                                         "/users",
                                         "/login",
-                                        "/signup"
+                                        "/signup",
+                                        "/accompany"
                                 )
                                 .permitAll() // 모든 사용자 허용
                                 .requestMatchers(

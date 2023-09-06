@@ -21,4 +21,9 @@ public class ViewController {
     public String signup() {
         return "signup";
     }
+
+    @GetMapping("/accompany")
+    public String accompany() {
+        return "accompany";
+    }
 }
