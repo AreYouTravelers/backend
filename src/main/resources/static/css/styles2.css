@@ -32,3 +32,12 @@ footer p {font-weight: 300; font-size: 14px;}
 .board-item-info .user-temp {margin-bottom: 14px; font-size: 13px;}
 .board-item-info .item-contents {min-height: 97px; margin: 0 25px; padding: 1.2rem; border-radius: 19px; font-size: 13px; box-shadow: 0px 0px 11px 3px #5c5c5c21; color: #606060;}
 
+/* accompany */
+.accompany .page-section {padding-top: 10rem;}
+.accompany form {margin-top: 1rem; margin-bottom: 2rem;}
+.accompany form button {padding-left: 1.2em; padding-right: 1.2em;}
+
+/* my page */
+.sub-nav {}
+
+/* received */
