@@ -26,4 +26,9 @@ public class ViewController {
     public String accompany() {
         return "accompany";
     }
+
+    @GetMapping("/request-received")
+    public String requestReceived() {
+        return "request-received";
+    }
 }
