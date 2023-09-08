@@ -20,7 +20,6 @@ public class SenderRequestsDto {
     private Boolean status;
     private LocalDateTime createdAt;
     private LocalDateTime rejectedAt;
-    private Boolean reviewPossible;
     private Boolean finalStatus;
     private Long receiverId;
     private Long boardId;
@@ -32,7 +31,6 @@ public class SenderRequestsDto {
         dto.setStatus(entity.getStatus()); // 요청: 1동의 0거절
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setRejectedAt(entity.getRejectedAt());
-        dto.setReviewPossible(entity.getReviewPossible());
         dto.setFinalStatus(entity.getFinalStatus());
         dto.setReceiverId(entity.getBoard().getUser().getId());
         dto.setBoardId(entity.getBoard().getId());
