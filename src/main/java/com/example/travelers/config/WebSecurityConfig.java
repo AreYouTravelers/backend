@@ -30,9 +30,8 @@ public class WebSecurityConfig {
                         authHttp -> authHttp
                                 // 인증을 필요로 하지 않는 공개 엔드포인트를 정의
                                 .requestMatchers(
-                                        HttpMethod.GET,
+//                                        HttpMethod.GET,
                                         "/",
-                                        "/static",
                                         "/static/**",
                                         "/templates/**",
                                         "/css/**",
