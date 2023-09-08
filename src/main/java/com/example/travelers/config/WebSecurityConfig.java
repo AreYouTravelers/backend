@@ -3,6 +3,7 @@ package com.example.travelers.config;
 import com.example.travelers.jwt.JwtTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -29,7 +30,9 @@ public class WebSecurityConfig {
                         authHttp -> authHttp
                                 // 인증을 필요로 하지 않는 공개 엔드포인트를 정의
                                 .requestMatchers(
+                                        HttpMethod.GET,
                                         "/",
+                                        "/static",
                                         "/static/**",
                                         "/templates/**",
                                         "/css/**",
