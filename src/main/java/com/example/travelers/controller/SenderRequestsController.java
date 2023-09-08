@@ -45,6 +45,15 @@ public class SenderRequestsController {
     ) {
         return service.readAllSenderRequests(id);
     }
+
+    // 작성자 별 수락 된 요청 '후기 작성하기' 전체 조회 = 후기 작성하기 Page
+    // GET /boards/accepted-sender-requests/{id}
+    @GetMapping("/boards/accepted-sender-requests/{id}")
+    public List<SenderRequestsDto> acceptedReadAll(
+            @PathVariable("id") Long id
+    ) {
+        return service.readAllAcceptedSenderRequests(id);
+    }
     
     // 동행 요청 수정 (메세지)
     // PUT /boards/{boardId}/sender-requests/{id}

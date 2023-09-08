@@ -77,6 +77,7 @@ public class ReceiverRequestsService {
         // Receiver 응답(수락 or 거절) 시 Sender 상태 변경
         if (dto.getStatus().equals(true)) { // Receiver가 요청을 수락한다면
             sender.setStatus(true);
+            sender.setFinalStatus(true);
             receiver.setStatus(true);
             board.setStatus(true);
             senderRequestsRepository.save(sender);
@@ -85,6 +86,7 @@ public class ReceiverRequestsService {
         } else { // Receiver가 요청을 거절한다면
             sender.setStatus(true);
             sender.setRejectedAt(LocalDateTime.now());
+            sender.setFinalStatus(false);
             receiver.setStatus(false);
             receiver.setRejectedAt(LocalDateTime.now());
             senderRequestsRepository.save(sender);

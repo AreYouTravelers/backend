@@ -101,15 +101,22 @@ public class SenderRequestsService {
         return senderRequestsDtoList;
     }
 
-    // 작성자 별 수락된 요청 '후기 작성하기' 전체 조회
-//    public List<SenderRequestsDto> readAllSenderRequestsReview() {
-//        UsersEntity usersEntity = authService.getUser();
-//
-//    }
+    // 작성자 별 수락 된 요청 '후기 작성하기' 전체 조회 = 후기 작성하기 Page
+    public List<SenderRequestsDto> readAllAcceptedSenderRequests(Long senderId) {
+        UsersEntity usersEntity = authService.getUser();
 
-    // 작성자 별 수락된 요청 '후기 작성하기' 버튼 활성화 유무
+        // senderId에 해당하는 요청글이 존재하지 않을 경우 예외 처리
+        if (!senderRequestsRepository.existsById(senderId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
 
+        List<SenderRequestsDto> senderRequestsDtoList = new ArrayList<>();
+        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdAndFinalStatus(senderId, true);
 
+        for (SenderRequestsEntity entity : senderRequestsEntityList)
+            senderRequestsDtoList.add(SenderRequestsDto.fromEntity(entity));
+
+        return senderRequestsDtoList;
+    }
 
     // 동행 요청 수정 (메세지)
     public void updateSenderRequests(Long boardId, Long id, SenderRequestsDto dto) {

@@ -29,9 +29,6 @@ public class SenderRequestsEntity {
     @Column(name = "rejected_at")
     private LocalDateTime rejectedAt;
 
-    @Column(name = "review_possible")
-    private Boolean reviewPossible;
-
     @Column(name = "final_status")  // 최종 수락 or 거절 상태
     private Boolean finalStatus;
 
