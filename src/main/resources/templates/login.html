@@ -34,7 +34,7 @@
               </a>
             </div>
             <h3 class="mb-2">로그인</h3>
-            <form>
+            <form id="login-form">
               <div class="mb-2">
                 <label for="username" class="form-label">아이디</label>
                 <input
@@ -55,10 +55,10 @@
                   placeholder="비밀번호"
                 />
               </div>
+              <div class="mt-4">
+                <button type="submit" class="btn btn-primary">로그인</button>
+              </div>
             </form>
-            <div class="mt-4">
-              <button type="submit" class="btn btn-primary">로그인</button>
-            </div>
             <div class="mt-3">
               <!-- 회원가입으로 가는 링크-->
               <a href="signup">계정이 없으신가요?</a>
@@ -67,5 +67,38 @@
         </div>
       </div>
     </div>
+    <script src="/static/js/user.js"></script>
+    <script>
+      const lastUrl = new URLSearchParams(location.search).get('next') ?? '/'
+      fetchLoggedIn().then(userInfo => {
+        if (userInfo) {
+          location.href = lastUrl
+        }
+      })
+      document.getElementById('login-form').addEventListener('submit', e => {
+        e.preventDefault()
+        const data = {
+          username: document.getElementById('username').value,
+          password: document.getElementById('password').value
+        }
+        fetch('/users/login', {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        }).then(response => {
+          if (response.ok) return response.json()
+          else throw new Error(response.status.toString())
+        }).then(bodyJson => {
+          localStorage.setItem('accessToken', bodyJson.accessToken)
+          alert('로그인 성공')
+          location.href = lastUrl
+        }).catch(e => {
+          console.log(e.message)
+          alert(e.message)
+        })
+      })
+    </script>
   </body>
 </html>
