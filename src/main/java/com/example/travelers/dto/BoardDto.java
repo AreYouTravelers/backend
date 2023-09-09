@@ -32,7 +32,7 @@ public class BoardDto implements Serializable {
     private String content;
     private Integer people;
     private String status;
-    private Long views;
+    private int views;
 
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -47,6 +47,7 @@ public class BoardDto implements Serializable {
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
 
+    private List<CommentsDto> commentsList;
     private List<ReceiverRequestsDto> receiverRequestsList;
     private List<SenderRequestsDto> senderRequestsList;
 
@@ -65,6 +66,7 @@ public class BoardDto implements Serializable {
         dto.setUsername(entity.getUser().getUsername());
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setDeletedAt(entity.getDeletedAt());
+        dto.setCommentsList(CommentsDto.dtoList(entity.getComments()));
         dto.setReceiverRequestsList(ReceiverRequestsDto.dtoList(entity.getReceiverRequests()));
         dto.setSenderRequestsList(SenderRequestsDto.dtoList(entity.getSenderRequests()));
         return dto;

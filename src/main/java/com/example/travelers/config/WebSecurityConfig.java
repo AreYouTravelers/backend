@@ -45,7 +45,8 @@ public class WebSecurityConfig {
                                         "/readReview",
                                         "/readReviewsAll",
                                         "/readReviewsAllBySender",
-                                        "/updateReview"
+                                        "/updateReview",
+                                        "/boards/**"
 //                                        "/accompany"
                                 )
                                 .permitAll() // 모든 사용자 허용
@@ -59,7 +60,7 @@ public class WebSecurityConfig {
                                         "/users/mbti",
                                         "/users/deactivate",
                                         "/admin/deactivate",
-                                        "/boards/**",
+//                                        "/boards/**",
                                         "/boards/categories",
                                         "/board/{boardId}/reviews/**"
                                 )
