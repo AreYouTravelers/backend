@@ -39,7 +39,7 @@ public class BoardsController {
     }
 
     @GetMapping("/{id}")
-    @Cacheable(value = "boards", key = "#id")
+//    @Cacheable(value = "boards", key = "#id")
     public String read(
             @PathVariable("id") Long id, Model model) {
         BoardDto result = boardsService.readBoard(id);
