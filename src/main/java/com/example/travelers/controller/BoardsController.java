@@ -5,20 +5,14 @@ import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.mapping.BoardsMapping;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.MbtiFilter;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.List;
 
@@ -32,7 +26,7 @@ public class BoardsController {
     private MbtiFilter mbtiFilter;
 
     @PostMapping
-    @CachePut(value = "boards", key = "#dto.id")
+//    @CachePut(value = "boards", key = "#dto.id")
     public BoardDto create(
             @RequestBody BoardDto dto) {
         return boardsService.createBoard(dto);

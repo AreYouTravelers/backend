@@ -34,6 +34,8 @@ public class WebSecurityConfig {
                                         "/",
                                         "/static/**",
                                         "/templates/**",
+                                        "/templates/board",
+                                        "/templates/layout",
                                         "/css/**",
                                         "/js/**",
                                         "/images/**",

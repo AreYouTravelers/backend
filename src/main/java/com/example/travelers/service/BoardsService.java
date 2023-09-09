@@ -69,7 +69,7 @@ public class BoardsService {
     }
 
     public BoardDto readBoard(Long id) {
-        UsersEntity userEntity = authService.getUser();
+//        UsersEntity userEntity = authService.getUser();
         Optional<BoardsEntity> board = boardsRepository.findById(id);
 
         if (board.isPresent()) {
@@ -84,7 +84,6 @@ public class BoardsService {
 //                views = Integer.parseInt(values) + 1; // 조회수 증가
 //                redisDao.setValues(redisKey, String.valueOf(views)); // 글ID key로 조회수 저장
 //            }
-
             BoardDto dto = BoardDto.fromEntity(board.get());
 //            dto.setViews(views);
             return dto;

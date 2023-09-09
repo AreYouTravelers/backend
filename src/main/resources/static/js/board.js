@@ -21,19 +21,26 @@
 //         console.error('에러:', error);
 //     });
 
+// accessToken 불러오기
 let accessToken = localStorage.getItem('accessToken');
 
-const boardId = 1; // 조회할 게시물의 ID를 여기에 넣으세요
+const id = 1; // 조회할 게시물의 ID를 여기에 넣으세요
 
 // 게시물 조회 요청
-fetch(`/boards/${boardId}`, {
+fetch(`/boards/${id}`, {
     method: 'GET',
     headers: {
         'Authorization': 'Bearer ' + accessToken, // JWT 토큰을 포함
         'Content-Type': 'application/json'
     }
 })
-    .then(response => response.json())
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('서버에서 응답 오류 발생');
+        }
+    })
     .then(data => {
         console.log('서버로부터 받은 데이터:', data);
         // 원하는 동작 수행
