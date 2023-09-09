@@ -113,4 +113,7 @@ public class CommentsService {
         commentsRepository.delete(commentEntity);
         return new MessageResponseDto("댓글을 삭제했습니다.");
     }
+    public boolean isCommentRelatedToBoard(Long boardId, Long commentId) {
+        return commentsRepository.existsByIdAndBoardId(commentId, boardId);
+    }
 }
