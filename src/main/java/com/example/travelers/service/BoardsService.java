@@ -69,7 +69,7 @@ public class BoardsService {
     }
 
     public BoardDto readBoard(Long id) {
-//        UsersEntity userEntity = authService.getUser();
+        UsersEntity userEntity = authService.getUser();
         Optional<BoardsEntity> board = boardsRepository.findById(id);
 
         if (board.isPresent()) {

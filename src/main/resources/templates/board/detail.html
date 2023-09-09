@@ -4,9 +4,14 @@
       layout:decorate="~{layout/default}">
 <head>
     <title th:text="'게시글 | ' + ${dto.title}">동행 구하기</title>
+    <style>
+        .board-detail{
+            padding-top: 10rem;
+        }
+    </style>
 </head>
 <body>
-<div class="container" layout:fragment="content">
+<div class="container board-detail" layout:fragment="content">
     <h1 class="mt-4">동행 구하기</h1>
     <div class="card mb-4">
         <div class="card-body">
@@ -68,5 +73,6 @@
         </div>
     </div>
 </div>
+<script src="/static/js/board.js"></script>
 </body>
 </html>
