@@ -26,4 +26,29 @@ public class ViewController {
 //    public String accompany() {
 //        return "accompany";
 //    }
+
+    @GetMapping("/createReview")
+    public String createReview() {
+        return "createReview";
+    }
+
+    @GetMapping("/readReview")
+    public String readReview() {
+        return "readReview";
+    }
+
+    @GetMapping("/readReviewsAll")
+    public String readReviewsAll() {
+        return "readReviewsAll";
+    }
+
+    @GetMapping("/readReviewsAllBySender")
+    public String readReviewsAllBySender() {
+        return "readReviewsAllBySender";
+    }
+
+    @GetMapping("/updateReview")
+    public String updateReview() {
+        return "updateReview";
+    }
 }

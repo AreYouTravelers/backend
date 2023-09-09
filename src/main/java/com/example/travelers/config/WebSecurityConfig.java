@@ -40,7 +40,12 @@ public class WebSecurityConfig {
                                         "/users/login",
                                         "/users",
                                         "/login",
-                                        "/signup"
+                                        "/signup",
+                                        "/createReview",
+                                        "/readReview",
+                                        "/readReviewsAll",
+                                        "/readReviewsAllBySender",
+                                        "/updateReview"
 //                                        "/accompany"
                                 )
                                 .permitAll() // 모든 사용자 허용
