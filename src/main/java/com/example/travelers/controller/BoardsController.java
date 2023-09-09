@@ -14,13 +14,15 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/boards")
 @RequiredArgsConstructor
 public class BoardsController {
@@ -38,9 +40,12 @@ public class BoardsController {
 
     @GetMapping("/{id}")
     @Cacheable(value = "boards", key = "#id")
-    public BoardDto read(
-            @PathVariable("id") Long id) {
-        return boardsService.readBoard(id);
+    public String read(
+            @PathVariable("id") Long id, Model model) {
+        BoardDto result = boardsService.readBoard(id);
+        model.addAttribute("dto", result);
+        model.addAttribute("id", id);
+        return "board/detail";
     }
 
     @GetMapping

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title th:text="'게시글 | ' + ${dto.title}">동행 구하기</title>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+    <h1 class="mt-4">동행 구하기</h1>
+    <div class="card mb-4">
+        <div class="card-body">
+            <form>
+                <div class="mb-3">
+                    <label for="country" class="form-label">나라</label>
+                    <input type="text" class="form-control" id="country" name="country" th:value="${dto.country}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="category" class="form-label">카테고리</label>
+                    <input type="text" class="form-control" id="category" name="category" th:value="${dto.category}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="title" class="form-label">제목</label>
+                    <input type="text" class="form-control" id="title" name="title" th:value="${dto.title}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">내용</label>
+                    <textarea class="form-control" id="content" name="content" disabled>[[${dto.content}]]</textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="people" class="form-label">총 인원수</label>
+                    <input type="text" class="form-control" id="people" name="people" th:value="${dto.people}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="dateRange" class="form-label">날짜</label>
+                    <input type="text" class="form-control" id="dateRange" name="dateRange"
+                           th:value="${#temporals.format(dto.startDate, 'yyyy-MM-dd')} + ' ~ ' + ${#temporals.format(dto.endDate, 'yyyy-MM-dd')}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="username" class="form-label">작성자</label>
+                    <input type="text" class="form-control" id="username" name="username" th:value="${dto.username}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">상태</label>
+                    <input type="text" class="form-control" id="status" name="status" th:value="${dto.status}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="views" class="form-label">조회수</label>
+                    <input type="text" class="form-control" id="views" name="views" th:value="${dto.views}" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="createdAt" class="form-label">작성일</label>
+                    <input type="text" class="form-control" id="createdAt" name="createdAt"
+                           th:value="${#temporals.format(dto.createdAt, 'yyyy-MM-dd HH:mm')}" disabled>
+                </div>
+<!--                <div class="mb-3" th:if="${dto.commentsList != null and dto.commentsList.size() > 0}">-->
+<!--                    <label class="form-label">댓글</label>-->
+<!--                    <div th:each="comment : ${dto.commentsList}">-->
+<!--                        <div class="comment">-->
+<!--                            <p th:text="${comment.content}" th:id="'comment-' + ${comment.id}">댓글 내용</p>-->
+<!--                            <p>작성자: <span th:text="${comment.username}">작성자 없음</span></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <a href="/static" class="btn btn-outline-secondary">목록</a>
+                <a th:href="@{'/boards/' + ${dto.id} + '/edit'}" class="btn btn-outline-warning">수정</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

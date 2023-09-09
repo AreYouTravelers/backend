@@ -23,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -67,32 +69,33 @@ public class BoardsService {
     }
 
     public BoardDto readBoard(Long id) {
-        UsersEntity userEntity = authService.getUser();
+//        UsersEntity userEntity = authService.getUser();
         Optional<BoardsEntity> board = boardsRepository.findById(id);
 
         if (board.isPresent()) {
-            String redisKey = id.toString(); // 해당 글의 ID를 key값으로 선언
-            String redisUserKey = userEntity.getUsername(); // 유저 key
-            String values = redisDao.getValues(redisKey); // 현재 글의 조회수를 가져온다.
-            long views = 0;
-
-           if (values != null && !values.isEmpty()) {
-               views = Long.parseLong(values); // 가져온 조회수를 Long으로 형변환
-           }
-
-            // 유저를 key로 조회한 게시글 ID List안에 해당 게시글 ID가 포함되어있지 않는다면,
-            if (!redisDao.getValuesList(redisUserKey).contains(redisKey)) {
-                redisDao.setValuesList(redisUserKey, redisKey); // 유저 key로 해당 글 ID를 List 형태로 저장
-//                views++; // 조회수 증가
+//            String redisKey = id.toString(); // 해당 글의 ID를 key값으로 선언
+//            String redisUserKey = userEntity.getUsername(); // 유저 key
+//            String values = redisDao.getValues(redisKey); // 현재 글의 조회수를 가져온다.
+//            int views = Integer.parseInt(values); // 가져온 값은 Integer로 변환
+//
+//            // 유저를 key로 조회한 게시글 ID List안에 해당 게시글 ID가 포함되어있지 않는다면,
+//            if (!redisDao.getValuesList(redisUserKey).contains(redisKey)) {
+//                redisDao.setValuesList(redisUserKey, redisKey); // 유저 key로 해당 글 ID를 List 형태로 저장
+//                views = Integer.parseInt(values) + 1; // 조회수 증가
 //                redisDao.setValues(redisKey, String.valueOf(views)); // 글ID key로 조회수 저장
-                redisDao.persistKey(redisKey); // 조회수 유지를 위해만료시간 제거
-                redisDao.increaseViews(redisKey);
-            }
+//            }
+
             BoardDto dto = BoardDto.fromEntity(board.get());
-            dto.setViews(views);
+//            dto.setViews(views);
             return dto;
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
     }
+
+    public static long calculateTimeUntilMidnight() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime midnight = now.truncatedTo(ChronoUnit.DAYS).plusDays(1);
+        return ChronoUnit.SECONDS.between(now, midnight);
+    } //현재 시간을 기준으로 00시까지의 시간을 계산
 
     public Page<BoardsMapping> readBoardsAll(Integer pageNumber) {
         UsersEntity userEntity = authService.getUser();

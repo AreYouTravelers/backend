@@ -4,6 +4,8 @@ import com.example.travelers.entity.CommentsEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -33,4 +35,11 @@ public class CommentsDto {
         return dto;
     }
 
+    public static List<CommentsDto> dtoList(List<CommentsEntity> entityList) {
+        List<CommentsDto> commentsDtoList = new ArrayList<>();
+        for (CommentsEntity entity : entityList) {
+            commentsDtoList.add(CommentsDto.fromEntity(entity));
+        }
+        return commentsDtoList;
+    }
 }
