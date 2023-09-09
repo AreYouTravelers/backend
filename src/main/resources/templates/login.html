@@ -73,6 +73,7 @@
       fetchLoggedIn().then(userInfo => {
         if (userInfo) {
           location.href = lastUrl
+          alert("이미 로그인 상태입니다.") // 로그인되어있어야되고
         }
       })
       document.getElementById('login-form').addEventListener('submit', e => {
@@ -92,11 +93,11 @@
           else throw new Error(response.status.toString())
         }).then(bodyJson => {
           localStorage.setItem('accessToken', bodyJson.accessToken)
-          alert('로그인 성공')
+          alert('로그인에 성공하였습니다.')
           location.href = lastUrl
         }).catch(e => {
           console.log(e.message)
-          alert(e.message)
+          alert('로그인 정보가 일치하지 않습니다.')
         })
       })
     </script>
