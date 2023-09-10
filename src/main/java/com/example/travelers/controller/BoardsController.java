@@ -64,11 +64,14 @@ public class BoardsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<MessageResponseDto> update(
+    public String update(
             @PathVariable("id") Long id,
-            @RequestBody BoardDto dto) {
-        MessageResponseDto responseDto = boardsService.updateBoard(id, dto);
-        return ResponseEntity.ok(responseDto);
+            @RequestBody BoardDto dto, Model model) {
+        BoardDto result = boardsService.updateBoard(id, dto);
+        model.addAttribute("dto", result);
+        model.addAttribute("id", id);
+        return "board/detail";
+//        return ResponseEntity.ok(boardsService.updateBoard(id, dto));
     }
 
     @DeleteMapping("/{id}")
