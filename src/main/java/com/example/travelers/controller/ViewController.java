@@ -22,10 +22,15 @@ public class ViewController {
         return "signup";
     }
 
-//    @GetMapping("/accompany")
-//    public String accompany() {
-//        return "accompany";
-//    }
+    @GetMapping("/mypage")
+    public String mypage() {
+        return "mypage";
+    }
+
+    @GetMapping("/accompany")
+    public String accompany() {
+        return "accompany";
+    }
 
     @GetMapping("/createReview")
     public String createReview() {
