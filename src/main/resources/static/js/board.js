@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
             method: 'PUT',
             headers: {
                 'Authorization': 'Bearer ' + accessToken,
-                'Content-Type': 'application/json;charset=UTF-8'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(Object.fromEntries(formData.entries())) // FormData를 JSON으로 변환
         })

@@ -2,7 +2,9 @@ package com.example.travelers.controller;
 
 import com.example.travelers.dto.BoardDto;
 import com.example.travelers.dto.MessageResponseDto;
+import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.mapping.BoardsMapping;
+import com.example.travelers.service.AuthService;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.MbtiFilter;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardsController {
     private final BoardsService boardsService;
+    private final AuthService authService;
 
     @Autowired
     private MbtiFilter mbtiFilter;
@@ -66,8 +69,12 @@ public class BoardsController {
     @PutMapping("/{id}")
     public String update(
             @PathVariable("id") Long id,
-            @RequestBody BoardDto dto, Model model) {
+            BoardDto dto, Model model) {
+//        UsersEntity userEntity = authService.getUser();
         BoardDto result = boardsService.updateBoard(id, dto);
+//        if (!result.getUsername().equals(userEntity.getUsername())) {
+//            return "redirect:/";
+//        }
         model.addAttribute("dto", result);
         model.addAttribute("id", id);
         return "board/detail";
