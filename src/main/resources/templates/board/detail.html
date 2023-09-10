@@ -18,7 +18,6 @@
     <div class="card mb-4">
         <div class="card-body">
             <form th:action="@{'/boards/' + ${dto.id}}" th:method="post" id="updateForm">
-<!--            <form action="/boards/{id}" method="post" id="updateForm">-->
                 <input type="hidden" name="_method" value="put"/>
                 <div class="mb-3">
                     <label for="country" class="form-label">나라</label>
@@ -41,9 +40,12 @@
                     <input type="text" class="form-control" id="people" name="people" th:value="${dto.people}">
                 </div>
                 <div class="mb-3">
-                    <label for="dateRange" class="form-label">날짜</label>
-                    <input type="text" class="form-control" id="dateRange" name="dateRange"
-                           th:value="${#temporals.format(dto.startDate, 'yyyy-MM-dd')} + ' ~ ' + ${#temporals.format(dto.endDate, 'yyyy-MM-dd')}">
+                    <label for="startDate" class="form-label">시작 날짜</label>
+                    <input type="date" class="form-control" id="startDate" name="startDate" th:value="${dto.startDate}">
+                </div>
+                <div class="mb-3">
+                    <label for="endDate" class="form-label">종료 날짜</label>
+                    <input type="date" class="form-control" id="endDate" name="endDate" th:value="${dto.endDate}">
                 </div>
                 <div class="mb-3">
                     <label for="username" class="form-label">작성자</label>
