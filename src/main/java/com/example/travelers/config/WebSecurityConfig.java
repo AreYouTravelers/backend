@@ -43,6 +43,8 @@ public class WebSecurityConfig {
                                         "/users",
                                         "/login",
                                         "/signup",
+                                        "/mypage",
+                                        "/accompany",
                                         "/createReview",
                                         "/readReview",
                                         "/readReviewsAll",
@@ -50,7 +52,6 @@ public class WebSecurityConfig {
                                         "/updateReview",
                                         "/boards/**",
                                         "/boards/{boardId}/edit"
-//                                        "/accompany"
                                 )
                                 .permitAll() // 모든 사용자 허용
                                 .requestMatchers(
