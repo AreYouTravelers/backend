@@ -157,7 +157,7 @@
           lastName: document.getElementById('lastName').value,
           birthDate: document.getElementById('birthDate').value
         }
-        fetch('users', {
+        fetch('/users', {
           method: 'post',
           headers: {
             'Content-Type': 'application/json'
