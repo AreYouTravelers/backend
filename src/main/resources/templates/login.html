@@ -93,7 +93,6 @@
           else throw new Error(response.status.toString())
         }).then(bodyJson => {
           localStorage.setItem('accessToken', bodyJson.accessToken)
-          alert('로그인에 성공하였습니다.')
           location.href = lastUrl
         }).catch(e => {
           console.log(e.message)
