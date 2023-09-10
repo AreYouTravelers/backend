@@ -15,6 +15,18 @@ footer {margin-top: 7rem; padding-top: 4rem; padding-bottom: 3rem; background-co
 footer img {margin-bottom: 3rem;}
 footer p {font-weight: 300; font-size: 14px;}
 
+/* login */
+.login {background: linear-gradient(180deg, #c5f2ff 0%, rgba(180, 238, 255, 0) 100%);}
+.login .page-section {padding-top: 15rem; padding-bottom: 0;}
+.login .login-inner {max-width: 40%; margin: 0 auto; padding: 5em 3em; border-radius: 12px; background-color: #ffffff; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+.login .login-inner img {display: block; margin: 0 auto 1em;}
+.login .login-inner h1 {font-size: 1.5rem; text-align: center;}
+.login .login-inner form {margin-top: 2em; margin-bottom: 2em;}
+.login .login-inner form .password {margin-top: -8px;}
+.login .login-inner form input {max-width: 70%; margin: 0 auto; padding: 1em; border: 1px solid #dddddd; border-radius: 5px; font-size: 0.9em;}
+.login .login-inner form button {display: block; width: 70%; margin: 1em auto; padding: 0.6em 1em; border-radius: 5px;}
+.login .login-inner a {display: block; color: #5D9EE2; text-align: center;}
+
 /* main */
 .board-item {min-height: 469px; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
 .board-item-header {display: flex; justify-content: space-between; padding: 1.2em 1.2em 0 1.2em; font-size: 13px;}
@@ -38,6 +50,30 @@ footer p {font-weight: 300; font-size: 14px;}
 .accompany form button {padding-left: 1.2em; padding-right: 1.2em;}
 
 /* my page */
-.sub-nav {}
+.my-page .page-section {padding: 0;}
+.my-page .page-section > .container > .div {margin-top: 1em;}
+.my-page .profile {max-height: 457px; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+.my-page .profile .profile-image {overflow: hidden; position: relative;}
+.my-page .profile .profile-image .profile-image-inner {border-radius: 50%; border: 1px solid #ddd; width: 50%; height: 50%; margin: 3.7em auto 0;}
+.my-page .profile .profile-image .profile-image-inner .profile-image-circle img {width: 100%;}
+.my-page .profile .profile-image button {position: absolute; bottom: 0; right: 50px; transform: translate(-50%, -50%); width: 37px; height: 37px; border: 0; border-radius: 50%;}
+.my-page .profile .profile-image button img {width: 100%; padding: 2px; margin-top: -6px; margin-left: 1px;}
+.my-page .profile .profile-name {margin-top: 1em; margin-bottom: 2.5em; text-align: center;}
+.my-page .profile .profile-name .profile-username {margin-bottom: 0; font-weight: 700; font-size: 1.5rem;}
+.my-page .profile .profile-name .profile-fullname {font-size: 0.9em; color: #999;}
+.my-page .profile .profile-info .info-box {display: flex;}
+.my-page .profile .profile-info .info-box .info-box-inner {width: 33.3333%;}
+.my-page .profile .profile-info .info-box .info-box-inner:nth-child(2) {border-left: 1px solid #e4e4e4; border-right: 1px solid #e4e4e4;}
+.my-page .profile .profile-info .info-box .info-box-inner .info-title {display: block; margin-top: 2px; margin-bottom: 7px; text-align: center; font-size: 0.9em; color: #5D9EE2;}
+.my-page .profile .profile-info .info-box .info-box-inner .info-content {text-align: center;}
+.my-page .profile .profile-info .info-box .info-box-inner .info-content .info-temp {color: #4CB7EF}
+.my-page .profile2 {padding-left: 5em; padding-right: 5em;}
+.my-page .profile2 h3 {margin-bottom: 2em; font-weight: 700; font-size: 1.3rem; color: #4CB7EF;}
+.my-page .profile2 .profile2-box {display: flex;}
+.my-page .profile2 .profile2-box .profile2-title {display: flex; font-size: 1.1rem;}
+.my-page .profile2 .profile2-box .profile2-title button {width: 30px; border: none; background-color: inherit;}
+.my-page .profile2 .profile2-box .profile2-title button img {width: 100%; margin-top: -19px; margin-left: 3px;}
+.my-page .profile2 .profile2-box input {width: 75%; padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+.my-page .profile2 .profile2-box input.profile2-email {width: 87.5%;}
 
 /* received */
