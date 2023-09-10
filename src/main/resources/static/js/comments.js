@@ -8,6 +8,31 @@ document.addEventListener("DOMContentLoaded", function() {
         'Content-Type': 'application/json'
     };
 
+    document.body.addEventListener('submit', function(event) {
+        if (event.target.matches('.comment-section form')) {
+            event.preventDefault();
+
+            const content = event.target.elements.commentContent.value;
+
+            if (content) {
+                // 여기서 boardId가 어디서 왔는지 확실하지 않으므로, 만약 이전 코드에 정의되지 않았다면
+                // 적절한 방법으로 boardId 값을 가져올 필요가 있습니다.
+                fetch(`/boards/${boardId}/comments`, {
+                    method: 'POST',
+                    headers: headersWithToken,
+                    body: JSON.stringify({ content: content })
+                }).then(response => {
+                    if (response.ok) {
+                        alert("댓글이 저장되었습니다.");
+                        location.reload();
+                    } else {
+                        alert("댓글 저장 중 오류가 발생했습니다.");
+                    }
+                });
+            }
+        }
+    });
+
     // 댓글 삭제 기능
     document.querySelectorAll('.delete-button').forEach(function(button) {
         button.addEventListener('click', function(event) {

@@ -4,21 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comments Page</title>
-    <link rel="stylesheet" href="/static/css/comment.css"> <!-- 주어진 CSS 파일 경로를 추가하세요. -->
+    <link rel="stylesheet" href="/static/css/comment.css">
 </head>
 <body>
-
-<!-- Header -->
-<!--<div th:replace="~{header :: headerFragment}"></div>-->
 
 <!-- 댓글 목록 -->
 <section class="comment-section">
     <h2>댓글 목록</h2>
     <ul>
-        <li th:each="comment : ${comments}">
+        <li th:each="comment : ${comments}" th:if="${comment.parentCommentId == null}">
             <!-- 메인 댓글 -->
-            <div th:if="${comment.parentCommentId == null}" class="comment-container">
-                <strong th:text="${comment.username}">Username</strong> <!-- username을 앞에 표시 -->
+            <div class="comment-container">
+                <strong th:text="${comment.username}">Username</strong>
                 <p th:text="${comment.content}">예시 댓글입니다.</p>
                 <div class="comment-actions">
                     <button class="temp-3 edit-button" th:data-comment-id="${comment.id}">수정</button>
@@ -39,17 +36,22 @@
             </div>
 
             <!-- 답글 -->
-            <div th:if="${comment.parentCommentId != null}" class="comment-container">
-                <strong th:text="${comment.username}">Username</strong> <!-- username을 앞에 표시 -->
-                <p th:text="${comment.content}">예시 답글입니다.</p>
+            <ul>
+                <li th:each="reply : ${comments}" th:if="${reply.parentCommentId == comment.id}">
+                    <div class="comment-container">
+                        <strong th:text="${reply.username}">Username</strong>
+                        <p th:text="${reply.content}">예시 답글입니다.</p>
                 <div>
                     <button class="temp-3 edit-button" th:data-comment-id="${comment.id}">수정</button>
                     <button class="temp-3 delete-button" th:data-comment-id="${comment.id}">삭제</button>
                 </div>
+                </li>
+            </ul>
             </div>
         </li>
     </ul>
 </section>
+
 
 <!-- 댓글 작성 폼 -->
 <section class="comment-section">
