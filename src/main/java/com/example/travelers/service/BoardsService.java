@@ -155,12 +155,12 @@ public class BoardsService {
         return new BoardsMappingImpl(boardsEntity);
     }
 
-    @Transactional
-    public MessageResponseDto updateBoard(Long id, BoardDto dto) {
-        UsersEntity userEntity = authService.getUser();
+//    @Transactional
+    public BoardDto updateBoard(Long id, BoardDto dto) {
+//        UsersEntity userEntity = authService.getUser();
         Optional<BoardsEntity> board = boardsRepository.findById(id);
         if (board.isPresent()) {
-            if (board.get().getUser().getId().equals(userEntity.getId())) {
+//            if (board.get().getUser().getId().equals(userEntity.getId())) {
                 BoardsEntity boardsEntity = board.get();
                 boardsEntity.getCountry().setName(dto.getCountry());
                 boardsEntity.getBoardCategory().setCategory(dto.getCategory());
@@ -170,9 +170,8 @@ public class BoardsService {
                 boardsEntity.setStartDate(dto.getStartDate());
                 boardsEntity.setEndDate(dto.getEndDate());
                 boardsEntity.setCreatedAt(LocalDateTime.now());
-                boardsRepository.save(boardsEntity);
-                return new MessageResponseDto("게시물을 업데이트했습니다.");
-            } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
+                return dto.fromEntity(boardsRepository.save(boardsEntity));
+//            } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
     }
 
