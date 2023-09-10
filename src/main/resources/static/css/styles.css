@@ -10926,14 +10926,13 @@ html {
   padding-bottom: 1rem;
   font-weight: 700;
 }
-#subNav .navbar-brand {
-  color: #4CB7EF;
-}
+
 #subNav .navbar-nav {
   margin-top: 1rem;
 }
 #subNav .navbar-nav li.nav-item a.nav-link {
-  color: #4CB7EF;
+  font-weight: 500;
+  color: #999999;
 }
 #subNav .navbar-nav li.nav-item a.nav-link:hover {
   color: #5D9EE2;
@@ -10952,7 +10951,7 @@ html {
 @media (min-width: 992px) {
   #mainNav {
     padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 2rem;
     transition: padding-top 0.3s, padding-bottom 0.3s;
   }
   #mainNav .navbar-brand {
@@ -10963,12 +10962,10 @@ html {
     margin-top: 0;
   }
   #mainNav .navbar-nav > li.nav-item > a.nav-link.active {
-    color: #fff;
-    background: #1abc9c;
+    color: #4cb7ef;
   }
   #mainNav .navbar-nav > li.nav-item > a.nav-link.active:active, #mainNav .navbar-nav > li.nav-item > a.nav-link.active:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link.active:hover {
-    color: #fff;
-    background: #1abc9c;
+    color: #4cb7ef;
   }
   #mainNav.navbar-shrink {
     padding-top: 0.5rem;
@@ -10978,8 +10975,8 @@ html {
     font-size: 1.5em;
   }
   #subNav {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    padding-top: 8rem;
+    padding-bottom: 2.5rem;
     transition: padding-top 0.3s, padding-bottom 0.3s;
   }
   #subNav .navbar-brand {
@@ -10987,15 +10984,15 @@ html {
     transition: font-size 0.3s;
   }
   #subNav .navbar-nav {
+    flex-direction: inherit;
     margin-top: 0;
+    border-bottom: 1px solid #dddddd;
   }
   #subNav .navbar-nav > li.nav-item > a.nav-link.active {
-    color: #fff;
-    background: #1abc9c;
+    color: #4cb7ef;
   }
   #subNav .navbar-nav > li.nav-item > a.nav-link.active:active, #subNav .navbar-nav > li.nav-item > a.nav-link.active:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link.active:hover {
-    color: #fff;
-    background: #1abc9c;
+    color: #4cb7ef;
   }
   #subNav.navbar-shrink {
     padding-top: 0.5rem;
