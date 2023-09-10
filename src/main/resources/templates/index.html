@@ -37,8 +37,8 @@
             <div class="nav-right">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3" href="#">마이페이지</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3" href="/login">로그인</a></li>
-                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3" href="/signup">회원가입</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3" href="#" id="login-link">로그인</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3" href="#" id="signup-link">회원가입</a></li>
                 </ul>
             </div>
         </div>
@@ -413,6 +413,39 @@
         </div>
     </div>
 </footer>
+<script src="/static/js/user.js"></script>
+<script>
+    const goToLogin = function () {
+        document.location.href = '/login';
+    }
+    const goToSignup = function () {
+        document.location.href = '/signup';
+    }
+    fetchLoggedIn().then(userInfo => {
+        if (userInfo) {
+            // userInfo가 있을 때
+            const loginLink = document.getElementById("login-link");
+            const signupLink = document.getElementById("signup-link");
+
+            // login-link와 signup-link를 제거
+            if (loginLink) {
+                loginLink.remove();
+            }
+            if (signupLink) {
+                signupLink.remove();
+            }
+        }
+    })
+
+    document.getElementById('login-link').addEventListener('click', event => {
+        event.preventDefault();
+        goToLogin();
+    })
+    document.getElementById('signup-link').addEventListener('click', event => {
+        event.preventDefault();
+        goToSignup()
+    })
+</script>
 <!-- Bootstrap core JS-->
 <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>-->
 <!-- Core theme JS-->
