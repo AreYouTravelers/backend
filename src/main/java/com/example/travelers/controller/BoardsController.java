@@ -65,7 +65,7 @@ public class BoardsController {
     @PutMapping("/{id}")
     public String update(
             @PathVariable("id") Long id,
-            BoardDto dto, Model model) {
+            @RequestBody BoardDto dto, Model model) {
 //        UsersEntity user = authService.getUser();  // user가 null이어서 오류나는것이었음
         BoardDto result = boardsService.updateBoard(id, dto);
 //        if (!result.getUsername().equals(userEntity.getUsername())) {
