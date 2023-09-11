@@ -54,7 +54,8 @@ public class WebSecurityConfig {
                                         "/readReviewsAllBySender",
                                         "/updateReview",
                                         "/boards/**",
-                                        "/boards/{boardId}/edit"
+                                        "/boards/{boardId}/edit",
+                                        "/board/{boardId}/reviews/**"
                                 )
                                 .permitAll() // 모든 사용자 허용
                                 .requestMatchers(
@@ -68,8 +69,7 @@ public class WebSecurityConfig {
                                         "/users/deactivate",
                                         "/admin/deactivate",
 //                                        "/boards/**",
-                                        "/boards/categories",
-                                        "/board/{boardId}/reviews/**"
+                                        "/boards/categories"
                                 )
                                 .authenticated() // 인증된 사용자만 접근 허용
                                 .anyRequest()

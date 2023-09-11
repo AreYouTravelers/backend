@@ -25,8 +25,36 @@ fetch(`/boards/${board.id}/reviews/${review.id}`, {
     });
 
 document.addEventListener('DOMContentLoaded', function () {
+    const createForm = document.getElementById('createForm');
+    const createButton = document.getElementById('createButton');
     const updateForm = document.getElementById('updateForm');
     const updateButton = document.getElementById('updateButton');
+
+    createButton.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(createForm);
+
+        fetch(`/boards/${board.id}/reviews`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(formData.entries())) // FormData를 JSON으로 변환
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("후기가 작성 되었습니다.");
+                    window.location.href = '/index';
+                } else {
+                    alert("후기 작성에 실패하였습니다.");
+                }
+            })
+            .catch(error => {
+                console.error('Network error:', error);
+            });
+    });
 
     updateButton.addEventListener('click', function (event) {
         event.preventDefault(); // 폼 제출을 막습니다.

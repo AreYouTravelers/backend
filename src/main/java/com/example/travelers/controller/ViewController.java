@@ -45,28 +45,23 @@ public class ViewController {
         return "reviewPossible";
     }
 
-    @GetMapping("/createReview")
-    public String createReview() {
-        return "createReview";
-    }
-
-    @GetMapping("/readReview")
-    public String readReview() {
-        return "readReview";
-    }
-
-    @GetMapping("/readReviewsAll")
-    public String readReviewsAll() {
-        return "readReviewsAll";
-    }
-
-    @GetMapping("/readReviewsAllBySender")
-    public String readReviewsAllBySender() {
-        return "readReviewsAllBySender";
-    }
-
-    @GetMapping("/updateReview")
-    public String updateReview() {
-        return "updateReview";
-    }
+//    @GetMapping("/createReview")
+//    public String createReview() {
+//        return "createReview";
+//    }
+//
+//    @GetMapping("/readReview")
+//    public String readReview() {
+//        return "readReview";
+//    }
+//
+//    @GetMapping("/readReviewsAll")
+//    public String readReviewsAll() {
+//        return "readReviewsAll";
+//    }
+//
+//    @GetMapping("/readReviewsAllBySender")
+//    public String readReviewsAllBySender() {
+//        return "readReviewsAllBySender";
+//    }
 }
