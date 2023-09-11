@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+>
 <head>
     <meta charset="UTF-8">
     <title>동행 후기 작성</title>
@@ -8,6 +11,7 @@
     <link rel="stylesheet" href="/static/css/styles2.css">
 </head>
 <body>
+<th:block layout:fragment="content">
     <div class="content">
         <h2>동행 후기 작성</h2>
         <div class="original-board">
@@ -57,8 +61,10 @@
             </div>
         </form>
     </div>
+</th:block>
 </body>
 </html>
+
 <!--
 별점 코드
 <div class="starpoint_wrap" onclick="range_change(this)">-->
@@ -86,5 +92,3 @@
 <!--                    <span class="starpoint_bg"></span>-->
 <!--                </div>-->
 <!--            </div>-->
-
--->

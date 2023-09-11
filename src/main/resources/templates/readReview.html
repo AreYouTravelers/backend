@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
 <head>
     <meta charset="UTF-8">
     <title>후기 단일 조회</title>
@@ -8,6 +10,7 @@
     <link rel="stylesheet" href="/static/css/styles2.css">
 </head>
 <body>
+<th:block layout:fragment="content">
     <div class="content">
         <h2>동행 후기 단일 조회</h2>
         <div class="original-board">
@@ -44,49 +47,15 @@
                 </span>
             </div>
             <div>
-                <span th:text="${review.content}">후기 내용</span>
+                <textarea th:text="${review.content}" class="review-content">후기 내용</textarea>
             </div>
         </div>
 <!--        TODO onClick 부분 수정. 뒤로가기 말고 readReviewAll로 가도록 -->
         <button type="button" class="btn btn-light" onclick="window.history.go(-1)">목록</button>
             <!-- 수정, 삭제 버튼은 본인 작성 후기 시에만 보이도록 활성화할 예정 -->
-            <button type="button" class="btn btn-primary" id="update">수정</button>
+            <button type="button" class="btn btn-primary" id="update" th:href="@{'/boards/' + ${boardId} + '/review/' + ${reviewId}}">수정</button>
             <button type="button" class="btn btn-danger" id="delete">삭제</button>
     </div>
-
-
-
-
-
-<!-- <div class="container">
-        <script>
-            // let review = await fetch('/boards/' + boardId + '/reviews/' + reviewId);
-            // review = await review.json();
-
-            // fetch("https://localhost:8080/boards/2/reviews/4")
-            //     .then((response) => response.json())
-            //     .then((data) => console.log(data))
-
-            fetch("https://localhost:8080/boards/2/reviews/4")
-                .then(function(response) {
-                    if (!response.ok) {
-                        throw new Error("Network response was not ok");
-                    }
-                    return response.json();
-                })
-                .then(function(data) {
-                    // data를 활용하여 필요한 작업을 수행
-                })
-                .catch(function(error) {
-                    console.error("Fetch error:", error);
-                });
-
-        </script>
-    <div>
-        <button>Edit</button>
-        <button>Delete</button>
-        <button onclick="window.history.go(-1)">Back</button>
-    </div>
-</div> -->
+</th:block>
 </body>
 </html>
