@@ -1,8 +1,14 @@
+import * as userModule from './user.js';
+
 const goToLogin = function () {
     document.location.href = '/login';
 }
 
-fetchLoggedIn().then(userInfo => {
+const goToMypage = function () {
+    document.location.href = '/mypage';
+}
+
+userModule.fetchLoggedIn().then(userInfo => {
     // userInfo가 있으면 로그인 상태로 처리
     if (userInfo) {
         removeLoginLink(); // 로그인, 회원가입 링크 제거
@@ -34,6 +40,13 @@ function showLogoutMypageLink() {
     }
 }
 
+// 마이페이지 기능
+document.getElementById('mypage-link').addEventListener('click', event => {
+    event.preventDefault();
+    goToMypage();
+})
+
+// 로그인 링크
 document.getElementById('login-link').addEventListener('click', event => {
     event.preventDefault();
     goToLogin();
@@ -46,7 +59,7 @@ document.getElementById('logout-link').addEventListener('click', event => {
         method: 'post',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${getJwt()}`
+            'Authorization': `Bearer ${userModule.getJwt()}`
         }
     }).then(response => {
         if (response.ok) {
@@ -56,7 +69,7 @@ document.getElementById('logout-link').addEventListener('click', event => {
             location.href = '/'
         } else throw new Error(response.status.toString())
     }).catch(event => {
-        console.log(e.message)
+        console.log(event.message)
         alert('잘못된 접근입니다.')
     })
 })
