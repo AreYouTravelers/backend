@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
 <head>
     <meta charset="UTF-8">
     <title>후기 전체 조회</title>
@@ -9,6 +11,7 @@
     <link rel="stylesheet" href="/static/css/styles2.css">
 </head>
 <body>
+<th:block layout:fragment="content">
     <div class="content">
         <div class="title-header">
             <h2>user님이 받은 후기</h2>
@@ -137,5 +140,6 @@
             </div>
         </div>
     </div>
+</th:block>
 </body>
 </html>

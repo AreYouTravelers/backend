@@ -29,9 +29,9 @@ public class ReviewsController {
             ReviewsDto dto,
             Model model
     ) {
-        model.addAttribute("boardId", boardId);
-        model.addAttribute("review", service.createReview(boardId, dto));
         model.addAttribute("board", boardsService.readBoard(boardId));
+        model.addAttribute("review", service.createReview(boardId, dto));
+        model.addAttribute("boardId", boardId);
         return "readReview";
     }
 
@@ -40,8 +40,8 @@ public class ReviewsController {
             @PathVariable("boardId") Long boardId,
             Model model
     ) {
-        model.addAttribute("boardId", boardId);
         model.addAttribute("board", boardsService.readBoard(boardId));
+        model.addAttribute("boardId", boardId);
         return "createReview";
     }
 
@@ -75,9 +75,8 @@ public class ReviewsController {
         return service.readReviewsAllBySender(pageNumber);
     }
 
-    // updateReview.html 반환
     @GetMapping("/boards/{boardId}/reviews/{id}/update")
-    public String readAll(
+    public String update(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
             Model model
@@ -95,8 +94,8 @@ public class ReviewsController {
             ReviewsDto dto,
             Model model
     ) {
-        model.addAttribute("review", service.updateReview(boardId, id, dto));
         model.addAttribute("board", boardsService.readBoard(boardId));
+        model.addAttribute("review", service.updateReview(boardId, id, dto));
         model.addAttribute("boardId", boardId);
         model.addAttribute("id", id);
         return "readReview";

@@ -76,7 +76,7 @@
 .review-board {
     flex: 0 0 auto;
     width: 100%;
-    height: min-content;
+    height: 22rem;
     text-align: center;
     margin-top: 3rem;
     margin-bottom: 3rem !important;    
@@ -89,13 +89,17 @@
     padding: 1rem;
     float: left;
     text-align: left;
+    height: 15rem;
 }
+.review-content::-webkit-scrollbar {width: 0.5em;}
+.review-content::-webkit-scrollbar-thumb {background-color: transparent; /* 스크롤바 색상 투명으로 설정 */}
 
 
 /* readReviewAll */
 .review-list {
     padding: 1rem;
     width: 100%;
+    height: 80%;
 }
 .header {
     text-align: left;
