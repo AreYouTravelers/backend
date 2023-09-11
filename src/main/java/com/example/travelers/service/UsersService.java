@@ -90,6 +90,7 @@ public class UsersService {
                 .lastName(registerRequestDto.getLastName())
                 .birthDate(registerRequestDto.getBirthDate())
                 .temperature(36.5)
+                .role("회원")
                 .createdAt(LocalDateTime.now())  // 생성일 설정 부분
                 .build();
 
