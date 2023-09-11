@@ -2,17 +2,16 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
-<head>
-  <th:block th:insert="layout/head :: headFragment" />
-  <title>Are you travelers?</title>
-
-</head>
-<body>
-    <!--header-->
-    <header th:replace="layout/header :: headerFragment"></header>
-    <!--content-->
-    <div layout:fragment="content"></div>
-    <!--footer-->
-    <footer th:replace="layout/footer :: footerFragment"></footer>
-</body>
+  <th:block th:replace="~{/layout/head :: headFragment}" />
+  <body>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!--header-->
+      <th:block th:replace="~{layout/header :: headerFragment}"></th:block>
+      <!--content-->
+      <th:block layout:fragment="content"></th:block>
+      <!--footer-->
+      <th:block th:replace="~{/layout/footer :: footerFragment}"></th:block>
+    </div>
+    <th:block th:replace="~{/layout/script :: scriptFragment}"></th:block>
+  </body>
 </html>
