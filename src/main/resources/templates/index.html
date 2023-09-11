@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="~{layout/default}">
-<body>
-<div layout:fragment="content">
+      layout:decorate="~{layout/default}">
+<head>
+    <title>Are you travelers</title>
+</head>
+<th:block layout:fragment="content">
     <!-- Banner -->
     <div class="main-banner">
         <img class="masthead-avatar mb-5" src="/static/images/main/main-banner.png" alt="배너"/>
@@ -367,7 +369,5 @@
             </div>
         </div>
     </section>
-</div>
-<script src="/static/js/main.js"></script>
-</body>
+</th:block>
 </html>
