@@ -47,6 +47,7 @@ public class WebSecurityConfig {
                                         "/accompany",
                                         "/receiverRequests",
                                         "/senderRequests",
+                                        "/reviewPossible",
                                         "/createReview",
                                         "/readReview",
                                         "/readReviewsAll",
