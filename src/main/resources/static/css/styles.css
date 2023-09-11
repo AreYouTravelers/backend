@@ -10962,6 +10962,7 @@ html {
     padding-top: 1.5rem;
     padding-bottom: 2rem;
     transition: padding-top 0.3s, padding-bottom 0.3s;
+    box-shadow: 0px 4px 10px 0px #ecececb3;
   }
   #mainNav .navbar-brand {
     font-size: 1.75em;
