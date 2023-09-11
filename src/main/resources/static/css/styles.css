@@ -1279,6 +1279,10 @@ progress {
     flex: 0 0 auto;
     width: 25%;
   }
+  .col-lg-3-2 {
+    width: 24%;
+    margin: 0 0.5%;
+  }
   .col-lg-4 {
     flex: 0 0 auto;
     width: 33.33333333%;
@@ -10835,12 +10839,11 @@ html {
   padding: 6rem 0;
 }
 .page-section .page-section-heading {
-  font-size: 2.25rem;
+  font-size: 1.5rem;
   line-height: 2rem;
 }
 @media (min-width: 992px) {
   .page-section .page-section-heading {
-    font-weight: 500;
     font-size: 1.5rem;
     line-height: 2.5rem;
   }

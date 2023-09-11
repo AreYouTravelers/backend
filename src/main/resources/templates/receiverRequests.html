@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>받은 동행 요청</title>
+</head>
+<body class="receiver">
+<th:block layout:fragment="content">
+    <!-- Contents -->
+    <nav id="subNav">
+        <div class="container">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3" href="/mypage">계정 설정</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link active py-3 px-0 px-lg-3" href="/receiverRequests">받은 동행 요청</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3" href="/senderRequests">동행 요청 내역</a></li>
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3" href="#">여행 후기</a></li>
+            </ul>
+        </div>
+    </nav>
+    <section class="page-section portfolio" id="portfolio" style="padding: 0;">
+        <div class="container">
+            <!-- Menu -->
+            <img class="main-menu-icon" src="/static/images/icon/icon-with.png" alt="동행 구하기">
+            <h2 class="page-section-heading text-secondary mb-0 main-menu">받은 동행 요청</h2>
+            <!-- Grid Items -->
+            <div class="row justify-content-center">
+                <!-- Board Item 1 -->
+                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-profile">
+                                <p class="board-item-img">
+                                    <img src="/static/images/user-profile-basic.png" alt="프로필 이미지">
+                                </p>
+                                <div class="board-item-info">
+                                    <p class="user-name">홍길동</p>
+                                    <p class="user-profile">
+                                        <span class="user-age">27</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-mbti">ESFJ</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-gender">남성</span>
+                                    </p>
+                                    <p class="user-temp"><span class="temp-3">36.5</span>℃</p>
+                                    <div class="item-contents">
+                                        <p>
+                                            안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다!  같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을 좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 2 -->
+                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-profile">
+                                <p class="board-item-img">
+                                    <img src="/static/images/user-profile-basic.png" alt="프로필 이미지">
+                                </p>
+                                <div class="board-item-info">
+                                    <p class="user-name">홍길동</p>
+                                    <p class="user-profile">
+                                        <span class="user-age">27</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-mbti">ESFJ</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-gender">남성</span>
+                                    </p>
+                                    <p class="user-temp"><span class="temp-3">36.5</span>℃</p>
+                                    <div class="item-contents">
+                                        <p>
+                                            안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다!  같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을 좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 3 -->
+                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-profile">
+                                <p class="board-item-img">
+                                    <img src="/static/images/user-profile-basic.png" alt="프로필 이미지">
+                                </p>
+                                <div class="board-item-info">
+                                    <p class="user-name">홍길동</p>
+                                    <p class="user-profile">
+                                        <span class="user-age">27</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-mbti">ESFJ</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-gender">남성</span>
+                                    </p>
+                                    <p class="user-temp"><span class="temp-3">36.5</span>℃</p>
+                                    <div class="item-contents">
+                                        <p>
+                                            안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다!  같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을 좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 4 -->
+                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-profile">
+                                <p class="board-item-img">
+                                    <img src="/static/images/user-profile-basic.png" alt="프로필 이미지">
+                                </p>
+                                <div class="board-item-info">
+                                    <p class="user-name">홍길동</p>
+                                    <p class="user-profile">
+                                        <span class="user-age">27</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-mbti">ESFJ</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-gender">남성</span>
+                                    </p>
+                                    <p class="user-temp"><span class="temp-3">36.5</span>℃</p>
+                                    <div class="item-contents">
+                                        <p>
+                                            안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다!  같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을 좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 5 -->
+                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-profile">
+                                <p class="board-item-img">
+                                    <img src="/static/images/user-profile-basic.png" alt="프로필 이미지">
+                                </p>
+                                <div class="board-item-info">
+                                    <p class="user-name">홍길동</p>
+                                    <p class="user-profile">
+                                        <span class="user-age">27</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-mbti">ESFJ</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-gender">남성</span>
+                                    </p>
+                                    <p class="user-temp"><span class="temp-3">36.5</span>℃</p>
+                                    <div class="item-contents">
+                                        <p>
+                                            안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다!  같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을 좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 6 -->
+                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-profile">
+                                <p class="board-item-img">
+                                    <img src="/static/images/user-profile-basic.png" alt="프로필 이미지">
+                                </p>
+                                <div class="board-item-info">
+                                    <p class="user-name">홍길동</p>
+                                    <p class="user-profile">
+                                        <span class="user-age">27</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-mbti">ESFJ</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-gender">남성</span>
+                                    </p>
+                                    <p class="user-temp"><span class="temp-3">36.5</span>℃</p>
+                                    <div class="item-contents">
+                                        <p>
+                                            안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다!  같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을 좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 7 -->
+                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-profile">
+                                <p class="board-item-img">
+                                    <img src="/static/images/user-profile-basic.png" alt="프로필 이미지">
+                                </p>
+                                <div class="board-item-info">
+                                    <p class="user-name">홍길동</p>
+                                    <p class="user-profile">
+                                        <span class="user-age">27</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-mbti">ESFJ</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-gender">남성</span>
+                                    </p>
+                                    <p class="user-temp"><span class="temp-3">36.5</span>℃</p>
+                                    <div class="item-contents">
+                                        <p>
+                                            안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다!  같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을 좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 8 -->
+                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-profile">
+                                <p class="board-item-img">
+                                    <img src="/static/images/user-profile-basic.png" alt="프로필 이미지">
+                                </p>
+                                <div class="board-item-info">
+                                    <p class="user-name">홍길동</p>
+                                    <p class="user-profile">
+                                        <span class="user-age">27</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-mbti">ESFJ</span>
+                                        <span class="--bs-gray-500">·</span>
+                                        <span class="user-gender">남성</span>
+                                    </p>
+                                    <p class="user-temp"><span class="temp-3">36.5</span>℃</p>
+                                    <div class="item-contents">
+                                        <p>
+                                            안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다!  같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을 좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</th:block>
+</body>
+</html>
