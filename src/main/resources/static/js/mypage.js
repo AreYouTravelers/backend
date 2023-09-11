@@ -16,6 +16,7 @@ fetch('/users/my-profile', {
     })
     .then(data => {
         // JSON 데이터를 받은 후 input 요소의 value 속성을 변경합니다.
+        const profileImage = document.getElementById('profile-image');
         const profileUsername = document.getElementById('profile-username')
         const profileFullname = document.getElementById('profile-fullname')
         const infoMbti = document.getElementById('info-mbti');
@@ -28,6 +29,7 @@ fetch('/users/my-profile', {
         const mbtiInput = document.getElementById('mbti');
         const emailInput = document.getElementById('email');
 
+        profileImage.src = data.profileImg;
         profileUsername.innerText = data.username;
         profileFullname.innerText = data.fullName;
         infoMbti.innerText = data.mbti;
