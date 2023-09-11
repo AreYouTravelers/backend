@@ -35,6 +35,19 @@ footer p {font-weight: 300; font-size: 14px;}
 .login .login-inner form button {display: block; width: 70%; margin: 1em auto; padding: 0.6em 1em; border-radius: 5px;}
 .login .login-inner a {display: block; color: #5D9EE2; text-align: center;}
 
+/* sign-up */
+.signup {background: linear-gradient(180deg, #c5f2ff 0%, rgba(180, 238, 255, 0) 100%);}
+.signup .page-section {padding-top: 15rem; padding-bottom: 0;}
+.signup .signup-inner {max-width: 35%; margin: 0 auto; padding: 5em 3em; border-radius: 12px; background-color: #ffffff; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+.signup .signup-inner img {display: block; margin: 0 auto 1em;}
+.signup .signup-inner h1 {font-size: 1.5rem; text-align: center;}
+.signup .signup-inner form {margin-top: 2em; margin-bottom: 2em;}
+.signup .signup-inner form .password {margin-top: -8px;}
+.signup .signup-inner form input {max-width: 70%; margin: 0 auto; padding: 1em; border: 1px solid #dddddd; border-radius: 5px; font-size: 0.9em;}
+.signup .signup-inner form button {display: block; width: 70%; margin: 1em auto; padding: 0.6em 1em; border-radius: 5px;}
+.signup .signup-inner a {display: block; color: #5D9EE2; text-align: center;}
+.signup .signup-inner .form-control {width: 70%; margin: 0 auto; padding: 1em; border: 1px solid #dddddd; border-radius: 5px; font-size: 0.9em;}
+
 /* main */
 .board-item {min-height: 469px; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
 .board-item-header {display: flex; justify-content: space-between; padding: 1.2em 1.2em 0 1.2em; font-size: 13px;}
