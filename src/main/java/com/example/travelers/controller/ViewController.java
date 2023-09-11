@@ -40,6 +40,11 @@ public class ViewController {
         return "senderRequests";
     }
 
+    @GetMapping("/reviewPossible")
+    public String reviewPossible() {
+        return "reviewPossible";
+    }
+
     @GetMapping("/createReview")
     public String createReview() {
         return "createReview";
