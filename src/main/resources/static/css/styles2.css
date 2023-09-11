@@ -77,3 +77,16 @@ footer p {font-weight: 300; font-size: 14px;}
 .my-page .profile2 .profile2-box input.profile2-email {width: 87.5%;}
 
 /* received */
+.receiver .board-item {min-height: 417px; padding: 2.5em 0 3em;}
+.receiver .board-item .board-item-profile .board-item-img {overflow: hidden; width: 47%; margin: 0 auto 1em; border: 1px solid #dddddd; border-radius: 50%;}
+.receiver .board-item .board-item-profile .board-item-img img {width: 100%;}
+.receiver .board-item .board-item-profile .board-item-info {padding-bottom: 0;}
+.receiver .board-item .board-item-profile .board-item-info .item-contents {margin-top: 2em;}
+.receiver .board-item .board-item-profile .board-item-info .item-contents p {
+    overflow: hidden;
+    margin-bottom: 0;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
