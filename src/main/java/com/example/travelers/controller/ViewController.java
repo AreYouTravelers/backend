@@ -32,6 +32,16 @@ public class ViewController {
         return "accompany";
     }
 
+    @GetMapping("/receiverRequests")
+    public String receiverRequests() {
+        return "receiverRequests";
+    }
+
+    @GetMapping("/senderRequests")
+    public String senderRequests() {
+        return "senderRequests";
+    }
+
     @GetMapping("/createReview")
     public String createReview() {
         return "createReview";
