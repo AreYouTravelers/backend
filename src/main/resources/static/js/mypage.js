@@ -1,7 +1,5 @@
 const getJwt = localStorage.getItem('accessToken');
 
-console.log(getJwt);
-
 fetch('/users/my-profile', {
     method: 'GET',
     headers: {
