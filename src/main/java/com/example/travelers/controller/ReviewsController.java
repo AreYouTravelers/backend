@@ -23,25 +23,27 @@ public class ReviewsController {
     private final BoardsService boardsService;
 
     // POST /boards/{boardId}/reviews
-    @PostMapping("/createReview")
-    public MessageResponseDto create(
+    @PostMapping("/boards/{boardId}/reviews")
+    public String create(
             @PathVariable("boardId") Long boardId,
-            @RequestBody ReviewsDto dto
+            ReviewsDto dto,
+            Model model
     ) {
-        service.createReview(boardId, dto);
-        log.info("create review success");
-        MessageResponseDto response = new MessageResponseDto("후기 생성 완료");
-
-        return response;
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("review", service.createReview(boardId, dto));
+        model.addAttribute("board", boardsService.readBoard(boardId));
+        return "readReview";
     }
 
-//    @GetMapping("/boards/{boardId}/reviews")
-//    public String createReview(
-//            @PathVariable("boardId") Long boardId,
-//            @RequestBody ReviewsDto dto
-//    ) {
-//        return "createReview";
-//    }
+    @GetMapping("/boards/{boardId}/reviews/create")
+    public String createReview(
+            @PathVariable("boardId") Long boardId,
+            Model model
+    ) {
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("board", boardsService.readBoard(boardId));
+        return "createReview";
+    }
 
     // GET /boards/{boardId}/reviews/{id}
     @GetMapping("/boards/{boardId}/reviews/{id}")
@@ -54,7 +56,6 @@ public class ReviewsController {
         model.addAttribute("review", service.readReview(boardId, id));
         model.addAttribute("boardId", boardId);
         model.addAttribute("reviewId", id);
-//        return response;
         return "readReview";
     }
 
@@ -95,10 +96,10 @@ public class ReviewsController {
             Model model
     ) {
         model.addAttribute("review", service.updateReview(boardId, id, dto));
+        model.addAttribute("board", boardsService.readBoard(boardId));
         model.addAttribute("boardId", boardId);
         model.addAttribute("id", id);
-        // TODO return 수정
-        return "updateReview";
+        return "readReview";
     }
 
     // DELETE /boards/{boardId}/reviews/{id}

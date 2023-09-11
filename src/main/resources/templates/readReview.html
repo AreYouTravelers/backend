@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>후기 단일 조회</title>
@@ -8,96 +8,57 @@
     <link rel="stylesheet" href="/static/css/styles2.css">
 </head>
 <body>
-<div class="content">
-    <h2>동행 후기 단일 조회</h2>
-    <div class="original-board">
-        <a class="href-none" href="#">
-            <span class="original-left">
-                <p><img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진"></p>
-            </span>
-            <span class="original-right">
-                <span class="original-right-top">
-                    원글 제목
+    <div class="content">
+        <h2>동행 후기 단일 조회</h2>
+        <div class="original-board">
+            <a class="href-none" href="#">
+                <span class="original-left">
+                    <p><img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진"></p>
                 </span>
-                <br> 
-                <span class="original-right-bottom">
-                    <span>원글 작성자</span>
-                    <span>·</span>
-                    <span>여행지</span>
+                <span class="original-right">
+                    <span class="original-right-top" th:text="${board.title}">
+                        원글 제목
+                    </span>
+                    <br>
+                    <span class="original-right-bottom">
+                        <span th:text="${board.username}">원글 작성자</span>
+                        <span>·</span>
+                        <span th:text="${board.country}">여행지</span>
+                    </span>
                 </span>
-            </span>
-        </a>
-    </div>
-    <div class="review-board">
-        <div>
-            <span class="original-left">
-                <p><img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진"></p>
-            </span>
-            <span class="original-right">
-                <span class="original-right-top">
-                    후기 작성자
-                </span>
-                <br> 
-                <span class="original-right-bottom">
-                    <span>별점</span>
-                </span>
-            </span>
+            </a>
         </div>
-        <div>
-            <span>후기 내용</span>
+        <div class="review-board">
+            <div>
+                <span class="original-left">
+                    <p><img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진"></p>
+                </span>
+                <span class="original-right">
+                    <span class="original-right-top" th:text="${review.senderUsername}">
+                        후기 작성자
+                    </span>
+                    <br>
+                    <span class="original-right-bottom">
+                        <span th:text="${review.rating}">별점</span>
+                    </span>
+                </span>
+            </div>
+            <div>
+                <span th:text="${review.content}">후기 내용</span>
+            </div>
         </div>
+<!--        TODO onClick 부분 수정. 뒤로가기 말고 readReviewAll로 가도록 -->
+        <button type="button" class="btn btn-light" onclick="window.history.go(-1)">목록</button>
+            <!-- 수정, 삭제 버튼은 본인 작성 후기 시에만 보이도록 활성화할 예정 -->
+            <button type="button" class="btn btn-primary" id="update">수정</button>
+            <button type="button" class="btn btn-danger" id="delete">삭제</button>
     </div>
-    <button type="button" class="btn btn-light" onclick="window.history.go(-1)">목록</button>
-        <!-- 수정, 삭제 버튼은 본인 작성 후기 시에만 보이도록 활성화할 예정 -->
-        <button type="button" class="btn btn-primary" id="update">수정</button>
-        <button type="button" class="btn btn-danger" id="delete">삭제</button>
-</div>
 
 
 
 
 
 <!-- <div class="container">
-    <h2>동행 후기 조회</h2>
-    <div>
-        <p>원글로 이동</p>
-        <div class="div-center">
-            <div class="boards">
-                <div class="board-item mx-auto">
-                    <a class="href-none" href="#">
-                        <div class="board-item-header">
-                            <div>
-                                <p><img src="/src/main/resources/static/images/user-profile1.jpg" alt="원글 작성자 프로필 이미지"></p>
-                            </div>
-                            <div class="board-item-info">
-                                <p class="item-title">원글 제목</p>
-                                <span class="user-name">원글 작성자</span>
-                                <span class="user-name">·</span>
-                                <span class="user-profile">여행지</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="boards">
-                <div class="board-item mx-auto">
-                    <a class="href-none" href="#">
-                        <div class="board-item-header">
-                            <div>
-                                <p><img src="/src/main/resources/static/images/user-profile1.jpg" alt="후기 작성자 프로필 이미지"></p>
-                            </div>
-                            <div class="board-item-info">
-                                <p class="item-title" id="review-writer">후기 작성자</p>
-                                <span class="user-name">별점</span>
-                            </div>
-                        </div>
-                        <div>
-                            <p>후기 내용</p>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
         <script>
             // let review = await fetch('/boards/' + boardId + '/reviews/' + reviewId);
             // review = await review.json();

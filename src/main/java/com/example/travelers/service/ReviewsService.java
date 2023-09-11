@@ -32,24 +32,24 @@ public class ReviewsService {
     private final UsersRepository usersRepository;
     private final AuthService authService;
     @Transactional
-    public void createReview(Long boardId, ReviewsDto dto) {
-        UsersEntity sender = authService.getUser();
+    public ReviewsDto createReview(Long boardId, ReviewsDto dto) {
+//        UsersEntity sender = authService.getUser();
         Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
         if (boardsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
         UsersEntity receiver = boardsEntity.get().getUser();
-        repository.save(ReviewsEntity.builder()
+        // 입력 받은 평점으로 온도 조절
+        receiver.setTemperature(receiver.getTemperature() + updateTemperature(dto.getRating()));
+        usersRepository.save(receiver);
+        return ReviewsDto.fromEntity(repository.save(ReviewsEntity.builder()
                 .country(boardsEntity.get().getCountry())
                 .rating(dto.getRating())
                 .content(dto.getContent())
                 .board(boardsEntity.get())
-                .sender(sender)
+                // TODO sender 받아오는 부분 수정
+                .sender(receiver)
                 .receiver(receiver)
-                .build());
-
-        // 입력 받은 평점으로 온도 조절
-        receiver.setTemperature(receiver.getTemperature() + updateTemperature(dto.getRating()));
-        usersRepository.save(receiver);
+                .build()));
     }
 
     public ReviewsDto readReview(Long boardId, Long id) {
