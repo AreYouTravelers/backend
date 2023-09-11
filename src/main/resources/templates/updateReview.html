@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>동행 후기 수정</title>
     <link rel="stylesheet" href="/static/css/reviews.css">
     <link rel="stylesheet" href="/static/css/styles.css">
@@ -16,39 +17,47 @@
                 <p><img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진"></p>
             </span>
             <span class="original-right">
-                <span class="original-right-top">
+                <span class="original-right-top" th:text="${board.title}">
                     원글 제목
                 </span>
-                <br> 
+                <br>
                 <span class="original-right-bottom">
-                    <span>원글 작성자</span>
+                    <span th:text="${board.username}">원글 작성자</span>
                     <span>·</span>
-                    <span>여행지</span>
+                    <span th:text="${board.country}">여행지</span>
                 </span>
             </span>
         </a>
     </div>
     <br>
-    <div class="rating">
-        <h4>여행은 어떠셨나요 ?</h4>
-        <span>별로였어요</span>
-        <span class="rating-score">★★★☆☆</span>
-        <span>좋았어요 !</span>
-        
-    </div>
-    <br>
-    <div class="review">
-        <h4>후기를 남겨주세요</h3>
-        <form action="">
-            <div class="mb-3 original-board">
-                <textarea class="review-content" id="exampleFormControlTextarea1" rows="8" cols="92">수정 전 작성한 후기가 보여집니다.</textarea>
+    <form th:action="@{'/boards/' + ${boardId} + '/reviews/' + ${id}}" th:method="put" id="updateForm">
+        <div class="rating">
+            <h4>여행은 어떠셨나요 ?</h4>
+            <span>별로였어요</span>
+<!--            <span class="rating-score" th:text="${review.rating}" name="rating">3</span>-->
+            <input type="range" class="form-range" id="customRange1" min="1" max="5" step=0.5 th:value="${review.rating}" onchange="range_change(this)">
+            <input type="text" id="rating" name="rating" th:value="${review.rating}">
+            <script>
+                function range_change(obj) {
+                    document.getElementById('rating').value=obj.value;
+                }
+            </script>
+            <br>
+            <span>좋았어요 !</span>
+        </div>
+        <br>
+        <div>
+            <h4>후기를 남겨주세요</h4>
+            <div class="mb-3 review-board-update">
+                <textarea th:text="${review.content}" class="review-content" id="exampleFormControlTextarea1" name="content" rows="7" cols="92">수정 전 작성한 후기가 보여집니다.</textarea>
             </div>
             <div class="form-button">
-                <button type="button" class="btn btn-light">등록</button>
+                <button type="submit" class="btn btn-light" id="updateButton">등록</button>
                 <button type="button" class="btn btn-secondary">취소</button>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
+<script src="/static/js/reviews.js"></script>
 </body>
 </html>

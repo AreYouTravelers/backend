@@ -2,24 +2,28 @@ package com.example.travelers.controller;
 
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.ReviewsDto;
-import com.example.travelers.entity.ReviewsEntity;
+import com.example.travelers.entity.BoardsEntity;
+import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.ReviewsService;
+import com.example.travelers.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.message.Message;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class ReviewsController {
     private final ReviewsService service;
+    private final BoardsService boardsService;
 
     // POST /boards/{boardId}/reviews
-    @PostMapping("/boards/{boardId}/reviews")
+    @PostMapping("/createReview")
     public MessageResponseDto create(
             @PathVariable("boardId") Long boardId,
             @RequestBody ReviewsDto dto
@@ -27,17 +31,31 @@ public class ReviewsController {
         service.createReview(boardId, dto);
         log.info("create review success");
         MessageResponseDto response = new MessageResponseDto("후기 생성 완료");
+
         return response;
     }
 
+//    @GetMapping("/boards/{boardId}/reviews")
+//    public String createReview(
+//            @PathVariable("boardId") Long boardId,
+//            @RequestBody ReviewsDto dto
+//    ) {
+//        return "createReview";
+//    }
+
     // GET /boards/{boardId}/reviews/{id}
     @GetMapping("/boards/{boardId}/reviews/{id}")
-    public ReviewsDto read(
+    public String read(
             @PathVariable("boardId") Long boardId,
-            @PathVariable("id") Long id
+            @PathVariable("id") Long id,
+            Model model
     ) {
-        ReviewsDto response = service.readReview(boardId, id);
-        return response;
+        model.addAttribute("board", boardsService.readBoard(boardId));
+        model.addAttribute("review", service.readReview(boardId, id));
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("reviewId", id);
+//        return response;
+        return "readReview";
     }
 
     // GET /boards/{boardId}/reviews
@@ -56,16 +74,31 @@ public class ReviewsController {
         return service.readReviewsAllBySender(pageNumber);
     }
 
-    // PUT /boards/{boardId}/reviews/{id}
-    @PutMapping("/boards/{boardId}/reviews/{id}")
-    public MessageResponseDto update(
+    // updateReview.html 반환
+    @GetMapping("/boards/{boardId}/reviews/{id}/update")
+    public String readAll(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
-            @RequestBody ReviewsDto dto
+            Model model
     ) {
-        service.updateReview(boardId, id, dto);
-        MessageResponseDto response = new MessageResponseDto("후기 수정 완료");
-        return response;
+        model.addAttribute("board", boardsService.readBoard(boardId));
+        model.addAttribute("review", service.readReview(boardId, id));
+        return "updateReview";
+    }
+
+    // PUT /boards/{boardId}/reviews/{id}
+    @PutMapping("/boards/{boardId}/reviews/{id}")
+    public String update(
+            @PathVariable("boardId") Long boardId,
+            @PathVariable("id") Long id,
+            ReviewsDto dto,
+            Model model
+    ) {
+        model.addAttribute("review", service.updateReview(boardId, id, dto));
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("id", id);
+        // TODO return 수정
+        return "updateReview";
     }
 
     // DELETE /boards/{boardId}/reviews/{id}

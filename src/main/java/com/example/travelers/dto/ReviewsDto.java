@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class ReviewsDto {
     private Long id;
-    private Long countryId;
+    private String country;
     private Double rating;
     private String content;
     private String senderUsername;
@@ -19,7 +19,7 @@ public class ReviewsDto {
     public static ReviewsDto fromEntity(ReviewsEntity entity) {
         ReviewsDto dto = new ReviewsDto();
         dto.setId(entity.getId());
-        dto.setCountryId(entity.getCountry().getId());
+        dto.setCountry(entity.getCountry().getName());
         dto.setRating(entity.getRating());
         dto.setContent(entity.getContent());
         dto.setSenderUsername(entity.getSender().getUsername());
