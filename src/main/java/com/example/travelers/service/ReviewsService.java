@@ -8,6 +8,7 @@ import com.example.travelers.repos.CountryRepository;
 import com.example.travelers.repos.ReviewsRepository;
 import com.example.travelers.repos.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReviewsService {
@@ -51,12 +53,13 @@ public class ReviewsService {
     }
 
     public ReviewsDto readReview(Long boardId, Long id) {
-        UsersEntity usersEntity = authService.getUser();
+//        UsersEntity usersEntity = authService.getUser();
         if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
         Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
         if (optionalReviewsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
+        System.out.println((ReviewsDto.fromEntity(optionalReviewsEntity.get())).getCountry());
         return ReviewsDto.fromEntity(optionalReviewsEntity.get());
     }
 
@@ -81,26 +84,29 @@ public class ReviewsService {
 
 
     @Transactional
-    public void updateReview(Long boardId, Long id, ReviewsDto dto) {
-        UsersEntity usersEntity = authService.getUser();
-        Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
-        ReviewsEntity entity = optionalReviewsEntity.get();
-        UsersEntity receiver = entity.getReceiver();
+    public ReviewsDto updateReview(Long boardId, Long id, ReviewsDto dto) {
+//        UsersEntity usersEntity = authService.getUser();
 
         if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+
+        Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
         if (optionalReviewsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
-        if (!entity.getSender().getId().equals(usersEntity.getId()))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
 
-        entity.setRating(dto.getRating());
+        ReviewsEntity entity = optionalReviewsEntity.get();
+        UsersEntity receiver = entity.getReceiver();
+
+//        if (!entity.getSender().getId().equals(usersEntity.getId()))
+//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
+
+        log.info("1");
+        entity.setRating((Double) dto.getRating());
+        log.info("2");
         entity.setContent(dto.getContent());
-        repository.save(entity);
-
-        // 업데이트 된 평점으로 온도 조절
         receiver.setTemperature(receiver.getTemperature() + updateTemperature(dto.getRating()));
         usersRepository.save(receiver);
+        return ReviewsDto.fromEntity(repository.save(entity));
     }
 
     @Transactional
