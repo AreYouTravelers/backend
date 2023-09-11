@@ -1,17 +1,13 @@
 package com.example.travelers.controller;
 
 import com.example.travelers.dto.BoardDto;
-import com.example.travelers.dto.MessageResponseDto;
-import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.mapping.BoardsMapping;
 import com.example.travelers.service.AuthService;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.MbtiFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.*;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +38,7 @@ public class BoardsController {
         BoardDto result = boardsService.readBoard(id);
         model.addAttribute("dto", result);
         model.addAttribute("id", id);
-        return "board/detail";
+        return "boardDetail";
     }
 
     @GetMapping
@@ -78,7 +74,7 @@ public class BoardsController {
         model.addAttribute("dto", result);
         model.addAttribute("id", id);
 //        model.addAttribute("user", user);
-        return "board/detail";
+        return "boardDetail";
 //        return ResponseEntity.ok(boardsService.updateBoard(id, dto));
     }
 
@@ -88,6 +84,6 @@ public class BoardsController {
             @PathVariable("id") Long id) {
         BoardDto result = boardsService.readBoard(id);
         boardsService.deleteBoard(id);
-        return "redirect:/";
+        return "accompany";
     }
 }

@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="en"
+<html lang="kr"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      th:with="lang=${#locale.language}" th:lang="${lang}">
 <head>
   <th:block th:insert="layout/head :: headFragment" />
   <title>Are you travelers?</title>
@@ -14,5 +15,11 @@
     <div layout:fragment="content"></div>
     <!--footer-->
     <footer th:replace="layout/footer :: footerFragment"></footer>
+
+    <!-- JavaScript Bundle with Popper -->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>-->
+<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>-->
+<!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<!--    <script src="/static/js/board.js"></script>-->
 </body>
 </html>
