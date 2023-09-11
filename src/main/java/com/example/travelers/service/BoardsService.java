@@ -175,16 +175,16 @@ public class BoardsService {
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
     }
 
-    @Transactional
-    public MessageResponseDto deleteBoard(Long id) {
-        UsersEntity userEntity = authService.getUser();
+//    @Transactional
+    public void deleteBoard(Long id) {
+//        UsersEntity userEntity = authService.getUser();
         Optional<BoardsEntity> board = boardsRepository.findById(id);
         if (board.isPresent()) {
-            if (board.get().getUser().getId().equals(userEntity.getId())) {
+//            if (board.get().getUser().getId().equals(userEntity.getId())) {
                 BoardsEntity boardsEntity = board.get();
                 boardsRepository.delete(boardsEntity);
-                return new MessageResponseDto("게시물을 삭제했습니다.");
-            } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
+//                return new MessageResponseDto("게시물을 삭제했습니다.");
+//            } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
     }
 }
