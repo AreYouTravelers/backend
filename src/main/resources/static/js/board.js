@@ -1,9 +1,9 @@
 // accessToken 불러오기
 let accessToken = localStorage.getItem('accessToken');
-var boardId = /*[[${dto.id}]]*/ 'default_value';
+var boardId = [[${dto.id}]];
 
 // 게시물 조회 요청
-fetch(`/boards/${dto.id}`, {
+fetch(`/boards/${boardId}`, {
     method: 'GET',
     headers: {
         'Authorization': `Bearer ` + accessToken, // JWT 토큰을 포함
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(updateForm);
 
         // 서버로 PUT 요청을 보냅니다.
-        fetch(`/boards/${dto.id}`, {
+        fetch(`/boards/${boardId}`, {
             method: 'PUT',
             headers: {
                 'Authorization': 'Bearer ' + accessToken,
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // 사용자에게 삭제 여부를 물어보고 확인을 누르면 삭제 작업을 수행합니다.
         if (window.confirm("삭제하시겠습니까?")) {
             // const formData = new FormData(deleteForm);
-            fetch(`/boards/${dto.id}`, {
+            fetch(`/boards/${boardId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Bearer ' + accessToken,
