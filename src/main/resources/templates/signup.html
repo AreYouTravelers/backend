@@ -11,10 +11,13 @@
       rel="stylesheet"
     />
     <!-- 회원가입 페이지에 맞는 CSS 파일 연결 -->
+    <link rel="stylesheet" th:href="@{/static/css/styles.css}" />
+    <link rel="stylesheet" th:href="@{/static/css/styles2.css}" />
     <link rel="stylesheet" href="/static/css/signup.css" />
   </head>
   <body>
     <div class="container">
+      <th:block th:replace="header :: headerFragment" />
       <!-- 폼을 페이지 가운데로 위치시킵니다. -->
       <div
         class="d-flex justify-content-center align-items-center"
@@ -136,6 +139,7 @@
           </div>
         </div>
       </div>
+      <th:block th:replace="footer :: footerFragment" />
     </div>
     <script src="/static/js/user.js"></script>
     <script>
