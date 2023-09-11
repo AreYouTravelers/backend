@@ -23,9 +23,7 @@ public class ViewController {
     }
 
     @GetMapping("/mypage")
-    public String mypage() {
-        return "mypage";
-    }
+    public String mypage() { return "mypage"; }
 
     @GetMapping("/accompany")
     public String accompany() {

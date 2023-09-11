@@ -70,22 +70,24 @@ public class BoardsController {
     public String update(
             @PathVariable("id") Long id,
             BoardDto dto, Model model) {
-//        UsersEntity userEntity = authService.getUser();
+//        UsersEntity user = authService.getUser();  // user가 null이어서 오류나는것이었음
         BoardDto result = boardsService.updateBoard(id, dto);
 //        if (!result.getUsername().equals(userEntity.getUsername())) {
 //            return "redirect:/";
 //        }
         model.addAttribute("dto", result);
         model.addAttribute("id", id);
+//        model.addAttribute("user", user);
         return "board/detail";
 //        return ResponseEntity.ok(boardsService.updateBoard(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    @CacheEvict(value = "boards", key = "#id")
-    public ResponseEntity<MessageResponseDto> delete(
+//    @CacheEvict(value = "boards", key = "#id")
+    public String delete(
             @PathVariable("id") Long id) {
-        MessageResponseDto responseDto = boardsService.deleteBoard(id);
-        return ResponseEntity.ok(responseDto);
+        BoardDto result = boardsService.readBoard(id);
+        boardsService.deleteBoard(id);
+        return "redirect:/";
     }
 }
