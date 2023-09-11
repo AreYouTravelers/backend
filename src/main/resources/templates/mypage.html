@@ -5,6 +5,7 @@
 <head>
     <title>프로필</title>
     <script src="/static/js/mypage.js"></script>
+    <script src="/static/js/mypageImageUpload.js"></script>
 </head>
 <body class="my-page">
 <th:block layout:fragment="content">
@@ -63,12 +64,13 @@
                     <div class="profile-image">
                         <div class="profile-image-inner">
                             <div class="profile-image-circle">
-                                <img src="/static/images/user-profile-basic.png" alt="">
+                                <img id="profile-image" src="/static/images/user-profile-basic.png" style="width: 152px; height: 150px; border-radius: 50%; object-fit: cover;" alt="">
                             </div>
                         </div>
-                        <button>
+                        <button id="upload-image-button">
                             <img src="/static/images/icon/icon-edit-image.png" alt="">
                         </button>
+                        <input type="file" id="image-input" style="display: none;">
                     </div>
                     <div class="profile-name">
                         <p class="profile-username" id="profile-username"></p>

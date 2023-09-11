@@ -128,7 +128,7 @@ public class UsersService {
     public MessageResponseDto uploadProfileImage(MultipartFile multipartFile) {
         UsersEntity userEntity = authService.getUser();
 
-        String profileDir = String.format("media/profile/%d/", userEntity.getId());
+        String profileDir = String.format("static/images/profile/%d/", userEntity.getId());
 
         try {
             Files.createDirectories(Path.of(profileDir));
