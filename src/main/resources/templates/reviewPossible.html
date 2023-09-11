@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>후기 작성</title>
+</head>
+<body class="review-possible">
+<th:block layout:fragment="content">
+    <!-- Contents -->
+    <div class="container container-wrap justify-content-between">
+        <nav id="subNav" class="col-md-2 col-lg-2">
+            <div class="container">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item mx-0 mx-lg-1">마이페이지
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/mypage">프로필</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="#">나의 알림</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">나의 동행
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="#">내가 쓴 글</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/receiverRequests">받은 동행</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/senderRequests">보낸 동행</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link active py-2 px-0 px-lg-3" href="/reviewPossible">후기 작성</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">나의 후기
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/readReviewsAll">받은 후기</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/readReviewsAllBySender">보낸 후기</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="container-content page-section portfolio col-md-9 col-lg-9" id="portfolio">
+            <!-- Menu -->
+            <img class="sub-menu-icon" src="/static/images/icon/icon-review-possible.png" alt="후기 작성">
+            <h2 class="page-section-heading text-secondary mb-0 main-menu">후기 작성</h2>
+            <!-- Grid Items -->
+            <div class="row justify-content-center">
+                <!-- Board Item 1 -->
+                <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-header">
+                                <div class="header-left">
+                                    <p class="item-date">
+                                        <span class="start-date">2023-09-15</span>
+                                        <span> ~ </span>
+                                        <span class="end-date">2023-09-20</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-bg">
+                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">파리
+                                </p>
+                                <p class="board-item-img">
+                                    <img src="/static/images/country/paris.jpg" alt="파리">
+                                </p>
+                            </div>
+                            <div class="board-item-info">
+                                <p class="item-title">오늘 파리 에펠탑 보러 가실 분?</p>
+                                <div class="item-contents">
+                                    <p>
+                                        안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다! 같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을
+                                        좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-review">
+                                <button class="impossible"><a class="href-none" href="#">후기 작성하기</a></button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 2 -->
+                <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-header">
+                                <div class="header-left">
+                                    <p class="item-date">
+                                        <span class="start-date">2023-09-15</span>
+                                        <span> ~ </span>
+                                        <span class="end-date">2023-09-20</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-bg">
+                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">파리
+                                </p>
+                                <p class="board-item-img">
+                                    <img src="/static/images/country/paris.jpg" alt="파리">
+                                </p>
+                            </div>
+                            <div class="board-item-info">
+                                <p class="item-title">오늘 파리 에펠탑 보러 가실 분?</p>
+                                <div class="item-contents">
+                                    <p>
+                                        안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다! 같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을
+                                        좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-review">
+                                <button class="impossible"><a class="href-none" href="#">후기 작성하기</a></button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 3 -->
+                <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-header">
+                                <div class="header-left">
+                                    <p class="item-date">
+                                        <span class="start-date">2023-09-15</span>
+                                        <span> ~ </span>
+                                        <span class="end-date">2023-09-20</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-bg">
+                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">파리
+                                </p>
+                                <p class="board-item-img">
+                                    <img src="/static/images/country/paris.jpg" alt="파리">
+                                </p>
+                            </div>
+                            <div class="board-item-info">
+                                <p class="item-title">오늘 파리 에펠탑 보러 가실 분?</p>
+                                <div class="item-contents">
+                                    <p>
+                                        안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다! 같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을
+                                        좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-review">
+                                <button class="possible"><a class="href-none" href="#">후기 작성하기</a></button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 4 -->
+                <div class="col-md-4 col-lg-4 col-lg-4-2">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-header">
+                                <div class="header-left">
+                                    <p class="item-date">
+                                        <span class="start-date">2023-09-15</span>
+                                        <span> ~ </span>
+                                        <span class="end-date">2023-09-20</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-bg">
+                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">파리
+                                </p>
+                                <p class="board-item-img">
+                                    <img src="/static/images/country/paris.jpg" alt="파리">
+                                </p>
+                            </div>
+                            <div class="board-item-info">
+                                <p class="item-title">오늘 파리 에펠탑 보러 가실 분?</p>
+                                <div class="item-contents">
+                                    <p>
+                                        안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다! 같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을
+                                        좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-review">
+                                <button class="possible"><a class="href-none" href="#">후기 작성하기</a></button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 5 -->
+                <div class="col-md-4 col-lg-4 col-lg-4-2">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-header">
+                                <div class="header-left">
+                                    <p class="item-date">
+                                        <span class="start-date">2023-09-15</span>
+                                        <span> ~ </span>
+                                        <span class="end-date">2023-09-20</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-bg">
+                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">파리
+                                </p>
+                                <p class="board-item-img">
+                                    <img src="/static/images/country/paris.jpg" alt="파리">
+                                </p>
+                            </div>
+                            <div class="board-item-info">
+                                <p class="item-title">오늘 파리 에펠탑 보러 가실 분?</p>
+                                <div class="item-contents">
+                                    <p>
+                                        안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다! 같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을
+                                        좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-review">
+                                <button class="possible"><a class="href-none" href="#">후기 작성하기</a></button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Board Item 6 -->
+                <div class="col-md-4 col-lg-4 col-lg-4-2">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" href="#">
+                            <div class="board-item-header">
+                                <div class="header-left">
+                                    <p class="item-date">
+                                        <span class="start-date">2023-09-15</span>
+                                        <span> ~ </span>
+                                        <span class="end-date">2023-09-20</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-bg">
+                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">파리
+                                </p>
+                                <p class="board-item-img">
+                                    <img src="/static/images/country/paris.jpg" alt="파리">
+                                </p>
+                            </div>
+                            <div class="board-item-info">
+                                <p class="item-title">오늘 파리 에펠탑 보러 가실 분?</p>
+                                <div class="item-contents">
+                                    <p>
+                                        안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다! 같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을
+                                        좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-review">
+                                <button class="possible"><a class="href-none" href="#">후기 작성하기</a></button>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</th:block>
+</body>
+</html>

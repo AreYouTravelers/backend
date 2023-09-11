@@ -3,6 +3,14 @@ body {overflow-x: hidden;}
 .href-none {color: inherit; text-decoration: none;}
 .href-none:hover {color: inherit;}
 .temp-3 {color: #3BD0FA;}
+.container-wrap {display: flex;}
+.container-content {padding-top: 10rem;}
+.sub-menu-icon {width: 40px; margin-right: 7px; margin-bottom: 2em; vertical-align: top;}
+
+/* #subNav */
+#subNav > .container > ul > li {margin-bottom: 2em; font-weight: 500; font-size: 0.9rem; color: #999999;}
+#subNav > .container > ul > li > ul {margin-top: 8px;}
+#subNav > .container > ul > li > ul > li > a {font-size: 1rem;}
 
 /* header */
 .navbar-expand-lg .navbar-collapse a {font-weight: 700; font-size: 1.2rem;}
@@ -58,7 +66,8 @@ footer p {font-weight: 300; font-size: 14px;}
 .accompany form button {padding-left: 1.2em; padding-right: 1.2em;}
 
 /* my page */
-.my-page .page-section {padding: 0;}
+.my-page .sub-menu-icon {width: 45px; margin-top: -2px;}
+.my-page .page-section {padding-bottom: 0;}
 .my-page .page-section > .container > .div {margin-top: 1em;}
 .my-page .profile {max-height: 457px; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
 .my-page .profile .profile-image {overflow: hidden; position: relative;}
@@ -75,17 +84,18 @@ footer p {font-weight: 300; font-size: 14px;}
 .my-page .profile .profile-info .info-box .info-box-inner .info-title {display: block; margin-top: 2px; margin-bottom: 7px; text-align: center; font-size: 0.9em; color: #5D9EE2;}
 .my-page .profile .profile-info .info-box .info-box-inner .info-content {text-align: center;}
 .my-page .profile .profile-info .info-box .info-box-inner .info-content .info-temp {color: #4CB7EF}
-.my-page .profile2 {padding-left: 5em; padding-right: 5em;}
+.my-page .profile2 {padding-left: 4em;}
 .my-page .profile2 h3 {margin-bottom: 2em; font-weight: 700; font-size: 1.3rem; color: #4CB7EF;}
 .my-page .profile2 .profile2-box {display: flex;}
 .my-page .profile2 .profile2-box .profile2-title {display: flex; font-size: 1.1rem;}
 .my-page .profile2 .profile2-box .profile2-title button {width: 30px; border: none; background-color: inherit;}
 .my-page .profile2 .profile2-box .profile2-title button img {width: 100%; margin-top: -19px; margin-left: 3px;}
-.my-page .profile2 .profile2-box input {width: 75%; padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
-.my-page .profile2 .profile2-box input.profile2-email {width: 87.5%;}
+.my-page .profile2 .profile2-box input {width: 80%; padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+.my-page .profile2 .profile2-box input.profile2-email {width: 90%;}
 
-/* received */
-.receiver .board-item {min-height: 417px; padding: 2.5em 0 3em;}
+/* receiver */
+.receiver .sub-menu-icon {width: 43px;}
+.receiver .board-item {min-height: 400px; padding: 2em 0;}
 .receiver .board-item .board-item-profile .board-item-img {overflow: hidden; width: 47%; margin: 0 auto 1em; border: 1px solid #dddddd; border-radius: 50%;}
 .receiver .board-item .board-item-profile .board-item-img img {width: 100%;}
 .receiver .board-item .board-item-profile .board-item-info {padding-bottom: 0;}
@@ -98,3 +108,35 @@ footer p {font-weight: 300; font-size: 14px;}
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
 }
+
+/* sender */
+.sender .sub-menu-icon {width: 43px;}
+.sender .board-item {min-height: 420px;}
+.sender .board-item .board-item-info {padding-bottom: 0;}
+.sender .board-item .board-item-info .item-contents {margin-top: 2em;}
+.sender .board-item .board-item-info .item-contents p {
+    overflow: hidden;
+    margin-bottom: 0;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+/* review-possible */
+.review-possible .sub-menu-icon {width: 48px; margin-top: -5px;}
+.review-possible .board-item .board-item-info {padding-bottom: 0;}
+.review-possible .board-item .board-item-info .item-contents {margin-top: 2em;}
+.review-possible .board-item .board-item-info .item-contents p {
+    overflow: hidden;
+    margin-bottom: 0;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+.review-possible .board-item .board-item-review {margin-top: 1.5em; text-align: center;}
+.review-possible .board-item .board-item-review button {width: 45%; padding: 0.5em; border: none; border-radius: 9px; font-size: 0.9rem; color: #ffffff;}
+.review-possible .board-item .board-item-review button.possible {background-color: #3BD0FA;}
+.review-possible .board-item .board-item-review button.impossible {background-color: #B0B0B0; pointer-events: none; cursor: default;}
+.review-possible .board-item .board-item-review button.impossible a {pointer-events: none; cursor: default;}
