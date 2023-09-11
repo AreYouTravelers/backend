@@ -45,6 +45,8 @@ public class WebSecurityConfig {
                                         "/signup",
                                         "/mypage",
                                         "/accompany",
+                                        "/receiverRequests",
+                                        "/senderRequests",
                                         "/createReview",
                                         "/readReview",
                                         "/readReviewsAll",
