@@ -1,34 +1,19 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="kr" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
     <title th:text="'동행 구하기 | ' + ${dto.title}"></title>
     <style>
-        .board-detail {
-            padding-top: 10rem;
-        }
-
         .form-container {
             display: flex;
-            flex-direction: row; /* 가로 방향으로 요소를 정렬 */
-            align-items: center; /* 요소를 수직 중앙에 정렬 */
-            gap: 10px; /* 요소 간 간격 설정 */
-        }
-
-        .form-container form {
-            flex: 1; /* 폼 요소가 남은 공간을 차지하도록 설정 */
-        }
-
-        .form-container button {
-            margin: 0; /* 버튼의 기본 여백 제거 */
         }
     </style>
     <script src="/static/js/board.js"></script>
 </head>
-<body>
+<body style="padding-top: 130px;">
 <th:block layout:fragment="content">
-    <div class="container board-detail" layout:fragment="content">
+    <div class="container board-detail">
         <h1 class="mt-4">동행 구하기</h1>
         <div class="card mb-4">
             <div class="card-body">
@@ -84,20 +69,22 @@
                         <input type="text" class="form-control" id="createdAt" name="createdAt"
                                th:value="${#temporals.format(dto.createdAt, 'yyyy-MM-dd HH:mm')}" disabled>
                     </div>
-                    <div class="form-container">
-                        <a href="/boards" class="btn btn-outline-secondary">목록</a>
-                        <!--                <button type="button" class="btn btn-primary" id="updateButton">수정</button>-->
-                        <!--                <a th:href="@{'/boards/' + ${dto.id} + '/edit'}" class="btn btn-primary">수정</a>-->
-                        <!--                <th:block th:if="${user != null and dto.getUsername() == user.getUsername()}">-->
-                        <button class="btn btn-primary" id="updateButton">수정</button>
                 </form>
-                <form th:action="@{'/boards/' + ${dto.id}}" th:method="post" id="deleteForm">
-                    <input type="hidden" name="_method" value="delete"/>
-                    <button class="btn btn-outline-danger" id="deleteButton" onclick="window.confirm('삭제하시겠습니까?')">삭제
-                    </button>
-                </form>
+                <div class="form-container">
+                    <a href="/accompany" class="btn btn-outline-secondary" style="margin-right: 6px;">목록</a>
+                    <a th:href="@{'/boards/' + ${dto.id} + '/comments'}" class="btn btn-outline-secondary" style="margin-right: auto;">댓글</a>
+                    <!--                <a th:href="@{'/boards/' + ${dto.id} + '/edit'}" class="btn btn-primary">수정</a>-->
+                    <!--                <th:block th:if="${user != null and dto.getUsername() == user.getUsername()}">-->
+                    <div style="display: flex; justify-content: flex-end;">
+                    <button class="btn btn-primary" id="updateButton" style="margin-right: 6px;">수정</button>
+                    <form th:action="@{'/boards/' + ${dto.id}}" th:method="post" id="deleteForm">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button class="btn btn-outline-danger" id="deleteButton">삭제</button>
+                    </form>
+                </div>
             </div>
         </div>
+    </div>
     </div>
 </th:block>
 </body>
