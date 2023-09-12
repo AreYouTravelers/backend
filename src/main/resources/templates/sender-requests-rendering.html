@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>동행 요청 작성</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/styles2.css">
+    <script>
+        // accessToken 불러오기
+        let accessToken = localStorage.getItem('accessToken');
+        const boardId = window.location.pathname.split("/")[2];
+        const senderRequestsId = window.location.pathname.split("/")[4];
+
+        // 동행 요청 조회 단일 조회
+        fetch(`/boards/${boardId}/sender-requests/${senderRequestsId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ` + accessToken, // JWT 토큰을 포함
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('서버에서 응답 오류 발생');
+                }
+            })
+            .then(data => {
+                console.log('서버로부터 받은 데이터:', data);
+                // 원하는 동작 수행
+            })
+            .catch(error => {
+                console.error('에러:', error);
+            });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const createForm = document.getElementById('createForm');
+            const createButton = document.getElementById('createButton');
+
+            createButton.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                const formData = new FormData(createForm);
+
+                fetch(`/boards/${boardId}/sender-requests`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData.entries())) // FormData를 JSON으로 변환
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("동행 요청이 되었습니다.");
+                            window.location.href = '/boards/{boardId}/sender-requests/{id}';
+                        } else {
+                            alert("동행 요청에 실패했습니다.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Network error:', error);
+                    });
+            });
+        });
+    </script>
+</head>
+<body class="sender-rendering">
+<th:block layout:fragment="content">
+    <!-- Contents -->
+    <div class="container container2">
+        <p class="sub-title-icon">
+            <img src="/static/images/icon/icon-sender-requests.png" alt="동행 요청하기">
+        </p>
+        <h2>동행 요청하기</h2>
+        <h3 class="board-title">현재 게시글</h3>
+        <div class="original-board">
+            <a class="href-none" href="#">
+                <div class="original-left">
+                    <img src="/static/images/user-profile-basic.png" alt="원글 작성자 프로필 사진" />
+                </div>
+                <div class="original-right">
+                    <div class="original-right-top" th:text="${board.title}"></div>
+                    <div class="original-right-bottom">
+                        <p>작성자: <span th:text="${board.username}"></span> |</p>
+                        <p>여행지: <span th:text="${board.country}"></span> |</p>
+                        <p>기간: <span th:text="${board.startDate}"></span> ~ <span th:text="${board.endDate}"></span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="board-message">
+            <h4 class="board-title">동행 요청 메세지를 작성해주세요.</h4>
+            <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="post" id="createForm">
+                <div class="board-message">
+                    <textarea id="sender-message" name="message" rows="8"></textarea>
+                </div>
+                <div class="container-wrap justify-content-center gap-3 mt-5 mb-5">
+                    <button type="button" class="btn btn-secondary">취소</button>
+                    <button type="submit" class="btn btn-primary" id="createButton">요청</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

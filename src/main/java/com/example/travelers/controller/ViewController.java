@@ -35,9 +35,9 @@ public class ViewController {
         return "receiverRequests";
     }
 
-    @GetMapping("/senderRequests")
+    @GetMapping("/sender-requests")
     public String senderRequests() {
-        return "senderRequests";
+        return "sender-requests";
     }
 
     @GetMapping("/reviewPossible")

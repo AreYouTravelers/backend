@@ -2,39 +2,61 @@ package com.example.travelers.controller;
 
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.SenderRequestsDto;
+import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.SenderRequestsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j // 로깅
-@RestController // JSON 응답, @Controller 의 역할을 하면서, 등록된 모든 메소드에 @ResponseBody 를 포함
+@Controller // HTML응답 | JSON응답: @RestController로 작성 (@Controller 역할을 하면서, 등록된 모든 메소드에 @ResponseBody를 포함)
 @RequiredArgsConstructor
 public class SenderRequestsController {
     private final SenderRequestsService service;
+    private final BoardsService boardsService;
 
-    // 동행 요청 생성
-    // POST /boards/{boardId}/sender-requests
-    @PostMapping("/boards/{boardId}/sender-requests")
-    public MessageResponseDto create(
+    // Rendering - 동행 요청 생성에 필요한 초기 HTML 렌더링 페이지
+    @GetMapping("/boards/{boardId}/sender-requests/write")
+    public String createSenderRequests(
             @PathVariable("boardId") Long boardId,
-            @RequestBody SenderRequestsDto dto
+            Model model
     ) {
-        service.createSenderRequests(boardId, dto);
-        MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청을 생성했습니다.");
-        return messageResponseDto;
+        model.addAttribute("board", boardsService.readBoard(boardId)); // 원본 게시글
+        model.addAttribute("boardId", boardId);
+        return "sender-requests-rendering";
     }
 
-    // 동행 요청 단일 조회
+    // Create - 동행 요청 생성
+    // POST /boards/{boardId}/sender-requests
+    @PostMapping("/boards/{boardId}/sender-requests")
+    public String create(
+            @PathVariable("boardId") Long boardId,
+            SenderRequestsDto dto,
+            Model model
+    ) {
+        model.addAttribute("board", boardsService.readBoard(boardId));
+        model.addAttribute("senderRequests", service.createSenderRequests(boardId, dto));
+        model.addAttribute("boardId", boardId);
+        return "read-sender-requests";
+    }
+
+    // Rendering Read - 동행 요청 단일 조회
     // GET /boards/{boardId}/sender-requests/{id}
     @GetMapping("/boards/{boardId}/sender-requests/{id}")
-    public SenderRequestsDto read(
+    public String read(
             @PathVariable("boardId") Long boardId,
-            @PathVariable("id") Long id
+            @PathVariable("id") Long id,
+            Model model
     ) {
-        return service.readSenderRequests(boardId, id);
+        model.addAttribute("board", boardsService.readBoard(boardId));
+        model.addAttribute("senderRequests", service.readSenderRequests(boardId, id));
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("id", id);
+        return "read-sender-requests";
     }
 
     // 작성자 별 동행 요청 전체 조회
