@@ -9,6 +9,7 @@ import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.repos.BoardsRepository;
 import com.example.travelers.repos.ReceiverRequestsRepository;
 import com.example.travelers.repos.SenderRequestsRepository;
+import com.example.travelers.repos.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,10 +29,11 @@ public class SenderRequestsService {
     private final ReceiverRequestsRepository receiverRequestsRepository;
     private final BoardsRepository boardsRepository;
     private final AuthService authService;
+    private final UsersRepository usersRepository;
 
     // 동행 요청 생성
-    public void createSenderRequests(Long boardId, SenderRequestsDto dto) {
-        UsersEntity usersEntity = authService.getUser();
+    public SenderRequestsDto createSenderRequests(Long boardId, SenderRequestsDto dto) {
+        UsersEntity usersEntity = usersRepository.findById((long)1).get();
 
         // 게시글 동행 요청 중복 방지
         Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndSenderId(boardId, usersEntity.getId());
@@ -43,16 +45,6 @@ public class SenderRequestsService {
         if (boardsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
 
-        // repository 저장
-        SenderRequestsEntity newSenderRequests = SenderRequestsEntity.builder()
-                .sender(usersEntity) // sender_id
-                .message(dto.getMessage()) // 요청 메세지
-                .status(false) // 기본 값: 거절
-                .createdAt(LocalDateTime.now()) // 요청일
-                .receiver(boardsEntity.get().getUser()) // receiver 기본 값: 거절
-                .board(boardsEntity.get()) // board_id
-                .build();
-        senderRequestsRepository.save(newSenderRequests);
 
         // 동행 요청시 receiver 테이블 생성
         // repository 저장
@@ -64,6 +56,16 @@ public class SenderRequestsService {
                 .board(boardsEntity.get()) // board_id
                 .build();
         receiverRequestsRepository.save(newReceiverRequests);
+
+        // repository 저장
+        return SenderRequestsDto.fromEntity(senderRequestsRepository.save(SenderRequestsEntity.builder()
+                .sender(usersEntity) // sender_id
+                .message(dto.getMessage()) // 요청 메세지
+                .status(false) // 기본 값: 거절
+                .createdAt(LocalDateTime.now()) // 요청일
+                .receiver(boardsEntity.get().getUser()) // receiver 기본 값: 거절
+                .board(boardsEntity.get()) // board_id
+                .build()));
     }
 
     // 동행 요청 단일 조회
