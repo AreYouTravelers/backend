@@ -1,6 +1,7 @@
 package com.example.travelers.service;
 
 import com.example.travelers.dto.BoardCategoryDto;
+import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.ReviewsDto;
 import com.example.travelers.entity.*;
 import com.example.travelers.repos.BoardsRepository;
@@ -33,10 +34,11 @@ public class ReviewsService {
     private final AuthService authService;
     @Transactional
     public ReviewsDto createReview(Long boardId, ReviewsDto dto) {
-//        UsersEntity sender = authService.getUser();
         Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
-        if (boardsEntity.isEmpty())
+        if (boardsEntity.isEmpty()) {
+            UsersEntity sender = authService.getUser();
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+        }
         UsersEntity receiver = boardsEntity.get().getUser();
         // 입력 받은 평점으로 온도 조절
         receiver.setTemperature(receiver.getTemperature() + updateTemperature(dto.getRating()));
@@ -53,13 +55,13 @@ public class ReviewsService {
     }
 
     public ReviewsDto readReview(Long boardId, Long id) {
-//        UsersEntity usersEntity = authService.getUser();
-        if (!boardsRepository.existsById(boardId))
+        if (!boardsRepository.existsById(boardId)) {
+            UsersEntity usersEntity = authService.getUser();
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+        }
         Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
         if (optionalReviewsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
-        System.out.println((ReviewsDto.fromEntity(optionalReviewsEntity.get())).getCountry());
         return ReviewsDto.fromEntity(optionalReviewsEntity.get());
     }
 
@@ -85,10 +87,10 @@ public class ReviewsService {
 
     @Transactional
     public ReviewsDto updateReview(Long boardId, Long id, ReviewsDto dto) {
-//        UsersEntity usersEntity = authService.getUser();
-
-        if (!boardsRepository.existsById(boardId))
+        if (!boardsRepository.existsById(boardId)) {
+            UsersEntity usersEntity = authService.getUser();
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+        }
 
         Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
         if (optionalReviewsEntity.isEmpty())
@@ -99,10 +101,10 @@ public class ReviewsService {
 
 //        if (!entity.getSender().getId().equals(usersEntity.getId()))
 //            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
-
-        log.info("1");
+        System.out.println(dto.getRating());
+        System.out.println(dto.getCountry());
+        System.out.println(dto.getContent());
         entity.setRating((Double) dto.getRating());
-        log.info("2");
         entity.setContent(dto.getContent());
         receiver.setTemperature(receiver.getTemperature() + updateTemperature(dto.getRating()));
         usersRepository.save(receiver);
@@ -110,7 +112,7 @@ public class ReviewsService {
     }
 
     @Transactional
-    public void deleteReview(Long boardId, Long id) {
+    public MessageResponseDto deleteReview(Long boardId, Long id) {
         UsersEntity usersEntity = authService.getUser();
         Optional<ReviewsEntity> reviewsEntity = repository.findById(id);
         UsersEntity receiver = reviewsEntity.get().getReceiver();
@@ -122,11 +124,11 @@ public class ReviewsService {
         if (!reviewsEntity.get().getSender().getId().equals(usersEntity.getId()))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다.");
 
-        repository.deleteById(id);
-
         // 삭제된 평점으로 온도 조절
         receiver.setTemperature(receiver.getTemperature() - updateTemperature(reviewsEntity.get().getRating()));
         usersRepository.save(receiver);
+        repository.deleteById(id);
+        return new MessageResponseDto("후기 삭제 완료");
     }
 
     public Double updateTemperature(Double temperature) {

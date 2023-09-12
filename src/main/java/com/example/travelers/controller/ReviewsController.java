@@ -9,6 +9,7 @@ import com.example.travelers.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -88,7 +89,7 @@ public class ReviewsController {
 
     // PUT /boards/{boardId}/reviews/{id}
     @PutMapping("/boards/{boardId}/reviews/{id}")
-    public String update(
+    public ResponseEntity<ReviewsDto> update(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
             ReviewsDto dto,
@@ -98,17 +99,18 @@ public class ReviewsController {
         model.addAttribute("review", service.updateReview(boardId, id, dto));
         model.addAttribute("boardId", boardId);
         model.addAttribute("id", id);
-        return "readReview";
+
+        return ResponseEntity.ok(service.updateReview(boardId, id, dto));
     }
 
     // DELETE /boards/{boardId}/reviews/{id}
     @DeleteMapping("/boards/{boardId}/reviews/{id}")
-    public MessageResponseDto delete(
+    public ResponseEntity<MessageResponseDto> delete(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id
     ) {
-        service.deleteReview(boardId, id);
-        MessageResponseDto response = new MessageResponseDto("후기 삭제 완료");
-        return response;
+//        service.deleteReview(boardId, id);
+//        MessageResponseDto response = new MessageResponseDto("후기 삭제 완료");
+        return ResponseEntity.ok(service.deleteReview(boardId, id));
     }
 }

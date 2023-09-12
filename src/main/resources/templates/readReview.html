@@ -5,9 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <title>후기 단일 조회</title>
-    <link rel="stylesheet" href="/static/css/reviews.css">
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="stylesheet" href="/static/css/styles2.css">
+    <link rel="stylesheet" href="/static/css/reviews.css">
+    <script src="/static/js/reviews.js"></script>
 </head>
 <body>
 <th:block layout:fragment="content">
@@ -53,8 +54,10 @@
 <!--        TODO onClick 부분 수정. 뒤로가기 말고 readReviewAll로 가도록 -->
         <button type="button" class="btn btn-light" onclick="window.history.go(-1)">목록</button>
             <!-- 수정, 삭제 버튼은 본인 작성 후기 시에만 보이도록 활성화할 예정 -->
-            <button type="button" class="btn btn-primary" id="update" th:href="@{'/boards/' + ${boardId} + '/review/' + ${reviewId}}">수정</button>
-            <button type="button" class="btn btn-danger" id="delete">삭제</button>
+            <button type="button" class="btn btn-primary" id="update">
+                <a th:href="@{'/boards/' + ${boardId} + '/reviews/' + ${reviewId} + '/update'}">수정</a>
+            </button>
+            <button type="button" class="btn btn-danger" id="deleteButton">삭제</button>
     </div>
 </th:block>
 </body>
