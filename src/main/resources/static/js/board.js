@@ -22,12 +22,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const postForm = document.getElementById('postForm');
     const postButton = document.getElementById('postButton');
 
-    // // 선택된 값을 Long 형으로 파싱
-    // const selectedCountry = document.getElementById("country").value;
-    // const country = parseInt(selectedCountry);
-    // const selectedCategory = document.getElementById("category").value;
-    // const category = parseInt(selectedCategory);
-
     updateCreatedAtField()
     // 작성일 업데이트 간격 설정 (예: 1분마다 업데이트)
     setInterval(updateCreatedAtField, 60000); // 60000 밀리초 = 1분
@@ -84,17 +78,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     postButton.addEventListener("click", function (event) {
-        event.preventDefault();
+        // event.preventDefault();
         const formData = new FormData(postForm);
 
-        // // FormData에 Long 형식의 'country' 값을 추가
+        // 선택된 값을 Long 형으로 파싱
+        const selectedCountry = document.getElementById("country").value;
+        const country = parseInt(selectedCountry);
+        const selectedCategory = document.getElementById("category").value;
+        const category = parseInt(selectedCategory);
+
+        // FormData에 Long 형식의 'country' 값을 추가
         // formData.append('country', country);
         // formData.append('category', category);
 
-        // console.log(Object.fromEntries(formData.entries()))
+        console.log(Object.fromEntries(formData.entries()))
 
         if (confirm("게시물을 등록하시겠습니까?")) {
-            fetch(`/boards`, {
+            fetch(`/boards/write`, {
                 method: 'POST',
                 headers: {
                     'Authorization': 'Bearer ' + accessToken,
@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => {
                     if (response.ok) {
                         alert('게시물이 등록되었습니다.');
-                        location.reload();
+                        window.location.href = '/accompany';
                     } else {
                         alert('게시물 등록에 실패했습니다.');
                     }
