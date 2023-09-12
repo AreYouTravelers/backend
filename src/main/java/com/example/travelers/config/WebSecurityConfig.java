@@ -44,6 +44,7 @@ public class WebSecurityConfig {
                                         "/login",
                                         "/signup",
                                         "/mypage",
+                                        "/account",
                                         "/accompany",
                                         "/receiverRequests",
                                         "/senderRequests",
