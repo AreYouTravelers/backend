@@ -36,18 +36,19 @@ public class BoardsController {
     }
 
     @GetMapping("/write")
-    public String writeForm() {
+    public String writeForm(Model model) {
+        model.addAttribute("countries", countryRepository.findAll());
+        model.addAttribute("categories", boardCategoriesRepository.findAll());
+        //여기에 넣어야 html의 option에 매치됨
         return "boardWrite";
     }
 
     @PostMapping("/write")
     public String create(
-//            @RequestParam(value = "country", defaultValue = "1") Long countryId,
-//            @RequestParam(value = "category", defaultValue = "1") Long categoryId,
             @RequestBody BoardDto dto, Model model) {
         BoardDto result = boardsService.createBoard(dto);
-        model.addAttribute("countries", countryRepository.findAll());
-        model.addAttribute("categories", boardCategoriesRepository.findAll());
+//        model.addAttribute("countries", countryRepository.findAll());
+//        model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("dto", result);
         return "redirect:/";
 }

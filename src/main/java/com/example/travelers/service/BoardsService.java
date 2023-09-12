@@ -79,7 +79,6 @@ public class BoardsService {
 
         BoardsEntity savedBoard = boardsRepository.save(newBoard);
         dto.setId(savedBoard.getId());
-//        dto.setCreatedAt(LocalDateTime.now());
         return dto;
     }
 
