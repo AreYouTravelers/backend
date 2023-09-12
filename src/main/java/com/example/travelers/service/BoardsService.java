@@ -54,16 +54,16 @@ public class BoardsService {
     }
 
     //    @Transactional
-    public BoardDto createBoard(Long country, Long category, BoardDto dto) {
+    public BoardDto createBoard(BoardDto dto) {
 
-        BoardCategoriesEntity categoriesEntity = boardCategoriesRepository.findById(category)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found"));
-        CountryEntity countryEntity = countryRepository.findById(country)
+        CountryEntity countryEntity = countryRepository.findById(dto.getCountryId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found"));
+        BoardCategoriesEntity categoriesEntity = boardCategoriesRepository.findById(dto.getCategoryId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found"));
 
-//        UsersEntity userEntity = authService.getUser();
-        UsersEntity userEntity = usersRepository.findById(1L)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        UsersEntity userEntity = authService.getUser();
+//        UsersEntity userEntity = usersRepository.findById(1L)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         BoardsEntity newBoard = BoardsEntity.builder()
                 .country(countryEntity)
