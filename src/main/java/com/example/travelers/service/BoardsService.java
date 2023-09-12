@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class BoardsService {
     private final BoardsRepository boardsRepository;
     private final BoardCategoriesRepository boardCategoriesRepository;
@@ -43,35 +43,48 @@ public class BoardsService {
     @Autowired
     private MbtiFilter mbtiFilter;
 
-    @Transactional
-    public BoardDto createBoard(BoardDto dto) {
-        UsersEntity userEntity = authService.getUser();
-        Optional<BoardCategoriesEntity> category = boardCategoriesRepository.findByCategory(dto.getCategory());
-        Optional<CountryEntity> country = countryRepository.findByName(dto.getCountry());
-        if (category.isPresent() && country.isPresent()) {
-            BoardCategoriesEntity categoriesEntity = category.get();
-            CountryEntity countryEntity = country.get();
-            BoardsEntity newBoard = BoardsEntity.builder()
-                    .country(countryEntity)
-                    .boardCategory(categoriesEntity)
-                    .user(userEntity)
-                    .title(dto.getTitle())
-                    .content(dto.getContent())
-                    .people(dto.getPeople())
-                    .status(false)
-                    .startDate(dto.getStartDate())
-                    .endDate(dto.getEndDate())
-                    .createdAt(LocalDateTime.now()).build();
-            BoardsEntity savedBoard = boardsRepository.save(newBoard);
-            dto.setId(savedBoard.getId());
-        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory or Country not found");
+    @Autowired
+    public BoardsService(BoardsRepository boardsRepository, BoardCategoriesRepository boardCategoriesRepository, CountryRepository countryRepository, UsersRepository usersRepository, AuthService authService, RedisDao redisDao) {
+        this.boardsRepository = boardsRepository;
+        this.boardCategoriesRepository = boardCategoriesRepository;
+        this.countryRepository = countryRepository;
+        this.usersRepository = usersRepository;
+        this.authService = authService;
+        this.redisDao = redisDao;
+    }
+
+    //    @Transactional
+    public BoardDto createBoard(Long country, Long category, BoardDto dto) {
+
+        BoardCategoriesEntity categoriesEntity = boardCategoriesRepository.findById(category)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found"));
+        CountryEntity countryEntity = countryRepository.findById(country)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found"));
+
+//        UsersEntity userEntity = authService.getUser();
+        UsersEntity userEntity = usersRepository.findById(1L)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        BoardsEntity newBoard = BoardsEntity.builder()
+                .country(countryEntity)
+                .boardCategory(categoriesEntity)
+                .user(userEntity)
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .people(dto.getPeople())
+                .status(false)
+                .startDate(dto.getStartDate())
+                .endDate(dto.getEndDate())
+                .createdAt(LocalDateTime.now()).build();
+
+        BoardsEntity savedBoard = boardsRepository.save(newBoard);
+        dto.setId(savedBoard.getId());
+//        dto.setCreatedAt(LocalDateTime.now());
         return dto;
     }
 
     public BoardDto readBoard(Long id) {
-//        UsersEntity userEntity = authService.getUser();
         Optional<BoardsEntity> board = boardsRepository.findById(id);
-
         if (board.isPresent()) {
 //            String redisKey = id.toString(); // 해당 글의 ID를 key값으로 선언
 //            String redisUserKey = userEntity.getUsername(); // 유저 key
@@ -97,7 +110,7 @@ public class BoardsService {
     } //현재 시간을 기준으로 00시까지의 시간을 계산
 
     public Page<BoardsMapping> readBoardsAll(Integer pageNumber) {
-        UsersEntity userEntity = authService.getUser();
+//        UsersEntity userEntity = authService.getUser();
         Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
         Page<BoardsEntity> boardsPage = boardsRepository.findAll(pageable);
         List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
@@ -157,10 +170,10 @@ public class BoardsService {
 
 //    @Transactional
     public BoardDto updateBoard(Long id, BoardDto dto) {
-//        UsersEntity userEntity = authService.getUser();
         Optional<BoardsEntity> board = boardsRepository.findById(id);
         if (board.isPresent()) {
-//            if (board.get().getUser().getId().equals(userEntity.getId())) {
+            UsersEntity userEntity = authService.getUser();
+            if (board.get().getUser().getId().equals(userEntity.getId())) {
                 BoardsEntity boardsEntity = board.get();
                 boardsEntity.getCountry().setName(dto.getCountry());
                 boardsEntity.getBoardCategory().setCategory(dto.getCategory());
@@ -171,20 +184,19 @@ public class BoardsService {
                 boardsEntity.setEndDate(dto.getEndDate());
                 boardsEntity.setCreatedAt(LocalDateTime.now());
                 return dto.fromEntity(boardsRepository.save(boardsEntity));
-//            } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
+            } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
     }
 
 //    @Transactional
     public void deleteBoard(Long id) {
-//        UsersEntity userEntity = authService.getUser();
         Optional<BoardsEntity> board = boardsRepository.findById(id);
         if (board.isPresent()) {
-//            if (board.get().getUser().getId().equals(userEntity.getId())) {
+            UsersEntity userEntity = authService.getUser();
+            if (board.get().getUser().getId().equals(userEntity.getId())) {
                 BoardsEntity boardsEntity = board.get();
                 boardsRepository.delete(boardsEntity);
-//                return new MessageResponseDto("게시물을 삭제했습니다.");
-//            } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
+            } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
     }
 }
