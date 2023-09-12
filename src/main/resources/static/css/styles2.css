@@ -106,6 +106,48 @@ footer p {font-weight: 300; font-size: 14px;}
 .my-page .profile2 .profile2-box input {width: 80%; padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
 .my-page .profile2 .profile2-box input.profile2-email {width: 90%;}
 
+/* 저장 버튼 스타일 */
+#save-mbti-button, #save-email-button {
+    /* 이전 스타일 유지 */
+    background-color: #007acc;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 12px; /* 더 둥글게 만듦 */
+    font-size: 12px;
+    margin-right: 2px;
+    /* 마우스 호버 시 스타일 변경 */
+    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
+}
+
+#save-mbti-button:hover , #save-email-button:hover {
+    background-color: #0056b3; /* 호버 시 밝은 하늘색으로 변경 */
+    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+}
+
+/* 취소 버튼 스타일 */
+#cancel-mbti-button, #cancel-email-button {
+    /* 이전 스타일 유지 */
+    background-color: #dc3545;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 12px; /* 더 둥글게 만듦 */
+    font-size: 12px;
+    /* 마우스 호버 시 스타일 변경 */
+    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
+}
+
+#cancel-mbti-button:hover, #cancel-email-button:hover {
+    background-color: #c82333; /* 호버 시 진한 빨간색으로 변경 */
+    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+}
+
+
+
+
 /* receiver */
 .receiver .sub-menu-icon {width: 43px;}
 .receiver .board-item {min-height: 400px; padding: 2em 0;}
