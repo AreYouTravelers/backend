@@ -1,8 +1,10 @@
 package com.example.travelers.controller;
 
 import com.example.travelers.dto.BoardDto;
+import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.mapping.BoardsMapping;
 import com.example.travelers.repos.BoardCategoriesRepository;
+import com.example.travelers.repos.BoardsRepository;
 import com.example.travelers.repos.CountryRepository;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.MbtiFilter;
@@ -20,26 +22,34 @@ public class BoardsController {
     private final BoardsService boardsService;
     private final CountryRepository countryRepository;
     private final BoardCategoriesRepository boardCategoriesRepository;
+    private final BoardsRepository boardsRepository;
 
     @Autowired
     private MbtiFilter mbtiFilter;
 
     @Autowired
-    public BoardsController(BoardsService boardsService, CountryRepository countryRepository, BoardCategoriesRepository boardCategoriesRepository) {
+    public BoardsController(BoardsService boardsService, CountryRepository countryRepository, BoardCategoriesRepository boardCategoriesRepository, BoardsRepository boardsRepository) {
         this.boardsService = boardsService;
         this.countryRepository = countryRepository;
         this.boardCategoriesRepository = boardCategoriesRepository;
+        this.boardsRepository = boardsRepository;
     }
 
-    @PostMapping
+    @GetMapping("/write")
+    public String writeForm() {
+        return "boardWrite";
+    }
+
+    @PostMapping("/write")
     public String create(
-            @RequestParam(value = "country", defaultValue = "1") Long country,
-            @RequestParam(value = "category", defaultValue = "1") Long category,
+//            @RequestParam(value = "country", defaultValue = "1") Long countryId,
+//            @RequestParam(value = "category", defaultValue = "1") Long categoryId,
             @RequestBody BoardDto dto, Model model) {
+        BoardDto result = boardsService.createBoard(dto);
         model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("categories", boardCategoriesRepository.findAll());
-        model.addAttribute("dto", boardsService.createBoard(country, category, dto));
-        return "boardWrite";
+        model.addAttribute("dto", result);
+        return "redirect:/";
 }
 
     @GetMapping("/{id}")
@@ -62,6 +72,7 @@ public class BoardsController {
         List<String> mbtiList = mbtiFilter.generateMbtiList(mbtiCriteria);
         return boardsService.readBoardsAllByCountryAndCategoryAndMbti(countryId, categoryId, mbtiCriteria, pageNumber);
     }
+
     @GetMapping("/myboard")
     public Page<BoardsMapping> readAllByUser(
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {

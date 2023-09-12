@@ -30,9 +30,6 @@ public class ViewController {
         return "accompany";
     }
 
-    @GetMapping("/boards/write")
-    public String BoardWrite() { return "boardWrite"; }
-
     @GetMapping("/receiverRequests")
     public String receiverRequests() {
         return "receiverRequests";
