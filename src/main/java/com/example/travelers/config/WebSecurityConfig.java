@@ -47,7 +47,7 @@ public class WebSecurityConfig {
                                         "/account",
                                         "/accompany",
                                         "/receiverRequests",
-                                        "/senderRequests",
+                                        "/sender-requests",
                                         "/board/{boardId}/sender-requests/**",
                                         "/reviewPossible",
                                         "/createReview",
