@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>계정 설정</title>
+</head>
+<body class="account">
+<th:block layout:fragment="content">
+    <!-- Contents -->
+    <div class="container container-wrap justify-content-between">
+        <nav id="subNav" class="col-md-2 col-lg-2">
+            <div class="container">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item mx-0 mx-lg-1">마이페이지
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/mypage">프로필</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/account">계정 설정</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">나의 동행
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="#">내가 쓴 글</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/receiverRequests">받은 동행</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link active py-2 px-0 px-lg-3" href="/senderRequests">보낸 동행</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/reviewPossible">후기 작성</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">나의 후기
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/readReviewsAll">받은 후기</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/readReviewsAllBySender">보낸 후기</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="container-content page-section col-md-9 col-lg-9">
+            <img class="sub-menu-icon" src="/static/images/icon/icon-mypage.png" alt="패스워드 변경">
+            <h2 class="page-section-heading text-secondary mb-0 main-menu">계정 설정</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-6 mb-5">
+                    <form id="change-password-form" action="/changepassword" method="post">
+                        <div class="form-group">
+                            <label for="current-password">현재 패스워드</label>
+                            <input type="password" class="form-control" id="current-password" name="current-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-password">새로운 패스워드</label>
+                            <input type="password" class="form-control" id="new-password" name="new-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">패스워드 확인</label>
+                            <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">변경</button>
+                    </form>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-6 mb-5">
+                    <h3>회원 탈퇴</h3>
+                    <p>회원 탈퇴하시려면 아래 버튼을 클릭하세요.</p>
+                    <form id="delete-account-form" action="/deleteaccount" method="post">
+                        <button type="submit" class="btn btn-danger">회원 탈퇴</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</th:block>
+</body>
+</html>
