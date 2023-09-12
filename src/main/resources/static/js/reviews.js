@@ -27,37 +27,36 @@ fetch(`/boards/${boardId}/reviews/${reviewId}`, {
     });
 
 document.addEventListener('DOMContentLoaded', function () {
-    // const createForm = document.getElementById('createForm');
-    // const createButton = document.getElementById('createButton');
+    const createForm = document.getElementById('createForm');
+    const createButton = document.getElementById('createButton');
     // const updateForm = document.getElementById('updateForm');
     // const updateButton = document.getElementById('updateButton');
-    const deleteButton = document.getElementById('deleteButton');
 
-    // createButton.addEventListener('click', function (event) {
-    //     event.preventDefault();
-    //
-    //     const formData = new FormData(createForm);
-    //
-    //     fetch(`/boards/${boardId}/reviews`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Authorization': 'Bearer ' + accessToken,
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(Object.fromEntries(formData.entries())) // FormData를 JSON으로 변환
-    //     })
-    //         .then(response => {
-    //             if (response.ok) {
-    //                 alert("후기가 작성 되었습니다.");
-    //                 window.location.href = '/index';
-    //             } else {
-    //                 alert("후기 작성에 실패하였습니다.");
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error('Network error:', error);
-    //         });
-    // });
+    createButton.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(createForm);
+
+        fetch(`/boards/${boardId}/reviews`, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Object.fromEntries(formData.entries())) // FormData를 JSON으로 변환
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("후기가 작성 되었습니다.");
+                    window.location.href = '/index';
+                } else {
+                    alert("후기 작성에 실패하였습니다.");
+                }
+            })
+            .catch(error => {
+                console.error('Network error:', error);
+            });
+    });
 
     // updateButton.addEventListener('click', function (event) {
     //     event.preventDefault(); // 폼 제출을 막습니다.
@@ -66,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
     //     const formData = new FormData(updateForm);
     //
     //     // 서버로 PUT 요청을 보냅니다.
-    //     fetch(`/boards/${board.id}/reviews/${review.id}`, {
+    //     fetch(`/boards/${boardId}/reviews/${reviewId}`, {
     //         method: 'PUT',
     //         headers: {
     //             'Authorization': 'Bearer ' + accessToken,
@@ -90,30 +89,4 @@ document.addEventListener('DOMContentLoaded', function () {
     //             console.error('Network error:', error);
     //         });
     // });
-
-    deleteButton.addEventListener("click", function (event) {
-        event.preventDefault();
-        if (confirm("게시물을 삭제하시겠습니까?")) {
-            fetch(`/boards/${boardId}/reviews/${reviewId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': 'Bearer ' + accessToken,
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert("후기가 삭제되었습니다.");
-                        window.location.href = `/boards/${boardId}`;
-                    } else {
-                        alert("후기 삭제에 실패했습니다.");
-                    }
-                })
-                .catch(error => {
-                    console.error('Network error:', error);
-                });
-        } else {
-            alert("후기 삭제가 취소되었습니다.");
-        }
-    });
 });

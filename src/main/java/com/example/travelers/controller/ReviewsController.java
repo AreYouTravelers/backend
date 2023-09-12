@@ -2,10 +2,8 @@ package com.example.travelers.controller;
 
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.ReviewsDto;
-import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.ReviewsService;
-import com.example.travelers.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,7 +24,7 @@ public class ReviewsController {
     // POST /boards/{boardId}/reviews
     @PostMapping("/boards/{boardId}/reviews")
 //    public String create(
-    public ResponseEntity<ReviewsDto> create(
+    public String create(
             @PathVariable("boardId") Long boardId,
             ReviewsDto dto,
             Model model
@@ -34,8 +32,8 @@ public class ReviewsController {
         model.addAttribute("board", boardsService.readBoard(boardId));
         model.addAttribute("review", service.createReview(boardId, dto));
         model.addAttribute("boardId", boardId);
-//        return "readReview";
-        return ResponseEntity.ok(service.createReview(boardId, dto));
+        return "readReview";
+//        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/boards/{boardId}/reviews/write")
@@ -64,11 +62,17 @@ public class ReviewsController {
 
     // GET /boards/{boardId}/reviews
     @GetMapping("/boards/{boardId}/reviews")
-    public List<ReviewsDto> readAll(
-            @PathVariable("boardId") Long boardId
+//    public List<ReviewsDto> readAll(
+    public String readAll(
+            @PathVariable("boardId") Long boardId,
+            Model model
     ) {
         List<ReviewsDto> list = service.readReviewsAll(boardId);
-        return service.readReviewsAll(boardId);
+        model.addAttribute("reviewList", list);
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("receiver", list.get(1).getReceiverUsername());
+//        return service.readReviewsAll(boardId);
+        return "readReviewsAll";
     }
 
     // GET /boards/reviews/myreview
@@ -91,7 +95,8 @@ public class ReviewsController {
 
     // PUT /boards/{boardId}/reviews/{id}
     @PutMapping("/boards/{boardId}/reviews/{id}")
-    public ResponseEntity<ReviewsDto> update(
+//    public ResponseEntity<ReviewsDto> update(
+    public String update(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
             ReviewsDto dto,
@@ -102,7 +107,8 @@ public class ReviewsController {
         model.addAttribute("boardId", boardId);
         model.addAttribute("id", id);
 
-        return ResponseEntity.ok(service.updateReview(boardId, id, dto));
+//        return ResponseEntity.ok(service.updateReview(boardId, id, dto));
+        return "readReview";
     }
 
     // DELETE /boards/{boardId}/reviews/{id}
