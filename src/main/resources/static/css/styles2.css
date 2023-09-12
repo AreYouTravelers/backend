@@ -108,7 +108,6 @@ footer p {font-weight: 300; font-size: 14px;}
 
 /* 저장 버튼 스타일 */
 #save-mbti-button, #save-email-button {
-    /* 이전 스타일 유지 */
     background-color: #007acc;
     color: white;
     border: none;
@@ -146,6 +145,22 @@ footer p {font-weight: 300; font-size: 14px;}
 }
 
 
+.btn-primary {
+    background-color: #007acc;
+    color: white;
+    border: none;
+    padding: 0.6em 1em;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    /* 마우스 호버 시 스타일 변경 */
+    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* 호버 시 밝은 하늘색으로 변경 */
+    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+}
 
 /* 회원 탈퇴 버튼 스타일 */
 .btn-danger {
@@ -155,12 +170,14 @@ footer p {font-weight: 300; font-size: 14px;}
     padding: 0.6em 1em;
     border-radius: 12px;
     font-size: 0.9rem;
+    /* 마우스 호버 시 스타일 변경 */
+    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
 }
 
 .btn-danger:hover {
-    background-color: #c82333;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #c82333; /* 호버 시 진한 빨간색으로 변경 */
+    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
 }
 
 

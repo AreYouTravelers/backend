@@ -16,27 +16,27 @@
             <form id="signup-form">
                 <div>
                     <label for="username" class="form-label"></label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="아이디" />
+                    <input type="text" class="form-control" id="username" name="username" placeholder="아이디" required />
                 </div>
                 <div>
                     <label for="password" class="form-label"></label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호"  />
+                    <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" required />
                 </div>
                 <div>
                     <label for="password-check" class="form-label"></label>
-                    <input type="password" class="form-control" id="password-check" name="password-check" placeholder="비밀번호 확인" />
+                    <input type="password" class="form-control" id="password-check" name="password-check" placeholder="비밀번호 확인" required />
                 </div>
                 <div>
                     <label for="email" class="form-label"></label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="이메일" />
+                    <input type="email" class="form-control" id="email" name="email" placeholder="이메일" required />
                 </div>
                 <div>
                     <label for="mbti" class="form-label"></label>
-                    <input type="text" class="form-control" id="mbti" name="mbti" placeholder="MBTI ex)ESTJ" />
+                    <input type="text" class="form-control" id="mbti" name="mbti" placeholder="MBTI ex)ESTJ" required />
                 </div>
                 <div>
                     <label for="gender" class="form-label"></label>
-                    <select class="form-control" id="gender" name="gender">
+                    <select class="form-control" id="gender" name="gender" required>
                         <option value="default">성별을 선택해주세요 ∇</option>
                         <option value="남성">남성</option>
                         <option value="여성">여성</option>
@@ -44,15 +44,15 @@
                 </div>
                 <div>
                     <label for="firstName" class="form-label"></label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="성" />
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="성" required />
                 </div>
                 <div>
                     <label for="lastName" class="form-label"></label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="이름" />
+                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="이름" required />
                 </div>
                 <div>
                     <label for="birthDate" class="form-label"></label>
-                    <input type="date" class="form-control" id="birthDate" name="birthDate" />
+                    <input type="date" class="form-control" id="birthDate" name="birthDate" required />
                 </div>
                 <button type="submit" class="btn btn-primary">가입하기</button>
             </form>

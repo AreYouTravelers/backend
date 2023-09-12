@@ -18,20 +18,26 @@ document.getElementById('signup-form').addEventListener('submit', e => {
         lastName: document.getElementById('lastName').value,
         birthDate: document.getElementById('birthDate').value
     }
-    fetch('/users', {
-        method: 'post',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    }).then(response => {
-        if (response.ok) {
-            alert('회원가입에 성공하였습니다.' + '\n' + '로그인 페이지로 이동합니다.')
-            location.href = lastUrl
-        }
-        else throw new Error(response.status.toString())
-    }).catch(e => {
-        console.log(e.message)
-        alert('회원가입에 실패하였습니다.')
-    })
+
+    if (data.gender === 'default') {
+        alert('성별을 선택해주세요.');
+        e.preventDefault(); // 폼 제출을 중지합니다.
+    } else {
+        fetch('/users', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        }).then(response => {
+            if (response.ok) {
+                alert('회원가입에 성공하였습니다.' + '\n' + '로그인 페이지로 이동합니다.')
+                location.href = lastUrl
+            }
+            else throw new Error(response.status.toString())
+        }).catch(e => {
+            console.log(e.message)
+            alert('회원가입에 실패하였습니다.')
+        })
+    }
 })
