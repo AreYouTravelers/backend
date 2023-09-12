@@ -147,6 +147,22 @@ footer p {font-weight: 300; font-size: 14px;}
 
 
 
+/* 회원 탈퇴 버튼 스타일 */
+.btn-danger {
+    background-color: #dc3545;
+    color: #ffffff;
+    border: none;
+    padding: 0.6em 1em;
+    border-radius: 12px;
+    font-size: 0.9rem;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 
 /* receiver */
 .receiver .sub-menu-icon {width: 43px;}

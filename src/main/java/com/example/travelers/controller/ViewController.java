@@ -45,6 +45,11 @@ public class ViewController {
         return "reviewPossible";
     }
 
+    @GetMapping("/account")
+    public String changePassword() {
+        return "account";
+    }
+
 //    @GetMapping("/createReview")
 //    public String createReview() {
 //        return "createReview";
