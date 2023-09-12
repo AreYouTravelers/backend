@@ -4,6 +4,8 @@
       layout:decorate="~{layout/default}">
 <head>
     <title>계정 설정</title>
+    <script src="/static/js/changePassword.js"></script>
+    <script src="/static/js/deleteAccount.js"></script>
 </head>
 <body class="account">
 <th:block layout:fragment="content">
@@ -56,17 +58,17 @@
             <h2 class="page-section-heading text-secondary mb-0 main-menu">계정 설정</h2>
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-6 mb-5">
-                    <form id="change-password-form" action="/changepassword" method="post">
+                    <form id="change-password-form">
                         <div class="form-group">
-                            <label for="current-password">현재 패스워드</label>
+                            <label for="current-password">현재 비밀번호</label>
                             <input type="password" class="form-control" id="current-password" name="current-password" required>
                         </div>
                         <div class="form-group">
-                            <label for="new-password">새로운 패스워드</label>
+                            <label for="new-password">새로운 비밀번호</label>
                             <input type="password" class="form-control" id="new-password" name="new-password" required>
                         </div>
                         <div class="form-group">
-                            <label for="confirm-password">패스워드 확인</label>
+                            <label for="confirm-password">새로운 비밀번호 확인</label>
                             <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
                         </div>
                         <button type="submit" class="btn btn-primary mt-2">변경</button>
@@ -76,8 +78,9 @@
             <div class="row justify-content-center">
                 <div class="col-md-6 col-lg-6 mb-5">
                     <h3>회원 탈퇴</h3>
-                    <p>회원 탈퇴하시려면 아래 버튼을 클릭하세요.</p>
-                    <form id="delete-account-form" action="/deleteaccount" method="post">
+                    <p>회원 탈퇴는 되돌릴 수 없습니다!</p>
+                    <p>회원 탈퇴를 하시려면 아래 버튼을 클릭하세요.</p>
+                    <form id="delete-account-form">
                         <button type="submit" class="btn btn-danger">회원 탈퇴</button>
                     </form>
                 </div>
