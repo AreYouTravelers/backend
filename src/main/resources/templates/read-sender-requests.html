@@ -35,7 +35,7 @@
             <h4 class="board-title">동행 요청 메세지를 작성해주세요.</h4>
             <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="post" id="createForm">
                 <div class="board-message">
-                    <textarea th:text="${senderRequests.message}" name="sender-message" rows="8"></textarea>
+                    <textarea th:text="${senderRequests.message}" rows="8"></textarea>
                 </div>
                 <div class="container-wrap justify-content-center mt-5 mb-5">
                     <button type="button" class="btn btn-secondary">취소</button>

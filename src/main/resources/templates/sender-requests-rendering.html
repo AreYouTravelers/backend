@@ -6,66 +6,7 @@
     <title>동행 요청 작성</title>
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="stylesheet" href="/static/css/styles2.css">
-    <script>
-        // accessToken 불러오기
-        let accessToken = localStorage.getItem('accessToken');
-        const boardId = window.location.pathname.split("/")[2];
-        const senderRequestsId = window.location.pathname.split("/")[4];
-
-        // 동행 요청 조회 단일 조회
-        fetch(`/boards/${boardId}/sender-requests/${senderRequestsId}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ` + accessToken, // JWT 토큰을 포함
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('서버에서 응답 오류 발생');
-                }
-            })
-            .then(data => {
-                console.log('서버로부터 받은 데이터:', data);
-                // 원하는 동작 수행
-            })
-            .catch(error => {
-                console.error('에러:', error);
-            });
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const createForm = document.getElementById('createForm');
-            const createButton = document.getElementById('createButton');
-
-            createButton.addEventListener('click', function (event) {
-                event.preventDefault();
-
-                const formData = new FormData(createForm);
-
-                fetch(`/boards/${boardId}/sender-requests`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': 'Bearer ' + accessToken,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(Object.fromEntries(formData.entries())) // FormData를 JSON으로 변환
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            alert("동행 요청이 되었습니다.");
-                            window.location.href = '/boards/{boardId}/sender-requests/{id}';
-                        } else {
-                            alert("동행 요청에 실패했습니다.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Network error:', error);
-                    });
-            });
-        });
-    </script>
+    <link rel="stylesheet" href="/static/js/sender-requests-rendering.js">
 </head>
 <body class="sender-rendering">
 <th:block layout:fragment="content">
@@ -94,9 +35,7 @@
         <div class="board-message">
             <h4 class="board-title">동행 요청 메세지를 작성해주세요.</h4>
             <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="post" id="createForm">
-                <div class="board-message">
-                    <textarea id="sender-message" name="message" rows="8"></textarea>
-                </div>
+                <textarea name="message" rows="8" placeholder="예시) 안녕하세요. 28살 남자입니다. 저는 현지의 음식과 문화를 즐기는 것을 좋아해요. 같이 동행하면 좋을 것 같습니다 :-)"></textarea>
                 <div class="container-wrap justify-content-center gap-3 mt-5 mb-5">
                     <button type="button" class="btn btn-secondary">취소</button>
                     <button type="submit" class="btn btn-primary" id="createButton">요청</button>

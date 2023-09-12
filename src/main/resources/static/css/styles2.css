@@ -3,6 +3,7 @@ body {overflow-x: hidden;}
 .href-none {color: inherit; text-decoration: none;}
 .href-none:hover {color: inherit;}
 .temp-3 {color: #3BD0FA;}
+.container2 {max-width: 720px;}
 .container-wrap {display: flex;}
 .container-content {padding-top: 10rem;}
 .sub-menu-icon {width: 40px; margin-right: 7px; margin-bottom: 2em; vertical-align: top;}
