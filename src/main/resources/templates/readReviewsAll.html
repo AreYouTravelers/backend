@@ -13,128 +13,28 @@
 <th:block layout:fragment="content">
     <div class="content">
         <div class="title-header">
-            <h2>user님이 받은 후기</h2>
+            <h2 th:text="${receiver} + '님이 받은 후기'">user님이 받은 후기</h2>
             <h2 class="temperature">36.5℃</h2>
         </div>
         <div class="original-board">
-            <div class="review-list">
+            <div class="review-list" th:each="review: ${reviewList}">
                 <a class="href-none" href="#">
-                    <span class="review-left">
-                        <img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진">
-                    </span>
+            <span class="review-left">
+                <img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진">
+            </span>
                     <span class="review-right">
-                        <span class="review-right-top">
-                            <span>후기 작성자명</span>
-                            <span>·</span>
-                            <span>여행지</span>
-                            <span>·</span>
-                            <span>별점</span>    
-                        </span>
-                        <br>
-                        <span class="review-right-bottom">
-                            <span>후기 내용</span>
-                        </span>                        
-                    </span>
-                </a>
-            </div>
-            <div class="review-list">
-                <a class="href-none" href="#">
-                    <span class="review-left">
-                        <img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진">
-                    </span>
-                    <span class="review-right">
-                        <span class="review-right-top">
-                            <span>김커비</span>
-                            <span>·</span>
-                            <span>핀란드</span>
-                            <span>·</span>
-                            <span>★★★☆☆</span>    
-                        </span>
-                        <br>
-                        <span class="review-right-bottom">
-                            <span>동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세</span>
-                        </span>                        
-                    </span>
-                </a>
-            </div>
-            <div class="review-list">
-                <a class="href-none" href="#">
-                    <span class="review-left">
-                        <img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진">
-                    </span>
-                    <span class="review-right">
-                        <span class="review-right-top">
-                            <span>김커비</span>
-                            <span>·</span>
-                            <span>핀란드</span>
-                            <span>·</span>
-                            <span>★★★☆☆</span>    
-                        </span>
-                        <br>
-                        <span class="review-right-bottom">
-                            <span>동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세</span>
-                        </span>                        
-                    </span>
-                </a>
-            </div>
-            <div class="review-list">
-                <a class="href-none" href="#">
-                    <span class="review-left">
-                        <img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진">
-                    </span>
-                    <span class="review-right">
-                        <span class="review-right-top">
-                            <span>김커비</span>
-                            <span>·</span>
-                            <span>핀란드</span>
-                            <span>·</span>
-                            <span>★★★☆☆</span>    
-                        </span>
-                        <br>
-                        <span class="review-right-bottom">
-                            <span>동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세</span>
-                        </span>                        
-                    </span>
-                </a>
-            </div>
-            <div class="review-list">
-                <a class="href-none" href="#">
-                    <span class="review-left">
-                        <img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진">
-                    </span>
-                    <span class="review-right">
-                        <span class="review-right-top">
-                            <span>김커비</span>
-                            <span>·</span>
-                            <span>핀란드</span>
-                            <span>·</span>
-                            <span>★★★☆☆</span>    
-                        </span>
-                        <br>
-                        <span class="review-right-bottom">
-                            <span>동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세</span>
-                        </span>                        
-                    </span>
-                </a>
-            </div>
-            <div class="review-list">
-                <a class="href-none" href="#">
-                    <span class="review-left">
-                        <img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진">
-                    </span>
-                    <span class="review-right">
-                        <span class="review-right-top">
-                            <span>김커비</span>
-                            <span>·</span>
-                            <span>핀란드</span>
-                            <span>·</span>
-                            <span>★★★☆☆</span>    
-                        </span>
-                        <br>
-                        <span class="review-right-bottom">
-                            <span>동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세</span>
-                        </span>                        
-                    </span>
+                <span class="review-right-top">
+                    <span th:text="${review.senderUsername}">후기 작성자명</span>
+                    <span>·</span>
+                    <span th:text="${review.country}">여행지</span>
+                    <span>·</span>
+                    <span th:text="${review.rating}">별점</span>
+                </span>
+                <br>
+                <span class="review-right-bottom">
+                    <span th:text="${review.content}">후기 내용</span>
+                </span>
+            </span>
                 </a>
             </div>
         </div>

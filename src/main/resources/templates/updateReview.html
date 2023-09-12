@@ -38,17 +38,7 @@
         <div class="rating">
             <h4>여행은 어떠셨나요 ?</h4>
             <span>별로였어요</span>
-<!--            <span class="rating-score" th:text="${review.rating}" name="rating">3</span>-->
-<!--            <input type="text" id="rating" name="rating" th:value="${review.rating}">-->
-<!--            <input type="range" id="rangeInput" min="1" max="5" step=0.5 th:value="${review.rating}" onchange="range_change(this)">-->
-<!--            <span id="rating" name="rating" th:text="${review.rating}">0</span>-->
-<!--            <script>-->
-<!--                const rangeInput = document.getElementById('rangeInput');-->
-<!--                const rangeValueDisplay = document.getElementById('rating');-->
-<!--                rangeInput.addEventListener('input', () => rangeValueDisplay.textContent = rangeInput.value);-->
-<!--            </script>-->
-<!--            <br>-->
-
+            <br>
             <input type="range" class="form-range" id="customRange1" min="1" max="5" step=0.5 th:value="${review.rating}" onchange="range_change(this)">
             <input type="text" id="rating" name="rating" th:value="${review.rating}">
             <script>
@@ -57,7 +47,6 @@
                 }
             </script>
             <br>
-
             <span>좋았어요 !</span>
         </div>
         <br>

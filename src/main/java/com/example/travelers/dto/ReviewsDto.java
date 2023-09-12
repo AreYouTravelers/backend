@@ -15,6 +15,7 @@ public class ReviewsDto {
     private Double rating;
     private String content;
     private String senderUsername;
+    private String receiverUsername;
 
     public static ReviewsDto fromEntity(ReviewsEntity entity) {
         ReviewsDto dto = new ReviewsDto();
@@ -23,6 +24,7 @@ public class ReviewsDto {
         dto.setRating(entity.getRating());
         dto.setContent(entity.getContent());
         dto.setSenderUsername(entity.getSender().getUsername());
+        dto.setReceiverUsername(entity.getReceiver().getUsername());
         return dto;
     }
 }

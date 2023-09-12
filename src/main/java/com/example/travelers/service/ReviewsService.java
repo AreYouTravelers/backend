@@ -41,8 +41,12 @@ public class ReviewsService {
         }
         UsersEntity receiver = boardsEntity.get().getUser();
         // 입력 받은 평점으로 온도 조절
+        System.out.println(dto.getContent());
+        System.out.println(dto.getRating());
         receiver.setTemperature(receiver.getTemperature() + updateTemperature(dto.getRating()));
         usersRepository.save(receiver);
+
+
         return ReviewsDto.fromEntity(repository.save(ReviewsEntity.builder()
                 .country(boardsEntity.get().getCountry())
                 .rating(dto.getRating())
@@ -102,9 +106,6 @@ public class ReviewsService {
 
 //        if (!entity.getSender().getId().equals(usersEntity.getId()))
 //            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
-        System.out.println(dto.getRating().getClass().getName());
-        System.out.println(dto.getCountry());
-        System.out.println(dto.getContent());
         entity.setRating((Double) dto.getRating());
         entity.setContent(dto.getContent());
         receiver.setTemperature(receiver.getTemperature() + updateTemperature(dto.getRating()));
