@@ -66,9 +66,10 @@ public class ReviewsService {
     }
 
     public List<ReviewsDto> readReviewsAll(Long boardId) {
-        UsersEntity usersEntity = authService.getUser();
-        if (!boardsRepository.existsById(boardId))
+        if (!boardsRepository.existsById(boardId)) {
+            UsersEntity usersEntity = authService.getUser();
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+        }
         List<ReviewsDto> reviewsDtoList = new ArrayList<>();
         List<ReviewsEntity> reviewsEntityList = repository.findAllByBoardId(boardId);
         for (ReviewsEntity entity : reviewsEntityList)
@@ -101,7 +102,7 @@ public class ReviewsService {
 
 //        if (!entity.getSender().getId().equals(usersEntity.getId()))
 //            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
-        System.out.println(dto.getRating());
+        System.out.println(dto.getRating().getClass().getName());
         System.out.println(dto.getCountry());
         System.out.println(dto.getContent());
         entity.setRating((Double) dto.getRating());

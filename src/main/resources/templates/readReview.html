@@ -55,7 +55,7 @@
         <button type="button" class="btn btn-light" onclick="window.history.go(-1)">목록</button>
             <!-- 수정, 삭제 버튼은 본인 작성 후기 시에만 보이도록 활성화할 예정 -->
             <button type="button" class="btn btn-primary" id="update">
-                <a th:href="@{'/boards/' + ${boardId} + '/reviews/' + ${reviewId} + '/update'}">수정</a>
+                <a th:href="@{'/boards/' + ${boardId} + '/reviews/' + ${reviewId} + '/edit'}">수정</a>
             </button>
             <button type="button" class="btn btn-danger" id="deleteButton">삭제</button>
     </div>

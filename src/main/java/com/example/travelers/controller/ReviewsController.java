@@ -25,7 +25,8 @@ public class ReviewsController {
 
     // POST /boards/{boardId}/reviews
     @PostMapping("/boards/{boardId}/reviews")
-    public String create(
+//    public String create(
+    public ResponseEntity<ReviewsDto> create(
             @PathVariable("boardId") Long boardId,
             ReviewsDto dto,
             Model model
@@ -33,10 +34,11 @@ public class ReviewsController {
         model.addAttribute("board", boardsService.readBoard(boardId));
         model.addAttribute("review", service.createReview(boardId, dto));
         model.addAttribute("boardId", boardId);
-        return "readReview";
+//        return "readReview";
+        return ResponseEntity.ok(service.createReview(boardId, dto));
     }
 
-    @GetMapping("/boards/{boardId}/reviews/create")
+    @GetMapping("/boards/{boardId}/reviews/write")
     public String createReview(
             @PathVariable("boardId") Long boardId,
             Model model
@@ -76,7 +78,7 @@ public class ReviewsController {
         return service.readReviewsAllBySender(pageNumber);
     }
 
-    @GetMapping("/boards/{boardId}/reviews/{id}/update")
+    @GetMapping("/boards/{boardId}/reviews/{id}/edit")
     public String update(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
