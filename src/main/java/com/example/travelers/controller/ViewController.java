@@ -27,6 +27,11 @@ public class ViewController {
         return "mypage";
     }
 
+    @GetMapping("/admin")
+    public String admin() {
+        return "admin";
+    }
+
     @GetMapping("/accompany")
     public String accompany() {
         return "accompany";

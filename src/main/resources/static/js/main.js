@@ -14,7 +14,6 @@ userModule.fetchLoggedIn().then(userInfo => {
         removeLoginLink(); // 로그인, 회원가입 링크 제거
         showLogoutMypageLink(); // 로그아웃 링크 보이게 설정
     } else if (userInfo.role === '관리자') {
-        console.log("good");
         removeLoginLink(); // 로그인, 회원가입 링크 제거
         showLogoutAdminLink(); // 로그아웃 링크 보이게 설정
     }
