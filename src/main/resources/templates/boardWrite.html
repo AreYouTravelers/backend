@@ -10,7 +10,7 @@
             display: flex;
         }
     </style>
-    <script src="/static/js/board.js"></script>
+    <script src="/static/js/boardWrite.js"></script>
 </head>
 <body style="padding-top: 130px;">
 <th:block layout:fragment="content">
@@ -19,7 +19,7 @@
         <div class="card mb-4">
             <div class="card-body">
                 <form th:action="@{'/boards/write'}" th:method="post" id="postForm">
-<!--                    <input type="hidden" name="_method" value="post"/>-->
+                    <!--                    <input type="hidden" name="_method" value="post"/>-->
                     <div class="mb-3">
                         <label for="country" class="form-label">나라</label>
                         <select class="form-select" id="country" name="country" required>
