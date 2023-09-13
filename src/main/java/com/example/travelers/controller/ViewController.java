@@ -32,7 +32,7 @@ public class ViewController {
         return "accompany";
     }
 
-    @GetMapping("/receiverRequests")
+    @GetMapping("/receiver-requests")
     public String receiverRequests() {
         return "receiver-requests";
     }
