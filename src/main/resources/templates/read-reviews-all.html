@@ -61,9 +61,8 @@
             <!-- Contents -->
             <div class="container">
                 <h3 class="board-title" th:text="${receiver.username} + '님의 여행 온도'"></h3>
-                <p class="board-temperature temp-3">36.5℃</p>
+                <p class="board-temperature temp-3" th:text="${receiver.temperature} + '℃'">36.5℃</p>
                 <!-- Grid Items -->
-                <h3 class="board-title" th:text="${receiver.username} + '님이 받은 후기'"></h3>
                 <div class="container">
                     <div class="review-list" th:each="review: ${reviewList}">
                         <a class="href-none" href="#">
@@ -77,9 +76,6 @@
                                 <p class="review-top-right">
                                     <span th:text="${review.rating}"></span>
                                 </p>
-                            </div>
-                            <div class="review-middle">
-                                <span th:text="${review.country}">여행지</span>
                             </div>
                             <div class="review-bottom">
                                 <span th:text="${review.content}">후기 내용</span>

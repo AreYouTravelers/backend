@@ -1,6 +1,7 @@
 package com.example.travelers.service;
 
 import com.example.travelers.dto.BoardCategoryDto;
+import com.example.travelers.dto.BoardDto;
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.ReviewsDto;
 import com.example.travelers.entity.*;
@@ -69,6 +70,7 @@ public class ReviewsService {
         return ReviewsDto.fromEntity(optionalReviewsEntity.get());
     }
 
+    // 특정 게시글에 달린 후기 전체 조회
     public List<ReviewsDto> readReviewsAll(Long boardId) {
         if (!boardsRepository.existsById(boardId)) {
             UsersEntity usersEntity = authService.getUser();
@@ -81,6 +83,7 @@ public class ReviewsService {
         return reviewsDtoList;
     }
 
+    // 특정 사용자가 작성한 후기 전체 조회 (보낸 후기)
     public Page<ReviewsDto> readReviewsAllBySender(Integer pageNumber) {
         UsersEntity userEntity = authService.getUser();
         Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
@@ -89,6 +92,28 @@ public class ReviewsService {
         return reviewsPage.map(ReviewsDto::fromEntity);
     }
 
+    // 특정 사용자가 받은 후기 전체 조회
+    public Page<ReviewsDto> readReviewsAllByReceiver(Integer pageNumber) {
+        UsersEntity userEntity = authService.getUser();
+        Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
+        Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
+        Page<ReviewsEntity> reviewsPage = repository.findAllByReceiver(user, pageable);
+//        List<BoardDto>
+        return reviewsPage.map(ReviewsDto::fromEntity);
+    }
+
+    // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
+    public List<ReviewsDto> readReviewsAllByReceiver(Long boardId) {
+        if (!boardsRepository.existsById(boardId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+        }
+        UsersEntity usersEntity = authService.getUser();
+        List<ReviewsDto> reviewsDtoList = new ArrayList<>();
+        List<ReviewsEntity> reviewsEntityList = repository.findAllByBoardId(boardId);
+        for (ReviewsEntity entity : reviewsEntityList)
+            reviewsDtoList.add(ReviewsDto.fromEntity(entity));
+        return reviewsDtoList;
+    }
 
     @Transactional
     public ReviewsDto updateReview(Long boardId, Long id, ReviewsDto dto) {
