@@ -46,10 +46,10 @@ public class WebSecurityConfig {
                                         "/mypage",
                                         "/account",
                                         "/accompany",
-                                        "/receiverRequests",
+                                        "/receiver-requests",
                                         "/sender-requests",
                                         "/board/{boardId}/sender-requests/**",
-                                        "/reviewPossible",
+                                        "/review-possible",
                                         "/boards/**",
                                         "/boards/{boardId}",
                                         "/board/{boardId}/reviews/**"

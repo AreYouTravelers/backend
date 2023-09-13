@@ -2,6 +2,8 @@ package com.example.travelers.controller;
 
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.ReviewsDto;
+import com.example.travelers.dto.UserProfileDto;
+import com.example.travelers.repos.UsersRepository;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.ReviewsService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ import java.util.List;
 public class ReviewsController {
     private final ReviewsService service;
     private final BoardsService boardsService;
+    private final UsersRepository usersRepository;
 
     // POST /boards/{boardId}/reviews
     @PostMapping("/boards/{boardId}/reviews")
@@ -70,8 +73,7 @@ public class ReviewsController {
         List<ReviewsDto> list = service.readReviewsAll(boardId);
         model.addAttribute("reviewList", list);
         model.addAttribute("boardId", boardId);
-        model.addAttribute("receiver", list.get(1).getReceiverUsername());
-//        return service.readReviewsAll(boardId);
+        model.addAttribute("receiver", UserProfileDto.fromEntity(usersRepository.findById(list.get(1).getId()).get()));
         return "read-reviews-all";
     }
 

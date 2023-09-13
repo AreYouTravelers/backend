@@ -28,23 +28,23 @@
                                 <a class="nav-link py-2 px-0 px-lg-3" href="#">내가 쓴 글</a>
                             </li>
                             <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" href="/receiverRequests">받은 동행</a>
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/receiver-requests">받은 동행</a>
                             </li>
                             <li class="nav-item mx-0">
                                 <a class="nav-link py-2 px-0 px-lg-3" href="/sender-requests">보낸 동행</a>
                             </li>
                             <li class="nav-item mx-0">
-                                <a class="nav-link active py-2 px-0 px-lg-3" href="/reviewPossible">후기 작성</a>
+                                <a class="nav-link active py-2 px-0 px-lg-3" href="/review-possible">후기 작성</a>
                             </li>
                         </ul>
                     </li>
                     <li class="nav-item mx-0 mx-lg-1">나의 후기
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" href="/readReviewsAll">받은 후기</a>
+                                <a class="nav-link py-2 px-0 px-lg-3" th:href="@{'/boards/' + ${boardId} + '/reviews'}">받은 후기</a>
                             </li>
                             <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" href="/readReviewsAllBySender">보낸 후기</a>
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/read-reviews-all-by-sender">보낸 후기</a>
                             </li>
                         </ul>
                     </li>
@@ -52,8 +52,8 @@
             </div>
         </nav>
         <section class="container-content page-section portfolio col-md-9 col-lg-9" id="portfolio">
-            <!-- Menu -->
-            <img class="sub-menu-icon" src="/static/images/icon/icon-review-possible.png" alt="후기 작성">
+            <!-- Title -->
+            <img class="sub-menu-icon" src="/images/icon/icon-review.png" alt="후기 작성">
             <h2 class="page-section-heading text-secondary mb-0 main-menu">후기 작성</h2>
             <!-- Grid Items -->
             <div class="row justify-content-center">

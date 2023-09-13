@@ -259,3 +259,14 @@ footer p {font-weight: 300; font-size: 14px;}
 .review-possible .board-item .board-item-review button.possible {background-color: #3BD0FA;}
 .review-possible .board-item .board-item-review button.impossible {background-color: #B0B0B0; pointer-events: none; cursor: default;}
 .review-possible .board-item .board-item-review button.impossible a {pointer-events: none; cursor: default;}
+
+/* read-reviews-all */
+.read-reviews-all .board-title {font-weight: 500; margin-bottom: 15px; font-size: 1.1rem; color: #333;}
+.read-reviews-all .board-temperature {font-weight: 700; font-size: 1.8rem;}
+.read-reviews-all .review-list {margin-bottom: 4em; padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+.read-reviews-all .review-list a .review-top {display: flex; justify-content: space-between;}
+.read-reviews-all .review-list a .review-top .review-top-left {display: flex; align-items: center}
+.read-reviews-all .review-list a .review-top .review-top-left .review-requests-profile {width: 40px; margin-right: 3px; border-radius: 50%; border: 1px solid #fff;}
+.read-reviews-all .review-list a .review-top .review-top-left .review-requests-profile img {width: 100%;}
+.read-reviews-all .review-list a .review-bottom {padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+
