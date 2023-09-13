@@ -83,33 +83,45 @@ public class ReviewsService {
         return reviewsDtoList;
     }
 
-    // 특정 사용자가 작성한 후기 전체 조회 (보낸 후기)
-    public Page<ReviewsDto> readReviewsAllBySender(Integer pageNumber) {
-        UsersEntity userEntity = authService.getUser();
-        Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
-        Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
-        Page<ReviewsEntity> reviewsPage = repository.findAllBySender(user, pageable);
-        return reviewsPage.map(ReviewsDto::fromEntity);
-    }
+//    // 특정 사용자가 작성한 후기 전체 조회 (보낸 후기)
+//    public Page<ReviewsDto> readReviewsAllBySender(Integer pageNumber) {
+//        UsersEntity userEntity = authService.getUser();
+//        Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
+//        Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
+//        Page<ReviewsEntity> reviewsPage = repository.findAllBySender(user, pageable);
+//        return reviewsPage.map(ReviewsDto::fromEntity);
+//    }
 
-    // 특정 사용자가 받은 후기 전체 조회
-    public Page<ReviewsDto> readReviewsAllByReceiver(Integer pageNumber) {
-        UsersEntity userEntity = authService.getUser();
-        Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
-        Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
-        Page<ReviewsEntity> reviewsPage = repository.findAllByReceiver(user, pageable);
-//        List<BoardDto>
-        return reviewsPage.map(ReviewsDto::fromEntity);
+    // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
+//    public Page<ReviewsDto> readReviewsAllByReceiver(Integer pageNumber) {
+//        UsersEntity userEntity = authService.getUser();
+//        Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
+//        Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
+//        Page<ReviewsEntity> reviewsPage = repository.findAllByReceiver(user, pageable);
+//        return reviewsPage.map(ReviewsDto::fromEntity);
+//    }
+
+    // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
+    public List<ReviewsDto> readReviewsAllBySender(Long senderId) {
+        if (!boardsRepository.existsById(senderId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+        }
+//        UsersEntity usersEntity = authService.getUser();
+        List<ReviewsDto> reviewsDtoList = new ArrayList<>();
+        List<ReviewsEntity> reviewsEntityList = repository.findAllBySenderId(senderId);
+        for (ReviewsEntity entity : reviewsEntityList)
+            reviewsDtoList.add(ReviewsDto.fromEntity(entity));
+        return reviewsDtoList;
     }
 
     // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
-    public List<ReviewsDto> readReviewsAllByReceiver(Long boardId) {
-        if (!boardsRepository.existsById(boardId)) {
+    public List<ReviewsDto> readReviewsAllByReceiver(Long receiverId) {
+        if (!boardsRepository.existsById(receiverId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
         }
-        UsersEntity usersEntity = authService.getUser();
+//        UsersEntity usersEntity = authService.getUser();
         List<ReviewsDto> reviewsDtoList = new ArrayList<>();
-        List<ReviewsEntity> reviewsEntityList = repository.findAllByBoardId(boardId);
+        List<ReviewsEntity> reviewsEntityList = repository.findAllByReceiverId(receiverId);
         for (ReviewsEntity entity : reviewsEntityList)
             reviewsDtoList.add(ReviewsDto.fromEntity(entity));
         return reviewsDtoList;

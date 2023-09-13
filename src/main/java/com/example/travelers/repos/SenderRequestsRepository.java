@@ -16,4 +16,5 @@ public interface SenderRequestsRepository extends JpaRepository<SenderRequestsEn
     Optional<SenderRequestsEntity> findByBoardIdAndSenderId(Long boardId, Long id);
 
     boolean existsBySenderId(long l);
+    List<SenderRequestsEntity> findAllByReceiverIdOrderByCreatedAtDesc(Long receiverId);
 }

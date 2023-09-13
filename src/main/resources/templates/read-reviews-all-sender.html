@@ -3,12 +3,12 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-    <title>받은 동행</title>
+    <title>후기 전체 조회</title>
 </head>
-<body class="receiver">
+<body class="read-reviews-all">
 <th:block layout:fragment="content">
     <!-- Contents -->
-    <div class="container container-wrap justify-content-center">
+    <div class="container container-wrap justify-content-between">
         <nav id="subNav" class="col-md-2 col-lg-2">
             <div class="container">
                 <ul class="navbar-nav me-auto">
@@ -28,7 +28,7 @@
                                 <a class="nav-link py-2 px-0 px-lg-3" href="#">내가 쓴 글</a>
                             </li>
                             <li class="nav-item mx-0">
-                                <a class="nav-link active py-2 px-0 px-lg-3" href="/receiver-requests">받은 동행</a>
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/receiver-requests">받은 동행</a>
                             </li>
                             <li class="nav-item mx-0">
                                 <a class="nav-link py-2 px-0 px-lg-3" href="/sender-requests">보낸 동행</a>
@@ -41,7 +41,8 @@
                     <li class="nav-item mx-0 mx-lg-1">나의 후기
                         <ul class="navbar-nav me-auto">
                             <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" th:href="@{'/boards/' + ${boardId} + '/reviews'}">받은 후기</a>
+                                <a class="nav-link active py-2 px-0 px-lg-3"
+                                   th:href="@{'/boards/' + ${boardId} + '/reviews'}">받은 후기</a>
                             </li>
                             <li class="nav-item mx-0">
                                 <a class="nav-link py-2 px-0 px-lg-3" href="/read-reviews-all-by-sender">보낸 후기</a>
@@ -51,33 +52,33 @@
                 </ul>
             </div>
         </nav>
-        <section class="container-content page-section portfolio col-md-9 col-lg-9" id="portfolio">
-            <!-- Menu -->
-            <img class="sub-menu-icon" src="/static/images/icon/icon-receiver.png" alt="받은 동행">
-            <h2 class="page-section-heading text-secondary mb-0 main-menu">받은 동행</h2>
-            <!-- Grid Items -->
-            <div class="row justify-content-start">
-                <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5" th:each="request, requestIdx : ${receiverRequestsList}">
-                    <div th:with="sender=${senderList[requestIdx.index]}">
-                    <div class="board-item mx-auto">
-                        <a class="href-none" th:href="@{'/boards/' + ${boardId} + 'sender-requests' + ${request.senderId}}">
-                            <div class="board-item-profile">
-                                <p class="board-item-img">
-                                    <img th:src="'/' + ${sender.profileImg}" alt="프로필 이미지">
+        <section class="container-content page-section col-md-9 col-lg-9">
+            <!-- Title -->
+            <img th:src="'/' + ${sender.profileImg}" alt="원글 작성자 프로필 사진"/>
+            <h2 class="page-section-heading text-secondary mb-0 main-menu"
+                th:text="${sender.username} + '님이 보낸 후기'">
+            </h2>
+            <!-- Contents -->
+            <div class="container">
+                <h3 class="board-title" th:text="${sender.username} + '님의 여행 온도'"></h3>
+                <p class="board-temperature temp-3" th:text="${sender.temperature} + '℃'">36.5℃</p>
+                <!-- Grid Items -->
+                <div class="container">
+                    <div class="review-list" th:each="review: ${reviewList}">
+                        <a class="href-none" th:href="@{'/boards/' + ${review.boardId} + '/reviews/' + ${review.id}}">
+                            <div class="review-top">
+                                <p class="review-top-left">
+                                    <span class="review-requests-profile">
+                                        <img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진">
+                                    </span>
+                                    <span th:text="${review.senderUsername} + '님이 보낸 후기'"></span>
                                 </p>
-                                <div class="board-item-info">
-                                    <p th:text="${sender.username}" class="user-name"></p>
-                                    <p class="user-profile">
-                                        <span th:text="${sender.mbti}" class="user-mbti"></span>
-                                        <span class="--bs-gray-500">·</span>
-                                        <span th:text="${sender.gender}" class="user-gender"></span>
-                                        <span class="--bs-gray-500">·</span>
-                                        <span class="temp-3" th:text="${sender.temperature} + '℃'"></span>
-                                    </p>
-                                    <div class="item-contents">
-                                        <p th:text="${request.message}"></p>
-                                    </div>
-                                </div>
+                                <p class="review-top-right">
+                                    <span th:text="${review.rating}"></span>
+                                </p>
+                            </div>
+                            <div class="review-bottom">
+                                <span th:text="${review.content}">후기 내용</span>
                             </div>
                         </a>
                     </div>

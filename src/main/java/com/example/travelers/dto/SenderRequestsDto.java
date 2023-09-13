@@ -21,6 +21,7 @@ public class SenderRequestsDto {
     private LocalDateTime createdAt;
     private LocalDateTime rejectedAt;
     private Boolean finalStatus;
+    private Long senderId;
     private Long receiverId;
     private Long boardId;
 
@@ -33,6 +34,7 @@ public class SenderRequestsDto {
         dto.setRejectedAt(entity.getRejectedAt());
         dto.setFinalStatus(entity.getFinalStatus());
         dto.setReceiverId(entity.getBoard().getUser().getId());
+        dto.setSenderId(entity.getSender().getId());
         dto.setBoardId(entity.getBoard().getId());
         return dto;
     }
