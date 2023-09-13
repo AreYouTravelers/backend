@@ -17,8 +17,8 @@ function updateCreatedAtField() {
 document.addEventListener('DOMContentLoaded', function () {
     const updateForm = document.getElementById('updateForm');
     const updateButton = document.getElementById('updateButton');
-    const deleteForm = document.getElementById("deleteForm");
-    const deleteButton = document.getElementById("deleteButton");
+    const deleteForm = document.getElementById('deleteForm');
+    const deleteButton = document.getElementById('deleteButton');
     const postForm = document.getElementById('postForm');
     const postButton = document.getElementById('postButton');
 
@@ -26,9 +26,57 @@ document.addEventListener('DOMContentLoaded', function () {
     // 작성일 업데이트 간격 설정 (예: 1분마다 업데이트)
     setInterval(updateCreatedAtField, 60000); // 60000 밀리초 = 1분
 
+    // postButton.addEventListener("click", function (event) {
+    //     event.preventDefault();
+    //     const formData = new FormData(postForm);
+    //
+    //     // 선택된 값을 Long 형으로 파싱
+    //     const selectedCountry = document.getElementById("country").value;
+    //     const countryId = parseInt(selectedCountry);
+    //     const selectedCategory = document.getElementById("category").value;
+    //     const categoryId = parseInt(selectedCategory);
+    //
+    //     // FormData에 Long 형식의 'country' 값을 추가
+    //     formData.append('countryId', countryId);
+    //     formData.append('categoryId', categoryId);
+    //
+    //     fetch(`/boards/write`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Authorization': 'Bearer ' + accessToken,
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(Object.fromEntries(formData.entries()))
+    //     })
+    //         .then(response => {
+    //             if (response.ok) {
+    //                 alert('게시물이 등록되었습니다.');
+    //                 location.reload();
+    //             } else {
+    //                 alert('게시물 등록에 실패했습니다.');
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.error('Network error:', error);
+    //         });
+    // });
+
     updateButton.addEventListener('click', function (event) {
         event.preventDefault();
         const formData = new FormData(updateForm);
+
+        // 선택된 값을 Long 형으로 파싱
+        const selectedCountry = document.getElementById("country").value;
+        const countryId = parseInt(selectedCountry);
+        const selectedCategory = document.getElementById("category").value;
+        const categoryId = parseInt(selectedCategory);
+
+        console.log("Selected Country ID:", countryId);
+        console.log("Selected Category ID:", categoryId);
+
+        // FormData에 Long 형식의 'country' 값을 추가
+        formData.append('countryId', countryId);
+        formData.append('categoryId', categoryId);
 
         fetch(`/boards/${boardId}`, {  // <-- dto.id를 boardId로 변경했습니다.
             method: 'PUT',
@@ -41,7 +89,8 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => {
                 if (response.ok) {
                     alert('게시물이 업데이트되었습니다.');
-                    window.location.href = '/boards/' + boardId;  // <-- dto.id를 boardId로 변경했습니다.
+                    window.location.href = '/boards/' + boardId;
+                    // location.reload();
                 } else {
                     alert('게시물 업데이트에 실패했습니다.');
                 }
@@ -74,45 +123,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
         } else {
             alert("게시물 삭제가 취소되었습니다.");
-        }
-    });
-
-    postButton.addEventListener("click", function (event) {
-        // event.preventDefault();
-        const formData = new FormData(postForm);
-
-        // 선택된 값을 Long 형으로 파싱
-        const selectedCountry = document.getElementById("country").value;
-        const country = parseInt(selectedCountry);
-        const selectedCategory = document.getElementById("category").value;
-        const category = parseInt(selectedCategory);
-
-        // FormData에 Long 형식의 'country' 값을 추가
-        // formData.append('country', country);
-        // formData.append('category', category);
-
-        console.log(Object.fromEntries(formData.entries()))
-
-        if (confirm("게시물을 등록하시겠습니까?")) {
-            fetch(`/boards/write`, {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + accessToken,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(Object.fromEntries(formData.entries()))
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert('게시물이 등록되었습니다.');
-                        window.location.href = '/accompany';
-                    } else {
-                        alert('게시물 등록에 실패했습니다.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Network error:', error);
-                });
         }
     });
 });

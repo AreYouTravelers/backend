@@ -4,6 +4,7 @@
       layout:decorate="~{layout/default}">
 <head>
     <title text="동행 구하기"></title>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> <!--    mixed content 해결 -->
     <style>
         .form-container {
             display: flex;
@@ -17,23 +18,26 @@
         <h1 class="mt-4">동행 구하기</h1>
         <div class="card mb-4">
             <div class="card-body">
-                <form action="/boards/write" method="post" id="postForm">
+                <form th:action="@{'/boards/write'}" th:method="post" id="postForm">
 <!--                    <input type="hidden" name="_method" value="post"/>-->
                     <div class="mb-3">
                         <label for="country" class="form-label">나라</label>
                         <select class="form-select" id="country" name="country" required>
                             <option value="">나라를 선택하세요</option>
-                            <option value="1">파리</option>
-                            <option value="2">오사카</option>
+                            <option th:each="country : ${countries}"
+                                    th:value="${country.id}"
+                                    th:text="${country.name}">
+                            </option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="category" class="form-label">카테고리</label>
                         <select class="form-select" id="category" name="category" required>
                             <option value="">카테고리를 선택하세요</option>
-                            <option value="1">여행</option>
-                            <option value="2">가이드</option>
-                            <option value="3">기타</option>
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.id}"
+                                    th:text="${category.category}">
+                            </option>
                         </select>
                     </div>
                     <div class="mb-3">

@@ -21,12 +21,25 @@
                     <input type="hidden" name="_method" value="put"/>
                     <div class="mb-3">
                         <label for="country" class="form-label">나라</label>
-                        <input type="text" class="form-control" id="country" name="country" th:value="${dto.country}">
+                        <!--                        <input type="text" class="form-control" id="country" name="country" th:value="${dto.country}">-->
+                        <select class="form-select" id="country" name="country">
+                            <option th:each="country : ${countries}"
+                                    th:value="${country.id}"
+                                    th:text="${country.name}"
+                                    th:selected="${country.name} == ${dto.country}">
+                            </option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="category" class="form-label">카테고리</label>
-                        <input type="text" class="form-control" id="category" name="category"
-                               th:value="${dto.category}">
+                        <!--                        <input type="text" class="form-control" id="category" name="category" th:value="${dto.category}">-->
+                        <select class="form-select" id="category" name="category">
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.id}"
+                                    th:text="${category.category}"
+                                    th:selected="${category.category} == ${dto.category}">
+                            </option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="title" class="form-label">제목</label>
@@ -76,15 +89,15 @@
                     <a th:href="@{'/boards/' + ${dto.id} + '/sender-requests/write'}" class="btn btn-primary" style="margin-right: auto;">동행 요청하기</a>
                     <!--                <th:block th:if="${user != null and dto.getUsername() == user.getUsername()}">-->
                     <div style="display: flex; justify-content: flex-end;">
-                    <button class="btn btn-primary" id="updateButton" style="margin-right: 6px;">수정</button>
-                    <form th:action="@{'/boards/' + ${dto.id}}" th:method="post" id="deleteForm">
-                        <input type="hidden" name="_method" value="delete"/>
-                        <button class="btn btn-outline-danger" id="deleteButton">삭제</button>
-                    </form>
+                        <button class="btn btn-primary" id="updateButton" style="margin-right: 6px;">수정</button>
+                        <form th:action="@{'/boards/' + ${dto.id}}" th:method="post" id="deleteForm">
+                            <input type="hidden" name="_method" value="delete"/>
+                            <button class="btn btn-outline-danger" id="deleteButton">삭제</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </th:block>
 </body>

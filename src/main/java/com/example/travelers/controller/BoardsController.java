@@ -22,32 +22,31 @@ public class BoardsController {
     private final BoardsService boardsService;
     private final CountryRepository countryRepository;
     private final BoardCategoriesRepository boardCategoriesRepository;
-    private final BoardsRepository boardsRepository;
 
     @Autowired
     private MbtiFilter mbtiFilter;
 
     @Autowired
-    public BoardsController(BoardsService boardsService, CountryRepository countryRepository, BoardCategoriesRepository boardCategoriesRepository, BoardsRepository boardsRepository) {
+    public BoardsController(BoardsService boardsService, CountryRepository countryRepository, BoardCategoriesRepository boardCategoriesRepository) {
         this.boardsService = boardsService;
         this.countryRepository = countryRepository;
         this.boardCategoriesRepository = boardCategoriesRepository;
-        this.boardsRepository = boardsRepository;
     }
 
     @GetMapping("/write")
-    public String writeForm() {
+    public String writeForm(Model model) {
+        model.addAttribute("countries", countryRepository.findAll());
+        model.addAttribute("categories", boardCategoriesRepository.findAll());
+        //여기에 넣어야 html의 option에 매치됨
         return "boardWrite";
     }
 
     @PostMapping("/write")
     public String create(
-//            @RequestParam(value = "country", defaultValue = "1") Long countryId,
-//            @RequestParam(value = "category", defaultValue = "1") Long categoryId,
             @RequestBody BoardDto dto, Model model) {
         BoardDto result = boardsService.createBoard(dto);
-        model.addAttribute("countries", countryRepository.findAll());
-        model.addAttribute("categories", boardCategoriesRepository.findAll());
+//        model.addAttribute("countries", countryRepository.findAll());
+//        model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("dto", result);
         return "redirect:/";
 }
@@ -57,6 +56,8 @@ public class BoardsController {
     public String read(
                     @PathVariable("id") Long id, Model model) {
         BoardDto result = boardsService.readBoard(id);
+        model.addAttribute("countries", countryRepository.findAll());
+        model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("dto", result);
         model.addAttribute("id", id);
         return "boardDetail";

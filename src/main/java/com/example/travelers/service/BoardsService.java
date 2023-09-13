@@ -79,7 +79,6 @@ public class BoardsService {
 
         BoardsEntity savedBoard = boardsRepository.save(newBoard);
         dto.setId(savedBoard.getId());
-//        dto.setCreatedAt(LocalDateTime.now());
         return dto;
     }
 
@@ -110,7 +109,7 @@ public class BoardsService {
     } //현재 시간을 기준으로 00시까지의 시간을 계산
 
     public Page<BoardsMapping> readBoardsAll(Integer pageNumber) {
-//        UsersEntity userEntity = authService.getUser();
+        UsersEntity userEntity = authService.getUser();
         Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
         Page<BoardsEntity> boardsPage = boardsRepository.findAll(pageable);
         List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
@@ -172,11 +171,15 @@ public class BoardsService {
     public BoardDto updateBoard(Long id, BoardDto dto) {
         Optional<BoardsEntity> board = boardsRepository.findById(id);
         if (board.isPresent()) {
+            CountryEntity countryEntity = countryRepository.findById(dto.getCountryId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found"));
+            BoardCategoriesEntity categoriesEntity = boardCategoriesRepository.findById(dto.getCategoryId())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found"));
             UsersEntity userEntity = authService.getUser();
             if (board.get().getUser().getId().equals(userEntity.getId())) {
                 BoardsEntity boardsEntity = board.get();
-                boardsEntity.getCountry().setName(dto.getCountry());
-                boardsEntity.getBoardCategory().setCategory(dto.getCategory());
+                boardsEntity.setCountry(countryEntity);
+                boardsEntity.setBoardCategory(categoriesEntity);
                 boardsEntity.setTitle(dto.getTitle());
                 boardsEntity.setContent(dto.getContent());
                 boardsEntity.setPeople(dto.getPeople());
