@@ -1,5 +1,6 @@
 package com.example.travelers.service;
 
+import com.example.travelers.dto.BoardDto;
 import com.example.travelers.dto.ReceiverRequestsDto;
 import com.example.travelers.dto.SenderRequestsDto;
 import com.example.travelers.entity.BoardsEntity;
@@ -104,20 +105,22 @@ public class SenderRequestsService {
     }
 
     // 작성자 별 수락 된 요청 '후기 작성하기' 전체 조회 = 후기 작성하기 Page
-    public List<SenderRequestsDto> readAllAcceptedSenderRequests(Long senderId) {
-        UsersEntity usersEntity = authService.getUser();
-
+//    public List<BoardDto> readAllAcceptedSenderRequests(Long senderId) {
+    public List<BoardDto> readAllAcceptedSenderRequests() {
+        // TODO sender id 받아오도록 수정
         // senderId에 해당하는 요청글이 존재하지 않을 경우 예외 처리
-        if (!senderRequestsRepository.existsById(senderId))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
+//        if (!senderRequestsRepository.existsBySenderId(1L)) {
+//            UsersEntity usersEntity = authService.getUser();
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
+//        }
 
-        List<SenderRequestsDto> senderRequestsDtoList = new ArrayList<>();
-        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdAndFinalStatus(senderId, true);
+        List<BoardDto> boardDtoList = new ArrayList<>();
+        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdAndFinalStatus(1L, true);
 
         for (SenderRequestsEntity entity : senderRequestsEntityList)
-            senderRequestsDtoList.add(SenderRequestsDto.fromEntity(entity));
+            boardDtoList.add(BoardDto.fromEntity(boardsRepository.findById(entity.getBoard().getId()).get()));
 
-        return senderRequestsDtoList;
+        return boardDtoList;
     }
 
     // 동행 요청 수정 (메세지)

@@ -1,7 +1,9 @@
 package com.example.travelers.controller;
 
+import com.example.travelers.dto.BoardDto;
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.SenderRequestsDto;
+import com.example.travelers.service.AuthService;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.SenderRequestsService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.List;
 public class SenderRequestsController {
     private final SenderRequestsService service;
     private final BoardsService boardsService;
+    private final AuthService authService;
 
     // Rendering - 동행 요청 생성에 필요한 초기 HTML 렌더링 페이지
     @GetMapping("/boards/{boardId}/sender-requests/write")
@@ -70,15 +73,28 @@ public class SenderRequestsController {
 
     // 작성자 별 수락 된 요청 '후기 작성하기' 전체 조회 = 후기 작성하기 Page
     // GET /boards/accepted-sender-requests/{id}
-    @GetMapping("/boards/accepted-sender-requests/{id}")
-    public List<SenderRequestsDto> acceptedReadAll(
-            @PathVariable("id") Long id
+//    @GetMapping("/boards/accepted-sender-requests/{id}")
+//    public List<SenderRequestsDto> acceptedReadAll(
+//            @PathVariable("id") Long id
+//    ) {
+//        return service.readAllAcceptedSenderRequests(id);
+//    }
+
+    // 후기 작성 가능 목록
+    @GetMapping("/boards/reviewPossible")
+    public String reviewPossible(
+            Model model
     ) {
-        return service.readAllAcceptedSenderRequests(id);
+        List<BoardDto> requestsList = service.readAllAcceptedSenderRequests();
+        model.addAttribute("requestsList", requestsList);
+        return "review-possible";
     }
-    
+
     // 동행 요청 수정 (메세지)
     // PUT /boards/{boardId}/sender-requests/{id}
+    // 동행 요청 삭제
+    // DELETE /boards/{boardId}/sender-requests/{id}
+
     @PutMapping("/boards/{boardId}/sender-requests/{id}")
     public MessageResponseDto update(
             @PathVariable("boardId") Long boardId,
@@ -90,8 +106,6 @@ public class SenderRequestsController {
         return messageResponseDto;
     }
 
-    // 동행 요청 삭제
-    // DELETE /boards/{boardId}/sender-requests/{id}
     @DeleteMapping("/boards/{boardId}/sender-requests/{id}")
     public MessageResponseDto delete(
             @PathVariable("boardId") Long boardId,
