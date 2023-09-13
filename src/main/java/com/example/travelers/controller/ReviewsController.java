@@ -32,7 +32,7 @@ public class ReviewsController {
         model.addAttribute("board", boardsService.readBoard(boardId));
         model.addAttribute("review", service.createReview(boardId, dto));
         model.addAttribute("boardId", boardId);
-        return "readReview";
+        return "read-review";
 //        return ResponseEntity.ok(dto);
     }
 
@@ -43,7 +43,7 @@ public class ReviewsController {
     ) {
         model.addAttribute("board", boardsService.readBoard(boardId));
         model.addAttribute("boardId", boardId);
-        return "createReview";
+        return "create-review";
     }
 
     // GET /boards/{boardId}/reviews/{id}
@@ -57,7 +57,7 @@ public class ReviewsController {
         model.addAttribute("review", service.readReview(boardId, id));
         model.addAttribute("boardId", boardId);
         model.addAttribute("reviewId", id);
-        return "readReview";
+        return "read-review";
     }
 
     // GET /boards/{boardId}/reviews
@@ -72,7 +72,7 @@ public class ReviewsController {
         model.addAttribute("boardId", boardId);
         model.addAttribute("receiver", list.get(1).getReceiverUsername());
 //        return service.readReviewsAll(boardId);
-        return "readReviewsAll";
+        return "read-reviews-all";
     }
 
     // GET /boards/reviews/myreview
@@ -90,7 +90,7 @@ public class ReviewsController {
     ) {
         model.addAttribute("board", boardsService.readBoard(boardId));
         model.addAttribute("review", service.readReview(boardId, id));
-        return "updateReview";
+        return "update-review";
     }
 
     // PUT /boards/{boardId}/reviews/{id}
@@ -108,7 +108,7 @@ public class ReviewsController {
         model.addAttribute("id", id);
 
 //        return ResponseEntity.ok(service.updateReview(boardId, id, dto));
-        return "readReview";
+        return "read-review";
     }
 
     // DELETE /boards/{boardId}/reviews/{id}
