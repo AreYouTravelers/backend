@@ -44,7 +44,8 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => {
                 if (response.ok) {
                     alert("동행 요청이 되었습니다.");
-                    window.location.href = '/boards/{boardId}/sender-requests/{senderRequestsId}';
+                    window.location.href = '/boards/' + boardId +
+                        '/sender-requests/' + senderRequestsId;
                 } else {
                     alert("동행 요청에 실패했습니다.");
                 }

@@ -53,6 +53,7 @@ public class WebSecurityConfig {
                                         "/review-possible",
                                         "/boards/**",
                                         "/boards/{boardId}",
+                                        "/boards/{boardId}/**",
                                         "/board/{boardId}/reviews/**",
                                         "/token/reissue"
                                 )
