@@ -1,6 +1,6 @@
 // accessToken 불러오기
 let accessToken = localStorage.getItem('accessToken');
-const boardId = window.location.pathname.split("/")[2];
+const boardId = window.location.pathname.split("/")[3];
 
 function updateCreatedAtField() {
     var createdAtField = document.getElementById("createdAt");
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('countryId', countryId);
         formData.append('categoryId', categoryId);
 
-        fetch(`/boards/${boardId}`, {  // <-- dto.id를 boardId로 변경했습니다.
+        fetch(`/boards/guide/${boardId}`, {  // <-- dto.id를 boardId로 변경했습니다.
             method: 'PUT',
             headers: {
                 'Authorization': 'Bearer ' + accessToken,
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
     deleteButton.addEventListener("click", function (event) {
         event.preventDefault();
         if (confirm("게시물을 삭제하시겠습니까?")) {
-            fetch(`/boards/${boardId}`, {  // <-- dto.id를 boardId로 변경했습니다.
+            fetch(`/boards/guide/${boardId}`, {  // <-- dto.id를 boardId로 변경했습니다.
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Bearer ' + accessToken,
