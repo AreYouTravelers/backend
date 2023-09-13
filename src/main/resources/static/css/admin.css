@@ -1,0 +1,10 @@
+/* User List Table */
+.table th,
+.table td {
+    vertical-align: middle;
+}
+
+/* Pagination */
+.pagination {
+    justify-content: center;
+}

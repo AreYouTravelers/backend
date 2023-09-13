@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>회원 관리</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+    <script src="/static/js/admin.js"></script>
+</head>
+<body class="my-page">
+<th:block layout:fragment="content">
+    <!-- Contents -->
+    <div class="container container-wrap justify-content-between">
+        <section class="container-content page-section col-md-9 col-lg-9">
+            <!-- Title -->
+            <img class="sub-menu-icon" src="/static/images/icon/icon-mypage.png" alt="프로필">
+            <h2 class="page-section-heading text-secondary mb-0 main-menu">회원 관리</h2>
+            <!-- User List -->
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>닉네임</th>
+                            <th>이메일</th>
+                            <th>MBTI</th>
+                            <th>온도</th>
+                            <th>성별</th>
+                            <th>생년월일</th>
+                            <th>가입일</th>
+                        </tr>
+                        </thead>
+                        <tbody id="user-list">
+                        <!-- User data will be inserted here dynamically -->
+                        </tbody>
+                    </table>
+                    <!-- Pagination -->
+                    <ul class="pagination" id="pagination">
+                        <!-- Pagination links will be inserted here dynamically -->
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+</th:block>
+</body>
+</html>

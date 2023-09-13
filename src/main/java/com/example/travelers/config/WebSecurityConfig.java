@@ -43,6 +43,7 @@ public class WebSecurityConfig {
                                         "/users",
                                         "/login",
                                         "/signup",
+                                        "/admin",
                                         "/mypage",
                                         "/account",
                                         "/accompany",
