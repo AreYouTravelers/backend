@@ -19,7 +19,7 @@ public class ReportsDto {
     private String title;
     private String content;
     private String reportedUser;
-    private Boolean status;
+    private String status;
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
 
@@ -29,7 +29,8 @@ public class ReportsDto {
         dto.setTitle(entity.getTitle());
         dto.setContent(entity.getContent());
         dto.setReportedUser(entity.getReportedUser());
-        dto.setStatus(entity.getStatus());
+        if (entity.getStatus() == true) dto.setStatus("처리완료");
+        else dto.setStatus("처리중");
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setDeletedAt(entity.getDeletedAt());
         return dto;

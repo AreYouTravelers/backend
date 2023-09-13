@@ -7,18 +7,27 @@ import com.example.travelers.service.ReportsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/reports")
 @RequiredArgsConstructor
 public class ReportsController {
     private final ReportsService reportsService;
 
-    @PostMapping
-    public ReportsDto create(
-            @RequestBody ReportsDto dto) {
-        return reportsService.createReport(dto);
+    @GetMapping("/write")
+    public String writeForm(Model model) {
+        return "reportWrite";
+    }
+
+    @PostMapping("/write")
+    public String create(
+            @RequestBody ReportsDto dto, Model model) {
+        ReportsDto result = reportsService.createReport(dto);
+        model.addAttribute("dto", result);
+        return "redirect:/";
     }
 
     @GetMapping("/{id}")

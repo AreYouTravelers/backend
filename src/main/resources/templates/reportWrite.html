@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+  <title>유저 신고하기</title>
+  <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> <!--    mixed content 해결 -->
+  <style>
+    .form-container {
+      display: flex;
+    }
+  </style>
+  <script src="/static/js/reportWrite.js"></script>
+</head>
+<body style="padding-top: 130px;">
+<th:block layout:fragment="content">
+  <div class="container board-detail">
+    <h1 class="mt-4">유저 신고하기</h1>
+    <div class="card mb-4">
+      <div class="card-body">
+        <form th:action="@{'/reports/write'}" th:method="post" id="postForm">
+          <!--                    <input type="hidden" name="_method" value="post"/>-->
+          <div class="mb-3">
+            <label for="title" class="form-label">제목</label>
+            <input type="text" class="form-control" id="title" name="title" required>
+          </div>
+          <div class="mb-3">
+            <label for="content" class="form-label">내용</label>
+            <textarea class="form-control" id="content" name="content" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="reportedUser" class="form-label">신고할 유저</label>
+            <input type="text" class="form-control" id="reportedUser" name="reportedUser" required>
+          </div>
+          <div class="mb-3">
+            <label for="status" class="form-label">상태</label>
+            <input type="text" class="form-control" id="status" name="status" value="처리중" disabled>
+          </div>
+          <div class="mb-3">
+            <label for="createdAt" class="form-label">작성일</label>
+            <input type="text" class="form-control" id="createdAt" name="createdAt" disabled>
+          </div>
+        </form>
+        <div class="form-container">
+          <button class="btn btn-primary" id="postButton" style="margin-right: 6px;">글쓰기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</th:block>
+</body>
+</html>

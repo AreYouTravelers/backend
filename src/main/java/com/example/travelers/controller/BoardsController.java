@@ -9,6 +9,7 @@ import com.example.travelers.repos.CountryRepository;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.MbtiFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,8 +46,6 @@ public class BoardsController {
     public String create(
             @RequestBody BoardDto dto, Model model) {
         BoardDto result = boardsService.createBoard(dto);
-//        model.addAttribute("countries", countryRepository.findAll());
-//        model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("dto", result);
         return "redirect:/";
 }
