@@ -3,6 +3,7 @@ package com.example.travelers.service;
 import com.example.travelers.dto.BoardDto;
 import com.example.travelers.dto.ReceiverRequestsDto;
 import com.example.travelers.dto.SenderRequestsDto;
+import com.example.travelers.dto.UserProfileDto;
 import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.entity.ReceiverRequestsEntity;
 import com.example.travelers.entity.SenderRequestsEntity;
@@ -34,7 +35,7 @@ public class SenderRequestsService {
 
     // 동행 요청 생성
     public SenderRequestsDto createSenderRequests(Long boardId, SenderRequestsDto dto) {
-        UsersEntity usersEntity = usersRepository.findById((long)1).get();
+        UsersEntity usersEntity = authService.getUser();
 
         // 게시글 동행 요청 중복 방지
         Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndSenderId(boardId, usersEntity.getId());
@@ -71,7 +72,7 @@ public class SenderRequestsService {
 
     // 동행 요청 단일 조회
     public SenderRequestsDto readSenderRequests(Long boardId, Long id) {
-//        UsersEntity usersEntity = authService.getUser();
+        UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
         if (!boardsRepository.existsById(boardId))
@@ -102,6 +103,13 @@ public class SenderRequestsService {
             senderRequestsDtoList.add(SenderRequestsDto.fromEntity(entity));
 
         return senderRequestsDtoList;
+    }
+
+    public List<BoardDto> readAllSenderRequestsBoards(List<SenderRequestsDto> requestsDtoList) {
+        List<BoardDto> boardDtoList = new ArrayList<>();
+        for (SenderRequestsDto dto: requestsDtoList)
+            boardDtoList.add(BoardDto.fromEntity(boardsRepository.findById(dto.getBoardId()).get()));
+        return boardDtoList;
     }
 
     // 작성자 별 수락 된 요청 '후기 작성하기' 전체 조회 = 후기 작성하기 Page

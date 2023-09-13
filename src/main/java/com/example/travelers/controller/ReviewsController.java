@@ -34,20 +34,18 @@ public class ReviewsController {
         return "create-review";
     }
 
-    // POST /boards/{boardId}/reviews
-    @PostMapping("/boards/{boardId}/reviews")
+    @PostMapping("/boards/{boardId}/reviews/write")
     public String create(
             @PathVariable("boardId") Long boardId,
-            ReviewsDto dto,
+            @RequestBody ReviewsDto dto,
             Model model
     ) {
         model.addAttribute("board", boardsService.readBoard(boardId));
         model.addAttribute("review", service.createReview(boardId, dto));
         model.addAttribute("boardId", boardId);
-        return "read-review";
+        return "redirect:/";
     }
 
-    // GET /boards/{boardId}/reviews/{id}
     @GetMapping("/boards/{boardId}/reviews/{id}")
     public String read(
             @PathVariable("boardId") Long boardId,

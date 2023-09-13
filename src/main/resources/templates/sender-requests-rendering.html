@@ -4,7 +4,7 @@
       layout:decorate="~{layout/default}">
 <head>
     <title>동행 요청 작성</title>
-    <link rel="stylesheet" href="/static/js/sender-requests-rendering.js">
+    <script src="/static/js/sender-requests-rendering.js"></script>
 </head>
 <body class="sender-rendering">
 <th:block layout:fragment="content">
@@ -32,8 +32,8 @@
         </div>
         <div class="board-message">
             <h4 class="board-title">동행 요청 메세지를 작성해주세요.</h4>
-            <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="post" id="createForm">
-                <textarea name="message" rows="8" placeholder="예시) 안녕하세요. 28살 남자입니다. 저는 현지의 음식과 문화를 즐기는 것을 좋아해요. 같이 동행하면 좋을 것 같습니다 :-)"></textarea>
+            <form id="createForm">
+                <textarea id="messages" name="message" rows="8" placeholder="예시) 안녕하세요. 28살 남자입니다. 저는 현지의 음식과 문화를 즐기는 것을 좋아해요. 같이 동행하면 좋을 것 같습니다 :-)"></textarea>
                 <div class="container-wrap justify-content-center gap-3 mt-5 mb-5">
                     <button type="button" class="btn btn-secondary">취소</button>
                     <button type="submit" class="btn btn-primary" id="createButton">요청</button>

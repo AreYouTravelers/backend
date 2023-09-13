@@ -36,32 +36,29 @@ public class ReviewsService {
     @Transactional
     public ReviewsDto createReview(Long boardId, ReviewsDto dto) {
         Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
-        if (boardsEntity.isEmpty()) {
-            UsersEntity sender = authService.getUser();
+        UsersEntity sender = authService.getUser();
+        if (boardsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
-        }
         UsersEntity receiver = boardsEntity.get().getUser();
+
         // 입력 받은 평점으로 온도 조절
         System.out.println(dto.getContent());
         System.out.println(dto.getRating());
         receiver.setTemperature(receiver.getTemperature() + updateTemperature(dto.getRating()));
         usersRepository.save(receiver);
-
-
         return ReviewsDto.fromEntity(repository.save(ReviewsEntity.builder()
                 .country(boardsEntity.get().getCountry())
                 .rating(dto.getRating())
                 .content(dto.getContent())
                 .board(boardsEntity.get())
-                // TODO sender 받아오는 부분 수정
-                .sender(receiver)
+                .sender(sender)
                 .receiver(receiver)
                 .build()));
     }
 
     public ReviewsDto readReview(Long boardId, Long id) {
+//        UsersEntity usersEntity = authService.getUser();
         if (!boardsRepository.existsById(boardId)) {
-            UsersEntity usersEntity = authService.getUser();
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
         }
         Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
@@ -72,8 +69,8 @@ public class ReviewsService {
 
     // 특정 게시글에 달린 후기 전체 조회
     public List<ReviewsDto> readReviewsAll(Long boardId) {
+        UsersEntity usersEntity = authService.getUser();
         if (!boardsRepository.existsById(boardId)) {
-            UsersEntity usersEntity = authService.getUser();
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
         }
         List<ReviewsDto> reviewsDtoList = new ArrayList<>();
