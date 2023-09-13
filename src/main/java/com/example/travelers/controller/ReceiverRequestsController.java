@@ -7,12 +7,14 @@ import com.example.travelers.service.ReceiverRequestsService;
 import com.example.travelers.service.SenderRequestsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Slf4j // 로깅
-@RestController // JSON 응답, @Controller 의 역할을 하면서, 등록된 모든 메소드에 @ResponseBody 를 포함
+@Controller // JSON 응답, @Controller 의 역할을 하면서, 등록된 모든 메소드에 @ResponseBody 를 포함
 @RequestMapping("/boards/{boardId}/receiver-requests") // 요청주소와 실제주소를 매핑하는 어노테이션
 @RequiredArgsConstructor
 public class ReceiverRequestsController {
@@ -32,10 +34,15 @@ public class ReceiverRequestsController {
     // 동행 요청 응답 전체 조회
     // GET /boards/{boardId}/receiver-requests
     @GetMapping
-    public List<SenderRequestsDto> readAll(
-            @PathVariable("boardId") Long boardId
+    public String readAll(
+            @PathVariable("boardId") Long boardId,
+            Model model
     ) {
-        return receiverRequestsService.readAllReceiverRequests(boardId);
+        List<SenderRequestsDto> requestsDtoList = receiverRequestsService.readAllReceiverRequests(1L);
+        model.addAttribute("receiverRequestsList", requestsDtoList);
+        model.addAttribute("senderList", receiverRequestsService.readAllReceiverRequestsUserProfile(requestsDtoList));
+        model.addAttribute("boardId", boardId);
+        return "receiver-requests";
     }
 
     // 동행 요청 응답 수정 (status)

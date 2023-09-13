@@ -61,7 +61,7 @@ public class ReviewsController {
         return "read-review";
     }
 
-    // 특정 게시글의 후기 전체 조회
+    // 후기 전체 조회
     @GetMapping("/boards/{boardId}/reviews")
     public String readAll(
             @PathVariable("boardId") Long boardId,
@@ -75,12 +75,34 @@ public class ReviewsController {
         return "read-reviews-all";
     }
 
-    // 특정 사용자가 작성한 후기 전체 조회 (보낸 후기)
-    @GetMapping("/boards/reviews/myreview")
-    public Page<ReviewsDto> readAllBySender(
-            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
-        return service.readReviewsAllBySender(pageNumber);
+    @GetMapping("/boards/reviews/sender/{id}")
+    public String readAllBySender(
+            @PathVariable("id") Long senderId,
+            Model model
+    ) {
+        model.addAttribute("reviewList", service.readReviewsAllBySender(senderId));
+        model.addAttribute("sender", usersRepository.findById(senderId).get());
+        model.addAttribute("id", senderId);
+        return "read-reviews-all-sender";
     }
+
+    @GetMapping("/boards/reviews/receiver/{id}")
+    public String readAllByReceiver(
+            @PathVariable("id") Long receiverId,
+            Model model
+    ) {
+        model.addAttribute("reviewList", service.readReviewsAllBySender(receiverId));
+        model.addAttribute("sender", usersRepository.findById(receiverId).get());
+        model.addAttribute("id", receiverId);
+        return "read-reviews-all-receiver";
+    }
+
+    // 특정 사용자가 작성한 후기 전체 조회 (보낸 후기)
+//    @GetMapping("/boards/reviews/myreview")
+//    public Page<ReviewsDto> readAllBySender(
+//            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
+//        return service.readReviewsAllBySender(pageNumber);
+//    }
 
     // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
 //    @GetMapping("/boards/reviews/myreview")
@@ -100,7 +122,6 @@ public class ReviewsController {
         return "update-review";
     }
 
-    // PUT /boards/{boardId}/reviews/{id}
     @PutMapping("/boards/{boardId}/reviews/{id}")
     public String update(
             @PathVariable("boardId") Long boardId,
@@ -115,7 +136,6 @@ public class ReviewsController {
         return "read-review";
     }
 
-    // DELETE /boards/{boardId}/reviews/{id}
     @DeleteMapping("/boards/{boardId}/reviews/{id}")
     public ResponseEntity<MessageResponseDto> delete(
             @PathVariable("boardId") Long boardId,

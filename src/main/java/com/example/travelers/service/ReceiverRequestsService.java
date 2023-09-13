@@ -2,6 +2,7 @@ package com.example.travelers.service;
 
 import com.example.travelers.dto.ReceiverRequestsDto;
 import com.example.travelers.dto.SenderRequestsDto;
+import com.example.travelers.dto.UserProfileDto;
 import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.entity.ReceiverRequestsEntity;
 import com.example.travelers.entity.SenderRequestsEntity;
@@ -27,24 +28,31 @@ import java.util.Optional;
 public class ReceiverRequestsService {
     private final ReceiverRequestsRepository receiverRequestsRepository;
     private final SenderRequestsRepository senderRequestsRepository;
+    private final UsersRepository usersRepository;
     private final BoardsRepository boardsRepository;
     private final AuthService authService;
 
     // 동행 요청 응답 전체 조회
-    public List<SenderRequestsDto> readAllReceiverRequests(Long boardId) {
-        UsersEntity usersEntity = authService.getUser();
+    public List<SenderRequestsDto> readAllReceiverRequests(Long receiverId) {
+//        UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
-        if (!boardsRepository.existsById(boardId))
+        if (!boardsRepository.existsById(receiverId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "조회할 게시글이 존재하지 않습니다.");
 
-        List<SenderRequestsDto> senderRequestsDtoList = new ArrayList<>();
-        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllByBoardId(boardId);
+        List<SenderRequestsDto> receiverRequestsDtoList = new ArrayList<>();
+        List<SenderRequestsEntity> receiverRequestsEntityList = senderRequestsRepository.findAllByReceiverIdOrderByCreatedAtDesc(receiverId);
 
-        for (SenderRequestsEntity entity : senderRequestsEntityList)
-            senderRequestsDtoList.add(SenderRequestsDto.fromEntity(entity));
+        for (SenderRequestsEntity entity : receiverRequestsEntityList)
+            receiverRequestsDtoList.add(SenderRequestsDto.fromEntity(entity));
+        return receiverRequestsDtoList;
+    }
 
-        return senderRequestsDtoList;
+    public List<UserProfileDto> readAllReceiverRequestsUserProfile(List<SenderRequestsDto> requestsDtoList) {
+        List<UserProfileDto> userProfileDtoList = new ArrayList<>();
+        for (SenderRequestsDto dto: requestsDtoList)
+            userProfileDtoList.add(UserProfileDto.fromEntity(usersRepository.findById(dto.getSenderId()).get()));
+        return userProfileDtoList;
     }
 
     // 동행 요청 응답 수정 (status)
