@@ -40,11 +40,6 @@ public class ViewController {
         return "sender-requests";
     }
 
-    @GetMapping("/reviewPossible")
-    public String reviewPossible() {
-        return "reviewPossible";
-    }
-
     @GetMapping("/account")
     public String changePassword() {
         return "account";

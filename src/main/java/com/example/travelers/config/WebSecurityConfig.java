@@ -50,11 +50,6 @@ public class WebSecurityConfig {
                                         "/sender-requests",
                                         "/board/{boardId}/sender-requests/**",
                                         "/reviewPossible",
-                                        "/createReview",
-                                        "/readReview",
-                                        "/readReviewsAll",
-                                        "/readReviewsAllBySender",
-                                        "/updateReview",
                                         "/boards/**",
                                         "/boards/{boardId}",
                                         "/board/{boardId}/reviews/**"
