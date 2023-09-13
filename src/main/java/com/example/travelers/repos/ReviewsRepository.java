@@ -17,4 +17,6 @@ public interface ReviewsRepository extends JpaRepository<ReviewsEntity, Long> {
     List<ReviewsEntity> findAllByBoardId(Long id);
 
     Page<ReviewsEntity> findAllBySender(Optional<UsersEntity> usersEntity, Pageable pageable);
+
+    Page<ReviewsEntity> findAllByReceiver(Optional<UsersEntity> user, Pageable pageable);
 }

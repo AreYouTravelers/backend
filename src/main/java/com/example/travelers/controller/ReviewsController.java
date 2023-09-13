@@ -24,9 +24,18 @@ public class ReviewsController {
     private final BoardsService boardsService;
     private final UsersRepository usersRepository;
 
+    @GetMapping("/boards/{boardId}/reviews/write")
+    public String createReview(
+            @PathVariable("boardId") Long boardId,
+            Model model
+    ) {
+        model.addAttribute("board", boardsService.readBoard(boardId));
+        model.addAttribute("boardId", boardId);
+        return "create-review";
+    }
+
     // POST /boards/{boardId}/reviews
     @PostMapping("/boards/{boardId}/reviews")
-//    public String create(
     public String create(
             @PathVariable("boardId") Long boardId,
             ReviewsDto dto,
@@ -36,17 +45,6 @@ public class ReviewsController {
         model.addAttribute("review", service.createReview(boardId, dto));
         model.addAttribute("boardId", boardId);
         return "read-review";
-//        return ResponseEntity.ok(dto);
-    }
-
-    @GetMapping("/boards/{boardId}/reviews/write")
-    public String createReview(
-            @PathVariable("boardId") Long boardId,
-            Model model
-    ) {
-        model.addAttribute("board", boardsService.readBoard(boardId));
-        model.addAttribute("boardId", boardId);
-        return "create-review";
     }
 
     // GET /boards/{boardId}/reviews/{id}
@@ -63,26 +61,33 @@ public class ReviewsController {
         return "read-review";
     }
 
-    // GET /boards/{boardId}/reviews
+    // 특정 게시글의 후기 전체 조회
     @GetMapping("/boards/{boardId}/reviews")
-//    public List<ReviewsDto> readAll(
     public String readAll(
             @PathVariable("boardId") Long boardId,
             Model model
     ) {
         List<ReviewsDto> list = service.readReviewsAll(boardId);
         model.addAttribute("reviewList", list);
-        model.addAttribute("boardId", boardId);
         model.addAttribute("receiver", UserProfileDto.fromEntity(usersRepository.findById(list.get(1).getId()).get()));
+        model.addAttribute("board", boardsService.readBoard(boardId));
+        model.addAttribute("boardId", boardId);
         return "read-reviews-all";
     }
 
-    // GET /boards/reviews/myreview
+    // 특정 사용자가 작성한 후기 전체 조회 (보낸 후기)
     @GetMapping("/boards/reviews/myreview")
     public Page<ReviewsDto> readAllBySender(
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
         return service.readReviewsAllBySender(pageNumber);
     }
+
+    // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
+//    @GetMapping("/boards/reviews/myreview")
+//    public List<ReviewsDto> readAllByReceiver(
+//            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
+//        return service.readReviewsAllBySender(pageNumber);
+//    }
 
     @GetMapping("/boards/{boardId}/reviews/{id}/edit")
     public String update(
@@ -97,7 +102,6 @@ public class ReviewsController {
 
     // PUT /boards/{boardId}/reviews/{id}
     @PutMapping("/boards/{boardId}/reviews/{id}")
-//    public ResponseEntity<ReviewsDto> update(
     public String update(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
@@ -108,8 +112,6 @@ public class ReviewsController {
         model.addAttribute("review", service.updateReview(boardId, id, dto));
         model.addAttribute("boardId", boardId);
         model.addAttribute("id", id);
-
-//        return ResponseEntity.ok(service.updateReview(boardId, id, dto));
         return "read-review";
     }
 
@@ -119,8 +121,6 @@ public class ReviewsController {
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id
     ) {
-//        service.deleteReview(boardId, id);
-//        MessageResponseDto response = new MessageResponseDto("후기 삭제 완료");
         return ResponseEntity.ok(service.deleteReview(boardId, id));
     }
 }
