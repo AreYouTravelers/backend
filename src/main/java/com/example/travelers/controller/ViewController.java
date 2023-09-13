@@ -23,7 +23,9 @@ public class ViewController {
     }
 
     @GetMapping("/mypage")
-    public String mypage() { return "mypage"; }
+    public String mypage() {
+        return "mypage";
+    }
 
     @GetMapping("/accompany")
     public String accompany() {
@@ -32,7 +34,7 @@ public class ViewController {
 
     @GetMapping("/receiverRequests")
     public String receiverRequests() {
-        return "receiverRequests";
+        return "receiver-requests";
     }
 
     @GetMapping("/sender-requests")
