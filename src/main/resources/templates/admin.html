@@ -9,9 +9,9 @@
 </head>
 <body class="my-page">
 <th:block layout:fragment="content">
-    <!-- Contents -->
-    <div class="container container-wrap justify-content-between">
-        <section class="container-content page-section col-md-9 col-lg-9">
+    <div class="container text-center container-wrap justify-content-between">
+        <!-- Contents -->
+        <section class="container-content page-section col-md-9 col-lg-12">
             <!-- Title -->
             <img class="sub-menu-icon" src="/static/images/icon/icon-mypage.png" alt="프로필">
             <h2 class="page-section-heading text-secondary mb-0 main-menu">회원 관리</h2>
@@ -29,6 +29,7 @@
                             <th>성별</th>
                             <th>생년월일</th>
                             <th>가입일</th>
+                            <th style="color : red">탈퇴처리</th>
                         </tr>
                         </thead>
                         <tbody id="user-list">
