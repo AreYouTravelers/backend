@@ -54,32 +54,34 @@
             </div>
         </nav>
         <section class="container-content page-section col-md-9 col-lg-9">
-            <img class="sub-menu-icon" src="/static/images/icon/icon-mypage.png" alt="패스워드 변경">
+            <!-- Title -->
+            <img class="sub-menu-icon" src="/static/images/icon/icon-mypage2.png" alt="계정 설정">
             <h2 class="page-section-heading text-secondary mb-0 main-menu">계정 설정</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-6 col-lg-6 mb-5">
+            <!-- Contents -->
+            <div class="row profile2">
+                <div class="profile2-box col-md-12 col-lg-12 mb-5">
                     <form id="change-password-form">
                         <div class="form-group">
-                            <label for="current-password">현재 비밀번호</label>
+                            <label for="current-password" class="profile2-title">현재 비밀번호</label>
                             <input type="password" class="form-control" id="current-password" name="current-password" required>
                         </div>
                         <div class="form-group">
-                            <label for="new-password">새로운 비밀번호</label>
+                            <label for="new-password" class="profile2-title">새로운 비밀번호</label>
                             <input type="password" class="form-control" id="new-password" name="new-password" required>
                         </div>
                         <div class="form-group">
-                            <label for="confirm-password">새로운 비밀번호 확인</label>
+                            <label for="confirm-password" class="profile2-title">새로운 비밀번호 확인</label>
                             <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
                         </div>
                         <button type="submit" class="btn btn-primary mt-2">변경</button>
                     </form>
                 </div>
             </div>
-            <div class="row justify-content-center">
+            <div class="row profile2">
                 <div class="col-md-6 col-lg-6 mb-5">
-                    <h3>회원 탈퇴</h3>
-                    <p>회원 탈퇴는 되돌릴 수 없습니다!</p>
-                    <p>회원 탈퇴를 하시려면 아래 버튼을 클릭하세요.</p>
+                    <h4>회원 탈퇴</h4>
+                    <p>회원 탈퇴는 되돌릴 수 없습니다!<br>
+                    회원 탈퇴를 하시려면 아래 버튼을 클릭하세요.</p>
                     <form id="delete-account-form">
                         <button type="submit" class="btn btn-danger">회원 탈퇴</button>
                     </form>
