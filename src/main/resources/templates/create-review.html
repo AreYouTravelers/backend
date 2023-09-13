@@ -7,9 +7,7 @@
     <meta charset="UTF-8">
     <title>동행 후기 작성</title>
     <link rel="stylesheet" href="/static/css/reviews.css">
-<!--    <link rel="stylesheet" href="/static/css/styles.css">-->
-<!--    <link rel="stylesheet" href="/static/css/styles2.css">-->
-<!--    <script src="/static/js/reviews.js"></script>-->
+    <script src="/static/js/reviews.js"></script>
 </head>
 <body>
 <th:block layout:fragment="content">
@@ -34,7 +32,8 @@
             </a>
         </div>
         <br>
-        <form th:action="@{'/boards/' + ${boardId} + '/reviews'}" th:method="post" id="createForm">
+<!--        <form th:action="@{'/boards/' + ${boardId} + '/reviews/write'}" th:method="post" id="createForm">-->
+        <form id="createForm">
             <div class="rating">
                 <h4>여행은 어떠셨나요 ?</h4>
                 <span>별로였어요</span>
@@ -62,39 +61,6 @@
             </div>
         </form>
     </div>
-
-<!--    <script>-->
-<!--        document.addEventListener('DOMContentLoaded', function () {-->
-<!--            const createForm = document.getElementById('createForm');-->
-<!--            const createButton = document.getElementById('createButton');-->
-<!--            createButton.addEventListener('click', function (event) {-->
-<!--                event.preventDefault();-->
-
-<!--                const formData = new FormData(createForm);-->
-
-<!--                fetch(`/boards/${boardId}/reviews`, {-->
-<!--                    method: 'POST',-->
-<!--                    headers: {-->
-<!--                        'Authorization': 'Bearer ' + accessToken,-->
-<!--                        'Content-Type': 'application/json'-->
-<!--                    },-->
-<!--                    body: JSON.stringify(Object.fromEntries(formData.entries())) // FormData를 JSON으로 변환-->
-<!--                })-->
-<!--                    .then(response => {-->
-<!--                        if (response.ok) {-->
-<!--                            alert("후기가 작성 되었습니다.");-->
-<!--                            window.location.href = '/index';-->
-<!--                        } else {-->
-<!--                            alert("후기 작성에 실패하였습니다.");-->
-<!--                        }-->
-<!--                    })-->
-<!--                    .catch(error => {-->
-<!--                        console.error('Network error:', error);-->
-<!--                    });-->
-<!--            });-->
-<!--        });-->
-<!--    </script>-->
-
 </th:block>
 </body>
 </html>

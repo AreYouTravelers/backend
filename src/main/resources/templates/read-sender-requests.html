@@ -6,6 +6,7 @@
     <title>동행 요청 조회</title>
     <link rel="stylesheet" href="/static/css/styles.css">
     <link rel="stylesheet" href="/static/css/styles2.css">
+    <script src="/static/js/read-sender-requests.js"></script>
 </head>
 <body class="sender-read">
 <th:block layout:fragment="content">
@@ -33,13 +34,20 @@
         </div>
         <div class="board-message">
             <h4 class="board-title">동행 요청 메세지를 작성해주세요.</h4>
-            <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="post" id="createForm">
+            <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="post" id="updateForm">
                 <div class="board-message">
-                    <textarea th:text="${senderRequests.message}" rows="8"></textarea>
+                    <textarea th:text="${senderRequests.message}" rows="8" id="message"></textarea>
                 </div>
                 <div class="container-wrap justify-content-center mt-5 mb-5">
-                    <button type="button" class="btn btn-secondary">취소</button>
-                    <button type="submit" class="btn btn-primary" id="createButton">요청</button>
+                    <button type="button" class="btn btn-secondary">
+                        <a href="/sender-requests">목록</a>
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="updateButton">
+                        <a href="/sender-requests">수정</a>
+                    </button>
+                    <button type="button" class="btn btn-secondary" id="deleteButton">
+                        <a href="/sender-requests">삭제</a>
+                    </button>
                 </div>
             </form>
         </div>

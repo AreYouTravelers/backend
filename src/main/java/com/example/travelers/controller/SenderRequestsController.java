@@ -38,7 +38,7 @@ public class SenderRequestsController {
     @PostMapping("/boards/{boardId}/sender-requests")
     public String create(
             @PathVariable("boardId") Long boardId,
-            SenderRequestsDto dto,
+            @RequestBody SenderRequestsDto dto,
             Model model
     ) {
         model.addAttribute("board", boardsService.readBoard(boardId));
@@ -49,7 +49,7 @@ public class SenderRequestsController {
 
     // Rendering Read - 동행 요청 단일 조회
     // GET /boards/{boardId}/sender-requests/{id}
-    @GetMapping("/boards/{boardId}/sender-requests/{id}")
+    @GetMapping("/boards/sender-requests/{id}")
     public String read(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
@@ -63,12 +63,17 @@ public class SenderRequestsController {
     }
 
     // 작성자 별 동행 요청 전체 조회
-    // GET /boards/sender-requests/{id}
-    @GetMapping("/boards/sender-requests/{id}")
-    public List<SenderRequestsDto> readAll(
-            @PathVariable("id") Long id
+    // GET /sender-requests/{id}
+    @GetMapping("/sender-requests/{senderId}")
+    public String readAll(
+            @PathVariable("senderId") Long id,
+            Model model
     ) {
-        return service.readAllSenderRequests(id);
+        List<SenderRequestsDto> senderDtoList = service.readAllSenderRequests(id);
+        model.addAttribute("senderList", senderDtoList);
+        model.addAttribute("boardList", service.readAllSenderRequestsBoards(senderDtoList));
+        model.addAttribute("senderId", id);
+        return "sender-requests";
     }
 
     // 작성자 별 수락 된 요청 '후기 작성하기' 전체 조회 = 후기 작성하기 Page
@@ -99,7 +104,7 @@ public class SenderRequestsController {
     public MessageResponseDto update(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
-            @RequestBody SenderRequestsDto dto
+            SenderRequestsDto dto
     ) {
         service.updateSenderRequests(boardId, id, dto);
         MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청 메세지를 수정했습니다.");
@@ -107,12 +112,11 @@ public class SenderRequestsController {
     }
 
     @DeleteMapping("/boards/{boardId}/sender-requests/{id}")
-    public MessageResponseDto delete(
+    public String delete(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id
     ) {
         service.deleteSenderRequests(boardId, id);
-        MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청을 삭제했습니다.");
-        return messageResponseDto;
+        return "accompany";
     }
 }
