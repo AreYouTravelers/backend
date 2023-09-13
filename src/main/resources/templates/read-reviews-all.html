@@ -54,24 +54,26 @@
         </nav>
         <section class="container-content page-section col-md-9 col-lg-9">
             <!-- Title -->
-            <img th:src="${receiver.profileImg}" alt="원글 작성자 프로필 사진"/>
-            <h2 class="page-section-heading text-secondary mb-0 main-menu"
-                th:text="${receiver.username} + '님이 받은 후기'">
-            </h2>
+            <div class="receiver-profile-img">
+                <img th:src="${receiver.profileImg}" alt="원글 작성자 프로필 사진"/>
+            </div>
+            <h2 class="page-section-heading text-secondary mb-0 main-menu" th:text="${receiver.username}"></h2>
+            <p class="receiver-profile-text">님이 받은 후기</p>
             <!-- Contents -->
             <div class="container">
                 <h3 class="board-title" th:text="${receiver.username} + '님의 여행 온도'"></h3>
-                <p class="board-temperature temp-3" th:text="${receiver.temperature} + '℃'">36.5℃</p>
+                <p class="board-temperature" th:text="${receiver.temperature} + '℃'">36.5℃</p>
                 <!-- Grid Items -->
-                <div class="container">
+                <div class="read-reviews-all-wrap">
                     <div class="review-list" th:each="review: ${reviewList}">
-                        <a class="href-none" href="#">
+                        <a class="href-none" th:href="@{'/boards/' + ${review.boardId} + '/reviews/' + ${review.id}}">
                             <div class="review-top">
                                 <p class="review-top-left">
                                     <span class="review-requests-profile">
                                         <img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진">
                                     </span>
-                                    <span th:text="${review.senderUsername} + '님이 보낸 후기'"></span>
+                                    <span th:text="${review.senderUsername}"></span>
+                                    <span class="review-list-text">님이 보낸 후기</span>
                                 </p>
                                 <p class="review-top-right">
                                     <span th:text="${review.rating}"></span>

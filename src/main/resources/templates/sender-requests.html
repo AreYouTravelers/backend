@@ -58,7 +58,7 @@
             <!-- Grid Items -->
             <div class="row justify-content-center">
                 <!-- Board Item 1 -->
-                <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5">
+                <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5" th:each="request: ${requestsList}" th:with="boardId=${request.id}">
                     <div class="board-item mx-auto">
                         <a class="href-none" href="#">
                             <div class="board-item-header">
