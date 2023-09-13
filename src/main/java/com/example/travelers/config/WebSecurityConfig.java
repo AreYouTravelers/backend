@@ -52,7 +52,8 @@ public class WebSecurityConfig {
                                         "/review-possible",
                                         "/boards/**",
                                         "/boards/{boardId}",
-                                        "/board/{boardId}/reviews/**"
+                                        "/board/{boardId}/reviews/**",
+                                        "/token/reissue"
                                 )
                                 .permitAll() // 모든 사용자 허용
                                 .requestMatchers(
