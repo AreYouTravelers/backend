@@ -81,7 +81,7 @@ public class SenderRequestsController {
 //    }
 
     // 후기 작성 가능 목록
-    @GetMapping("/boards/reviewPossible")
+    @GetMapping("/boards/review-possible")
     public String reviewPossible(
             Model model
     ) {
