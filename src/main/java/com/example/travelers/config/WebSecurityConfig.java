@@ -56,7 +56,7 @@ public class WebSecurityConfig {
                                         "/readReviewsAllBySender",
                                         "/updateReview",
                                         "/boards/**",
-                                        "/boards/{boardId}/edit",
+                                        "/boards/{boardId}",
                                         "/board/{boardId}/reviews/**"
                                 )
                                 .permitAll() // 모든 사용자 허용
