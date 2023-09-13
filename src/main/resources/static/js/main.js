@@ -10,11 +10,30 @@ const goToMypage = function () {
 
 userModule.fetchLoggedIn().then(userInfo => {
     // userInfo가 있으면 로그인 상태로 처리
-    if (userInfo) {
+    if (userInfo.role === '회원') {
         removeLoginLink(); // 로그인, 회원가입 링크 제거
         showLogoutMypageLink(); // 로그아웃 링크 보이게 설정
+    } else if (userInfo.role === '관리자') {
+        console.log("good");
+        removeLoginLink(); // 로그인, 회원가입 링크 제거
+        showLogoutAdminLink(); // 로그아웃 링크 보이게 설정
     }
 })
+
+// 로그아웃 링크를 보이게 하고 관리자 페이지를 보이게 하는 함수
+function showLogoutAdminLink() {
+    const logoutLink = document.getElementById("logout-link");
+    const adminLink = document.getElementById("admin-link");
+
+    // 로그아웃 링크를 보이게 설정
+    if (logoutLink) {
+        logoutLink.style.display = "block";
+    }
+    // 어드민 링크를 보이게 설정
+    if (adminLink) {
+        adminLink.style.display = "block";
+    }
+}
 
 // 로그인, 회원가입 링크를 삭제하는 함수
 function removeLoginLink() {
