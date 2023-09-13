@@ -27,9 +27,11 @@ public class ReportsService {
     private final AuthService authService;
 
     public ReportsDto createReport(ReportsDto dto) {
+
+        UsersEntity reportedUser = usersRepository.findByUsername(dto.getReportedUser())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ReportedUser not found"));
+
         UsersEntity userEntity = authService.getUser();
-        Optional<UsersEntity> reportedUser = usersRepository.findByUsername(dto.getReportedUser());
-        if (reportedUser.isPresent()) {
             ReportsEntity newReport = ReportsEntity.builder()
                     .title(dto.getTitle())
                     .content(dto.getContent())
@@ -37,9 +39,10 @@ public class ReportsService {
                     .status(false)
                     .createdAt(LocalDateTime.now())
                     .user(userEntity).build();
+
             ReportsEntity savedReport = reportsRepository.save(newReport);
-            return ReportsDto.fromEntity(savedReport);
-        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "ReportedUser not found");
+            dto.setId(savedReport.getId());
+            return dto;
     }
 
     public ReportsDto readReport(Long id) {

@@ -16,6 +16,7 @@ import com.example.travelers.repos.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -82,6 +83,7 @@ public class BoardsService {
         return dto;
     }
 
+//    @Cacheable(value = "boards", key = "#id")
     public BoardDto readBoard(Long id) {
         Optional<BoardsEntity> board = boardsRepository.findById(id);
         if (board.isPresent()) {
