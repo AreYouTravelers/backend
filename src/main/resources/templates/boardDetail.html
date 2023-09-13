@@ -84,7 +84,7 @@
                     </div>
                 </form>
                 <div class="form-container">
-                    <a href="/accompany" class="btn btn-outline-secondary" style="margin-right: 6px;">목록</a>
+                    <a href="/boards" class="btn btn-outline-secondary" style="margin-right: 6px;">목록</a>
                     <a th:href="@{'/boards/' + ${dto.id} + '/comments'}" class="btn btn-outline-secondary" style="margin-right: 6px;">댓글</a>
                     <a th:href="@{'/boards/' + ${dto.id} + '/sender-requests/write'}" class="btn btn-primary" style="margin-right: auto;">동행 요청하기</a>
                     <!--                <th:block th:if="${user != null and dto.getUsername() == user.getUsername()}">-->

@@ -32,10 +32,14 @@ public class ViewController {
         return "admin";
     }
 
-    @GetMapping("/accompany")
+    @GetMapping("/boards")
     public String accompany() {
         return "accompany";
     }
+
+    @GetMapping("/boards/guide")
+    public String guide() { return "guide"; }
+
 
     @GetMapping("/receiver-requests")
     public String receiverRequests() {
