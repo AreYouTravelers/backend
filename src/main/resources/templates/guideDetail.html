@@ -1,104 +1,114 @@
 <!DOCTYPE html>
-<html lang="kr" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-  <title th:text="'가이드 신청하기 | ' + ${dto.title}"></title>
-  <style>
-    .form-container {
-      display: flex;
-    }
-  </style>
-  <script src="/static/js/guide.js"></script>
+    <title th:text="'가이드 신청하기 | ' + ${dto.title}"></title>
+    <script src="/static/js/guide.js"></script>
 </head>
-<body style="padding-top: 130px;">
+<body class="board-write">
 <th:block layout:fragment="content">
-  <div class="container board-detail">
-    <h1 class="mt-4">가이드 신청하기</h1>
-    <div class="card mb-4">
-      <div class="card-body">
+    <!-- Contents -->
+    <div class="container container2">
+        <p class="sub-title-icon">
+            <img src="/static/images/icon/icon-guide.png" alt="가이드 신청하기">
+        </p>
+        <h2>가이드 상세보기</h2>
         <form th:action="@{'/boards/guide/' + ${dto.id}}" th:method="post" id="updateForm">
-          <input type="hidden" name="_method" value="put"/>
-          <div class="mb-3">
-            <label for="country" class="form-label">도시</label>
-            <!--                        <input type="text" class="form-control" id="country" name="country" th:value="${dto.country}">-->
-            <select class="form-select" id="country" name="country">
-              <option th:each="country : ${countries}"
-                      th:value="${country.id}"
-                      th:text="${country.name}"
-                      th:selected="${country.name} == ${dto.country}">
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="category" class="form-label">카테고리</label>
-            <!--                        <input type="text" class="form-control" id="category" name="category" th:value="${dto.category}">-->
-            <select class="form-select" id="category" name="category">
-              <option th:each="category : ${categories}"
-                      th:value="${category.id}"
-                      th:text="${category.category}"
-                      th:selected="${category.category} == ${dto.category}" disabled>
-              </option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="title" class="form-label">제목</label>
-            <input type="text" class="form-control" id="title" name="title" th:value="${dto.title}">
-          </div>
-          <div class="mb-3">
-            <label for="content" class="form-label">내용</label>
-            <textarea class="form-control" id="content" name="content">[[${dto.content}]]</textarea>
-          </div>
-          <div class="mb-3">
-            <label for="people" class="form-label">총 인원수</label>
-            <input type="text" class="form-control" id="people" name="people" th:value="${dto.people}">
-          </div>
-          <div class="mb-3">
-            <label for="startDate" class="form-label">시작일</label>
-            <input type="date" class="form-control" id="startDate" name="startDate"
-                   th:value="${dto.startDate}">
-          </div>
-          <div class="mb-3">
-            <label for="endDate" class="form-label">종료일</label>
-            <input type="date" class="form-control" id="endDate" name="endDate" th:value="${dto.endDate}">
-          </div>
-          <div class="mb-3">
-            <label for="username" class="form-label">작성자</label>
-            <input type="text" class="form-control" id="username" name="username" th:value="${dto.username}"
-                   disabled>
-          </div>
-          <div class="mb-3">
-            <label for="status" class="form-label">상태</label>
-            <input type="text" class="form-control" id="status" name="status" th:value="${dto.status}"
-                   disabled>
-          </div>
-          <div class="mb-3">
-            <label for="views" class="form-label">조회수</label>
-            <input type="text" class="form-control" id="views" name="views" th:value="${dto.views}"
-                   disabled>
-          </div>
-          <div class="mb-3">
-            <label for="createdAt" class="form-label">작성일</label>
-            <input type="text" class="form-control" id="createdAt" name="createdAt"
-                   th:value="${#temporals.format(dto.createdAt, 'yyyy-MM-dd HH:mm')}" disabled>
-          </div>
+            <input type="hidden" name="_method" value="put"/>
+            <div class="board-inner mb-5">
+                <div class="container-wrap mb-3">
+                    <div class="col-md-4 col-lg-4 me-3">
+                        <label for="country" class="form-label">도시</label>
+                        <select class="form-select" id="country" name="country">
+                            <option th:each="country : ${countries}"
+                                    th:value="${country.id}"
+                                    th:text="${country.name}"
+                                    th:selected="${country.name} == ${dto.country}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-lg-3 me-3">
+                        <label for="category" class="form-label">카테고리</label>
+                        <select class="form-select" id="category" name="category">
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.id}"
+                                    th:text="${category.category}"
+                                    th:selected="${category.category} == ${dto.category}" disabled>
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-lg-2">
+                        <label for="people" class="form-label">총 인원수</label>
+                        <input type="text" class="form-control" id="people" name="people" th:value="${dto.people}">
+                    </div>
+                </div>
+                <div class="container-wrap mb-3">
+                    <div class="col-md-3 col-lg-3 me-3">
+                        <label for="startDate" class="form-label">시작일</label>
+                        <input type="date" class="form-control" id="startDate" name="startDate" th:value="${dto.startDate}">
+                    </div>
+                    <div class="col-md-3 col-lg-3 me-3">
+                        <label for="endDate" class="form-label">종료일</label>
+                        <input type="date" class="form-control" id="endDate" name="endDate" th:value="${dto.endDate}">
+                    </div>
+                    <div class="col-md-3 col-lg-3 me-3">
+                        <label for="status" class="form-label">상태</label>
+                        <input type="text" class="form-control" id="status" name="status" th:value="${dto.status}"
+                               disabled>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <label for="createdAt" class="form-label">작성일</label>
+                        <input type="text" class="form-control" id="createdAt" name="createdAt"
+                               th:value="${#temporals.format(dto.createdAt, 'yyyy-MM-dd HH:mm')}" disabled>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="container-wrap mb-3 justify-content-between" style="max-width: 83%; margin: 0 auto;">
+                    <div class="col-md-3 col-lg-3 me-3">
+                        <label for="username" class="form-label">작성자</label>
+                        <input type="text" class="form-control" id="username" name="username" th:value="${dto.username}"
+                               disabled>
+                    </div>
+                    <div class="col-md-3 col-lg-3">
+                        <label for="views" class="form-label">조회수</label>
+                        <input type="text" class="form-control" id="views" name="views" th:value="${dto.views}"
+                               disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-5">
+                <div class="container-wrap mb-3">
+                    <div class="col-md-10 col-lg-10">
+                        <label for="title" class="form-label">제목</label>
+                        <input type="text" class="form-control" id="title" name="title" th:value="${dto.title}">
+                    </div>
+                </div>
+                <div class="container-wrap">
+                    <div class="col-md-10 col-lg-10">
+                        <label for="content" class="form-label">내용</label>
+                        <textarea class="form-control" id="content" name="content" rows="8">[[${dto.content}]]</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="container-wrap col-md-10 col-lg-10 justify-content-between" style="margin: 0 auto;">
+                <a href="/boards" class="btn btn-outline-secondary" style="margin-right: 6px;">목록</a>
+                <a th:href="@{'/boards/' + ${dto.id} + '/comments'}" class="btn btn-outline-secondary"
+                   style="margin-right: 6px;">댓글</a>
+                <a th:href="@{'/boards/' + ${dto.id} + '/sender-requests/write'}" class="btn btn-primary"
+                   style="margin-right: auto;">동행 요청하기</a>
+                <!--                <th:block th:if="${user != null and dto.getUsername() == user.getUsername()}">-->
+                <div style="display: flex; justify-content: flex-end;">
+                    <button class="btn btn-primary" id="updateButton" style="margin-right: 6px;">수정</button>
+                    <form th:action="@{'/boards/guide/' + ${dto.id}}" th:method="post" id="deleteForm">
+                        <input type="hidden" name="_method" value="delete"/>
+                        <button class="btn btn-outline-danger" id="deleteButton">삭제</button>
+                    </form>
+                </div>
+            </div>
         </form>
-        <div class="form-container">
-          <a href="/boards" class="btn btn-outline-secondary" style="margin-right: 6px;">목록</a>
-          <a th:href="@{'/boards/' + ${dto.id} + '/comments'}" class="btn btn-outline-secondary" style="margin-right: 6px;">댓글</a>
-          <a th:href="@{'/boards/' + ${dto.id} + '/sender-requests/write'}" class="btn btn-primary" style="margin-right: auto;">동행 요청하기</a>
-          <!--                <th:block th:if="${user != null and dto.getUsername() == user.getUsername()}">-->
-          <div style="display: flex; justify-content: flex-end;">
-            <button class="btn btn-primary" id="updateButton" style="margin-right: 6px;">수정</button>
-            <form th:action="@{'/boards/guide/' + ${dto.id}}" th:method="post" id="deleteForm">
-              <input type="hidden" name="_method" value="delete"/>
-              <button class="btn btn-outline-danger" id="deleteButton">삭제</button>
-            </form>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
 </th:block>
 </body>
 </html>

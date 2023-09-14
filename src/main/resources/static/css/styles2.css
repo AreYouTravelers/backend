@@ -70,7 +70,13 @@ footer p {font-weight: 300; font-size: 14px;}
 .board-item-bg .board-item-img {overflow: hidden; height: 170px; border-radius: 17px;}
 .board-item-bg .board-item-img img {width: 100%;}
 .board-item-info {padding-bottom: 2rem; text-align: center;}
-.board-item-info .item-title {margin-bottom: 6px; font-weight: 700;}
+.board-item-info .item-title {margin-bottom: 6px; font-weight: 700;
+    padding: 0 2em;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .board-item-info .user-name {margin-bottom: 0; font-size: 13px;}
 .board-item-info .user-profile {margin-bottom: 0; font-size: 13px;}
 .board-item-info .user-temp {margin-bottom: 14px; font-size: 13px;}

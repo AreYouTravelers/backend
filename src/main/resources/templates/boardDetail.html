@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="kr" xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
@@ -15,6 +15,7 @@
         </p>
         <h2>동행 상세보기</h2>
         <form th:action="@{'/boards/' + ${dto.id}}" th:method="post" id="updateForm">
+            <input type="hidden" name="_method" value="put"/>
             <div class="board-inner mb-5">
                 <div class="container-wrap mb-3">
                     <div class="col-md-4 col-lg-4 me-3">
@@ -28,7 +29,6 @@
                         </select>
                     </div>
                     <div class="col-md-3 col-lg-3 me-3">
-                        <label for="country" class="form-label">도시</label>
                         <label for="category" class="form-label">카테고리</label>
                         <select class="form-select" id="category" name="category">
                             <option th:each="category : ${categories}"
@@ -57,7 +57,7 @@
                         <input type="text" class="form-control" id="status" name="status" th:value="${dto.status}"
                                disabled>
                     </div>
-                    <div class="col-md-3 col-lg-3 me-3">
+                    <div class="col-md-3 col-lg-3">
                         <label for="createdAt" class="form-label">작성일</label>
                         <input type="text" class="form-control" id="createdAt" name="createdAt"
                                th:value="${#temporals.format(dto.createdAt, 'yyyy-MM-dd HH:mm')}" disabled>
@@ -92,7 +92,6 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="_method" value="put"/>
             <div class="container-wrap col-md-10 col-lg-10 justify-content-between" style="margin: 0 auto;">
                 <a href="/boards" class="btn btn-outline-secondary" style="margin-right: 6px;">목록</a>
                 <a th:href="@{'/boards/' + ${dto.id} + '/comments'}" class="btn btn-outline-secondary" style="margin-right: 6px;">댓글</a>
