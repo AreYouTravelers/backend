@@ -41,7 +41,7 @@ public class ReceiverRequestsController {
 //            @PathVariable("boardId") Long boardId,
             Model model
     ) {
-        List<SenderRequestsDto> requestsDtoList = receiverRequestsService.readAllReceiverRequests(authService.getUser().getId());
+        List<SenderRequestsDto> requestsDtoList = receiverRequestsService.readAllReceiverRequests(4L);
         model.addAttribute("receiverRequestsList", requestsDtoList);
         model.addAttribute("senderList", receiverRequestsService.readAllReceiverRequestsUserProfile(requestsDtoList));
 //        model.addAttribute("boardId", boardId);
