@@ -1,6 +1,11 @@
 /* comment section */
 .comment-section {
-    margin: 2rem 0;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;  /* 기존 스타일에서 가져옴 */
 }
 
 .comment-header, .reply-header {
@@ -21,21 +26,21 @@
 }
 
 .comment-container {
-    padding: 10px;
-    background-color: #f9f9f9;  /* 댓글 배경색 */
-    margin-bottom: 15px;        /* 각 댓글 사이의 간격 */
-    border: 1px solid #e0e0e0;  /* 댓글 테두리 */
-    border-radius: 5px;         /* 둥근 테두리 모서리 */
+    padding: 5px;  /* 기존에 10px에서 줄였습니다. */
+    background-color: #f9f9f9;
+    margin-bottom: 10px;  /* 기존에 15px에서 줄였습니다. */
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
 }
 
 .comment-container p {
-    margin: 10px 0;             /* 댓글 내용 위아래 간격 */
+    margin: 5px 0;  /* 기존에 10px에서 줄였습니다. */
 }
 
 .comment-container .comment-actions {
-    display: flex; /* 버튼과 폼 요소를 한 줄에 정렬 */
-    justify-content: flex-end; /* 버튼과 폼 요소를 오른쪽으로 정렬 */
-    gap: 10px; /* 버튼 및 폼 요소 사이의 간격 */
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
 }
 
 .reply-button, .edit-button, .delete-button {
@@ -61,17 +66,18 @@ textarea {
 
 /* 댓글 입력창 스타일링 */
 textarea.item-contents {
-    border: none;           /* 모든 테두리를 제거 */
-    border-bottom: 1px solid #cccccc;  /* 밑줄 추가 */
-    box-shadow: none;       /* 그림자 제거 */
+    height: 50px;  /* 댓글 입력창의 세로 길이를 지정합니다. */
+    border: none;
+    border-bottom: 1px solid #cccccc;
+    box-shadow: none;
     resize : none;
-    outline: none;          /* 포커스 시 외곽선 제거 */
+    outline: none;
     display: inline-block;
     vertical-align: middle;
     width: 85%;
 }
 
-/* 댓글 및 답글 스타일링 */
+    /* 댓글 및 답글 스타일링 */
 ul {
     padding: 0;
     list-style-type: none;
@@ -110,7 +116,7 @@ input[type="submit"].temp-3 {
     color: #fff;
     cursor: pointer;
     display: inline-block;
-    vertical-align: middle;  /* 중앙 정렬 추가 */
+    vertical-align: middle;
     margin-left: 10px;
 }
 
