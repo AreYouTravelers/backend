@@ -23,7 +23,8 @@ public class ViewController {
     }
 
     @GetMapping("/mypage")
-    public String mypage() {
+    public String mypage(Model model) {
+        model.addAttribute("senderId", 4L);
         return "mypage";
     }
 

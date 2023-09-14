@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => {
                 if (response.ok) {
                     alert("후기가 작성 되었습니다.");
-                    window.location.href = '/';
+                    window.location.href = '/boards/reviews/sender/4';
                 } else {
                     alert("후기 작성에 실패하였습니다.");
                 }
