@@ -118,12 +118,13 @@ public class SenderRequestsService {
         // TODO sender id 받아오도록 수정
         // senderId에 해당하는 요청글이 존재하지 않을 경우 예외 처리
 //        if (!senderRequestsRepository.existsBySenderId(1L)) {
-//            UsersEntity usersEntity = authService.getUser();
 //            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
 //        }
+        log.info("service 실행 시작");
 
+//        UsersEntity usersEntity = authService.getUser();
         List<BoardDto> boardDtoList = new ArrayList<>();
-        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdAndFinalStatus(1L, true);
+        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdAndFinalStatusOrderByCreatedAtDesc(4L, true);
 
         for (SenderRequestsEntity entity : senderRequestsEntityList)
             boardDtoList.add(BoardDto.fromEntity(boardsRepository.findById(entity.getBoard().getId()).get()));

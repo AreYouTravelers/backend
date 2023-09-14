@@ -1,7 +1,6 @@
 package com.example.travelers.controller;
 
 import com.example.travelers.dto.BoardDto;
-import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.SenderRequestsDto;
 import com.example.travelers.service.AuthService;
 import com.example.travelers.service.BoardsService;
@@ -86,13 +85,13 @@ public class SenderRequestsController {
 //    }
 
     // 후기 작성 가능 목록
-    @GetMapping("/boards/review-possible")
+    @GetMapping("/boards/reviews-possible")
     public String reviewPossible(
             Model model
     ) {
         List<BoardDto> requestsList = service.readAllAcceptedSenderRequests();
         model.addAttribute("requestsList", requestsList);
-        return "review-possible";
+        return "reviews-possible";
     }
 
     // 동행 요청 수정 (메세지)

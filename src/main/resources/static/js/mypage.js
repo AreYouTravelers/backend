@@ -45,3 +45,4 @@ fetch('/users/my-profile', {
     .catch(error => {
         console.error('Error:', error);
     });
+

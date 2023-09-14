@@ -53,7 +53,7 @@ public class WebSecurityConfig {
                                         "/boards/sender-requests",
                                         "/boards/sender-requests/**",
                                         "/boards/{boardId}/sender-requests/**",
-                                        "/review-possible",
+                                        "/boards/reviews-possible",
                                         "/boards/**",
                                         "/boards/{boardId}",
                                         "/boards/{boardId}/**",
