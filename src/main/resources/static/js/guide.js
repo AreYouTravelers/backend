@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => {
                     if (response.ok) {
                         alert("게시물이 삭제되었습니다.");
-                        window.location.href = '/boards';
+                        window.location.href = '/boards/guide';
                     } else {
                         alert("게시물 삭제를 실패했습니다.");
                     }
