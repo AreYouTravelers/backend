@@ -28,6 +28,10 @@ public class BoardDto implements Serializable {
     private String country;
     private String category;
     private String username;
+    private Integer age;
+    private String mbti;
+    private String gender;
+    private Double temperature;
     private String title;
     private String content;
     private Integer people;
@@ -64,6 +68,10 @@ public class BoardDto implements Serializable {
         dto.setStartDate(entity.getStartDate());
         dto.setEndDate(entity.getEndDate());
         dto.setUsername(entity.getUser().getUsername());
+        dto.setAge(entity.getUser().getAge());
+        dto.setMbti(entity.getUser().getMbti());
+        dto.setGender(entity.getUser().getGender());
+        dto.setTemperature(entity.getUser().getTemperature());
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setDeletedAt(entity.getDeletedAt());
         dto.setCommentsList(CommentsDto.dtoList(entity.getComments()));

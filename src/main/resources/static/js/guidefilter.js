@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         formData.append('country', selectedCountry);
         formData.append('category', selectedCategory);
 
-        fetch(`/boards/filter?country=${selectedCountry}&category=${selectedCategory}&mbti=${mbtiCriteria}`, {
+        fetch(`/boards/guide/filter?country=${selectedCountry}&category=${selectedCategory}&mbti=${mbtiCriteria}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + accessToken,

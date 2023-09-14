@@ -14,420 +14,91 @@
             <img class="main-menu-icon" src="/static/images/icon/icon-with.png" alt="동행 구하기">
             <h2 class="page-section-heading text-secondary mb-0 main-menu">동행 구하기</h2>
             <!-- Main Grid Items -->
-            <form class="row gy-2 gx-3 align-items-center">
+            <form th:action="@{'/boards/filter'}" th:method="get" id="getForm" class="row gy-2 gx-3 align-items-center">
                 <div class="col-auto">
-                    <label class="visually-hidden" for="travel">Preference</label>
-                    <select class="form-select" id="travel">
-                        <option selected>여행지</option>
-                        <option value="1">파리</option>
-                        <option value="2">런던</option>
-                        <option value="3">바르셀로나</option>
-                        <option value="4">프라하</option>
-                        <option value="5">인터라켄</option>
-                        <option value="6">오사카</option>
-                        <option value="7">도쿄</option>
-                        <option value="8">삿포로</option>
-                        <option value="9">방콕</option>
-                        <option value="10">다낭</option>
-                        <option value="11">타이베이</option>
-                        <option value="12">로마</option>
-                        <option value="13">리스본</option>
-                        <option value="14">포르투</option>
-                        <option value="15">마드리드</option>
-                        <option value="16">빈</option>
-                        <option value="17">부다페스트</option>
-                        <option value="18">암스테르담</option>
-                        <option value="19">베를린</option>
-                        <option value="20">프랑크푸르트</option>
-                        <option value="21">코타키나발루</option>
-                        <option value="22">세부</option>
-                        <option value="23">싱가포르</option>
-                        <option value="24">하노이</option>
-                        <option value="25">호치민</option>
-                        <option value="26">괌</option>
-                        <option value="27">사이판</option>
-                        <option value="28">발리</option>
-                        <option value="29">뉴욕</option>
-                        <option value="30">로스앤젤레스</option>
-                        <option value="31">하와이</option>
-                        <option value="32">샌프란시스코</option>
-                        <option value="33">벤쿠버</option>
-                        <option value="34">시드니</option>
-                        <option value="35">두바이</option>
-                        <option value="36">튀르키예</option>
+                    <label class="visually-hidden" for="country">Preference</label>
+                    <select class="form-select" id="country" name="country" required>
+                        <option value="">여행지</option>
+                        <option th:each="country : ${countries}"
+                                th:value="${country.id}"
+                                th:text="${country.name}">
+                        </option>
                     </select>
                 </div>
                 <div class="col-auto">
-                    <label class="visually-hidden" for="guide">Preference</label>
-                    <select class="form-select" id="guide">
-                        <option value="1" selected>여행</option>
-                        <option value="2">가이드</option>
-                        <option value="3">기타</option>
-
+                    <label class="visually-hidden" for="category">Preference</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="" disabled>카테고리</option>
+                        <option th:each="category : ${categories}"
+                                th:value="${category.id}"
+                                th:text="${category.category}"
+                                th:selected="${category.category} == 여행" disabled>
+                        </option>
                     </select>
                 </div>
                 <div class="col-3">
                     <label class="visually-hidden" for="mbti">Name</label>
-                    <input type="text" class="form-control" id="mbti" placeholder="선호하는 MBTI을 입력하세요. ex) E, FJ">
+                    <input type="text" class="form-control" id="mbti" name="mbti" placeholder="선호하는 MBTI을 입력하세요. ex) EJ, FP " required>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-outline-secondary" style="margin-right: 6px;">검색</button>
+                    <button class="btn btn-outline-secondary" id="getButton" style="margin-right: 6px;">검색</button>
+                    <a href="/boards" class="btn btn-outline-secondary" style="margin-right: 6px;">목록</a>
                     <a href="/boards/write" class="btn btn-primary" style="margin-right: auto;">글쓰기</a>
                 </div>
             </form>
             <div class="row justify-content-center">
-                <!-- Board Item 7 -->
-                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
+                <!-- 게시물 목록을 반복하며 게시물 정보 출력 -->
+                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5" th:each="board : ${boardsPage != null ? boardsPage.content : {}}">
                     <div class="board-item mx-auto">
-                        <a class="href-none" href="/boards/21">
+                        <a class="href-none" th:href="@{'/boards/' + ${board.id}}">
                             <div class="board-item-header">
                                 <div class="header-left">
                                     <p class="item-date">
-                                        <span class="start-date">2023-09-20</span>
+                                        <span class="start-date" th:text="${board.startDate}"></span>
                                         <span> ~ </span>
-                                        <span class="end-date">2023-09-25</span>
+                                        <span class="end-date" th:text="${board.endDate}"></span>
                                     </p>
                                 </div>
                                 <div class="header-right">
-                                    <p class="item-ing">모집중
+                                    <p class="item-ing">
                                         <span class="min-num">1</span>
                                         <span>/</span>
-                                        <span class="max-num">3</span>
+                                        <span class="max-num" th:text="${board.people}">3</span>
                                     </p>
                                 </div>
                             </div>
                             <div class="board-item-bg">
-                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">오사카
+                                <p class="board-item-icon">
+                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">
+                                    <span th:text="${board.country}"></span>
                                 </p>
                                 <p class="board-item-img">
-                                    <img src="/static/images/country/londoneye.jpg" alt="배경이미지">
+                                    <img th:src="@{'/static/images/country/' + ${board.country} + '.jpg'}" alt="배경이미지">
                                 </p>
                             </div>
                             <div class="board-item-info">
-                                <p class="item-title">런던 아이 같이 보러 가실 분</p>
-                                <p class="user-name">유미미</p>
+                                <p class="item-title" th:text="${board.title}"></p>
+                                <p class="user-name" th:text="${board.username}"></p>
                                 <p class="user-profile">
-                                    <span class="user-age">22</span>
+                                    <span class="user-age" th:text="${board.age}"></span>
                                     <span class="--bs-gray-500">·</span>
-                                    <span class="user-mbti">ENFP</span>
+                                    <span class="user-mbti" th:text="${board.mbti}"></span>
                                     <span class="--bs-gray-500">·</span>
-                                    <span class="user-gender">여성</span>
+                                    <span class="user-gender" th:text="${board.gender}"></span>
                                 </p>
-                                <p class="user-temp"><span class="temp-4">48.5</span>℃</p>
-                                <p class="item-contents">런던아이 맞은편에서 간맥 한잔 하실 분 구합니다</p>
+                                <p class="user-temp">
+                                    <span th:class="|temp-${board.temperature >= 30 and board.temperature <= 40 ? '3' : (board.temperature < 30 ? '5' : (board.temperature > 40 ? '4' : ''))}|"
+                                          th:text="${board.temperature}"></span>℃
+                                </p>
+                                <p class="item-contents" th:text="${board.content}"></p>
                             </div>
                         </a>
                     </div>
                 </div>
-                <!-- Board Item 5 -->
-                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
-                    <div class="board-item mx-auto">
-                        <a class="href-none" href="/boards/17">
-                            <div class="board-item-header">
-                                <div class="header-left">
-                                    <p class="item-date">
-                                        <span class="start-date">2023-09-17</span>
-                                        <span> ~ </span>
-                                        <span class="end-date">2023-09-17</span>
-                                    </p>
-                                </div>
-                                <div class="header-right">
-                                    <p class="item-ing">모집중
-                                        <span class="min-num">1</span>
-                                        <span>/</span>
-                                        <span class="max-num">3</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="board-item-bg">
-                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">파리
-                                </p>
-                                <p class="board-item-img">
-                                    <img src="/static/images/country/paris.jpg" alt="파리">
-                                </p>
-                            </div>
-                            <div class="board-item-info">
-                                <p class="item-title">오늘 파리 에펠탑 보러 가실 분?</p>
-                                <p class="user-name">chulsoo</p>
-                                <p class="user-profile">
-                                    <span class="user-age">26</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-mbti">ESTJ</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-gender">남성</span>
-                                </p>
-                                <p class="user-temp"><span class="temp-4">54.5</span>℃</p>
-                                <p class="item-contents">안녕하세요. 오늘 에펠탑 보러 가실 분 구해요~ 저 포함 3명 정도 구하고 비슷한 나이대면 좋겠어요 ~ ^^</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Board Item 6 -->
-                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
-                    <div class="board-item mx-auto">
-                        <a class="href-none" href="/boards/16">
-                            <div class="board-item-header">
-                                <div class="header-left">
-                                    <p class="item-date">
-                                        <span class="start-date">2023-10-15</span>
-                                        <span> ~ </span>
-                                        <span class="end-date">2023-10-20</span>
-                                    </p>
-                                </div>
-                                <div class="header-right">
-                                    <p class="item-ing">모집중
-                                        <span class="min-num">1</span>
-                                        <span>/</span>
-                                        <span class="max-num">2</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="board-item-bg">
-                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">오사카
-                                </p>
-                                <p class="board-item-img">
-                                    <img src="/static/images/country/osaka.jpg" alt="오사카">
-                                </p>
-                            </div>
-                            <div class="board-item-info">
-                                <p class="item-title">같이 오사카 여행 하실 분!</p>
-                                <p class="user-name">홍길동</p>
-                                <p class="user-profile">
-                                    <span class="user-age">22</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-mbti">ENFP</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-gender">남성</span>
-                                </p>
-                                <p class="user-temp"><span class="temp-5">15.5</span>℃</p>
-                                <p class="item-contents">안녕하세요. 오늘 난바 여행 가실 분 구해요~ 같이 여행 할 1명 구하고 비슷한 나이대면 좋겠어요 ~ ^^</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Board Item 8 -->
-                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
-                    <div class="board-item mx-auto">
-                        <a class="href-none" href="/boards/15">
-                            <div class="board-item-header">
-                                <div class="header-left">
-                                    <p class="item-date">
-                                        <span class="start-date">2023-12-19</span>
-                                        <span> ~ </span>
-                                        <span class="end-date">2023-12-23</span>
-                                    </p>
-                                </div>
-                                <div class="header-right">
-                                    <p class="item-ing">모집중
-                                        <span class="min-num">1</span>
-                                        <span>/</span>
-                                        <span class="max-num">3</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="board-item-bg">
-                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">벤쿠버
-                                </p>
-                                <p class="board-item-img">
-                                    <img src="/static/images/country/vancouver.jpg" alt="배경이미지">
-                                </p>
-                            </div>
-                            <div class="board-item-info">
-                                <p class="item-title">겨울에 벤쿠버 여행 같이 가요~</p>
-                                <p class="user-name">baljang</p>
-                                <p class="user-profile">
-                                    <span class="user-age">30</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-mbti">ISTJ</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-gender">남성</span>
-                                </p>
-                                <p class="user-temp"><span class="temp-3">36.5</span>℃</p>
-                                <p class="item-contents">저 포함 3명 정도 구하고 비슷한 나이대면 좋겠어요!</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Board Item 4 -->
-                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
-                    <div class="board-item mx-auto">
-                        <a class="href-none" href="/boards/10">
-                            <div class="board-item-header">
-                                <div class="header-left">
-                                    <p class="item-date">
-                                        <span class="start-date">2023-09-26</span>
-                                        <span> ~ </span>
-                                        <span class="end-date">2023-09-26</span>
-                                    </p>
-                                </div>
-                                <div class="header-right">
-                                    <p class="item-ing">모집중
-                                        <span class="min-num">1</span>
-                                        <span>/</span>
-                                        <span class="max-num">3</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="board-item-bg">
-                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">바르셀로나
-                                </p>
-                                <p class="board-item-img">
-                                    <img src="static/images/country/campnou.jpg" alt="캄프누">
-                                </p>
-                            </div>
-                            <div class="board-item-info">
-                                <p class="item-title">바르셀로나 경기 같이 직관하실 분 구해요 :)</p>
-                                <p class="user-name">hanbin</p>
-                                <p class="user-profile">
-                                    <span class="user-age">30</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-mbti">INFP</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-gender">남성</span>
-                                </p>
-                                <p class="user-temp"><span class="temp-3">38.5</span>℃</p>
-                                <p class="item-contents">바르셀로나 vs 레알 베티스 경기 같이 보실 분 구해요</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
-                    <div class="board-item mx-auto">
-                        <a class="href-none" href="/boards/8">
-                            <div class="board-item-header">
-                                <div class="header-left">
-                                    <p class="item-date">
-                                        <span class="start-date">2023-09-22</span>
-                                        <span> ~ </span>
-                                        <span class="end-date">2023-09-27</span>
-                                    </p>
-                                </div>
-                                <div class="header-right">
-                                    <p class="item-ing">모집중
-                                        <span class="min-num">1</span>
-                                        <span>/</span>
-                                        <span class="max-num">10</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="board-item-bg">
-                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">괌
-                                </p>
-                                <p class="board-item-img">
-                                    <img src="/static/images/country/guam.jpg" alt="괌">
-                                </p>
-                            </div>
-                            <div class="board-item-info">
-                                <p class="item-title">괌괌</p>
-                                <p class="user-name">yeoon</p>
-                                <p class="user-profile">
-                                    <span class="user-age">22</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-mbti">ISFP</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-gender">여성</span>
-                                </p>
-                                <p class="user-temp"><span class="temp-5">20.5</span>℃</p>
-                                <p class="item-contents">괌괌괌괌 광광</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Board Item 2 -->
-                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
-                    <div class="board-item mx-auto">
-                        <a class="href-none" href="/boards/2">
-                            <div class="board-item-header">
-                                <div class="header-left">
-                                    <p class="item-date">
-                                        <span class="start-date">2023-09-26</span>
-                                        <span> ~ </span>
-                                        <span class="end-date">2023-09-26</span>
-                                    </p>
-                                </div>
-                                <div class="header-right">
-                                    <p class="item-ing">모집중
-                                        <span class="min-num">1</span>
-                                        <span>/</span>
-                                        <span class="max-num">3</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="board-item-bg">
-                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">오사카
-                                </p>
-                                <p class="board-item-img">
-                                    <img src="/static/images/country/usj.jpg" alt="배경이미지">
-                                </p>
-                            </div>
-                            <div class="board-item-info">
-                                <p class="item-title">USJ 갈 사람 구해요~~</p>
-                                <p class="user-name">yezy</p>
-                                <p class="user-profile">
-                                    <span class="user-age">24</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-mbti">ISTP</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-gender">여성</span>
-                                </p>
-                                <p class="user-temp"><span class="temp-3">34.5</span>℃</p>
-                                <p class="item-contents">USJ 가실 분 ? USJ 가실 분 ? USJ 가실 분 ? USJ 가실 분 ? USJ 가실 분 ? USJ 가실 분 ? USJ 가실 분 ?</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-                <!-- Board Item 1 -->
-                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
-                    <div class="board-item mx-auto">
-                        <a class="href-none" href="boards/1">
-                            <div class="board-item-header">
-                                <div class="header-left">
-                                    <p class="item-date">
-                                        <span class="start-date">2023-09-21</span>
-                                        <span> ~ </span>
-                                        <span class="end-date">2023-09-23</span>
-                                    </p>
-                                </div>
-                                <div class="header-right">
-                                    <p class="item-ing">모집중
-                                        <span class="min-num">1</span>
-                                        <span>/</span>
-                                        <span class="max-num">3</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="board-item-bg">
-                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">인터라켄
-                                </p>
-                                <p class="board-item-img">
-                                    <img src="/static/images/country/paragliding.jpg" alt="패러글라이딩">
-                                </p>
-                            </div>
-                            <div class="board-item-info">
-                                <p class="item-title">같이 패러글라이딩 해요</p>
-                                <p class="user-name">dohun</p>
-                                <p class="user-profile">
-                                    <span class="user-age">23</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-mbti">ESTJ</span>
-                                    <span class="--bs-gray-500">·</span>
-                                    <span class="user-gender">남성</span>
-                                </p>
-                                <p class="user-temp"><span class="temp-3">36.5</span>℃</p>
-                                <p class="item-contents">같이 패러 글라이딩 해요!! 저 포함 3명 정도 구하고 비슷한 나이대면 좋겠어요 ~ ^^</p>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-
-
             </div>
         </div>
     </section>
-    <script src="/static/js/filter.js"></script>
 </th:block>
+<script src="/static/js/filter.js"></script>
 </body>
 </html>

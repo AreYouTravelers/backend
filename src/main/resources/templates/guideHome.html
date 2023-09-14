@@ -38,17 +38,17 @@
         </div>
         <div class="col-3">
           <label class="visually-hidden" for="mbti">Name</label>
-          <input type="text" class="form-control" id="mbti" name="mbti" placeholder="선호하는 MBTI을 입력하세요. ex) E, EJ, FP " required>
+          <input type="text" class="form-control" id="mbti" name="mbti" placeholder="선호하는 MBTI을 입력하세요. ex) EJ, FP " required>
         </div>
         <div class="col-auto">
           <button class="btn btn-outline-secondary" id="getButton" style="margin-right: 6px;">검색</button>
-          <a href="/boards/guide" class="btn btn-outline-secondary" style="margin-right: 6px;">목록</a>
           <a href="/boards/guide/write" class="btn btn-primary" style="margin-right: auto;">글쓰기</a>
         </div>
       </form>
       <div class="row justify-content-center">
         <!-- 게시물 목록을 반복하며 게시물 정보 출력 -->
-        <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5" th:each="board : ${boardsPage != null ? boardsPage.content : {}}">
+        <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5" th:each="board : ${boardsPage != null ? boardsPage.content : {}}"
+             th:if="${board.category} == 가이드">
           <div class="board-item mx-auto">
             <a class="href-none" th:href="@{'/boards/' + ${board.id}}">
               <div class="board-item-header">
@@ -99,6 +99,5 @@
     </div>
   </section>
 </th:block>
-<script src="/static/js/guidefilter.js"></script>
 </body>
 </html>
