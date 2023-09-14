@@ -72,7 +72,7 @@ public class GuidesController {
     @GetMapping("/filter")
     public String readAllByCountryAndCategoryAndMbti(
             @RequestParam(value = "country") Long countryId,
-            @RequestParam(value = "category", defaultValue = "1") Long categoryId,
+            @RequestParam(value = "category", defaultValue = "2") Long categoryId,
             @RequestParam(value = "mbti", required = false) String mbtiCriteria,
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber,
             Model model) {
@@ -101,6 +101,6 @@ public class GuidesController {
             @PathVariable("id") Long id) {
         BoardDto result = boardsService.readBoard(id);
         boardsService.deleteBoard(id);
-        return "accompany";
+        return "guideHome";
     }
 }

@@ -50,7 +50,7 @@
         <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5" th:each="board : ${boardsPage != null ? boardsPage.content : {}}"
              th:if="${board.category} == 가이드">
           <div class="board-item mx-auto">
-            <a class="href-none" th:href="@{'/boards/' + ${board.id}}">
+            <a class="href-none" th:href="@{'/boards/guide/' + ${board.id}}">
               <div class="board-item-header">
                 <div class="header-left">
                   <p class="item-date">
