@@ -60,13 +60,13 @@
                 <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5" th:each="sender, idx: ${senderList}">
                     <div th:with="board=${boardList[idx.index]}">
                     <div class="board-item mx-auto">
-                        <a class="href-none" href="#">
+                        <a class="href-none" th:href="'/boards/' + ${board.id} + '/sender-requests/' + ${sender.senderId}">
                             <div class="board-item-header">
                                 <div class="header-left">
                                     <p class="item-date">
-                                        <span class="start-date">2023-09-15</span>
+                                        <span th:text="${board.startDate}" class="start-date">2023-09-15</span>
                                         <span> ~ </span>
-                                        <span class="end-date">2023-09-20</span>
+                                        <span th:text="${board.endDate}" class="end-date">2023-09-20</span>
                                     </p>
                                 </div>
                                 <div class="header-right">

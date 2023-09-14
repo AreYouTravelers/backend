@@ -72,7 +72,7 @@ public class SenderRequestsService {
 
     // 동행 요청 단일 조회
     public SenderRequestsDto readSenderRequests(Long boardId, Long id) {
-        UsersEntity usersEntity = authService.getUser();
+//        UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
         if (!boardsRepository.existsById(boardId))
@@ -80,7 +80,7 @@ public class SenderRequestsService {
 
 
         // boardId, SenderId가 모두 존재할 때만 조회
-        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndId(boardId, id);
+        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndSenderId(boardId, id);
         if (senderRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "조회할 동행 요청이 존재하지 않습니다");
 
@@ -90,14 +90,14 @@ public class SenderRequestsService {
 
     // 작성자 별 동행 요청 전체 조회
     public List<SenderRequestsDto> readAllSenderRequests(Long senderId) {
-        UsersEntity usersEntity = authService.getUser();
+//        UsersEntity usersEntity = authService.getUser();
 
         // senderId에 해당하는 요청글이 존재하지 않을 경우 예외 처리
         if (!senderRequestsRepository.existsById(senderId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
 
         List<SenderRequestsDto> senderRequestsDtoList = new ArrayList<>();
-        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderId(senderId);
+        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdOrderByCreatedAtDesc(4L);
 
         for (SenderRequestsEntity entity : senderRequestsEntityList)
             senderRequestsDtoList.add(SenderRequestsDto.fromEntity(entity));
@@ -133,7 +133,7 @@ public class SenderRequestsService {
 
     // 동행 요청 수정 (메세지)
     public void updateSenderRequests(Long boardId, Long id, SenderRequestsDto dto) {
-        UsersEntity usersEntity = authService.getUser();
+//        UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
         if (!boardsRepository.existsById(boardId))
@@ -164,7 +164,7 @@ public class SenderRequestsService {
 
     // 동행 요청 삭제
     public void deleteSenderRequests(Long boardId, Long id) {
-        UsersEntity usersEntity = authService.getUser();
+//        UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
         if (!boardsRepository.existsById(boardId))
