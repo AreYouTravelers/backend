@@ -41,11 +41,10 @@
           <li class="nav-item mx-0 mx-lg-1">나의 후기
             <ul class="navbar-nav me-auto">
               <li class="nav-item mx-0">
-                <a class="nav-link active py-2 px-0 px-lg-3"
-                   th:href="@{'/boards/' + ${boardId} + '/reviews'}">받은 후기</a>
+                <a class="nav-link py-2 px-0 px-lg-3" href="/boards/reviews/receiver">받은 후기</a>
               </li>
               <li class="nav-item mx-0">
-                <a class="nav-link py-2 px-0 px-lg-3" href="/read-reviews-all-by-sender">보낸 후기</a>
+                <a class="nav-link py-2 px-0 px-lg-3" href="/boards/reviews/sender">보낸 후기</a>
               </li>
             </ul>
           </li>
@@ -54,7 +53,7 @@
     </nav>
     <section class="container-content page-section col-md-9 col-lg-9">
       <!-- Title -->
-      <img th:src="'/' + ${receiver.profileImg}" alt="원글 작성자 프로필 사진"/>
+      <img th:src="'/' + ${receiver.profileImg}" alt="사용자 프로필 사진"/>
       <h2 class="page-section-heading text-secondary mb-0 main-menu"
           th:text="${receiver.username} + '님이 받은 후기'">
       </h2>
@@ -64,14 +63,15 @@
         <p class="board-temperature temp-3" th:text="${receiver.temperature} + '℃'">36.5℃</p>
         <!-- Grid Items -->
         <div class="container">
-          <div class="review-list" th:each="review: ${reviewList}">
+          <div class="review-list" th:each="review, idx : ${reviewList}">
+            <div th:with="writer=${writerList[idx.index]}">
             <a class="href-none" th:href="@{'/boards/' + ${review.boardId} + '/reviews/' + ${review.id}}">
               <div class="review-top">
                 <p class="review-top-left">
                                     <span class="review-requests-profile">
-                                        <img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진">
+                                        <img th:src="'/'+ ${writer.profileImg}" alt="후기 작성자 프로필 사진">
                                     </span>
-                  <span th:text="${review.senderUsername} + '님이 보낸 후기'"></span>
+                  <span th:text="${writer.username} + '님이 보낸 후기'"></span>
                 </p>
                 <p class="review-top-right">
                   <span th:text="${review.rating}"></span>
