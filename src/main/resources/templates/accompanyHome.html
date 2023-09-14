@@ -3,20 +3,48 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-    <title>Are you travelers</title>
+    <title>동행 구하기</title>
 </head>
+<body class="accompany">
 <th:block layout:fragment="content">
-    <!-- Banner -->
-    <div class="main-banner">
-        <img class="masthead-avatar mb-5" src="/static/images/main/main-banner.png" alt="배너"/>
-    </div>
-    <!-- Main Section -->
-    <section class="page-section portfolio" id="portfolio" style="padding: 0;">
+    <!-- Contents -->
+    <section class="page-section portfolio" id="portfolio">
         <div class="container">
             <!-- Main Menu -->
             <img class="main-menu-icon" src="/static/images/icon/icon-with.png" alt="동행 구하기">
-            <h2 class="page-section-heading text-secondary mb-0 main-menu">최신 동행 구하기</h2>
+            <h2 class="page-section-heading text-secondary mb-0 main-menu">동행 구하기</h2>
             <!-- Main Grid Items -->
+            <form th:action="@{'/boards/filter'}" th:method="get" id="getForm" class="row gy-2 gx-3 align-items-center">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="country">Preference</label>
+                    <select class="form-select" id="country" name="country" required>
+                        <option value="">여행지</option>
+                        <option th:each="country : ${countries}"
+                                th:value="${country.id}"
+                                th:text="${country.name}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="category">Preference</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="" disabled>카테고리</option>
+                        <option th:each="category : ${categories}"
+                                th:value="${category.id}"
+                                th:text="${category.category}"
+                                th:selected="${category.category} == 여행" disabled>
+                        </option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <label class="visually-hidden" for="mbti">Name</label>
+                    <input type="text" class="form-control" id="mbti" name="mbti" placeholder="선호하는 MBTI을 입력하세요. ex) EJ, FP " required>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-secondary" id="getButton" style="margin-right: 6px;">검색</button>
+                    <a href="/boards/write" class="btn btn-primary" style="margin-right: auto;">글쓰기</a>
+                </div>
+            </form>
             <div class="row justify-content-center">
                 <!-- 게시물 목록을 반복하며 게시물 정보 출력 -->
                 <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5" th:each="board : ${boardsPage != null ? boardsPage.content : {}}"
@@ -71,4 +99,5 @@
         </div>
     </section>
 </th:block>
+</body>
 </html>

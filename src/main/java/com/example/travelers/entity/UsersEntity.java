@@ -8,6 +8,7 @@ import org.hibernate.annotations.Where;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +50,9 @@ public class UsersEntity {
     @Column(name = "birth_date")
     private LocalDate birthDate;
 
+    @Transient //DB 테이블에 매핑되지 않음
+    private Integer age;
+
     @Column(name = "profile_img", columnDefinition = "TEXT")
     private String profileImg;
 
@@ -84,4 +88,14 @@ public class UsersEntity {
 
     @OneToMany(mappedBy = "receiver")
     private final List<SenderRequestsEntity> receiverSenderRequests = new ArrayList<>();
+
+    public Integer getAge() {
+        if (birthDate != null) {
+            LocalDate currentDate = LocalDate.now();
+            Period period = Period.between(birthDate, currentDate);
+            return period.getYears();
+        } else {
+            return null; // Handle the case where birthDate is null
+        }
+    }
 }

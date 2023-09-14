@@ -4,7 +4,7 @@ body {overflow-x: hidden;}
 .href-none:hover {color: inherit;}
 .temp-3 {color: #3BD0FA;}
 .temp-4 {color: #FF5733;}
-.temp-5 {color: #800080;}
+.temp-5 {color: blueviolet;}
 .container2 {max-width: 720px;}
 .container-wrap {display: flex;}
 .container-content {padding-top: 10rem;}

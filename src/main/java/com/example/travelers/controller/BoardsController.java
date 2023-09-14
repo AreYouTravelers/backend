@@ -62,15 +62,32 @@ public class BoardsController {
         return "boardDetail";
     }
 
-//    @GetMapping
-    public Page<BoardsMapping> readAllByCountryAndCategoryAndMbti(
+    @GetMapping
+    public String readAll(
+            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber,
+            Model model) {
+        Page<BoardsMapping> boardsPage = boardsService.readBoardsAll(pageNumber);
+        model.addAttribute("countries", countryRepository.findAll());
+        model.addAttribute("categories", boardCategoriesRepository.findAll());
+        model.addAttribute("boardsPage", boardsPage);
+        return "accompanyHome";
+    }
+
+    @GetMapping("/filter")
+    public String readAllByCountryAndCategoryAndMbti(
             @RequestParam(value = "country") Long countryId,
             @RequestParam(value = "category", defaultValue = "1") Long categoryId,
             @RequestParam(value = "mbti", required = false) String mbtiCriteria,
-            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
+            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber,
+            Model model) {
 
-        List<String> mbtiList = mbtiFilter.generateMbtiList(mbtiCriteria);
-        return boardsService.readBoardsAllByCountryAndCategoryAndMbti(countryId, categoryId, mbtiCriteria, pageNumber);
+        model.addAttribute("countries", countryRepository.findAll());
+        model.addAttribute("categories", boardCategoriesRepository.findAll());
+
+        // 호출한 서비스 결과를 "boardsPage"라는 이름으로 모델에 추가
+        Page<BoardsMapping> boardsPage = boardsService.readBoardsAllByCountryAndCategoryAndMbti(countryId, categoryId, mbtiCriteria, pageNumber);
+        model.addAttribute("boardsPage", boardsPage);
+        return "accompany";
     }
 
     @GetMapping("/myboard")

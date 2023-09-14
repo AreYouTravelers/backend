@@ -19,9 +19,9 @@
             <div class="board-inner mb-5">
                 <div class="container-wrap mb-3">
                     <div class="col-md-4 col-lg-4 me-3">
-                        <label for="country" class="form-label">도시</label>
+                        <label for="country" class="form-label">여행지</label>
                         <select class="form-select" id="country" name="country" required>
-                            <option value="">도시를 선택하세요</option>
+                            <option value="">여행지</option>
                             <option th:each="country : ${countries}"
                                     th:value="${country.id}"
                                     th:text="${country.name}">
@@ -31,7 +31,7 @@
                     <div class="col-md-3 col-lg-3 me-3">
                         <label for="category" class="form-label">카테고리</label>
                         <select class="form-select" id="category" name="category" required>
-                            <option value="" disabled>카테고리를 선택하세요</option>
+                            <option value="" disabled>카테고리</option>
                             <option th:each="category : ${categories}"
                                     th:value="${category.id}"
                                     th:text="${category.category}"

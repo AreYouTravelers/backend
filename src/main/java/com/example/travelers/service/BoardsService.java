@@ -111,8 +111,8 @@ public class BoardsService {
     } //현재 시간을 기준으로 00시까지의 시간을 계산
 
     public Page<BoardsMapping> readBoardsAll(Integer pageNumber) {
-        UsersEntity userEntity = authService.getUser();
-        Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
+//        UsersEntity userEntity = authService.getUser();
+        Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").descending());
         Page<BoardsEntity> boardsPage = boardsRepository.findAll(pageable);
         List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
                 .map(this::createBoardsMapping)
@@ -121,12 +121,9 @@ public class BoardsService {
     }
 
     public Page<BoardsMapping> readBoardsAllByCountryAndCategoryAndMbti(Long countryId, Long categoryId, String mbtiCriteria, Integer pageNumber) {
-        UsersEntity userEntity = authService.getUser();
-        Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
-        if (user.isPresent()) {
             List<String> mbtiList = mbtiFilter.generateMbtiList(mbtiCriteria); // MBTI 리스트 생성
 
-            Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
+            Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").descending());
 
             // 메서드 이름 및 매개변수 수정
             Page<BoardsEntity> boardsPage = boardsRepository.findAllByCountryIdAndBoardCategoryIdAndUser_MbtiIn(countryId, categoryId, mbtiList, pageable);
@@ -135,8 +132,8 @@ public class BoardsService {
                     .map(this::createBoardsMapping)
                     .collect(Collectors.toList());
             return new PageImpl<>(boardsMappings, pageable, boardsPage.getTotalElements());
-        } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
+
     public Page<BoardsMapping> readBoardsAllByCountryAndCategory(Long countryId, Long categoryId, Integer pageNumber) {
         UsersEntity userEntity = authService.getUser();
         Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
@@ -155,7 +152,7 @@ public class BoardsService {
         UsersEntity userEntity = authService.getUser();
         Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
         if (user.isPresent()) {
-            Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
+            Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").descending());
             Page<BoardsEntity> boardsPage = boardsRepository.findAllByUser(user, pageable);
 
             List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
