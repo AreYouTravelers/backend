@@ -132,7 +132,7 @@ public class SenderRequestsService {
     }
 
     // 동행 요청 수정 (메세지)
-    public void updateSenderRequests(Long boardId, Long id, SenderRequestsDto dto) {
+    public SenderRequestsDto updateSenderRequests(Long boardId, Long id, SenderRequestsDto dto) {
 //        UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
@@ -140,7 +140,7 @@ public class SenderRequestsService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 게시글이 존재하지 않습니다.");
 
         // boardId, SenderId가 모두 존재할 때만 조회
-        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndId(boardId, id);
+        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndSenderId(boardId, id);
         if (senderRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 동행 요청이 존재하지 않습니다");
 
@@ -159,7 +159,8 @@ public class SenderRequestsService {
         // Optional에서 Entity 받아오기
         SenderRequestsEntity sender = senderRequestsEntity.get();
         sender.setMessage(dto.getMessage());
-        senderRequestsRepository.save(sender);
+        return SenderRequestsDto.fromEntity(senderRequestsRepository.save(sender));
+
     }
 
     // 동행 요청 삭제

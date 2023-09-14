@@ -101,14 +101,18 @@ public class SenderRequestsController {
     // DELETE /boards/{boardId}/sender-requests/{id}
 
     @PutMapping("/boards/{boardId}/sender-requests/{id}")
-    public MessageResponseDto update(
+    public String update(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
-            SenderRequestsDto dto
+            @RequestBody SenderRequestsDto dto,
+            Model model
     ) {
-        service.updateSenderRequests(boardId, id, dto);
-        MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청 메세지를 수정했습니다.");
-        return messageResponseDto;
+        model.addAttribute("board", boardsService.readBoard(boardId));
+        model.addAttribute("senderRequests", service.updateSenderRequests(boardId, id, dto));
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("id", id);
+        model.addAttribute("dto", dto);
+        return "read-sender-requests";
     }
 
     @DeleteMapping("/boards/{boardId}/sender-requests/{id}")
