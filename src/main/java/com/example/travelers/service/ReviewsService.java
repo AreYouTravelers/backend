@@ -1,9 +1,6 @@
 package com.example.travelers.service;
 
-import com.example.travelers.dto.BoardCategoryDto;
-import com.example.travelers.dto.BoardDto;
-import com.example.travelers.dto.MessageResponseDto;
-import com.example.travelers.dto.ReviewsDto;
+import com.example.travelers.dto.*;
 import com.example.travelers.entity.*;
 import com.example.travelers.repos.BoardsRepository;
 import com.example.travelers.repos.CountryRepository;
@@ -98,11 +95,11 @@ public class ReviewsService {
 //        return reviewsPage.map(ReviewsDto::fromEntity);
 //    }
 
-    // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
+    // 특정 사용자가 보낸 후기 전체 조회 (받은 후기)
     public List<ReviewsDto> readReviewsAllBySender(Long senderId) {
-        if (!boardsRepository.existsById(senderId)) {
+        if (!boardsRepository.existsById(senderId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
-        }
+
 //        UsersEntity usersEntity = authService.getUser();
         List<ReviewsDto> reviewsDtoList = new ArrayList<>();
         List<ReviewsEntity> reviewsEntityList = repository.findAllBySenderId(senderId);
@@ -113,15 +110,22 @@ public class ReviewsService {
 
     // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
     public List<ReviewsDto> readReviewsAllByReceiver(Long receiverId) {
-        if (!boardsRepository.existsById(receiverId)) {
+        if (!boardsRepository.existsById(receiverId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
-        }
+
 //        UsersEntity usersEntity = authService.getUser();
         List<ReviewsDto> reviewsDtoList = new ArrayList<>();
         List<ReviewsEntity> reviewsEntityList = repository.findAllByReceiverId(receiverId);
         for (ReviewsEntity entity : reviewsEntityList)
             reviewsDtoList.add(ReviewsDto.fromEntity(entity));
         return reviewsDtoList;
+    }
+
+    public List<UserProfileDto> readReviewsWriterProfile(List<ReviewsDto> reviewsDtoList) {
+        List<UserProfileDto> userProfileDtoList = new ArrayList<>();
+        for (ReviewsDto review: reviewsDtoList)
+            userProfileDtoList.add(UserProfileDto.fromEntity(usersRepository.findByUsername(review.getSenderUsername()).get()));
+        return userProfileDtoList;
     }
 
     @Transactional

@@ -3,9 +3,12 @@ package com.example.travelers.controller;
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.ReviewsDto;
 import com.example.travelers.dto.UserProfileDto;
+import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.repos.UsersRepository;
+import com.example.travelers.service.AuthService;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.ReviewsService;
+import com.example.travelers.service.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,6 +25,7 @@ import java.util.List;
 public class ReviewsController {
     private final ReviewsService service;
     private final BoardsService boardsService;
+    private final AuthService authService;
     private final UsersRepository usersRepository;
 
     @GetMapping("/boards/{boardId}/reviews/write")
@@ -73,25 +77,29 @@ public class ReviewsController {
         return "read-reviews-all";
     }
 
-    @GetMapping("/boards/reviews/sender/{id}")
+    @GetMapping("/boards/reviews/sender")
     public String readAllBySender(
-            @PathVariable("id") Long senderId,
             Model model
     ) {
+//        Long senderId = authService.getUser().getId();
+        Long senderId = 4L;
         model.addAttribute("reviewList", service.readReviewsAllBySender(senderId));
         model.addAttribute("sender", usersRepository.findById(senderId).get());
-        model.addAttribute("id", senderId);
+        model.addAttribute("senderId", senderId);
         return "read-reviews-all-sender";
     }
 
-    @GetMapping("/boards/reviews/receiver/{id}")
+    @GetMapping("/boards/reviews/receiver")
     public String readAllByReceiver(
-            @PathVariable("id") Long receiverId,
             Model model
     ) {
-        model.addAttribute("reviewList", service.readReviewsAllBySender(receiverId));
-        model.addAttribute("sender", usersRepository.findById(receiverId).get());
-        model.addAttribute("id", receiverId);
+//        Long receiverId = authService.getUser().getId();
+        Long receiverId = 4L;
+        List<ReviewsDto> reviewList = service.readReviewsAllByReceiver(receiverId);
+        model.addAttribute("reviewList", reviewList);
+        model.addAttribute("writerList", service.readReviewsWriterProfile(reviewList));
+        model.addAttribute("receiver", usersRepository.findById(receiverId).get());
+        model.addAttribute("receiverId", receiverId);
         return "read-reviews-all-receiver";
     }
 
