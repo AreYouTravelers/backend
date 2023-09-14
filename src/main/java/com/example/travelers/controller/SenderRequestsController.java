@@ -49,7 +49,7 @@ public class SenderRequestsController {
 
     // Rendering Read - 동행 요청 단일 조회
     // GET /boards/{boardId}/sender-requests/{id}
-    @GetMapping("/boards/sender-requests/{id}")
+    @GetMapping("/boards/{boardId}/sender-requests/{id}")
     public String read(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
