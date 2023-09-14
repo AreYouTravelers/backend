@@ -134,80 +134,12 @@ footer p {font-weight: 300; font-size: 14px;}
 .account .profile2 .profile2-box button {display: block;}
 .account .profile2 h4 {margin-top: 2em; color: #dc3545;}
 
-/* 저장 버튼 스타일 */
-#save-mbti-button, #save-email-button {
-    background-color: #007acc;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 12px; /* 더 둥글게 만듦 */
-    font-size: 12px;
-    margin-right: 2px;
-    /* 마우스 호버 시 스타일 변경 */
-    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
-}
-
-#save-mbti-button:hover , #save-email-button:hover {
-    background-color: #0056b3; /* 호버 시 밝은 하늘색으로 변경 */
-    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
-}
-
-/* 취소 버튼 스타일 */
-#cancel-mbti-button, #cancel-email-button {
-    /* 이전 스타일 유지 */
-    background-color: #dc3545;
-    color: #ffffff;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 12px; /* 더 둥글게 만듦 */
-    font-size: 12px;
-    /* 마우스 호버 시 스타일 변경 */
-    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
-}
-
-#cancel-mbti-button:hover, #cancel-email-button:hover {
-    background-color: #c82333; /* 호버 시 진한 빨간색으로 변경 */
-    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
-}
-
-
-.btn-primary {
-    background-color: #007acc;
-    color: white;
-    border: none;
-    padding: 0.6em 1em;
-    border-radius: 12px;
-    font-size: 0.9rem;
-    /* 마우스 호버 시 스타일 변경 */
-    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
-}
-
-.btn-primary:hover {
-    background-color: #0056b3; /* 호버 시 밝은 하늘색으로 변경 */
-    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
-}
-
-/* 회원 탈퇴 버튼 스타일 */
-.btn-danger {
-    background-color: #dc3545;
-    color: #ffffff;
-    border: none;
-    padding: 0.6em 1em;
-    border-radius: 12px;
-    font-size: 0.9rem;
-    /* 마우스 호버 시 스타일 변경 */
-    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
-}
-
-.btn-danger:hover {
-    background-color: #c82333; /* 호버 시 진한 빨간색으로 변경 */
-    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
-}
-
+/* board */
+.board-write .container2 {max-width: 800px;}
+.board-write .container-wrap {justify-content: center;}
+.board-write .sub-title-icon {margin-top: 13em;}
+.board-write h2 {margin-bottom: 2.5em; font-size: 1.6rem; text-align: center;}
+.board-write .board-inner {padding: 2em; border-bottom: 1px solid #ddd; border-top: 1px solid #ddd;}
 
 /* receiver */
 .receiver .sub-menu-icon {width: 43px;}
@@ -308,3 +240,72 @@ footer p {font-weight: 300; font-size: 14px;}
     -webkit-line-clamp: 4;
 }
 
+/* 저장 버튼 스타일 */
+#save-mbti-button, #save-email-button {
+    background-color: #007acc;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 12px; /* 더 둥글게 만듦 */
+    font-size: 12px;
+    margin-right: 2px;
+    /* 마우스 호버 시 스타일 변경 */
+    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
+}
+
+#save-mbti-button:hover , #save-email-button:hover {
+    background-color: #0056b3; /* 호버 시 밝은 하늘색으로 변경 */
+    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+}
+
+/* 취소 버튼 스타일 */
+#cancel-mbti-button, #cancel-email-button {
+    /* 이전 스타일 유지 */
+    background-color: #dc3545;
+    color: #ffffff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 12px; /* 더 둥글게 만듦 */
+    font-size: 12px;
+    /* 마우스 호버 시 스타일 변경 */
+    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
+}
+
+#cancel-mbti-button:hover, #cancel-email-button:hover {
+    background-color: #c82333; /* 호버 시 진한 빨간색으로 변경 */
+    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+}
+
+
+.btn-primary {
+    background-color: #007acc;
+    border: none;
+    padding: 0.6em 1em;
+    font-size: 0.9rem;
+    /* 마우스 호버 시 스타일 변경 */
+    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* 호버 시 밝은 하늘색으로 변경 */
+    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+}
+
+/* 회원 탈퇴 버튼 스타일 */
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    padding: 0.6em 1em;
+    font-size: 0.9rem;
+    /* 마우스 호버 시 스타일 변경 */
+    transition: all 0.3s ease; /* 모든 속성에 전환 효과 적용 */
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* 호버 시 진한 빨간색으로 변경 */
+    transform: translateY(-2px); /* 위로 약간 이동하는 효과 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 효과 추가 */
+}
