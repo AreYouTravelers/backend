@@ -4,6 +4,8 @@
       layout:decorate="~{layout/default}">
 <head>
     <title>후기 작성</title>
+    <script src="/static/js/reviews-possible.js"></script>
+    <script src="/static/js/goto-reviews-possible.js"></script>
 </head>
 <body class="review-possible">
 <th:block layout:fragment="content">
@@ -56,7 +58,7 @@
             <img class="sub-menu-icon" src="/static/images/icon/icon-review.png" alt="후기 작성">
             <h2 class="page-section-heading text-secondary mb-0 main-menu">후기 작성</h2>
             <!-- Grid Items -->
-            <div class="row justify-content-center">
+            <div class="row justify-content-start">
                 <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5" th:each="request: ${requestsList}" th:with="boardId=${request.id}">
                     <div class="board-item mx-auto">
                         <a class="href-none" href="#">
