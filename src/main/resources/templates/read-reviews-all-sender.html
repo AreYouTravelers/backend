@@ -44,7 +44,7 @@
                                 <a class="nav-link py-2 px-0 px-lg-3" href="/boards/reviews/receiver">받은 후기</a>
                             </li>
                             <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" href="/boards/reviews/sender">보낸 후기</a>
+                                <a class="nav-link active py-2 px-0 px-lg-3" href="/boards/reviews/sender">보낸 후기</a>
                             </li>
                         </ul>
                     </li>
@@ -62,7 +62,7 @@
                 <h3 class="board-title" th:text="${sender.username} + '님의 여행 온도'"></h3>
                 <p class="board-temperature temp-3" th:text="${sender.temperature} + '℃'">36.5℃</p>
                 <!-- Grid Items -->
-                <div class="container">
+                <div class="container read-reviews-all-wrap">
                     <div class="review-list" th:each="review: ${reviewList}">
                         <a class="href-none" th:href="@{'/boards/' + ${review.boardId} + '/reviews/' + ${review.id}}">
                             <div class="review-top">
