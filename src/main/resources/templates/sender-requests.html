@@ -73,11 +73,20 @@
                                     <p class="item-ing">대기</p>
                                 </div>
                             </div>
+<!--                            <div class="board-item-bg">-->
+<!--                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">파리-->
+<!--                                </p>-->
+<!--                                <p class="board-item-img">-->
+<!--                                    <img src="/static/images/country/파리.jpg" alt="파리">-->
+<!--                                </p>-->
+<!--                            </div>-->
                             <div class="board-item-bg">
-                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">파리
+                                <p class="board-item-icon">
+                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">
+                                    <span th:text="${board.country}"></span>
                                 </p>
                                 <p class="board-item-img">
-                                    <img src="/static/images/country/paris.jpg" alt="파리">
+                                    <img th:src="@{'/static/images/country/' + ${board.country} + '.jpg'}" alt="배경이미지">
                                 </p>
                             </div>
                             <div class="board-item-info">
