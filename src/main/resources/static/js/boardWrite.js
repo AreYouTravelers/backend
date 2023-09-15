@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => {
                 if (response.ok) {
                     alert('게시물이 등록되었습니다.');
-                    window.location.href = '/boards/write';
+                    window.location.href = '/boards';
                 } else {
                     alert('게시물 등록에 실패했습니다.');
                 }
