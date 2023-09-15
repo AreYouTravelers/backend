@@ -66,7 +66,7 @@ public class ReviewsService {
 
     // 특정 게시글에 달린 후기 전체 조회
     public List<ReviewsDto> readReviewsAll(Long boardId) {
-        UsersEntity usersEntity = authService.getUser();
+//        UsersEntity usersEntity = authService.getUser();
         if (!boardsRepository.existsById(boardId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
         }
