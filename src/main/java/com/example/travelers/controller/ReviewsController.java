@@ -87,7 +87,7 @@ public class ReviewsController {
             Model model
     ) {
 //        Long senderId = authService.getUser().getId();
-        Long senderId = 4L;
+        Long senderId = 1L;
         model.addAttribute("reviewList", service.readReviewsAllBySender(senderId));
         model.addAttribute("sender", usersRepository.findById(senderId).get());
         model.addAttribute("senderId", senderId);
@@ -99,7 +99,7 @@ public class ReviewsController {
             Model model
     ) {
 //        Long receiverId = authService.getUser().getId();
-        Long receiverId = 4L;
+        Long receiverId = 1L;
         List<ReviewsDto> reviewList = service.readReviewsAllByReceiver(receiverId);
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("writerList", service.readReviewsWriterProfile(reviewList));

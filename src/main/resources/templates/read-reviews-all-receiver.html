@@ -3,89 +3,92 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-  <title>후기 전체 조회</title>
+    <title>후기 전체 조회</title>
 </head>
 <body class="read-reviews-all">
 <th:block layout:fragment="content">
-  <!-- Contents -->
-  <div class="container container-wrap justify-content-between">
-    <nav id="subNav" class="col-md-2 col-lg-2">
-      <div class="container">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item mx-0 mx-lg-1">마이페이지
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item mx-0">
-                <a class="nav-link py-2 px-0 px-lg-3" href="/mypage">프로필</a>
-              </li>
-              <li class="nav-item mx-0">
-                <a class="nav-link py-2 px-0 px-lg-3" href="/account">계정 설정</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">나의 동행
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item mx-0">
-                <a class="nav-link py-2 px-0 px-lg-3" href="#">내가 쓴 글</a>
-              </li>
-              <li class="nav-item mx-0">
-                <a class="nav-link py-2 px-0 px-lg-3" href="/receiver-requests">받은 동행</a>
-              </li>
-              <li class="nav-item mx-0">
-                <a class="nav-link py-2 px-0 px-lg-3" href="/sender-requests">보낸 동행</a>
-              </li>
-              <li class="nav-item mx-0">
-                <a class="nav-link py-2 px-0 px-lg-3" href="/boards/reviews-possible">후기 작성</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">나의 후기
-            <ul class="navbar-nav me-auto">
-              <li class="nav-item mx-0">
-                <a class="nav-link py-2 px-0 px-lg-3" href="/boards/reviews/receiver">받은 후기</a>
-              </li>
-              <li class="nav-item mx-0">
-                <a class="nav-link py-2 px-0 px-lg-3" href="/boards/reviews/sender">보낸 후기</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <section class="container-content page-section col-md-9 col-lg-9">
-      <!-- Title -->
-      <img th:src="'/' + ${receiver.profileImg}" alt="사용자 프로필 사진"/>
-      <h2 class="page-section-heading text-secondary mb-0 main-menu"
-          th:text="${receiver.username} + '님이 받은 후기'">
-      </h2>
-      <!-- Contents -->
-      <div class="container">
-        <h3 class="board-title" th:text="${receiver.username} + '님의 여행 온도'"></h3>
-        <p class="board-temperature temp-3" th:text="${receiver.temperature} + '℃'">36.5℃</p>
-        <!-- Grid Items -->
-        <div class="container">
-          <div class="review-list" th:each="review, idx : ${reviewList}">
-            <div th:with="writer=${writerList[idx.index]}">
-            <a class="href-none" th:href="@{'/boards/' + ${review.boardId} + '/reviews/' + ${review.id}}">
-              <div class="review-top">
-                <p class="review-top-left">
+    <!-- Contents -->
+    <div class="container container-wrap justify-content-between">
+        <nav id="subNav" class="col-md-2 col-lg-2">
+            <div class="container">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item mx-0 mx-lg-1">마이페이지
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/mypage">프로필</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/account">계정 설정</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">나의 동행
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="#">내가 쓴 글</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/receiver-requests">받은 동행</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/sender-requests">보낸 동행</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/boards/reviews-possible">후기 작성</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">나의 후기
+                        <ul class="navbar-nav me-auto">
+                            <li class="nav-item mx-0">
+                                <a class="nav-link active py-2 px-0 px-lg-3" href="/boards/reviews/receiver">받은 후기</a>
+                            </li>
+                            <li class="nav-item mx-0">
+                                <a class="nav-link py-2 px-0 px-lg-3" href="/boards/reviews/sender">보낸 후기</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section class="container-content page-section col-md-9 col-lg-9">
+            <!-- Title -->
+<!--            <img th:src="'/' + ${receiver.profileImg}" alt="사용자 프로필 사진"/>-->
+            <img src="/static/images/user-profile1.jpg" alt="사용자 프로필 사진"/>
+            <h2 class="page-section-heading text-secondary mb-0 main-menu"
+                th:text="${receiver.username} + '님이 받은 후기'">
+            </h2>
+            <!-- Contents -->
+            <div class="container">
+                <h3 class="board-title" th:text="${receiver.username} + '님의 여행 온도'"></h3>
+                <p class="board-temperature temp-3" th:text="${receiver.temperature} + '℃'">36.5℃</p>
+                <!-- Grid Items -->
+                <div class="container read-reviews-all-wrap">
+                    <div class="review-list" th:each="review, idx : ${reviewList}">
+                        <div th:with="writer=${writerList[idx.index]}">
+                            <a class="href-none"
+                               th:href="@{'/boards/' + ${review.boardId} + '/reviews/' + ${review.id}}">
+                                <div class="review-top">
+                                    <p class="review-top-left">
                                     <span class="review-requests-profile">
-                                        <img th:src="'/'+ ${writer.profileImg}" alt="후기 작성자 프로필 사진">
+                                        <img src="/static/images/user-profile1.jpg" alt="사용자 프로필 사진"/>
+<!--                                        <img th:src="'/'+ ${writer.profileImg}" alt="후기 작성자 프로필 사진" />-->
                                     </span>
-                  <span th:text="${writer.username} + '님이 보낸 후기'"></span>
-                </p>
-                <p class="review-top-right">
-                  <span th:text="${review.rating}"></span>
-                </p>
-              </div>
-              <div class="review-bottom">
-                <span th:text="${review.content}">후기 내용</span>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+                                        <span th:text="${writer.username} + '님이 보낸 후기'"></span>
+                                    </p>
+                                    <p class="review-top-right">
+                                        <span th:text="${review.rating}"></span>
+                                    </p>
+                                </div>
+                                <div class="review-bottom">
+                                    <span th:text="${review.content}">후기 내용</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </div>
 </th:block>
 </body>
 </html>
