@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', function () {
     const reviewPossible = document.getElementById('go-to-reviews-possible');
     const accessToken = localStorage.getItem('accessToken');
@@ -17,13 +16,11 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => {
                 if (response.ok) {
-                    alert('후기 작성 페이지로 이동합니다.');
-                    window.location.href = '/boards/reviews-possible';
-                    console.log("response 오케")
-                    // location.reload();
+                    // return document.write(response); // HTML 내용을 받아옴
+                    window.location.href(response.url)
                 } else {
                     alert('후기 작성 페이지로 이동 실패했습니다.');
-                    console.log("response 낫오케")
+                    console.log("response 낫오케");
                 }
             })
             .catch(error => {

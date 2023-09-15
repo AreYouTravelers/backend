@@ -1,5 +1,6 @@
 package com.example.travelers.controller;
 
+import com.example.travelers.dto.BoardDto;
 import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.ReviewsDto;
 import com.example.travelers.dto.UserProfileDto;
@@ -56,8 +57,12 @@ public class ReviewsController {
             @PathVariable("id") Long id,
             Model model
     ) {
-        model.addAttribute("board", boardsService.readBoard(boardId));
-        model.addAttribute("review", service.readReview(boardId, id));
+        BoardDto boardDto = boardsService.readBoard(boardId);
+        ReviewsDto reviewsDto = service.readReview(boardId, id);
+        model.addAttribute("boardWriter", usersRepository.findByUsername(boardDto.getUsername()).get());
+        model.addAttribute("reviewWriter", usersRepository.findByUsername(reviewsDto.getSenderUsername()).get());
+        model.addAttribute("board", boardDto);
+        model.addAttribute("review", reviewsDto);
         model.addAttribute("boardId", boardId);
         model.addAttribute("reviewId", id);
         return "read-review";

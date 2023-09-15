@@ -1,13 +1,12 @@
 package com.example.travelers.service;
 
 import com.example.travelers.dto.BoardDto;
-import com.example.travelers.dto.ReceiverRequestsDto;
 import com.example.travelers.dto.SenderRequestsDto;
-import com.example.travelers.dto.UserProfileDto;
 import com.example.travelers.entity.BoardsEntity;
 import com.example.travelers.entity.ReceiverRequestsEntity;
 import com.example.travelers.entity.SenderRequestsEntity;
 import com.example.travelers.entity.UsersEntity;
+import com.example.travelers.jwt.JwtTokenUtils;
 import com.example.travelers.repos.BoardsRepository;
 import com.example.travelers.repos.ReceiverRequestsRepository;
 import com.example.travelers.repos.SenderRequestsRepository;
@@ -32,6 +31,7 @@ public class SenderRequestsService {
     private final BoardsRepository boardsRepository;
     private final AuthService authService;
     private final UsersRepository usersRepository;
+    private final JwtTokenUtils jwtTokenUtils;
 
     // 동행 요청 생성
     public SenderRequestsDto createSenderRequests(Long boardId, SenderRequestsDto dto) {
@@ -120,11 +120,21 @@ public class SenderRequestsService {
 //        if (!senderRequestsRepository.existsBySenderId(1L)) {
 //            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
 //        }
-        log.info("service 실행 시작");
 
-//        UsersEntity usersEntity = authService.getUser();
+//        if (!jwtTokenUtils.validate(token)) {
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "validate");
+//        }
+//
+//        // 토큰을 해석하여 사용자명 추출
+//        String username = jwtTokenUtils.parseClaims(token).getSubject();
+//
+//        UsersEntity usersEntity =  usersRepository.findByUsername(username)
+//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+
         List<BoardDto> boardDtoList = new ArrayList<>();
-        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdAndFinalStatusOrderByCreatedAtDesc(4L, true);
+        List<SenderRequestsEntity> senderRequestsEntityList =
+                senderRequestsRepository.findAllBySenderIdAndFinalStatusOrderByCreatedAtDesc(4L, true);
 
         for (SenderRequestsEntity entity : senderRequestsEntityList)
             boardDtoList.add(BoardDto.fromEntity(boardsRepository.findById(entity.getBoard().getId()).get()));

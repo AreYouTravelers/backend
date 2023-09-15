@@ -61,7 +61,9 @@ public class WebSecurityConfig {
                                         "/token/reissue",
                                         "/boards/sender-reviews/**",
                                         "/boards/receiver-reviews/**",
-                                        "/reports/write"
+                                        "/reports/write",
+                                        "/reviews-possible"
+
                                 )
                                 .permitAll() // 모든 사용자 허용
                                 .requestMatchers(

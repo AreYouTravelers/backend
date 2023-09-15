@@ -97,8 +97,8 @@ public class ReviewsService {
 
     // 특정 사용자가 보낸 후기 전체 조회 (받은 후기)
     public List<ReviewsDto> readReviewsAllBySender(Long senderId) {
-        if (!boardsRepository.existsById(senderId))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+//        if (!boardsRepository.existsById(senderId))
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
 
 //        UsersEntity usersEntity = authService.getUser();
         List<ReviewsDto> reviewsDtoList = new ArrayList<>();
@@ -110,12 +110,18 @@ public class ReviewsService {
 
     // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
     public List<ReviewsDto> readReviewsAllByReceiver(Long receiverId) {
-        if (!boardsRepository.existsById(receiverId))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+//        if (!boardsRepository.existsById(receiverId))
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
 
 //        UsersEntity usersEntity = authService.getUser();
         List<ReviewsDto> reviewsDtoList = new ArrayList<>();
         List<ReviewsEntity> reviewsEntityList = repository.findAllByReceiverId(receiverId);
+//        System.out.println(reviewsEntityList.get(1).getId());
+//        System.out.println(reviewsEntityList.get(1).getReceiver());
+//        System.out.println(reviewsEntityList.get(1).getSender());
+//        System.out.println(reviewsEntityList.get(1).getCountry());
+//        System.out.println(reviewsEntityList.get(1).getContent());
+//        System.out.println(reviewsEntityList.get(1).getBoard().getId());
         for (ReviewsEntity entity : reviewsEntityList)
             reviewsDtoList.add(ReviewsDto.fromEntity(entity));
         return reviewsDtoList;

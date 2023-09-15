@@ -87,11 +87,15 @@ public class SenderRequestsController {
     // 후기 작성 가능 목록
     @GetMapping("/boards/reviews-possible")
     public String reviewPossible(
+//            @RequestHeader("Authorization") String authorizationHeader,
             Model model
     ) {
-        List<BoardDto> requestsList = service.readAllAcceptedSenderRequests();
-        model.addAttribute("requestsList", requestsList);
+        // TODO header에서 토큰 꺼내오는 방식 생각해보기
+//        List<BoardDto> requestsList = service.readAllAcceptedSenderRequests();
+//        model.addAttribute("requestsList", requestsList);
+
         return "reviews-possible";
+//        return service.readAllAcceptedSenderRequests();
     }
 
     // 동행 요청 수정 (메세지)

@@ -50,6 +50,11 @@ public class ViewController {
         return "account";
     }
 
+    @GetMapping("/reviews-possible")
+    public String reviewPossible() {
+        return "reviews-possible";
+    }
+
 //    @GetMapping("/createReview")
 //    public String createReview() {
 //        return "createReview";
