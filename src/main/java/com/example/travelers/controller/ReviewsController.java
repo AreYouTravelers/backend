@@ -140,10 +140,14 @@ public class ReviewsController {
             ReviewsDto dto,
             Model model
     ) {
+        BoardDto boardDto = boardsService.readBoard(boardId);
+        ReviewsDto reviewsDto = service.readReview(boardId, id);
         model.addAttribute("board", boardsService.readBoard(boardId));
         model.addAttribute("review", service.updateReview(boardId, id, dto));
+        model.addAttribute("boardWriter", usersRepository.findByUsername(boardDto.getUsername()).get());
+        model.addAttribute("reviewWriter", usersRepository.findByUsername(reviewsDto.getSenderUsername()).get());
         model.addAttribute("boardId", boardId);
-        model.addAttribute("id", id);
+        model.addAttribute("reviewId", id);
         return "read-review";
     }
 
