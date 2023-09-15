@@ -26,7 +26,7 @@ public class AuthService {
         // Authorization 헤더에서 토큰 추출
         String token = extractTokenFromHeader(request.getHeader(HttpHeaders.AUTHORIZATION));
         if (!jwtTokenUtils.validate(token)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "validate");
         }
 
         // 토큰을 해석하여 사용자명 추출
@@ -38,7 +38,7 @@ public class AuthService {
     // 헤더에서 토큰 추출
     public String extractTokenFromHeader(String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "extract");
         }
         return authHeader.split(" ")[1];
     }

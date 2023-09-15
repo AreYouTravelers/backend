@@ -5,11 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <title>후기 단일 조회</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
-    <link rel="stylesheet" href="/static/css/styles2.css">
-    <link rel="stylesheet" href="/static/css/reviews.css">
-<!--    <script src="/static/js/reviews.js"></script>-->
-
     <script>
         // accessToken 불러오기
         let accessToken = localStorage.getItem('accessToken');
@@ -39,41 +34,7 @@
                 console.error('에러:', error);
             });
         document.addEventListener('DOMContentLoaded', function () {
-            // const updateForm = document.getElementById('updateForm');
-            // const updateButton = document.getElementById('updateButton');
             const deleteButton = document.getElementById('deleteButton');
-
-            // updateButton.addEventListener('click', function (event) {
-            //     event.preventDefault(); // 폼 제출을 막습니다.
-            //
-            //     // 폼 데이터를 캡처합니다.
-            //     const formData = new FormData(updateForm);
-            //
-            //     // 서버로 PUT 요청을 보냅니다.
-            //     fetch(`/boards/${boardId}/reviews/${reviewId}`, {
-            //         method: 'PUT',
-            //         headers: {
-            //             'Authorization': 'Bearer ' + accessToken,
-            //             'Content-Type': 'application/json'
-            //         },
-            //         body: JSON.stringify(Object.fromEntries(formData.entries())) // FormData를 JSON으로 변환
-            //     })
-            //         .then(response => {
-            //             if (response.ok) {
-            //                 // 성공적으로 처리됐을 때의 작업을 수행합니다.
-            //                 alert("후기가 수정 되었습니다.");
-            //                 // 선택적으로 사용자를 다른 페이지로 리디렉션할 수 있습니다.
-            //                 window.location.href = '/index';
-            //             } else {
-            //                 // 오류 시의 작업을 수행합니다.
-            //                 alert('후기 수정에 실패했습니다.');
-            //             }
-            //         })
-            //         .catch(error => {
-            //             // 네트워크 오류 처리
-            //             console.error('Network error:', error);
-            //         });
-            // });
 
             deleteButton.addEventListener("click", function (event) {
                 event.preventDefault();
@@ -88,7 +49,7 @@
                         .then(response => {
                             if (response.ok) {
                                 alert("후기가 삭제되었습니다.");
-                                window.location.href = `/boards/reviews/sender/4`;
+                                window.location.href = `/boards/reviews/sender/`;
                             } else {
                                 alert("후기 삭제에 실패했습니다.");
                             }
@@ -110,12 +71,10 @@
         <div class="original-board">
             <a class="href-none" href="#">
                 <span class="original-left">
-                    <p><img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진"></p>
+                    <p><img th:src="'/' + ${boardWriter.profileImg}" alt="원글 작성자 프로필 사진"></p>
                 </span>
                 <span class="original-right">
-                    <span class="original-right-top" th:text="${board.title}">
-                        원글 제목
-                    </span>
+                    <span class="original-right-top" th:text="${board.title}">원글 제목</span>
                     <br>
                     <span class="original-right-bottom">
                         <span th:text="${board.username}">원글 작성자</span>
@@ -128,7 +87,7 @@
         <div class="review-board">
             <div>
                 <span class="original-left">
-                    <p><img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진"></p>
+                    <p><img th:src="'/' + ${reviewWriter.profileImg}" alt="후기 작성자 프로필 사진"></p>
                 </span>
                 <span class="original-right">
                     <span class="original-right-top" th:text="${review.senderUsername}">
@@ -145,7 +104,6 @@
             </div>
         </div>
 <!--        TODO onClick 부분 수정. 뒤로가기 말고 readReviewAll로 가도록 -->
-<!--        <button type="button" class="btn btn-light" onclick="window.history.go(-1)">-->
         <button type="button" class="btn btn-light">
             <a th:href="@{'/boards/' + ${boardId} + '/reviews'}">목록</a>
         </button>
