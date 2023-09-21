@@ -9,14 +9,6 @@
 
 <br>
 
-## **_💁🏻‍ 팀원 소개_**
-![image](https://github.com/AreYouTravelers/backend/assets/52392720/28327717-98d7-4449-87b6-0d64241f4226)
-
----  
-<br>
-<br>
-<br>
-
 
 ## **_✈️ 프로젝트 소개_**
 ![메인페이지](https://github.com/likelion-backend-5th/Final_Project_3team/assets/80811887/a2964cd8-ebcb-4931-acb7-e382b05115fd)
