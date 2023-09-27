@@ -1,17 +1,14 @@
 # _✈️ Are You Travelers?_
-
+![너-T-야_-최종발표-001](https://github.com/AreYouTravelers/backend/assets/70623290/d5f6be9f-12af-4e4d-aa99-c55b2cf8e73a)
 `[멋쟁이사자처럼 5rd 팀 프로젝트 'AreYouTravelers']`
 
 ### 내 성향에 맞는 여행 메이트 찾기 플랫폼
-[_**areyoutravelers.shop**_](https://areyoutravelers.shop/)
-
-![배너](https://github.com/likelion-backend-5th/Final_Project_3team/assets/80811887/3a7ed9c0-900b-4dec-bd37-8ede048561fd)
-
-<br>
+배포링크 : [_**areyoutravelers.shop**_](https://areyoutravelers.shop/)
 
 
 ## **_✈️ 프로젝트 소개_**
-![메인페이지](https://github.com/likelion-backend-5th/Final_Project_3team/assets/80811887/a2964cd8-ebcb-4931-acb7-e382b05115fd)
+![SmartSelectImage_2023-09-27-22-59-14](https://github.com/AreYouTravelers/backend/assets/70623290/6b09c089-fcf3-4988-834b-4ab10fef35b0)
+
 
 - 다양한 지역과 나라별로 MBTI와 성향을 고려한 여행 메이트 및 개인 로컬 투어 가이드를 찾을 수 있는 온라인 서비스 프로젝트입니다.
 - 다른 여행 메이트 및 가이드 검색 서비스와 다르게 MBTI 및 성향 정보를 활용하여 개인의 취향과 선호도를 고려하여 맞춤형 서비스를 이용할 수 있습니다.
@@ -25,6 +22,8 @@
 - `개발 날짜: 2023.08.09 ~ 2023.09.15`
 
 ## 🛠️ _개발 환경_
+
+![너-T-야_-최종발표-007](https://github.com/AreYouTravelers/backend/assets/70623290/246b64af-ed20-4bd7-8ab2-08861dfd4401)
 
 - _IDE : IntelliJ IDEA Ultimate_
 - _Tools : Notion, Github, Discord, Figma_
@@ -44,14 +43,14 @@
 
 
 ## 📊 _CI/CD_
-![image](https://github.com/AreYouTravelers/backend/assets/52392720/f064c417-b6d1-4cc1-bda2-05cfe79aaa33)
-
+<img width="2514" alt="screen_2022_05_05_05_33_03" src="https://github.com/AreYouTravelers/backend/assets/70623290/d5aec47e-3f12-45dd-a6ea-2dd7e02aaec3">
 
 ## 📊 _ERD_
-![image](https://github.com/AreYouTravelers/backend/assets/52392720/0f7521c3-2708-43f2-a2ec-fa64ab09d9a1)
+![너-T-야_-최종발표-010](https://github.com/AreYouTravelers/backend/assets/70623290/bc05f46d-5d95-40fc-ae4f-1de9ebf77250)
+
 
 ## 📊 _Flow Chart_
-![image](https://github.com/AreYouTravelers/backend/assets/52392720/eb647137-d1a3-417f-bcba-d930b911e8cf)
+![너-T-야_-최종발표-011](https://github.com/AreYouTravelers/backend/assets/70623290/c0cd72cc-1ede-4a87-9188-e3eb4e2cf03c)
 
 
 ## 📮 _API Documentations_
