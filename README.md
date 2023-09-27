@@ -81,3 +81,18 @@
 
 
 #### **_여행 온도_**
+
+
+# 
+
+Powered by AreYouTravelers
+
+Website designed by 3355
+
+© 2023 3355Corp. All rights reserved.
+
+AreYouTravelers는 통신판매중개자이며 통신판매 당사자가 아닙니다. 상품정보 및 거래에 관한 책임은 판매자에게 있습니다.
+
+![로고회색 255x52](https://github.com/AreYouTravelers/backend/assets/70623290/dcec6656-79bd-4f72-a076-10bed82e4883)
+
+
