@@ -11,8 +11,10 @@ import com.example.travelers.repos.BoardsRepository;
 import com.example.travelers.repos.ReceiverRequestsRepository;
 import com.example.travelers.repos.SenderRequestsRepository;
 import com.example.travelers.repos.UsersRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -29,9 +31,9 @@ public class SenderRequestsService {
     private final SenderRequestsRepository senderRequestsRepository;
     private final ReceiverRequestsRepository receiverRequestsRepository;
     private final BoardsRepository boardsRepository;
-    private final AuthService authService;
     private final UsersRepository usersRepository;
     private final JwtTokenUtils jwtTokenUtils;
+    private final AuthService authService;
 
     // 동행 요청 생성
     public SenderRequestsDto createSenderRequests(Long boardId, SenderRequestsDto dto) {
@@ -72,7 +74,7 @@ public class SenderRequestsService {
 
     // 동행 요청 단일 조회
     public SenderRequestsDto readSenderRequests(Long boardId, Long id) {
-//        UsersEntity usersEntity = authService.getUser();
+        UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
         if (!boardsRepository.existsById(boardId))
@@ -89,15 +91,15 @@ public class SenderRequestsService {
     }
 
     // 작성자 별 동행 요청 전체 조회
-    public List<SenderRequestsDto> readAllSenderRequests(Long senderId) {
-//        UsersEntity usersEntity = authService.getUser();
+    public List<SenderRequestsDto> readAllSenderRequests() {
+        UsersEntity usersEntity = authService.getUser();
 
         // senderId에 해당하는 요청글이 존재하지 않을 경우 예외 처리
-        if (!senderRequestsRepository.existsById(senderId))
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
+//        if (!senderRequestsRepository.existsById(usersEntity.getId()))
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
 
         List<SenderRequestsDto> senderRequestsDtoList = new ArrayList<>();
-        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdOrderByCreatedAtDesc(4L);
+        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdOrderByCreatedAtDesc(usersEntity.getId());
 
         for (SenderRequestsEntity entity : senderRequestsEntityList)
             senderRequestsDtoList.add(SenderRequestsDto.fromEntity(entity));
@@ -113,28 +115,15 @@ public class SenderRequestsService {
     }
 
     // 작성자 별 수락 된 요청 '후기 작성하기' 전체 조회 = 후기 작성하기 Page
-//    public List<BoardDto> readAllAcceptedSenderRequests(Long senderId) {
     public List<BoardDto> readAllAcceptedSenderRequests() {
         // TODO sender id 받아오도록 수정
         // senderId에 해당하는 요청글이 존재하지 않을 경우 예외 처리
-//        if (!senderRequestsRepository.existsBySenderId(1L)) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
-//        }
-
-//        if (!jwtTokenUtils.validate(token)) {
-//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "validate");
-//        }
-//
-//        // 토큰을 해석하여 사용자명 추출
-//        String username = jwtTokenUtils.parseClaims(token).getSubject();
-//
-//        UsersEntity usersEntity =  usersRepository.findByUsername(username)
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
+        if (!senderRequestsRepository.existsBySenderId(1L)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
+        }
 
         List<BoardDto> boardDtoList = new ArrayList<>();
-        List<SenderRequestsEntity> senderRequestsEntityList =
-                senderRequestsRepository.findAllBySenderIdAndFinalStatusOrderByCreatedAtDesc(4L, true);
+        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdAndFinalStatusOrderByCreatedAtDesc(1L, true);
 
         for (SenderRequestsEntity entity : senderRequestsEntityList)
             boardDtoList.add(BoardDto.fromEntity(boardsRepository.findById(entity.getBoard().getId()).get()));

@@ -21,7 +21,7 @@ public class SenderRequestsDto {
     private LocalDateTime createdAt;
     private LocalDateTime rejectedAt;
     private Boolean finalStatus;
-    private Long senderId;
+    private Long senderId; // 순환참조 문제로 id값을 받아오게 함
     private Long receiverId;
     private Long boardId;
 
@@ -33,8 +33,8 @@ public class SenderRequestsDto {
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setRejectedAt(entity.getRejectedAt());
         dto.setFinalStatus(entity.getFinalStatus());
-        dto.setReceiverId(entity.getBoard().getUser().getId());
         dto.setSenderId(entity.getSender().getId());
+        dto.setReceiverId(entity.getReceiver().getId());
         dto.setBoardId(entity.getBoard().getId());
         return dto;
     }
