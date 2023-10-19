@@ -41,10 +41,10 @@ public class ViewController {
 //    @GetMapping("/boards/guide")
 //    public String guide() { return "guide"; }
 
-    @GetMapping("/sender-requests")
-    public String senderRequests() {
-        return "sender-requests";
-    }
+//    @GetMapping("/sender-requests")
+//    public String senderRequests() {
+//        return "sender-requests";
+//    }
 
     @GetMapping("/account")
     public String changePassword() {

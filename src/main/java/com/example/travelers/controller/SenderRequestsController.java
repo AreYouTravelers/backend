@@ -63,15 +63,13 @@ public class SenderRequestsController {
 
     // 작성자 별 동행 요청 전체 조회
     // GET /sender-requests/{id}
-    @GetMapping("/sender-requests/{senderId}")
+    @GetMapping("/sender-requests")
     public String readAll(
-            @PathVariable("senderId") Long id,
             Model model
     ) {
-        List<SenderRequestsDto> senderDtoList = service.readAllSenderRequests(id);
+        List<SenderRequestsDto> senderDtoList = service.readAllSenderRequests();
         model.addAttribute("senderList", senderDtoList);
         model.addAttribute("boardList", service.readAllSenderRequestsBoards(senderDtoList));
-        model.addAttribute("senderId", id);
         return "sender-requests";
     }
 
@@ -86,16 +84,12 @@ public class SenderRequestsController {
 
     // 후기 작성 가능 목록
     @GetMapping("/boards/reviews-possible")
-    public String reviewPossible(
-//            @RequestHeader("Authorization") String authorizationHeader,
-            Model model
-    ) {
+    public String reviewPossible(Model model) {
         // TODO header에서 토큰 꺼내오는 방식 생각해보기
-//        List<BoardDto> requestsList = service.readAllAcceptedSenderRequests();
-//        model.addAttribute("requestsList", requestsList);
+        List<BoardDto> requestsList = service.readAllAcceptedSenderRequests();
+        model.addAttribute("requestsList", requestsList);
 
         return "reviews-possible";
-//        return service.readAllAcceptedSenderRequests();
     }
 
     // 동행 요청 수정 (메세지)

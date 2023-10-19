@@ -4,7 +4,7 @@
       layout:decorate="~{layout/default}">
 <head>
     <title>후기 작성</title>
-<!--    <script src="/static/js/reviews-possible.js"></script>-->
+    <script src="/static/js/reviews-possible.js" th:inline="javascript"></script>
 <!--    <script src="/static/js/goto-reviews-possible.js"></script>-->
 </head>
 <body class="review-possible">
@@ -72,19 +72,18 @@
                                 </div>
                             </div>
                             <div class="board-item-bg">
-                                <p class="board-item-icon"><img src="/static/images/icon/icon-location.png" alt="지도아이콘">파리
+                                <p class="board-item-icon">
+                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">
+                                    <span th:text="${request.country}"></span>
                                 </p>
                                 <p class="board-item-img">
-                                    <img src="/static/images/country/paris.jpg" alt="파리">
+                                    <img th:src="@{'/static/images/country/' + ${request.country} + '.jpg'}" alt="배경이미지">
                                 </p>
                             </div>
                             <div class="board-item-info">
                                 <p class="item-title" th:text="${request.title}">오늘 파리 에펠탑 보러 가실 분?</p>
                                 <div class="item-contents">
-                                    <p th:text="${request.content}">
-                                        안녕하세요. 저는 홍길동이라고 하구요, 나이는 28세 남자입니다! 같이 오사카 여행 해봐요. 저는 일본어에 능통하고, 현지 음식점 가는 것을
-                                        좋아해요. 맛집 탐방에 진심이라 같이 여행하면 현지 음식을 맛보고, 현지 문화와 사람들과 소통하는 것이 여행의 큰 즐거움을 느껴봐요!
-                                    </p>
+                                    <p th:text="${request.content}"></p>
                                 </div>
                             </div>
                             <div class="board-item-review">

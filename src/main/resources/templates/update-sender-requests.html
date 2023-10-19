@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>동행 요청 수정</title>
+    <script src="/js/read-sender-requests.js"></script>
+</head>
+<body class="sender-read">
+<th:block layout:fragment="content">
+    <!-- Contents -->
+    <div class="container container2">
+        <p class="sub-title-icon">
+            <img src="/static/images/icon/icon-sender-requests.png" alt="동행 요청하기">
+        </p>
+        <h2>동행 요청 수정</h2>
+        <h3 class="board-title">현재 게시글</h3>
+        <div class="original-board">
+            <a class="href-none" href="#">
+                <div class="original-left">
+                    <img src="/static/images/user-profile-basic.png" alt="원글 작성자 프로필 사진" />
+                </div>
+                <div class="original-right">
+                    <div class="original-right-top" th:text="${board.title}"></div>
+                    <div class="original-right-bottom">
+                        <p>작성자: <span th:text="${board.username}"></span> |</p>
+                        <p>여행지: <span th:text="${board.country}"></span> |</p>
+                        <p>기간: <span th:text="${board.startDate}"></span> ~ <span th:text="${board.endDate}"></span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="board-message">
+            <h4 class="board-title">동행 요청 메세지를 작성해주세요.</h4>
+            <form th:action="@{'/boards/' + ${boardId} + '/sender-requests' + ${id}}" th:method="put" id="updateForm">
+                <div class="board-message">
+                    <textarea th:text="${senderRequests.message}" rows="8" id="message"></textarea>
+                </div>
+                <div class="container-wrap justify-content-center mt-5 mb-5">
+                    <button type="button" class="btn btn-outline-secondary">취소</button>
+                    <button type="button" class="tn btn-primary" id="updateButton">수정</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>
