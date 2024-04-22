@@ -74,7 +74,7 @@ public class SenderRequestsService {
 
     // 동행 요청 단일 조회
     public SenderRequestsDto readSenderRequests(Long boardId, Long id) {
-        UsersEntity usersEntity = authService.getUser();
+//        UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
         if (!boardsRepository.existsById(boardId))
@@ -92,14 +92,14 @@ public class SenderRequestsService {
 
     // 작성자 별 동행 요청 전체 조회
     public List<SenderRequestsDto> readAllSenderRequests() {
-        UsersEntity usersEntity = authService.getUser();
+//        UsersEntity usersEntity = authService.getUser();
 
         // senderId에 해당하는 요청글이 존재하지 않을 경우 예외 처리
 //        if (!senderRequestsRepository.existsById(usersEntity.getId()))
 //            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "요청한 게시글이 존재하지 않습니다.");
 
         List<SenderRequestsDto> senderRequestsDtoList = new ArrayList<>();
-        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdOrderByCreatedAtDesc(usersEntity.getId());
+        List<SenderRequestsEntity> senderRequestsEntityList = senderRequestsRepository.findAllBySenderIdOrderByCreatedAtDesc(1L);
 
         for (SenderRequestsEntity entity : senderRequestsEntityList)
             senderRequestsDtoList.add(SenderRequestsDto.fromEntity(entity));
@@ -146,7 +146,8 @@ public class SenderRequestsService {
 
         // recevierEntity 받아오기
         Optional<ReceiverRequestsEntity> receiverRequestsEntity =
-                receiverRequestsRepository.findByBoardIdAndId(
+                receiverRequestsRepository.findByBoardIdAndReceiverId(
+
                         boardId,
                         senderRequestsEntity.get().getReceiver().getId());
         // Optional에서 Entity 받아오기
@@ -167,29 +168,38 @@ public class SenderRequestsService {
     public void deleteSenderRequests(Long boardId, Long id) {
 //        UsersEntity usersEntity = authService.getUser();
 
+        log.info("error 2");
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
         if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 게시글이 존재하지 않습니다.");
 
+        log.info("error 3");
         // repository에 존재하지 않을 경우 예외 처리
         Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndId(boardId, id);
         if (senderRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 동행 요청이 존재하지 않습니다");
 
+        log.info("error 4");
         // recevierEntity 받아오기
         Optional<ReceiverRequestsEntity> receiverRequestsEntity =
-                receiverRequestsRepository.findByBoardIdAndId(
+                receiverRequestsRepository.findByBoardIdAndReceiverId(
                         boardId,
                         senderRequestsEntity.get().getReceiver().getId());
-
+        log.info("error 5");
+        System.out.println("boardId : " + boardId);
+        System.out.println("receiverId : " + senderRequestsEntity.get().getReceiver().getId());
         // Optional에서 Entity 받아오기
         ReceiverRequestsEntity receiver = receiverRequestsEntity.get();
 
+        log.info("error 6");
         // Receiver status가 0일 때만 삭제 가능
         if (receiver.getStatus())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "응답된 요청에는 삭제가 불가능합니다.");
 
+        log.info("error 7");
         senderRequestsRepository.deleteById(id);
+        log.info("error 8");
         receiverRequestsRepository.deleteById(receiver.getId());
+        log.info("error 9");
     }
 }

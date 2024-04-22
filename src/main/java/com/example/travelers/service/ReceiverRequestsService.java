@@ -66,7 +66,7 @@ public class ReceiverRequestsService {
         BoardsEntity board = boardsEntity.get();
 
         // boardId, SenderId가 모두 존재할 때만 조회
-        Optional<ReceiverRequestsEntity> receiverRequestsEntity = receiverRequestsRepository.findByBoardIdAndId(boardId, id);
+        Optional<ReceiverRequestsEntity> receiverRequestsEntity = receiverRequestsRepository.findByBoardIdAndReceiverId(boardId, id);
         if (receiverRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 동행 요청이 존재하지 않습니다");
 

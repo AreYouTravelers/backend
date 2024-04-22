@@ -2,6 +2,7 @@ package com.example.travelers.controller;
 
 import com.example.travelers.dto.BoardDto;
 import com.example.travelers.dto.SenderRequestsDto;
+import com.example.travelers.repos.UsersRepository;
 import com.example.travelers.service.AuthService;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.SenderRequestsService;
@@ -19,6 +20,7 @@ import java.util.List;
 public class SenderRequestsController {
     private final SenderRequestsService service;
     private final BoardsService boardsService;
+    private final UsersRepository usersRepository;
     private final AuthService authService;
 
     // Rendering - 동행 요청 생성에 필요한 초기 HTML 렌더링 페이지
@@ -54,10 +56,12 @@ public class SenderRequestsController {
             @PathVariable("id") Long id,
             Model model
     ) {
-        model.addAttribute("board", boardsService.readBoard(boardId));
+        BoardDto boardDto = boardsService.readBoard(boardId);
+        model.addAttribute("board", boardDto);
         model.addAttribute("senderRequests", service.readSenderRequests(boardId, id));
         model.addAttribute("boardId", boardId);
         model.addAttribute("id", id);
+        model.addAttribute("receiver", usersRepository.findByUsername(boardDto.getUsername()).get());
         return "read-sender-requests";
     }
 
@@ -117,6 +121,7 @@ public class SenderRequestsController {
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id
     ) {
+        log.info("error 1");
         service.deleteSenderRequests(boardId, id);
         return "accompany";
     }

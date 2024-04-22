@@ -4,6 +4,7 @@
       layout:decorate="~{layout/default}">
 <head>
     <title>후기 전체 조회</title>
+    <script src="/static/js/read-reviews-all-receiver.js"></script>
 </head>
 <body class="read-reviews-all">
 <th:block layout:fragment="content">
@@ -55,7 +56,7 @@
             <!-- Title -->
 <!--            <img th:src="'/' + ${receiver.profileImg}" alt="사용자 프로필 사진"/>-->
             <img src="/static/images/user-profile2.jpg" alt="사용자 프로필 사진" style="width: 55px; margin-right: 10px; border-radius: 50%;"/>
-            <h2 class="page-section-heading text-secondary mb-0 main-menu"
+            <h2 class="page-section-heading text-secondary mb-0 main-menu">
                 th:text="${receiver.username} + '님이 받은 후기'">
             </h2>
             <!-- Contents -->

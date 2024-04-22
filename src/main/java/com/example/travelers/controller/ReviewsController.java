@@ -5,15 +5,20 @@ import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.ReviewsDto;
 import com.example.travelers.dto.UserProfileDto;
 import com.example.travelers.entity.UsersEntity;
+import com.example.travelers.jwt.JwtTokenUtils;
 import com.example.travelers.repos.UsersRepository;
 import com.example.travelers.service.AuthService;
 import com.example.travelers.service.BoardsService;
 import com.example.travelers.service.ReviewsService;
 import com.example.travelers.service.UsersService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +33,7 @@ public class ReviewsController {
     private final BoardsService boardsService;
     private final AuthService authService;
     private final UsersRepository usersRepository;
+    private final JwtTokenUtils jwtTokenUtils;
 
     @GetMapping("/boards/{boardId}/reviews/write")
     public String createReview(
@@ -94,17 +100,21 @@ public class ReviewsController {
         return "read-reviews-all-sender";
     }
 
+    @CrossOrigin(origins = "http://localhost:8080/boards/reviews/receiver")
     @GetMapping("/boards/reviews/receiver")
     public String readAllByReceiver(
-            Model model
+            Model model,
+            HttpServletRequest request
     ) {
-//        Long receiverId = authService.getUser().getId();
-        Long receiverId = 1L;
-        List<ReviewsDto> reviewList = service.readReviewsAllByReceiver(receiverId);
+        String username = jwtTokenUtils.parseClaims(
+                authService.extractTokenFromHeader(request.getHeader(HttpHeaders.AUTHORIZATION))).getSubject();
+        System.out.println("username : " + username);
+        model.addAttribute("receiver", usersRepository.findByUsername(username).get());
+//        model.addAttribute("receiver", usersRepository.findByUsername(username));
+        List<ReviewsDto> reviewList = service.readReviewsAllByReceiver(username);
+        System.out.println("read service 실행 완료 후 컨트롤러 넘어옴");
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("writerList", service.readReviewsWriterProfile(reviewList));
-        model.addAttribute("receiver", usersRepository.findById(receiverId).get());
-        model.addAttribute("receiverId", receiverId);
         return "read-reviews-all-receiver";
     }
 
