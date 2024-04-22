@@ -8,10 +8,12 @@ import com.example.travelers.repos.ReviewsRepository;
 import com.example.travelers.repos.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,13 +26,22 @@ import java.util.Optional;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class ReviewsService {
     private final ReviewsRepository repository;
     private final BoardsRepository boardsRepository;
     private final UsersRepository usersRepository;
     private final AuthService authService;
-    @Transactional
+
+    @Autowired
+    public ReviewsService(ReviewsRepository repository, BoardsRepository boardsRepository, UsersRepository usersRepository, AuthService authService) {
+        this.repository = repository;
+        this.boardsRepository = boardsRepository;
+        this.usersRepository = usersRepository;
+        this.authService = authService;
+    }
+
+//    @Transactional
     public ReviewsDto createReview(Long boardId, ReviewsDto dto) {
         Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
         UsersEntity sender = authService.getUser();
@@ -54,10 +65,9 @@ public class ReviewsService {
     }
 
     public ReviewsDto readReview(Long boardId, Long id) {
-//        UsersEntity usersEntity = authService.getUser();
-        if (!boardsRepository.existsById(boardId)) {
+        if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
-        }
+//        UsersEntity usersEntity = authService.getUser();
         Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
         if (optionalReviewsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found");
@@ -66,7 +76,7 @@ public class ReviewsService {
 
     // 특정 게시글에 달린 후기 전체 조회
     public List<ReviewsDto> readReviewsAll(Long boardId) {
-//        UsersEntity usersEntity = authService.getUser();
+        UsersEntity usersEntity = authService.getUser();
         if (!boardsRepository.existsById(boardId)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
         }
@@ -109,19 +119,15 @@ public class ReviewsService {
     }
 
     // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
-    public List<ReviewsDto> readReviewsAllByReceiver(Long receiverId) {
+    public List<ReviewsDto> readReviewsAllByReceiver(String username) {
 //        if (!boardsRepository.existsById(receiverId))
 //            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
-
+        System.out.println("read service 실행 시작");
+        UsersEntity usersEntity = usersRepository.findByUsername(username).get();
 //        UsersEntity usersEntity = authService.getUser();
+        System.out.println("getUser() 실행 종료");
         List<ReviewsDto> reviewsDtoList = new ArrayList<>();
-        List<ReviewsEntity> reviewsEntityList = repository.findAllByReceiverId(receiverId);
-//        System.out.println(reviewsEntityList.get(1).getId());
-//        System.out.println(reviewsEntityList.get(1).getReceiver());
-//        System.out.println(reviewsEntityList.get(1).getSender());
-//        System.out.println(reviewsEntityList.get(1).getCountry());
-//        System.out.println(reviewsEntityList.get(1).getContent());
-//        System.out.println(reviewsEntityList.get(1).getBoard().getId());
+        List<ReviewsEntity> reviewsEntityList = repository.findAllByReceiverId(usersEntity.getId());
         for (ReviewsEntity entity : reviewsEntityList)
             reviewsDtoList.add(ReviewsDto.fromEntity(entity));
         return reviewsDtoList;
@@ -134,12 +140,13 @@ public class ReviewsService {
         return userProfileDtoList;
     }
 
-    @Transactional
+//    @Transactional
     public ReviewsDto updateReview(Long boardId, Long id, ReviewsDto dto) {
-        if (!boardsRepository.existsById(boardId)) {
-            UsersEntity usersEntity = authService.getUser();
+        if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
-        }
+
+        UsersEntity usersEntity = authService.getUser();
+
 
         Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
         if (optionalReviewsEntity.isEmpty())
@@ -157,7 +164,7 @@ public class ReviewsService {
         return ReviewsDto.fromEntity(repository.save(entity));
     }
 
-    @Transactional
+//    @Transactional
     public MessageResponseDto deleteReview(Long boardId, Long id) {
         UsersEntity usersEntity = authService.getUser();
         Optional<ReviewsEntity> reviewsEntity = repository.findById(id);
