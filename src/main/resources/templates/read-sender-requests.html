@@ -36,7 +36,36 @@
                 console.error('에러:', error);
             });
         document.addEventListener('DOMContentLoaded', function () {
+            const updateForm = document.getElementById('updateForm');
+            const updateButton = document.getElementById('updateButton');
             const deleteButton = document.getElementById('deleteButton');
+
+            updateButton.addEventListener('click', function (event) {
+                event.preventDefault();
+                const formData = new FormData(updateForm);
+
+                fetch(`/boards/${boardId}/sender-requests/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': 'Bearer ' + accessToken,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData.entries()))
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('동행 요청이 업데이트되었습니다.');
+                            window.location.href = '/sender-requests';
+                            // location.reload();
+                        } else {
+                            alert('동행 요청 수정에 실패했습니다.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Network error:', error);
+                    });
+            });
+
 
             deleteButton.addEventListener("click", function (event) {
                 event.preventDefault();
@@ -78,7 +107,7 @@
         <div class="original-board">
             <a class="href-none" th:href="@{'/boards/' + ${boardId}}">
                 <div class="original-left">
-                    <img th:src="'/' + ${receiver.profileImg}" alt="원글 작성자 프로필 사진" />
+                    <img th:src="'/' + ${profileImg}" alt="원글 작성자 프로필 사진" />
                 </div>
                 <div class="original-right">
                     <div class="original-right-top" th:text="${board.title}"></div>
@@ -92,16 +121,16 @@
         </div>
         <div class="board-message">
             <h4 class="board-title">동행 요청 메세지를 작성해주세요.</h4>
-            <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="post" id="updateForm">
+            <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="put" id="updateForm">
                 <div class="board-message">
-                    <textarea th:text="${senderRequests.message}" rows="8" id="message"></textarea>
+                    <textarea name="message" id="message" rows="8" th:text="${senderRequests.message}"></textarea>
                 </div>
                 <div class="container-wrap justify-content-center mt-5 mb-5">
                     <button type="button" class="btn btn-secondary">
                         <a href="/sender-requests">목록</a>
                     </button>
                     <button type="button" class="btn btn-secondary" id="updateButton">
-                        <a href="/sender-requests">수정</a>
+                        수정
                     </button>
                     <button type="button" class="btn btn-danger" id="deleteButton">삭제</button>
                 </div>

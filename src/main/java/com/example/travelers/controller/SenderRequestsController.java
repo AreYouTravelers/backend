@@ -42,9 +42,11 @@ public class SenderRequestsController {
             @RequestBody SenderRequestsDto dto,
             Model model
     ) {
-        model.addAttribute("board", boardsService.readBoard(boardId));
+        BoardDto boardDto = boardsService.readBoard(boardId);
+        model.addAttribute("board", boardDto);
         model.addAttribute("senderRequests", service.createSenderRequests(boardId, dto));
         model.addAttribute("boardId", boardId);
+        model.addAttribute("receiver", usersRepository.findByUsername(boardDto.getUsername()).get());
         return "read-sender-requests";
     }
 
@@ -61,7 +63,7 @@ public class SenderRequestsController {
         model.addAttribute("senderRequests", service.readSenderRequests(boardId, id));
         model.addAttribute("boardId", boardId);
         model.addAttribute("id", id);
-        model.addAttribute("receiver", usersRepository.findByUsername(boardDto.getUsername()).get());
+        model.addAttribute("profileImg", usersRepository.findByUsername(boardDto.getUsername()).get().getProfileImg());
         return "read-sender-requests";
     }
 
@@ -108,6 +110,7 @@ public class SenderRequestsController {
             @RequestBody SenderRequestsDto dto,
             Model model
     ) {
+        System.out.println("dto : " + dto.getMessage());
         model.addAttribute("board", boardsService.readBoard(boardId));
         model.addAttribute("senderRequests", service.updateSenderRequests(boardId, id, dto));
         model.addAttribute("boardId", boardId);
