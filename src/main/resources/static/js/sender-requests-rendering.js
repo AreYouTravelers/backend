@@ -25,10 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (response.ok) {
                     console.log(JSON.stringify(Object.fromEntries(formData.entries())))
                     alert("동행 요청이 되었습니다.");
-                    // window.location.href = '/boards/' + boardId +
-                    //     '/sender-requests/' + senderRequestsId;
                     window.location.href = '/sender-requests'
-                    // location.reload();
                 } else {
                     alert("동행 요청에 실패했습니다.");
                 }
