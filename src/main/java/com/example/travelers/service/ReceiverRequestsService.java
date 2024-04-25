@@ -56,8 +56,8 @@ public class ReceiverRequestsService {
     }
 
     // 동행 요청 응답 수정 (status)
-    public void updateReceiverRequests(Long boardId, Long id, ReceiverRequestsDto dto) {
-        UsersEntity usersEntity = authService.getUser();
+    public void acceptReceiverRequests(Long boardId, Long id) {
+//        UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
         Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
@@ -66,9 +66,9 @@ public class ReceiverRequestsService {
         BoardsEntity board = boardsEntity.get();
 
         // boardId, SenderId가 모두 존재할 때만 조회
-        Optional<ReceiverRequestsEntity> receiverRequestsEntity = receiverRequestsRepository.findByBoardIdAndReceiverId(boardId, id);
+        Optional<ReceiverRequestsEntity> receiverRequestsEntity = receiverRequestsRepository.findByBoardIdAndSenderId(boardId, id);
         if (receiverRequestsEntity.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 동행 요청이 존재하지 않습니다");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 동행 요청이 존재하지 않습니다1");
 
         // Optional에서 Entity 받아오기
         ReceiverRequestsEntity receiver = receiverRequestsEntity.get();
@@ -80,25 +80,50 @@ public class ReceiverRequestsService {
         SenderRequestsEntity sender = senderRequestsEntity.get();
 
         if (senderRequestsEntity.isEmpty() || receiverRequestsEntity.isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 동행 요청이 존재하지 않습니다");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "수정할 동행 요청이 존재하지 않습니다2");
 
-        // Receiver 응답(수락 or 거절) 시 Sender 상태 변경
-        if (dto.getStatus().equals(true)) { // Receiver가 요청을 수락한다면
-            sender.setStatus(true);
-            sender.setFinalStatus(true);
-            receiver.setStatus(true);
-            board.setStatus(true);
-            senderRequestsRepository.save(sender);
-            receiverRequestsRepository.save(receiver);
-            boardsRepository.save(board);
-        } else { // Receiver가 요청을 거절한다면
-            sender.setStatus(true);
-            sender.setRejectedAt(LocalDateTime.now());
-            sender.setFinalStatus(false);
-            receiver.setStatus(false);
-            receiver.setRejectedAt(LocalDateTime.now());
-            senderRequestsRepository.save(sender);
-            receiverRequestsRepository.save(receiver);
-        }
+        // Receiver 수락시 Sender 상태 변경
+        sender.setStatus(true);
+        sender.setFinalStatus(true);
+        receiver.setStatus(true);
+        board.setStatus(true);
+        senderRequestsRepository.save(sender);
+        receiverRequestsRepository.save(receiver);
+        boardsRepository.save(board);
+    }
+    public void rejectReceiverRequests(Long boardId, Long id) {
+//        UsersEntity usersEntity = authService.getUser();
+
+        // boardId에 해당하는 board 존재하지 않을 경우 예외 처리
+        Optional<BoardsEntity> boardsEntity = boardsRepository.findById(boardId);
+        if (boardsEntity.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "거절할 게시글이 존재하지 않습니다.");
+        BoardsEntity board = boardsEntity.get();
+
+        // boardId, SenderId가 모두 존재할 때만 조회
+        Optional<ReceiverRequestsEntity> receiverRequestsEntity = receiverRequestsRepository.findByBoardIdAndReceiverId(boardId, id);
+        if (receiverRequestsEntity.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "거절할 동행 요청이 존재하지 않습니다");
+
+        // Optional에서 Entity 받아오기
+        ReceiverRequestsEntity receiver = receiverRequestsEntity.get();
+
+        // id에 해당하는 동행 요청이 존재하지 않을 경우 예외 처리
+        Optional<SenderRequestsEntity> senderRequestsEntity
+                = senderRequestsRepository.findByBoardIdAndSenderId(boardId, receiver.getSender().getId());
+        // Optional에서 Entity 받아오기
+        SenderRequestsEntity sender = senderRequestsEntity.get();
+
+        if (senderRequestsEntity.isEmpty() || receiverRequestsEntity.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "거절할 동행 요청이 존재하지 않습니다");
+
+        // Receiver 거절시 Sender 상태 변경
+        sender.setStatus(true);
+        sender.setRejectedAt(LocalDateTime.now());
+        sender.setFinalStatus(false);
+        receiver.setStatus(false);
+        receiver.setRejectedAt(LocalDateTime.now());
+        senderRequestsRepository.save(sender);
+        receiverRequestsRepository.save(receiver);
     }
 }
