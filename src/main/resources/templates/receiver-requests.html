@@ -60,7 +60,7 @@
                 <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5" th:each="request, requestIdx : ${receiverRequestsList}">
                     <div th:with="sender=${senderList[requestIdx.index]}">
                     <div class="board-item mx-auto">
-                        <a class="href-none" th:href="@{'/boards/' + ${boardId} + 'sender-requests' + ${request.senderId}}">
+                        <a class="href-none" th:href="@{'/boards/' + ${request.boardId} + '/receiver-requests/' + ${request.senderId}}">
                             <div class="board-item-profile">
                                 <p class="board-item-img">
                                     <img th:src="'/' + ${sender.profileImg}" alt="프로필 이미지">

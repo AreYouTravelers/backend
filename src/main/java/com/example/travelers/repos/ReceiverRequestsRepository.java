@@ -12,4 +12,7 @@ public interface ReceiverRequestsRepository extends JpaRepository<ReceiverReques
     Optional<ReceiverRequestsEntity> findByBoardIdAndReceiverId(Long boardId, Long id);
 
     List<ReceiverRequestsEntity> findAllByReceiverId(Long receiverId);
+
+    Optional<ReceiverRequestsEntity> findByBoardIdAndSenderId(Long boardId, Long id);
+
 }

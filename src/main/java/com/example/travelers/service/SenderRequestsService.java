@@ -73,7 +73,7 @@ public class SenderRequestsService {
     }
 
     // 동행 요청 단일 조회
-    public SenderRequestsDto readSenderRequests(Long boardId, Long id) {
+    public SenderRequestsDto readSenderRequests(Long boardId, Long senderId) {
 //        UsersEntity usersEntity = authService.getUser();
 
         // boardId에 해당하는 게시글이 존재하지 않을 경우 예외 처리
@@ -82,7 +82,7 @@ public class SenderRequestsService {
 
 
         // boardId, SenderId가 모두 존재할 때만 조회
-        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndSenderId(boardId, id);
+        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndSenderId(boardId, senderId);
         if (senderRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "조회할 동행 요청이 존재하지 않습니다");
 

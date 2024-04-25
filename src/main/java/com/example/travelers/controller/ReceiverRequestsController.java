@@ -4,6 +4,7 @@ import com.example.travelers.dto.MessageResponseDto;
 import com.example.travelers.dto.ReceiverRequestsDto;
 import com.example.travelers.dto.SenderRequestsDto;
 import com.example.travelers.entity.UsersEntity;
+import com.example.travelers.repos.UsersRepository;
 import com.example.travelers.service.AuthService;
 import com.example.travelers.service.ReceiverRequestsService;
 import com.example.travelers.service.SenderRequestsService;
@@ -22,42 +23,44 @@ import java.util.List;
 public class ReceiverRequestsController {
     private final ReceiverRequestsService receiverRequestsService;
     private final SenderRequestsService senderRequestsService;
+    private final UsersRepository usersRepository;
     private final AuthService authService;
 
     // 동행 요청 응답 단일 조회
     // GET /boards/{boardId}/receiver-requests/{id}
-    @GetMapping("/boards/{boardId}/receiver-requests/{id}")
-    public SenderRequestsDto read(
+    @GetMapping("/boards/{boardId}/receiver-requests/{senderId}")
+    public String read(
             @PathVariable("boardId") Long boardId,
-            @PathVariable("id") Long id
-    ) {
-        return senderRequestsService.readSenderRequests(boardId, id);
-    }
-
-    // 동행 요청 응답 전체 조회
-    // GET /boards/{boardId}/receiver-requests
-    @GetMapping("/receiver-requests")
-    public String readAll(
-//            @PathVariable("boardId") Long boardId,
+            @PathVariable("senderId") Long senderId,
             Model model
     ) {
-        List<SenderRequestsDto> requestsDtoList = receiverRequestsService.readAllReceiverRequests(1L);
+        model.addAttribute("sender", usersRepository.findById(senderId).get());
+        model.addAttribute("senderRequests", senderRequestsService.readSenderRequests(boardId, senderId));
+        return "read-receiver-requests";
+    }
+
+    // 받은 동행 전체 조회
+    // GET /receiver-requests
+    @GetMapping("/receiver-requests")
+    public String readAll(
+            Model model
+    ) {
+        List<SenderRequestsDto> requestsDtoList = receiverRequestsService.readAllReceiverRequests(2L);
         model.addAttribute("receiverRequestsList", requestsDtoList);
         model.addAttribute("senderList", receiverRequestsService.readAllReceiverRequestsUserProfile(requestsDtoList));
 //        model.addAttribute("boardId", boardId);
         return "receiver-requests";
     }
 
-    // 동행 요청 응답 수정 (status)
+    // 받은 동행 응답하기(수락/거절)
     // PUT boards/{boardId}/receiver-requests/{id}
-    @PutMapping("/{id}")
-    public MessageResponseDto update(
+    @PutMapping("/boards/{boardId}/receiver-requests/{senderId}")
+    public String acceptReceiverRequests(
             @PathVariable("boardId") Long boardId,
-            @PathVariable("id") Long id,
-            @RequestBody ReceiverRequestsDto dto
+            @PathVariable("senderId") Long id
     ) {
-        receiverRequestsService.updateReceiverRequests(boardId, id, dto);
+        receiverRequestsService.acceptReceiverRequests(boardId, id);
         MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청에 응답했습니다.");
-        return messageResponseDto;
+        return "read-receiver-requests";
     }
 }
