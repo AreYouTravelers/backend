@@ -173,7 +173,7 @@ public class SenderRequestsService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 게시글이 존재하지 않습니다.");
 
         // repository에 존재하지 않을 경우 예외 처리
-        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndId(boardId, id);
+        Optional<SenderRequestsEntity> senderRequestsEntity = senderRequestsRepository.findByBoardIdAndSenderId(boardId, id);
         if (senderRequestsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제할 동행 요청이 존재하지 않습니다");
 
@@ -189,7 +189,8 @@ public class SenderRequestsService {
         if (receiver.getStatus())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "응답된 요청에는 삭제가 불가능합니다.");
 
-        senderRequestsRepository.deleteById(id);
+        log.info("error 1");
+        senderRequestsRepository.deleteById(senderRequestsEntity.get().getId());
         receiverRequestsRepository.deleteById(receiver.getId());
     }
 }

@@ -124,7 +124,6 @@ public class SenderRequestsController {
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id
     ) {
-        log.info("error 1");
         service.deleteSenderRequests(boardId, id);
         return "accompany";
     }
