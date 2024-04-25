@@ -80,7 +80,7 @@
                         .then(response => {
                             if (response.ok) {
                                 alert("동행 요청이 삭제되었습니다.");
-                                window.location.href = `/`;
+                                window.location.href = `/sender-requests`;
                             } else {
                                 alert("동행 요청 삭제에 실패했습니다.");
                             }
@@ -89,7 +89,7 @@
                             console.error('Network error:', error);
                         });
                 } else {
-                    alert("후기 삭제가 취소되었습니다.");
+                    alert("동행 요청 삭제가 취소되었습니다.");
                 }
             });
         });
