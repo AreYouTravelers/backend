@@ -22,7 +22,7 @@
                 event.preventDefault();
                 const formData = new FormData(updateForm);
                 if (confirm("동행 요청을 수락 하시겠습니까?")) {
-                    fetch(`/boards/${boardId}/receiver-requests/${senderId}`, {
+                    fetch(`/boards/${boardId}/receiver-requests/${senderId}?status=accept`, {
                         method: 'PUT',
                         headers: {
                             'Authorization': 'Bearer ' + accessToken,
@@ -36,7 +36,7 @@
                                 window.location.href = '/sender-requests';
                                 // location.reload();
                             } else {
-                                alert('에러');
+                                alert('이미 응답하였습니다.');
                             }
                         })
                         .catch(error => {
@@ -48,8 +48,8 @@
             rejectButton.addEventListener("click", function (event) {
                 event.preventDefault();
                 if (confirm("동행 요청을 거절 하시겠습니까?")) {
-                    fetch(`/boards/${boardId}/receiver-requests/${senderId}`, {
-                        method: 'DELETE',
+                    fetch(`/boards/${boardId}/receiver-requests/${senderId}?status=reject`, {
+                        method: 'PUT',
                         headers: {
                             'Authorization': 'Bearer ' + accessToken,
                             'Content-Type': 'application/json'
@@ -60,7 +60,7 @@
                                 alert("동행 요청이 거절되었습니다.");
                                 window.location.href = `/sender-requests`;
                             } else {
-                                alert("동행 요청 거절에 실패했습니다.");
+                                alert("이미 응답하였습니다.");
                             }
                         })
                         .catch(error => {
@@ -83,19 +83,21 @@
         <h2>동행 요청 조회</h2>
         <h3 class="board-title">동행 요청자</h3>
         <div class="original-board">
-            <a class="href-none" th:href="@{'/boards/' + ${boardId}}">
-<!--                <div class="original-left">-->
-<!--                    <img th:src="'/' + ${profileImg}" alt="원글 작성자 프로필 사진" />-->
-<!--                </div>-->
-                <div class="original-right">
-                    <div class="original-right-top" th:text="${sender.username}"></div>
-<!--                    <div class="original-right-bottom">-->
-<!--                        <p>작성자: <span th:text="${board.username}"></span> |</p>-->
-<!--                        <p>여행지: <span th:text="${board.country}"></span> |</p>-->
-<!--                        <p>기간: <span th:text="${board.startDate}"></span> ~ <span th:text="${board.endDate}"></span></p>-->
-<!--                    </div>-->
+            <div class="original-right">
+                <div class="original-right-top">
+                    <img th:src="${sender.profileImg}" alt="프로필 이미지">
                 </div>
-            </a>
+                <div class="original-right-bottom">
+                    <div>
+                        <span th:text="${sender.temperature}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${sender.username}"></span>
+                        <span th:text="${sender.gender}"></span>
+                        <span th:text="${sender.mbti}"></span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="board-message">
             <h4 class="board-title">받은 메세지</h4>
@@ -107,8 +109,10 @@
                     <button type="button" class="btn btn-secondary">
                         <a href="/sender-requests">이전</a>
                     </button>
-                    <button type="button" class="btn btn-secondary" id="acceptButton">수락</button>
-                    <button type="button" class="btn btn-danger" id="rejectButton">거절</button>
+<!--                    <button type="button" class="btn btn-secondary" id="acceptButton">수락</button>-->
+<!--                    <button type="button" class="btn btn-danger" id="rejectButton">거절</button>-->
+                    <button type="button" class="btn btn-secondary" id="acceptButton" onclick="updateStatus('ACCEPTED')">수락</button>
+                    <button type="button" class="btn btn-danger" id="rejectButton" onclick="updateStatus('REJECTED')">거절</button>
                 </div>
             </form>
         </div>

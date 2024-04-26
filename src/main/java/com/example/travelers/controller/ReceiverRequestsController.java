@@ -57,9 +57,10 @@ public class ReceiverRequestsController {
     @PutMapping("/boards/{boardId}/receiver-requests/{senderId}")
     public String acceptReceiverRequests(
             @PathVariable("boardId") Long boardId,
-            @PathVariable("senderId") Long id
+            @PathVariable("senderId") Long id,
+            @RequestParam(value="status") String status
     ) {
-        receiverRequestsService.acceptReceiverRequests(boardId, id);
+        receiverRequestsService.acceptReceiverRequests(boardId, id, status);
         MessageResponseDto messageResponseDto = new MessageResponseDto("동행 요청에 응답했습니다.");
         return "read-receiver-requests";
     }
