@@ -61,11 +61,11 @@
             <!-- Contents -->
             <div class="container">
                 <h3 class="board-title" th:text="${sender.username} + '님의 여행 온도'"></h3>
-                <p class="board-temperature temp-3" th:text="${sender.temperature} + '℃'">36.5℃</p>
+                <p class="board-temperature temp-3" th:text="${sender.temperature} + '℃'"></p>
                 <!-- Grid Items -->
                 <div class="container read-reviews-all-wrap">
                     <div class="review-list" th:each="review: ${reviewList}">
-                        <a class="href-none" th:href="@{'/boards/' + ${review.boardId} + '/reviews/' + ${review.id}}">
+                        <a class="href-none" th:href="@{'/boards/' + ${review.boardId} + '/reviews/sender/' + ${review.id}}">
                             <div class="review-top">
                                 <p class="review-top-left">
                                     <span class="review-requests-profile">
