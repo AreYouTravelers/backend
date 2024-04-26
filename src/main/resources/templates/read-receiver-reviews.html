@@ -103,15 +103,15 @@
                 <textarea th:text="${review.content}" class="review-content">후기 내용</textarea>
             </div>
         </div>
-<!--        TODO onClick 부분 수정. 뒤로가기 말고 readReviewAll로 가도록 -->
+        <!--        TODO onClick 부분 수정. 뒤로가기 말고 readReviewAll로 가도록 -->
         <button type="button" class="btn btn-light">
             <a th:href="@{'/boards/' + ${boardId} + '/reviews'}">목록</a>
         </button>
-            <!-- 수정, 삭제 버튼은 본인 작성 후기 시에만 보이도록 활성화할 예정 -->
-            <button type="button" class="btn btn-primary" id="update">
-                <a th:href="@{'/boards/' + ${boardId} + '/reviews/' + ${reviewId} + '/edit'}">수정</a>
-            </button>
-            <button type="button" class="btn btn-danger" id="deleteButton">삭제</button>
+        <!-- 수정, 삭제 버튼은 본인 작성 후기 시에만 보이도록 활성화할 예정 -->
+<!--        <button type="button" class="btn btn-primary" id="update">-->
+<!--            <a th:href="@{'/boards/' + ${boardId} + '/reviews/' + ${reviewId} + '/edit'}">수정</a>-->
+<!--        </button>-->
+<!--        <button type="button" class="btn btn-danger" id="deleteButton">삭제</button>-->
     </div>
 </th:block>
 </body>

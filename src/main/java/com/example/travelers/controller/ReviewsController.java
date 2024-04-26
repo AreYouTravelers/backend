@@ -57,8 +57,8 @@ public class ReviewsController {
         return "redirect:/";
     }
 
-    @GetMapping("/boards/{boardId}/reviews/{id}")
-    public String read(
+    @GetMapping("/boards/{boardId}/reviews/sender/{id}")
+    public String readSender(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
             Model model
@@ -71,7 +71,24 @@ public class ReviewsController {
         model.addAttribute("review", reviewsDto);
         model.addAttribute("boardId", boardId);
         model.addAttribute("reviewId", id);
-        return "read-review";
+        return "read-sender-reviews";
+    }
+
+    @GetMapping("/boards/{boardId}/reviews/receiver/{id}")
+    public String readReceiver(
+            @PathVariable("boardId") Long boardId,
+            @PathVariable("id") Long id,
+            Model model
+    ) {
+        BoardDto boardDto = boardsService.readBoard(boardId);
+        ReviewsDto reviewsDto = service.readReview(boardId, id);
+        model.addAttribute("boardWriter", usersRepository.findByUsername(boardDto.getUsername()).get());
+        model.addAttribute("reviewWriter", usersRepository.findByUsername(reviewsDto.getSenderUsername()).get());
+        model.addAttribute("board", boardDto);
+        model.addAttribute("review", reviewsDto);
+        model.addAttribute("boardId", boardId);
+        model.addAttribute("reviewId", id);
+        return "read-receiver-reviews";
     }
 
     // 후기 전체 조회
@@ -106,13 +123,9 @@ public class ReviewsController {
             Model model,
             HttpServletRequest request
     ) {
-        String username = jwtTokenUtils.parseClaims(
-                authService.extractTokenFromHeader(request.getHeader(HttpHeaders.AUTHORIZATION))).getSubject();
-        System.out.println("username : " + username);
-        model.addAttribute("receiver", usersRepository.findByUsername(username).get());
-//        model.addAttribute("receiver", usersRepository.findByUsername(username));
-        List<ReviewsDto> reviewList = service.readReviewsAllByReceiver(username);
-        System.out.println("read service 실행 완료 후 컨트롤러 넘어옴");
+        Long receiverId = 2L;
+        model.addAttribute("receiver", usersRepository.findById(receiverId).get());
+        List<ReviewsDto> reviewList = service.readReviewsAllByReceiver(receiverId);
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("writerList", service.readReviewsWriterProfile(reviewList));
         return "read-reviews-all-receiver";
@@ -143,7 +156,7 @@ public class ReviewsController {
         return "update-review";
     }
 
-    @PutMapping("/boards/{boardId}/reviews/{id}")
+    @PutMapping("/boards/{boardId}/reviews/sender/{id}")
     public String update(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
@@ -158,10 +171,10 @@ public class ReviewsController {
         model.addAttribute("reviewWriter", usersRepository.findByUsername(reviewsDto.getSenderUsername()).get());
         model.addAttribute("boardId", boardId);
         model.addAttribute("reviewId", id);
-        return "read-review";
+        return "read-sender-reviews";
     }
 
-    @DeleteMapping("/boards/{boardId}/reviews/{id}")
+    @DeleteMapping("/boards/{boardId}/reviews/sender/{id}")
     public ResponseEntity<MessageResponseDto> delete(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id

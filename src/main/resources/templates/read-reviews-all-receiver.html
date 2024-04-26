@@ -62,13 +62,13 @@
             <!-- Contents -->
             <div class="container">
                 <h3 class="board-title" th:text="${receiver.username} + '님의 여행 온도'"></h3>
-                <p class="board-temperature temp-3" th:text="${receiver.temperature} + '℃'">36.5℃</p>
+                <p class="board-temperature temp-3" th:text="${receiver.temperature} + '℃'"></p>
                 <!-- Grid Items -->
                 <div class="container read-reviews-all-wrap">
                     <div class="review-list" th:each="review, idx : ${reviewList}">
                         <div th:with="writer=${writerList[idx.index]}">
                             <a class="href-none"
-                               th:href="@{'/boards/' + ${review.boardId} + '/reviews/' + ${review.id}}">
+                               th:href="@{'/boards/' + ${review.boardId} + '/reviews/receiver/' + ${review.id}}">
                                 <div class="review-top">
                                     <p class="review-top-left">
                                     <span class="review-requests-profile">
