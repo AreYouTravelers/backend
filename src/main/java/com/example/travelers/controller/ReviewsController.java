@@ -23,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -112,6 +113,12 @@ public class ReviewsController {
 //        Long senderId = authService.getUser().getId();
         Long senderId = 1L;
         model.addAttribute("reviewList", service.readReviewsAllBySender(senderId));
+        List<ReviewsDto> reviewList = service.readReviewsAllBySender(senderId);
+        List<BoardDto> boardDtoList = new ArrayList<>();
+        for (ReviewsDto reviewsDto : reviewList) {
+            boardDtoList.add(boardsService.readBoard(reviewsDto.getBoardId()));
+        }
+        model.addAttribute("boardList", boardDtoList);
         model.addAttribute("sender", usersRepository.findById(senderId).get());
         model.addAttribute("senderId", senderId);
         return "read-reviews-all-sender";
@@ -126,6 +133,11 @@ public class ReviewsController {
         Long receiverId = 2L;
         model.addAttribute("receiver", usersRepository.findById(receiverId).get());
         List<ReviewsDto> reviewList = service.readReviewsAllByReceiver(receiverId);
+        List<BoardDto> boardDtoList = new ArrayList<>();
+        for (ReviewsDto reviewsDto : reviewList) {
+            boardDtoList.add(boardsService.readBoard(reviewsDto.getBoardId()));
+        }
+        model.addAttribute("boardList", boardDtoList);
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("writerList", service.readReviewsWriterProfile(reviewList));
         return "read-reviews-all-receiver";
