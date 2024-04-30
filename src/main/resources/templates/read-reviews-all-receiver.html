@@ -5,6 +5,9 @@
 <head>
     <title>후기 전체 조회</title>
     <script src="/static/js/read-reviews-all-receiver.js"></script>
+    <style>
+
+    </style>
 </head>
 <body class="read-reviews-all">
 <th:block layout:fragment="content">
@@ -56,13 +59,14 @@
             <!-- Title -->
 <!--            <img th:src="'/' + ${receiver.profileImg}" alt="사용자 프로필 사진"/>-->
             <img src="/static/images/user-profile2.jpg" alt="사용자 프로필 사진" style="width: 55px; margin-right: 10px; border-radius: 50%;"/>
-            <h2 class="page-section-heading text-secondary mb-0 main-menu">
-                th:text="${receiver.username} + '님이 받은 후기'">
-            </h2>
+            <h2 class="page-section-heading text-secondary mb-0 main-menu" th:text="${receiver.username} + '님이 받은 후기'"></h2>
             <!-- Contents -->
             <div class="container">
                 <h3 class="board-title" th:text="${receiver.username} + '님의 여행 온도'"></h3>
-                <p class="board-temperature temp-3" th:text="${receiver.temperature} + '℃'"></p>
+                <p class="board-temperature user-temp">
+                    <span th:class="|temp-${receiver.temperature >= 30 and receiver.temperature <= 40 ? '3' : (receiver.temperature < 30 ? '5' : (receiver.temperature > 40 ? '4' : ''))}|"
+                          th:text="${receiver.temperature}"></span><span style="font-weight: 400; color: #6b6b6b; font-size: 22px; margin-left: 4px;">℃</span>
+                </p>
                 <!-- Grid Items -->
                 <div class="container read-reviews-all-wrap">
                     <div class="review-list" th:each="review, idx : ${reviewList}">
@@ -80,6 +84,15 @@
                                     <p class="review-top-right">
                                         <span th:text="${review.rating}"></span>
                                     </p>
+                                </div>
+                                <div class="review-middle" th:with="board=${boardList[idx.index]}">
+                                    <div class="middle-left">
+                                        <img th:src="@{'/static/images/country/' + ${board.country} + '.jpg'}" alt="배경이미지">
+                                    </div>
+                                    <div class="middle-right">
+                                        <p th:text="${board.title}" class="item-title"></p>
+                                        <p th:text="${board.content}"></p>
+                                    </div>
                                 </div>
                                 <div class="review-bottom">
                                     <span th:text="${review.content}">후기 내용</span>

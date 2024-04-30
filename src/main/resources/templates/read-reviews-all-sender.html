@@ -61,10 +61,13 @@
             <!-- Contents -->
             <div class="container">
                 <h3 class="board-title" th:text="${sender.username} + '님의 여행 온도'"></h3>
-                <p class="board-temperature temp-3" th:text="${sender.temperature} + '℃'"></p>
+                <p class="board-temperature user-temp">
+                    <span th:class="|temp-${sender.temperature >= 30 and sender.temperature <= 40 ? '3' : (sender.temperature < 30 ? '5' : (sender.temperature > 40 ? '4' : ''))}|"
+                          th:text="${sender.temperature}"></span><span style="font-weight: 400; color: #6b6b6b; font-size: 22px; margin-left: 4px;">℃</span>
+                </p>
                 <!-- Grid Items -->
                 <div class="container read-reviews-all-wrap">
-                    <div class="review-list" th:each="review: ${reviewList}">
+                    <div class="review-list" th:each="review, idx : ${reviewList}">
                         <a class="href-none" th:href="@{'/boards/' + ${review.boardId} + '/reviews/sender/' + ${review.id}}">
                             <div class="review-top">
                                 <p class="review-top-left">
@@ -76,6 +79,15 @@
                                 <p class="review-top-right">
                                     <span th:text="${review.rating}"></span>
                                 </p>
+                            </div>
+                            <div class="review-middle" th:with="board=${boardList[idx.index]}">
+                                <div class="middle-left">
+                                    <img th:src="@{'/static/images/country/' + ${board.country} + '.jpg'}" alt="배경이미지">
+                                </div>
+                                <div class="middle-right">
+                                    <p th:text="${board.title}" class="item-title"></p>
+                                    <p th:text="${board.content}"></p>
+                                </div>
                             </div>
                             <div class="review-bottom">
                                 <span th:text="${review.content}">후기 내용</span>
