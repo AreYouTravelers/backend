@@ -4,6 +4,8 @@ import com.example.travelers.entity.UsersEntity;
 import com.example.travelers.jwt.JwtTokenUtils;
 import com.example.travelers.repos.UsersRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class AuthService {
+    private static final Logger log = LoggerFactory.getLogger(AuthService.class);
     private final HttpServletRequest request;
     private final JwtTokenUtils jwtTokenUtils;
     private final UsersRepository usersRepository;
@@ -23,6 +26,7 @@ public class AuthService {
 
     // 현재 로그인한 사용자 정보 가져오기
     public UsersEntity getUser() {
+        log.info("Authorization Header: {}", request.getHeader(HttpHeaders.AUTHORIZATION));
         // Authorization 헤더에서 토큰 추출
         String token = extractTokenFromHeader(request.getHeader(HttpHeaders.AUTHORIZATION));
         if (!jwtTokenUtils.validate(token)) {

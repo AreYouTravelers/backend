@@ -9,7 +9,7 @@
         // accessToken 불러오기
         let accessToken = localStorage.getItem('accessToken');
         const boardId = window.location.pathname.split("/")[2];
-        const reviewId = window.location.pathname.split("/")[4];
+        const reviewId = window.location.pathname.split("/")[5];
 
         // 게시물 조회 요청
         fetch(`/boards/${boardId}/reviews/${reviewId}`, {
@@ -39,7 +39,7 @@
             deleteButton.addEventListener("click", function (event) {
                 event.preventDefault();
                 if (confirm("게시물을 삭제하시겠습니까?")) {
-                    fetch(`/boards/${boardId}/reviews/${reviewId}`, {
+                    fetch(`/boards/${boardId}/reviews/sender/${reviewId}`, {
                         method: 'DELETE',
                         headers: {
                             'Authorization': 'Bearer ' + accessToken,
