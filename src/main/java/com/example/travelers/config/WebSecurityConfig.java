@@ -47,24 +47,14 @@ public class WebSecurityConfig {
                                         "/mypage",
                                         "/account",
                                         "/accompany",
-                                        "/receiver-requests",
-                                        "/sender-requests",
-                                        "/sender-requests/**",
-                                        "/boards/sender-requests",
-                                        "/boards/sender-requests/**",
-                                        "/boards/{boardId}/sender-requests/**",
-                                        "/boards/reviews-possible",
-                                        "/boards/reviews/receiver",
                                         "/boards/**",
                                         "/boards/{boardId}",
-                                        "/boards/{boardId}/**",
-                                        "/board/{boardId}/reviews/**",
                                         "/token/reissue",
-                                        "/boards/sender-reviews/**",
-                                        "/boards/receiver-reviews/**",
                                         "/reports/write",
-                                        "/reviews-possible"
-
+                                        "/sender-requests",
+                                        "/receiver-requests",
+                                        "/boards/{boardId}/reviews/sender/{id}",
+                                        "/boards/reviews/receiver"
                                 )
                                 .permitAll() // 모든 사용자 허용
                                 .requestMatchers(
@@ -78,7 +68,8 @@ public class WebSecurityConfig {
                                         "/users/deactivate",
                                         "/admin/deactivate",
 //                                        "/boards/**",
-                                        "/boards/categories"
+                                        "/boards/categories",
+                                        "/boards/reviews/receiver"
                                 )
                                 .authenticated() // 인증된 사용자만 접근 허용
                                 .anyRequest()

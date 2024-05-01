@@ -107,10 +107,9 @@ public class ReviewsService {
 
     // 특정 사용자가 보낸 후기 전체 조회 (받은 후기)
     public List<ReviewsDto> readReviewsAllBySender(Long senderId) {
-//        if (!boardsRepository.existsById(senderId))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+        if (!boardsRepository.existsById(senderId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
 
-//        UsersEntity usersEntity = authService.getUser();
         List<ReviewsDto> reviewsDtoList = new ArrayList<>();
         List<ReviewsEntity> reviewsEntityList = repository.findAllBySenderId(senderId);
         for (ReviewsEntity entity : reviewsEntityList)
@@ -120,10 +119,9 @@ public class ReviewsService {
 
     // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
     public List<ReviewsDto> readReviewsAllByReceiver(Long receiverId) {
-//        if (!boardsRepository.existsById(receiverId))
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+        if (!boardsRepository.existsById(receiverId))
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
         UsersEntity usersEntity = usersRepository.findById(receiverId).get();
-//        UsersEntity usersEntity = authService.getUser();
         List<ReviewsDto> reviewsDtoList = new ArrayList<>();
         List<ReviewsEntity> reviewsEntityList = repository.findAllByReceiverId(usersEntity.getId());
         for (ReviewsEntity entity : reviewsEntityList)
@@ -143,7 +141,7 @@ public class ReviewsService {
         if (!boardsRepository.existsById(boardId))
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
 
-//        UsersEntity usersEntity = authService.getUser();
+        UsersEntity usersEntity = authService.getUser();
 
         Optional<ReviewsEntity> optionalReviewsEntity = repository.findById(id);
         if (optionalReviewsEntity.isEmpty())
@@ -152,8 +150,8 @@ public class ReviewsService {
         ReviewsEntity entity = optionalReviewsEntity.get();
         UsersEntity receiver = entity.getReceiver();
 
-//        if (!entity.getSender().getId().equals(usersEntity.getId()))
-//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
+        if (entity.getSender().getId() != usersEntity.getId())
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "수정 권한이 없습니다.");
         entity.setRating((Double) dto.getRating());
         entity.setContent(dto.getContent());
         receiver.setTemperature(receiver.getTemperature() + updateTemperature(dto.getRating()));
@@ -163,7 +161,7 @@ public class ReviewsService {
 
 //    @Transactional
     public MessageResponseDto deleteReview(Long boardId, Long id) {
-//        UsersEntity usersEntity = authService.getUser();
+        UsersEntity usersEntity = authService.getUser();
         Optional<ReviewsEntity> reviewsEntity = repository.findById(id);
         UsersEntity receiver = reviewsEntity.get().getReceiver();
 
@@ -171,8 +169,8 @@ public class ReviewsService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         if (reviewsEntity.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-//        if (!reviewsEntity.get().getSender().getId().equals(usersEntity.getId()))
-//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다.");
+        if (!reviewsEntity.get().getSender().getId().equals(usersEntity.getId()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다.");
 
         // 삭제된 평점으로 온도 조절
         receiver.setTemperature(receiver.getTemperature() - updateTemperature(reviewsEntity.get().getRating()));

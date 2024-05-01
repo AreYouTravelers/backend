@@ -110,8 +110,7 @@ public class ReviewsController {
     public String readAllBySender(
             Model model
     ) {
-//        Long senderId = authService.getUser().getId();
-        Long senderId = 1L;
+        Long senderId = authService.getUser().getId();
         model.addAttribute("reviewList", service.readReviewsAllBySender(senderId));
         List<ReviewsDto> reviewList = service.readReviewsAllBySender(senderId);
         List<BoardDto> boardDtoList = new ArrayList<>();
@@ -127,35 +126,19 @@ public class ReviewsController {
     @CrossOrigin(origins = "http://localhost:8080/boards/reviews/receiver")
     @GetMapping("/boards/reviews/receiver")
     public String readAllByReceiver(
-            Model model,
-            HttpServletRequest request
+            Model model
     ) {
-        Long receiverId = 2L;
+        Long receiverId = authService.getUser().getId();
         model.addAttribute("receiver", usersRepository.findById(receiverId).get());
         List<ReviewsDto> reviewList = service.readReviewsAllByReceiver(receiverId);
         List<BoardDto> boardDtoList = new ArrayList<>();
-        for (ReviewsDto reviewsDto : reviewList) {
+        for (ReviewsDto reviewsDto : reviewList)
             boardDtoList.add(boardsService.readBoard(reviewsDto.getBoardId()));
-        }
         model.addAttribute("boardList", boardDtoList);
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("writerList", service.readReviewsWriterProfile(reviewList));
         return "read-reviews-all-receiver";
     }
-
-    // 특정 사용자가 작성한 후기 전체 조회 (보낸 후기)
-//    @GetMapping("/boards/reviews/myreview")
-//    public Page<ReviewsDto> readAllBySender(
-//            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
-//        return service.readReviewsAllBySender(pageNumber);
-//    }
-
-    // 특정 사용자가 받은 후기 전체 조회 (받은 후기)
-//    @GetMapping("/boards/reviews/myreview")
-//    public List<ReviewsDto> readAllByReceiver(
-//            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
-//        return service.readReviewsAllBySender(pageNumber);
-//    }
 
     @GetMapping("/boards/{boardId}/reviews/{id}/edit")
     public String update(
@@ -172,7 +155,7 @@ public class ReviewsController {
     public String update(
             @PathVariable("boardId") Long boardId,
             @PathVariable("id") Long id,
-            ReviewsDto dto,
+            @RequestBody ReviewsDto dto,
             Model model
     ) {
         BoardDto boardDto = boardsService.readBoard(boardId);
