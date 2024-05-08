@@ -18,6 +18,7 @@ public class SenderRequestsDto {
     private Long id;
     private String message;
     private Boolean status;
+    private String statusMessage;
     private LocalDateTime createdAt;
     private LocalDateTime rejectedAt;
     private Boolean finalStatus;
@@ -36,6 +37,14 @@ public class SenderRequestsDto {
         dto.setSenderId(entity.getSender().getId());
         dto.setReceiverId(entity.getReceiver().getId());
         dto.setBoardId(entity.getBoard().getId());
+
+        if (entity.getFinalStatus() == null) {
+            dto.setStatusMessage("대기");
+        } else if (entity.getFinalStatus()) {
+            dto.setStatusMessage("수락");
+        } else {
+            dto.setStatusMessage("거절");
+        }
         return dto;
     }
 
