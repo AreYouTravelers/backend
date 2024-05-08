@@ -5,6 +5,9 @@ body {overflow-x: hidden;}
 .temp-3 {color: #3BD0FA;}
 .temp-4 {color: #FF5733;}
 .temp-5 {color: blueviolet;}
+.status-true {color: #3BD0FA; font-weight: bold;}
+.status-false {color: #FF5733; font-weight: bold;}
+.status-null {color: #999999; font-weight: bold;}
 .container2 {max-width: 720px;}
 .container-wrap {display: flex;}
 .container-content {padding-top: 10rem;}
