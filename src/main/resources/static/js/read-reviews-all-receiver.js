@@ -1,25 +1,51 @@
-// accessToken 불러오기
 let accessToken = localStorage.getItem('accessToken');
 
-// 게시물 조회 요청
-fetch(`/boards/reviews/receiver`, {
+fetch(`/boards/reviews/receiver/data`, {
     method: 'GET',
     headers: {
-        'Authorization': `Bearer ` + accessToken, // JWT 토큰을 포함
-        'Content-Type': 'application/json'
+    'Authorization': 'Bearer ' + accessToken,
+    'Content-Type': 'application/json'
     }
 })
     .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            throw new Error('서버에서 응답 오류 발생');
-        }
-    })
+    if (response.ok) {
+        return response.json();
+} else {
+    alert("받은 후기 조회에 실패했습니다.");
+    }
+})
     .then(data => {
-        console.log('서버로부터 받은 데이터:', data);
-        // 원하는 동작 수행
+        const userName1 = document.getElementById('user-name1')
+        const userName2 = document.getElementById('user-name2')
+        const temperature = document.getElementById('temperature')
+        const reviewWriter = document.getElementById('review-writer')
+        const rating = document.getElementById('rating')
+        const backgroundImage = document.getElementById('background-image')
+        const boardTitle = document.getElementById('board-title')
+        const boardContent = document.getElementById('board-content')
+        const reviewContent = document.getElementById('review-content')
+
+        userName1.innerText = data.receiver.username + " 님이 받은 후기";
+        userName2.innerText = data.receiver.username + " 님이 받은 후기";
+        temperature.innerText = data.receiver.temperature;
+
     })
     .catch(error => {
-        console.error('에러:', error);
-    });
+    console.error('Network error:', error);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
