@@ -1,7 +1,7 @@
 package com.example.domain.boards.service;
 
+import com.example.domain.boards.domain.Boards;
 import com.example.domain.boards.dto.BoardDto;
-import com.example.domain.blackList.entity.BlacklistEntity;
 import com.example.domain.boards.repository.BoardsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class MbtiFilter {
             throw new IllegalArgumentException("Invalid MBTI criteria");
         }
 
-        List<BlacklistEntity.BoardsEntity> filteredBoards = boardRepository.findAll().stream()
+        List<Boards> filteredBoards = boardRepository.findAll().stream()
                 .filter(board -> isBoardMatchCriteria(board.getUser().getMbti(), mbtiCriteria))
                 .collect(Collectors.toList());
         return filteredBoards.stream().map(BoardDto::fromEntity).collect(Collectors.toList());

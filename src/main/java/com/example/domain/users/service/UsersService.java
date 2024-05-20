@@ -1,8 +1,8 @@
 package com.example.domain.users.service;
 
-import com.example.domain.dto.*;
+import com.example.domain.users.domain.UsersRole;
 import com.example.domain.users.dto.*;
-import com.example.domain.users.entity.UsersEntity;
+import com.example.domain.users.domain.Users;
 import com.example.domain.jwt.JwtTokenDto;
 import com.example.domain.jwt.JwtTokenUtils;
 import com.example.domain.users.repository.UsersRepository;
@@ -88,11 +88,10 @@ public class UsersService {
                 .email(registerRequestDto.getEmail())
                 .mbti(registerRequestDto.getMbti())
                 .gender(registerRequestDto.getGender())
-                .firstName(registerRequestDto.getFirstName())
-                .lastName(registerRequestDto.getLastName())
+                .fullName(registerRequestDto.getFullName())
                 .birthDate(registerRequestDto.getBirthDate())
                 .temperature(36.5)
-                .role("회원")
+                .role(UsersRole.MEMBER)
                 .createdAt(LocalDateTime.now())  // 생성일 설정 부분
                 .build();
 
@@ -103,17 +102,17 @@ public class UsersService {
 
     // 회원 정보 (본인 단일) 조회 기능
     public UserProfileDto getMyProfile() {
-        UsersEntity usersEntity = authService.getUser();
+        Users usersEntity = authService.getUser();
         return UserProfileDto.fromEntity(usersEntity);
     }
 
     // 회원 정보 리스트 조회 (관리자용)
     public Page<UserProfileDto> getProfileList(int page, int size) {
         // 관리자 인지 검증
-        UsersEntity currentUser = authService.getUser();
-        String currentUserRole = currentUser.getRole();
+        Users currentUser = authService.getUser();
+        UsersRole currentUserRole = currentUser.getRole();
 
-        if (!currentUserRole.equals("관리자"))
+        if (!currentUserRole.equals(UsersRole.ADMIN))
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "관리자만 사용 가능합니다.");
 
         // 회원, 가이드만 조회되도록 리스트 추가
@@ -128,7 +127,7 @@ public class UsersService {
 
     // 프로필 이미지 업로드 기능
     public MessageResponseDto uploadProfileImage(MultipartFile multipartFile) {
-        UsersEntity userEntity = authService.getUser();
+        Users userEntity = authService.getUser();
 
         String profileDir = String.format("static/images/profile/%d/", userEntity.getId());
 
@@ -160,7 +159,7 @@ public class UsersService {
 
     // 사용자 정보 Password 수정 PUT 엔드포인트
     public MessageResponseDto updatePassword(UpdatePasswordDto updatePasswordDto) {
-        UsersEntity currentUser = authService.getUser();
+        Users currentUser = authService.getUser();
 
         // 현재 비밀번호 확인
         if (!passwordEncoder.matches(updatePasswordDto.getCurrentPassword(), currentUser.getPassword())) {
@@ -183,7 +182,7 @@ public class UsersService {
 
     // 사용자 정보 email 수정 PUT 엔드포인트
     public MessageResponseDto updateEmail(UpdateEmailDto updateEmailDto) {
-        UsersEntity currentUser = authService.getUser();
+        Users currentUser = authService.getUser();
 
         currentUser.setEmail(updateEmailDto.getEmail());
         usersRepository.save(currentUser);
@@ -193,7 +192,7 @@ public class UsersService {
 
     // 사용자 정보 mbti 수정 PUT 엔드포인트
     public MessageResponseDto updateMbti(UpdateMbtiDto updateMbtiDto) {
-        UsersEntity currentUser = authService.getUser();
+        Users currentUser = authService.getUser();
 
         currentUser.setMbti(updateMbtiDto.getMbti());
         usersRepository.save(currentUser);
@@ -203,7 +202,7 @@ public class UsersService {
 
     // 사용자 탈퇴 DELETE 엔드포인트
     public MessageResponseDto deleteUser(HttpServletRequest request, DeleteUserDto deleteUserDto) {
-        UsersEntity currentUser = authService.getUser();
+        Users currentUser = authService.getUser();
 
         // 비밀번호 확인
         if (!passwordEncoder.matches(deleteUserDto.getPassword(), currentUser.getPassword())) {
@@ -228,19 +227,19 @@ public class UsersService {
     // 관리자에 의한 사용자 탈퇴 처리 endpoint
     public MessageResponseDto deleteUserByAdmin(DeleteUserByAdminDto deleteUserByAdminDto) {
         // 관리자 인지 검증
-        UsersEntity currentUser = authService.getUser();
-        String currentUserRole = currentUser.getRole();
+        Users currentUser = authService.getUser();
+        UsersRole currentUserRole = currentUser.getRole();
 
-        if (!currentUserRole.equals("관리자")) {
+        if (!currentUserRole.equals(UsersRole.ADMIN)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "관리자만 사용 가능합니다.");
         }
 
-        Optional<UsersEntity> targetEntity = usersRepository.findByUsername(deleteUserByAdminDto.getUsername());
+        Optional<Users> targetEntity = usersRepository.findByUsername(deleteUserByAdminDto.getUsername());
         if (targetEntity.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제하려는 User가 존재하지 않습니다.");
         }
 
-        UsersEntity target = targetEntity.get();
+        Users target = targetEntity.get();
 
         // 이미 삭제된 사용자인 경우 Bad Request 반환
         if (target.getDeletedAt() != null) {
@@ -253,6 +252,4 @@ public class UsersService {
 
         return new MessageResponseDto("사용자가 성공적으로 삭제되었습니다.");
     }
-
-
 }

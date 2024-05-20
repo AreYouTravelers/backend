@@ -1,6 +1,6 @@
 package com.example.domain.comments.dto;
 
-import com.example.domain.comments.entity.CommentsEntity;
+import com.example.domain.comments.domain.Comments;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -22,7 +22,7 @@ public class CommentsDto {
     private Long parentCommentId;
 
 
-    public static CommentsDto fromEntity(CommentsEntity entity) {
+    public static CommentsDto fromEntity(Comments entity) {
         CommentsDto dto = new CommentsDto();
         dto.setId(entity.getId());
         dto.setContent(entity.getContent());
@@ -35,9 +35,9 @@ public class CommentsDto {
         return dto;
     }
 
-    public static List<CommentsDto> dtoList(List<CommentsEntity> entityList) {
+    public static List<CommentsDto> dtoList(List<Comments> entityList) {
         List<CommentsDto> commentsDtoList = new ArrayList<>();
-        for (CommentsEntity entity : entityList) {
+        for (Comments entity : entityList) {
             commentsDtoList.add(CommentsDto.fromEntity(entity));
         }
         return commentsDtoList;

@@ -1,6 +1,6 @@
 package com.example.domain.reviews.dto;
 
-import com.example.domain.reviews.entity.ReviewsEntity;
+import com.example.domain.reviews.domain.Reviews;
 import lombok.*;
 
 @Getter
@@ -16,7 +16,7 @@ public class ReviewsDto {
     private String senderUsername;
     private String receiverUsername;
 
-    public static ReviewsDto fromEntity(ReviewsEntity entity) {
+    public static ReviewsDto fromEntity(Reviews entity) {
         ReviewsDto dto = new ReviewsDto();
         dto.setId(entity.getId());
         dto.setBoardId(entity.getBoard().getId());

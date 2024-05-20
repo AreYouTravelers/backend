@@ -1,11 +1,11 @@
 package com.example.domain.comments.service;
 
+import com.example.domain.boards.domain.Boards;
 import com.example.domain.comments.dto.CommentsDto;
-import com.example.domain.dto.MessageResponseDto;
-import com.example.domain.blackList.entity.BlacklistEntity;
-import com.example.domain.comments.entity.CommentsEntity;
+import com.example.domain.users.dto.MessageResponseDto;
+import com.example.domain.comments.domain.Comments;
 import com.example.domain.users.service.AuthService;
-import com.example.domain.users.entity.UsersEntity;
+import com.example.domain.users.domain.Users;
 import com.example.domain.boards.repository.BoardsRepository;
 import com.example.domain.comments.repository.CommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +42,12 @@ public class CommentsService {
     }
 
     public CommentsDto createComment(CommentsDto commentsDto) {
-        UsersEntity currentUser = authService.getUser();
+        Users currentUser = authService.getUser();
 
-        BlacklistEntity.BoardsEntity board = boardsRepository.findById(commentsDto.getBoardId())
+        Boards board = boardsRepository.findById(commentsDto.getBoardId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "없는 게시글입니다."));
 
-        CommentsEntity commentEntity = CommentsEntity.builder()
+        Comments commentEntity = Comments.builder()
                 .content(commentsDto.getContent())
                 .parentCommentId(commentsDto.getParentCommentId())
                 .status(true)
@@ -56,13 +56,13 @@ public class CommentsService {
                 .user(currentUser)
                 .build();
 
-        CommentsEntity savedComment = commentsRepository.save(commentEntity);
+        Comments savedComment = commentsRepository.save(commentEntity);
 
         return CommentsDto.fromEntity(savedComment);
     }
 //  특정 게시글에 있는 모든 댓글 불러오기
     public List<CommentsDto> getCommentsByBoardId(Long boardId) {
-        List<CommentsEntity> commentsEntities = commentsRepository.findByBoardId(boardId);
+        List<Comments> commentsEntities = commentsRepository.findByBoardId(boardId);
 
         if (commentsEntities == null) {
             return new ArrayList<>();
@@ -74,36 +74,36 @@ public class CommentsService {
     }
 
     public CommentsDto getComment(Long boardId, Long commentId) {
-        BlacklistEntity.BoardsEntity board = boardsRepository.findById(boardId)
+        Boards board = boardsRepository.findById(boardId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "없는 게시글입니다."));
-        CommentsEntity commentEntity = commentsRepository.findByIdAndBoard(commentId, board)
+        Comments commentEntity = commentsRepository.findByIdAndBoard(commentId, board)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다."));
         return CommentsDto.fromEntity(commentEntity);
     }
 
     public CommentsDto updateComment(Long boardId, Long commentId, CommentsDto commentsDto) {
-        BlacklistEntity.BoardsEntity board = boardsRepository.findById(boardId)
+        Boards board = boardsRepository.findById(boardId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "없는 게시글입니다."));
-        CommentsEntity commentEntity = commentsRepository.findByIdAndBoard(commentId, board)
+        Comments commentEntity = commentsRepository.findByIdAndBoard(commentId, board)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다."));
 
-        UsersEntity currentUser = authService.getUser();
+        Users currentUser = authService.getUser();
         if (!commentEntity.getUser().getId().equals(currentUser.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 댓글이 아닙니다.");
         }
 
         commentEntity.setContent(commentsDto.getContent());
-        CommentsEntity updatedComment = commentsRepository.save(commentEntity);
+        Comments updatedComment = commentsRepository.save(commentEntity);
         return CommentsDto.fromEntity(updatedComment);
     }
 
     public MessageResponseDto deleteComment(Long boardId, Long commentId) {
-        BlacklistEntity.BoardsEntity board = boardsRepository.findById(boardId)
+        Boards board = boardsRepository.findById(boardId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "없는 게시글입니다."));
-        CommentsEntity commentEntity = commentsRepository.findByIdAndBoard(commentId, board)
+        Comments commentEntity = commentsRepository.findByIdAndBoard(commentId, board)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다."));
 
-        UsersEntity currentUser = authService.getUser();
+        Users currentUser = authService.getUser();
         if (!commentEntity.getUser().getId().equals(currentUser.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 댓글이 아닙니다.");
         }

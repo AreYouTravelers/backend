@@ -1,11 +1,9 @@
 package com.example.domain.boards.dto;
 
-import com.example.domain.accompany.dto.ReceiverRequestsDto;
-import com.example.domain.accompany.dto.SenderRequestsDto;
+import com.example.domain.boards.domain.Boards;
 import com.example.global.config.LocalDateSerializer;
 import com.example.global.config.LocalDateTimeSerializer;
 import com.example.domain.comments.dto.CommentsDto;
-import com.example.domain.blackList.entity.BlacklistEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -55,10 +53,8 @@ public class BoardDto implements Serializable {
     private LocalDateTime deletedAt;
 
     private List<CommentsDto> commentsList;
-    private List<ReceiverRequestsDto> receiverRequestsList;
-    private List<SenderRequestsDto> senderRequestsList;
 
-    public static BoardDto fromEntity(BlacklistEntity.BoardsEntity entity) {
+    public static BoardDto fromEntity(Boards entity) {
         BoardDto dto = new BoardDto();
         dto.setId(entity.getId());
         dto.setCountry(entity.getCountry().getName());
@@ -78,13 +74,11 @@ public class BoardDto implements Serializable {
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setDeletedAt(entity.getDeletedAt());
         dto.setCommentsList(CommentsDto.dtoList(entity.getComments()));
-        dto.setReceiverRequestsList(ReceiverRequestsDto.dtoList(entity.getReceiverRequests()));
-        dto.setSenderRequestsList(SenderRequestsDto.dtoList(entity.getSenderRequests()));
         return dto;
     }
-    public static List<BoardDto> dtoList(List<BlacklistEntity.BoardsEntity> entityList) {
+    public static List<BoardDto> dtoList(List<Boards> entityList) {
         List<BoardDto> boardDtoList = new ArrayList<>();
-        for (BlacklistEntity.BoardsEntity entity : entityList) {
+        for (Boards entity : entityList) {
             boardDtoList.add(BoardDto.fromEntity(entity));
         }
         return boardDtoList;

@@ -1,7 +1,7 @@
 package com.example.domain.boardCategories.controller;
 
 import com.example.domain.boardCategories.dto.BoardCategoryDto;
-import com.example.domain.dto.MessageResponseDto;
+import com.example.domain.users.dto.MessageResponseDto;
 import com.example.domain.boardCategories.service.BoardCategoriesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

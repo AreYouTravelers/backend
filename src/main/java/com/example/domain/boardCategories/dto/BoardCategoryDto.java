@@ -1,7 +1,7 @@
 package com.example.domain.boardCategories.dto;
 
 import com.example.domain.boards.dto.BoardDto;
-import com.example.domain.boardCategories.entity.BoardCategoriesEntity;
+import com.example.domain.boardCategories.domain.BoardCategories;
 import lombok.*;
 
 import java.io.Serializable;
@@ -15,8 +15,8 @@ public class BoardCategoryDto implements Serializable {
     private Long id;
     private String category;
     private List<BoardDto> boardsList;
-    
-    public static BoardCategoryDto fromEntity(BoardCategoriesEntity entity) {
+
+    public static BoardCategoryDto fromEntity(BoardCategories entity) {
         BoardCategoryDto dto = new BoardCategoryDto();
         dto.setId(entity.getId());
         dto.setCategory(entity.getCategory());

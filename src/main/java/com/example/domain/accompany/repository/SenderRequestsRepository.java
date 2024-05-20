@@ -1,21 +1,21 @@
-package com.example.domain.accompany.repository;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
-
-@Repository
-public interface SenderRequestsRepository extends JpaRepository<SenderRequestsEntity, Long> {
-    Optional<SenderRequestsEntity> findByBoardIdAndId(Long boardId, Long id);
-    List<SenderRequestsEntity> findAllBySenderId(Long id);
-    List<SenderRequestsEntity> findAllBySenderIdAndFinalStatusOrderByCreatedAtDesc(Long id, Boolean finalStatus);
-    List<SenderRequestsEntity> findAllByBoardId(Long boardId);
-    Optional<SenderRequestsEntity> findByBoardIdAndSenderId(Long boardId, Long id);
-
-    boolean existsBySenderId(long l);
-    List<SenderRequestsEntity> findAllByReceiverIdOrderByCreatedAtDesc(Long receiverId);
-
-    List<SenderRequestsEntity> findAllBySenderIdOrderByCreatedAtDesc(Long id);
-}
+//package com.example.domain.accompany.repository;
+//
+//import org.springframework.data.jpa.repository.JpaRepository;
+//import org.springframework.stereotype.Repository;
+//
+//import java.util.List;
+//import java.util.Optional;
+//
+//@Repository
+//public interface SenderRequestsRepository extends JpaRepository<SenderRequestsEntity, Long> {
+//    Optional<SenderRequestsEntity> findByBoardIdAndId(Long boardId, Long id);
+//    List<SenderRequestsEntity> findAllBySenderId(Long id);
+//    List<SenderRequestsEntity> findAllBySenderIdAndFinalStatusOrderByCreatedAtDesc(Long id, Boolean finalStatus);
+//    List<SenderRequestsEntity> findAllByBoardId(Long boardId);
+//    Optional<SenderRequestsEntity> findByBoardIdAndSenderId(Long boardId, Long id);
+//
+//    boolean existsBySenderId(long l);
+//    List<SenderRequestsEntity> findAllByReceiverIdOrderByCreatedAtDesc(Long receiverId);
+//
+//    List<SenderRequestsEntity> findAllBySenderIdOrderByCreatedAtDesc(Long id);
+//}

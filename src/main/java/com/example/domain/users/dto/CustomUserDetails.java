@@ -1,6 +1,7 @@
 package com.example.domain.users.dto;
 
-import com.example.domain.users.entity.UsersEntity;
+import com.example.domain.users.domain.Users;
+import com.example.domain.users.domain.UsersRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -27,9 +28,8 @@ public class CustomUserDetails implements UserDetails {
     private Double temperature;      // 사용자의 여행온도
     private String mbti;             // 사용자의 mbti
     private String gender;           // 사용자의 성별
-    private String role;             // 사용자의 역할
-    private String firstName;        // 사용자의 성씨
-    private String lastName;         // 사용자의 이름
+    private UsersRole role;          // 사용자의 역할
+    private String fullName;         // 사용자의 이름
     private LocalDate birthDate;     // 사용자의 생년월일
     private LocalDateTime createdAt; // 사용자를 생성한 시간
     private LocalDateTime deletedAt; // 사용자를 삭제한 시간
@@ -81,7 +81,7 @@ public class CustomUserDetails implements UserDetails {
     }
 
     // CustomUserDetails 객체를 UserEntity 객체로 변환하는 메서드
-    public static CustomUserDetails fromEntity(UsersEntity entity) {
+    public static CustomUserDetails fromEntity(Users entity) {
         CustomUserDetails details = new CustomUserDetails();
         details.id = entity.getId();
         details.username = entity.getUsername();
@@ -92,8 +92,7 @@ public class CustomUserDetails implements UserDetails {
         details.mbti = entity.getMbti();
         details.gender = entity.getGender();
         details.role = entity.getRole();
-        details.firstName = entity.getFirstName();
-        details.lastName = entity.getLastName();
+        details.fullName = entity.getFullName();
         details.birthDate = entity.getBirthDate();
         details.createdAt = entity.getCreatedAt();
         details.deletedAt = entity.getDeletedAt();
@@ -101,8 +100,8 @@ public class CustomUserDetails implements UserDetails {
     }
 
     // 새로운 UsersEntity 객체를 생성하고, CustomUserDetails 객체의 정보로 초기화하는 메서드
-    public UsersEntity newEntity() {
-        UsersEntity entity = new UsersEntity();
+    public Users newEntity() {
+        Users entity = new Users();
         entity.setUsername(username);
         entity.setPassword(password);
         entity.setProfileImg(profileImg);
@@ -110,9 +109,8 @@ public class CustomUserDetails implements UserDetails {
         entity.setTemperature(temperature);
         entity.setMbti(mbti);
         entity.setGender(gender);
-        entity.setRole(role);
-        entity.setFirstName(firstName);
-        entity.setLastName(lastName);
+        entity.setRole(UsersRole.MEMBER);
+        entity.setFullName(fullName);
         entity.setBirthDate(birthDate);
         entity.setCreatedAt(createdAt);
         entity.setDeletedAt(deletedAt);
@@ -134,8 +132,7 @@ public class CustomUserDetails implements UserDetails {
                 ", mbti='" + mbti + '\'' +
                 ", gender='" + gender + '\'' +
                 ", role='" + role + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
+                ", fullName='" + fullName + '\'' +
                 ", birthDate=" + birthDate +
                 ", createdAt=" + createdAt +
                 ", deletedAt=" + deletedAt +

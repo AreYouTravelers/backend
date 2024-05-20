@@ -1,7 +1,8 @@
-package com.example.domain.comments.entity;
+package com.example.domain.comments.domain;
 
-import com.example.domain.blackList.entity.BlacklistEntity;
-import com.example.domain.users.entity.UsersEntity;
+import com.example.domain.blackList.domain.Blacklist;
+import com.example.domain.boards.domain.Boards;
+import com.example.domain.users.domain.Users;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
@@ -18,12 +19,23 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "comments")
-public class CommentsEntity {
+public class Comments {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TEXT")
+    @ManyToOne
+    @JoinColumn(name = "board_id", nullable = false)
+    private Boards board;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Users user;
+
+    @Column(name = "parent_comment_id")
+    private Long parentCommentId;
+
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
     @Column(columnDefinition = "TINYINT(1)")
@@ -34,15 +46,4 @@ public class CommentsEntity {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
-
-    @Column(name = "parent_comment_id")
-    private Long parentCommentId;
-
-    @ManyToOne
-    @JoinColumn(name = "board_id")
-    private BlacklistEntity.BoardsEntity board;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UsersEntity user;
 }

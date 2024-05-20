@@ -1,6 +1,6 @@
 package com.example.domain.boards.mapping;
 
-import com.example.domain.blackList.entity.BlacklistEntity;
+import com.example.domain.boards.domain.Boards;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -9,7 +9,7 @@ import java.time.Period;
 
 @RequiredArgsConstructor
 public class BoardsMappingImpl implements BoardsMapping {
-    private final BlacklistEntity.BoardsEntity boards;
+    private final Boards boards;
     private Long id;
     private String country;
     private String category;
