@@ -1,6 +1,7 @@
-package com.example.domain.boardCategories.entity;
+package com.example.domain.boardCategories.domain;
 
-import com.example.domain.blackList.entity.BlacklistEntity;
+import com.example.domain.blackList.domain.Blacklist;
+import com.example.domain.boards.domain.Boards;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,14 +16,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "boards_categories")
-public class BoardCategoriesEntity implements Serializable {
+public class BoardCategories implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(length = 10, nullable = false, unique = true)
     private String category;
 
     @OneToMany(mappedBy = "boardCategory")
-    private final List<BlacklistEntity.BoardsEntity> boards = new ArrayList<>();
+    private final List<Boards> boards = new ArrayList<>();
 }

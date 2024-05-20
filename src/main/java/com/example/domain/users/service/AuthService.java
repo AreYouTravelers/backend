@@ -1,6 +1,6 @@
 package com.example.domain.users.service;
 
-import com.example.domain.users.entity.UsersEntity;
+import com.example.domain.users.domain.Users;
 import com.example.domain.jwt.JwtTokenUtils;
 import com.example.domain.users.repository.UsersRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class AuthService {
     }
 
     // 현재 로그인한 사용자 정보 가져오기
-    public UsersEntity getUser() {
+    public Users getUser() {
         log.info("Authorization Header: {}", request.getHeader(HttpHeaders.AUTHORIZATION));
         // Authorization 헤더에서 토큰 추출
         String token = extractTokenFromHeader(request.getHeader(HttpHeaders.AUTHORIZATION));

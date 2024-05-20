@@ -18,7 +18,6 @@ public class RegisterRequestDto {
     private String gender;         // 성별
     private String role;           // 역할
     private Double temperature;    // 여행 온도
-    private String firstName;      // 사용자의 성씨
-    private String lastName;       // 사용자의 이름
+    private String fullName;       // 사용자의 이름
     private LocalDate birthDate;   // 생년월일
 }

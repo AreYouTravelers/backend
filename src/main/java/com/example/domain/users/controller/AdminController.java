@@ -1,7 +1,7 @@
 package com.example.domain.users.controller;
 
 import com.example.domain.users.dto.DeleteUserByAdminDto;
-import com.example.domain.dto.MessageResponseDto;
+import com.example.domain.users.dto.MessageResponseDto;
 import com.example.domain.users.dto.UserProfileDto;
 import com.example.domain.users.service.UsersService;
 import lombok.RequiredArgsConstructor;

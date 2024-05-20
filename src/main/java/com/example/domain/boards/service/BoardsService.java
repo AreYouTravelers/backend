@@ -1,8 +1,8 @@
 package com.example.domain.boards.service;
 
-import com.example.domain.blackList.entity.BlacklistEntity;
-import com.example.domain.boardCategories.entity.BoardCategoriesEntity;
-import com.example.domain.country.entity.CountryEntity;
+import com.example.domain.boardCategories.domain.BoardCategories;
+import com.example.domain.boards.domain.Boards;
+import com.example.domain.country.domain.Country;
 import com.example.global.config.redis.RedisDao;
 import com.example.domain.boards.dto.BoardDto;
 import com.example.domain.boards.mapping.BoardsMapping;
@@ -10,7 +10,7 @@ import com.example.domain.boards.mapping.BoardsMappingImpl;
 import com.example.domain.boardCategories.repository.BoardCategoriesRepository;
 import com.example.domain.boards.repository.BoardsRepository;
 import com.example.domain.country.repository.CountryRepository;
-import com.example.domain.users.entity.UsersEntity;
+import com.example.domain.users.domain.Users;
 import com.example.domain.users.repository.UsersRepository;
 import com.example.domain.users.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
@@ -53,16 +53,16 @@ public class BoardsService {
     //    @Transactional
     public BoardDto createBoard(BoardDto dto) {
 
-        CountryEntity countryEntity = countryRepository.findById(dto.getCountryId())
+        Country countryEntity = countryRepository.findById(dto.getCountryId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found"));
-        BoardCategoriesEntity categoriesEntity = boardCategoriesRepository.findById(dto.getCategoryId())
+        BoardCategories categoriesEntity = boardCategoriesRepository.findById(dto.getCategoryId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found"));
 
-        UsersEntity userEntity = authService.getUser();
+        Users userEntity = authService.getUser();
 //        UsersEntity userEntity = usersRepository.findById(1L)
 //                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        BlacklistEntity.BoardsEntity newBoard = BlacklistEntity.BoardsEntity.builder()
+        Boards newBoard = Boards.builder()
                 .country(countryEntity)
                 .boardCategory(categoriesEntity)
                 .user(userEntity)
@@ -74,14 +74,14 @@ public class BoardsService {
                 .endDate(dto.getEndDate())
                 .createdAt(LocalDateTime.now()).build();
 
-        BlacklistEntity.BoardsEntity savedBoard = boardsRepository.save(newBoard);
+        Boards savedBoard = boardsRepository.save(newBoard);
         dto.setId(savedBoard.getId());
         return dto;
     }
 
 //    @Cacheable(value = "boards", key = "#id")
     public BoardDto readBoard(Long id) {
-        Optional<BlacklistEntity.BoardsEntity> board = boardsRepository.findById(id);
+        Optional<Boards> board = boardsRepository.findById(id);
         if (board.isPresent()) {
 //            String redisKey = id.toString(); // 해당 글의 ID를 key값으로 선언
 //            String redisUserKey = userEntity.getUsername(); // 유저 key
@@ -109,7 +109,7 @@ public class BoardsService {
     public Page<BoardsMapping> readBoardsAll(Integer pageNumber) {
 //        UsersEntity userEntity = authService.getUser();
         Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").descending());
-        Page<BlacklistEntity.BoardsEntity> boardsPage = boardsRepository.findAll(pageable);
+        Page<Boards> boardsPage = boardsRepository.findAll(pageable);
         List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
                 .map(this::createBoardsMapping)
                 .collect(Collectors.toList());
@@ -122,7 +122,7 @@ public class BoardsService {
             Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").descending());
 
             // 메서드 이름 및 매개변수 수정
-            Page<BlacklistEntity.BoardsEntity> boardsPage = boardsRepository.findAllByCountryIdAndBoardCategoryIdAndUser_MbtiIn(countryId, categoryId, mbtiList, pageable);
+            Page<Boards> boardsPage = boardsRepository.findAllByCountryIdAndBoardCategoryIdAndUser_MbtiIn(countryId, categoryId, mbtiList, pageable);
 
             List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
                     .map(this::createBoardsMapping)
@@ -131,11 +131,11 @@ public class BoardsService {
     }
 
     public Page<BoardsMapping> readBoardsAllByCountryAndCategory(Long countryId, Long categoryId, Integer pageNumber) {
-        UsersEntity userEntity = authService.getUser();
-        Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
+        Users userEntity = authService.getUser();
+        Optional<Users> user = usersRepository.findByUsername(userEntity.getUsername());
         if (user.isPresent()) {
             Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
-            Page<BlacklistEntity.BoardsEntity> boardsPage = boardsRepository.findAllByCountryIdAndBoardCategoryId(countryId, categoryId, pageable);
+            Page<Boards> boardsPage = boardsRepository.findAllByCountryIdAndBoardCategoryId(countryId, categoryId, pageable);
 
             List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
                     .map(this::createBoardsMapping)
@@ -145,11 +145,11 @@ public class BoardsService {
     }
 
     public Page<BoardsMapping> readBoardsAllByUser(Integer pageNumber) {
-        UsersEntity userEntity = authService.getUser();
-        Optional<UsersEntity> user = usersRepository.findByUsername(userEntity.getUsername());
+        Users userEntity = authService.getUser();
+        Optional<Users> user = usersRepository.findByUsername(userEntity.getUsername());
         if (user.isPresent()) {
             Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").descending());
-            Page<BlacklistEntity.BoardsEntity> boardsPage = boardsRepository.findAllByUser(user, pageable);
+            Page<Boards> boardsPage = boardsRepository.findAllByUser(user, pageable);
 
             List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
                     .map(this::createBoardsMapping)
@@ -158,21 +158,21 @@ public class BoardsService {
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
     }
 
-    public BoardsMapping createBoardsMapping(BlacklistEntity.BoardsEntity boardsEntity) {
+    public BoardsMapping createBoardsMapping(Boards boardsEntity) {
         return new BoardsMappingImpl(boardsEntity);
     }
 
 //    @Transactional
     public BoardDto updateBoard(Long id, BoardDto dto) {
-        Optional<BlacklistEntity.BoardsEntity> board = boardsRepository.findById(id);
+        Optional<Boards> board = boardsRepository.findById(id);
         if (board.isPresent()) {
-            CountryEntity countryEntity = countryRepository.findById(dto.getCountryId())
+            Country countryEntity = countryRepository.findById(dto.getCountryId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found"));
-            BoardCategoriesEntity categoriesEntity = boardCategoriesRepository.findById(dto.getCategoryId())
+            BoardCategories categoriesEntity = boardCategoriesRepository.findById(dto.getCategoryId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found"));
-            UsersEntity userEntity = authService.getUser();
+            Users userEntity = authService.getUser();
             if (board.get().getUser().getId().equals(userEntity.getId())) {
-                BlacklistEntity.BoardsEntity boardsEntity = board.get();
+                Boards boardsEntity = board.get();
                 boardsEntity.setCountry(countryEntity);
                 boardsEntity.setBoardCategory(categoriesEntity);
                 boardsEntity.setTitle(dto.getTitle());
@@ -188,11 +188,11 @@ public class BoardsService {
 
 //    @Transactional
     public void deleteBoard(Long id) {
-        Optional<BlacklistEntity.BoardsEntity> board = boardsRepository.findById(id);
+        Optional<Boards> board = boardsRepository.findById(id);
         if (board.isPresent()) {
-            UsersEntity userEntity = authService.getUser();
+            Users userEntity = authService.getUser();
             if (board.get().getUser().getId().equals(userEntity.getId())) {
-                BlacklistEntity.BoardsEntity boardsEntity = board.get();
+                Boards boardsEntity = board.get();
                 boardsRepository.delete(boardsEntity);
             } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");

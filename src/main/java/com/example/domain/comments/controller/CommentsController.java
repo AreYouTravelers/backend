@@ -2,7 +2,7 @@ package com.example.domain.comments.controller;
 
 
 import com.example.domain.comments.dto.CommentsDto;
-import com.example.domain.dto.MessageResponseDto;
+import com.example.domain.users.dto.MessageResponseDto;
 import com.example.domain.comments.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

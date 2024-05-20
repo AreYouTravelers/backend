@@ -1,6 +1,6 @@
 package com.example.domain.reports.dto;
 
-import com.example.domain.reports.entity.ReportsEntity;
+import com.example.domain.reports.domain.Reports;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,7 +23,7 @@ public class ReportsDto {
     private LocalDateTime createdAt;
     private LocalDateTime deletedAt;
 
-    public static ReportsDto fromEntity(ReportsEntity entity) {
+    public static ReportsDto fromEntity(Reports entity) {
         ReportsDto dto = new ReportsDto();
         dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());

@@ -1,6 +1,6 @@
-package com.example.domain.country.entity;
+package com.example.domain.country.domain;
 
-import com.example.domain.blackList.entity.BlacklistEntity;
+import com.example.domain.boards.domain.Boards;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,14 +14,14 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "country")
-public class CountryEntity {
+public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(nullable = false, unique = true)
     private String name;
 
     @OneToMany(mappedBy = "country")
-    private final List<BlacklistEntity.BoardsEntity> boards = new ArrayList<>();
+    private final List<Boards> boards = new ArrayList<>();
 }
