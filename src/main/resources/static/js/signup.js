@@ -14,8 +14,9 @@ document.getElementById('signup-form').addEventListener('submit', e => {
         email: document.getElementById('email').value,
         mbti: document.getElementById('mbti').value,
         gender: document.getElementById('gender').value,
-        firstName: document.getElementById('firstName').value,
-        lastName: document.getElementById('lastName').value,
+        fullName: document.getElementById('fullName').value,
+        // firstName: document.getElementById('firstName').value,
+        // lastName: document.getElementById('lastName').value,
         birthDate: document.getElementById('birthDate').value
     }
 

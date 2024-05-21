@@ -33,19 +33,3 @@ fetch(`/boards/reviews/receiver/data`, {
     .catch(error => {
     console.error('Network error:', error);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

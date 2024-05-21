@@ -9,11 +9,13 @@ document.addEventListener('DOMContentLoaded', function () {
     createButton.addEventListener('click', function (event) {
         event.preventDefault();
         const formData = new FormData(createForm);
+
         const messageValue = document.getElementById('messages').value;
+        formData.append('boardId', boardId);
         formData.append('message', messageValue);
         console.log(messageValue);
 
-        fetch(`/boards/${boardId}/sender-requests`, {
+        fetch(`/api/boards/${boardId}/accompany`, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + accessToken,
@@ -23,9 +25,8 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => {
                 if (response.ok) {
-                    console.log(JSON.stringify(Object.fromEntries(formData.entries())))
                     alert("동행 요청이 되었습니다.");
-                    window.location.href = '/sender-requests'
+                    window.location.href = '/boards';
                 } else {
                     alert("동행 요청에 실패했습니다.");
                 }
