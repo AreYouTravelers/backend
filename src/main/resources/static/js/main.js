@@ -10,10 +10,10 @@ const goToMypage = function () {
 
 userModule.fetchLoggedIn().then(userInfo => {
     // userInfo가 있으면 로그인 상태로 처리
-    if (userInfo.role === '회원') {
+    if (userInfo.role === 'MEMBER') {
         removeLoginLink(); // 로그인, 회원가입 링크 제거
         showLogoutMypageLink(); // 로그아웃 링크 보이게 설정
-    } else if (userInfo.role === '관리자') {
+    } else if (userInfo.role === 'ADMIN') {
         removeLoginLink(); // 로그인, 회원가입 링크 제거
         showLogoutAdminLink(); // 로그아웃 링크 보이게 설정
     }
