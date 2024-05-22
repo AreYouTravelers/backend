@@ -4,6 +4,7 @@
       layout:decorate="~{layout/default}">
 <head>
     <title>보낸 동행</title>
+    <script src="/static/js/accompany-sent.js"></script>
 </head>
 <body class="sender">
 <th:block layout:fragment="content">
@@ -57,36 +58,36 @@
             <h2 class="page-section-heading text-secondary mb-0 main-menu">보낸 동행</h2>
             <!-- Grid Items -->
             <div class="row justify-content-start">
-                <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5" th:each="sender, idx: ${senderList}">
-                    <div th:with="board=${boardList[idx.index]}">
+                <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5" id="accompany-container">
                     <div class="board-item mx-auto">
-                        <a class="href-none" th:href="'/boards/' + ${board.id} + '/sender-requests/' + ${sender.senderId}">
+                        <a class="href-none">
                             <div class="board-item-header">
                                 <div class="header-left">
                                     <p class="item-date">
-                                        <span th:text="${board.startDate}" class="start-date">2023-09-15</span>
+                                        <span class="start-date" id="start-date"></span>
                                         <span> ~ </span>
-                                        <span th:text="${board.endDate}" class="end-date">2023-09-20</span>
+                                        <span class="end-date" id="end-date"></span>
                                     </p>
                                 </div>
                                 <div class="header-right">
-                                    <p th:class="|status-${sender.statusMessage == '수락' ? 'true': (sender.statusMessage == '거절' ? 'false' : (sender.statusMessage == '대기' ? 'null' : ''))}|"
-                                          th:text="${sender.statusMessage}"></p>
+                                    <p id="status"></p>
+<!--                                    <p th:class="|status-${sender.statusMessage == '수락' ? 'true': (sender.statusMessage == '거절' ? 'false' : (sender.statusMessage == '대기' ? 'null' : ''))}|"-->
+<!--                                          th:text="${sender.statusMessage}"></p>-->
                                 </div>
                             </div>
-                            <div class="board-item-bg">
-                                <p class="board-item-icon">
-                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">
-                                    <span th:text="${board.country}"></span>
-                                </p>
-                                <p class="board-item-img">
-                                    <img th:src="@{'/static/images/country/' + ${board.country} + '.jpg'}" alt="배경이미지">
-                                </p>
-                            </div>
+<!--                            <div class="board-item-bg">-->
+<!--                                <p class="board-item-icon">-->
+<!--                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">-->
+<!--                                    <span id="country"></span>-->
+<!--                                </p>-->
+<!--                                <p class="board-item-img">-->
+<!--                                    <img src="" alt="배경이미지" id="country-image">-->
+<!--                                </p>-->
+<!--                            </div>-->
                             <div class="board-item-info">
-                                <p th:text="${board.title}" class="item-title"></p>
+<!--                                <p th:text="${board.title}" class="item-title"></p>-->
                                 <div class="item-contents">
-                                    <p th:text="${sender.message}"></p>
+                                    <p id="message"></p>
                                 </div>
                             </div>
                         </a>

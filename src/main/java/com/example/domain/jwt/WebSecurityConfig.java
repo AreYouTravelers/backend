@@ -47,6 +47,7 @@ public class WebSecurityConfig {
                                         "/mypage",
                                         "/account",
                                         "/accompany",
+                                        "/accompany/**",
                                         "/boards/**",
                                         "/boards/{boardId}",
                                         "/token/reissue",
