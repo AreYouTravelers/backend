@@ -2,6 +2,46 @@
 let accessToken = localStorage.getItem('accessToken');
 const boardId = window.location.pathname.split("/")[2];
 
+fetch(`/api/boards/${boardId}/info`, {
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer ' + accessToken,
+        'Content-Type': 'application/json'
+    }
+})
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error(response.status.toString());
+        }
+    })
+    .then(responseData => {
+        const data = responseData.data;
+
+        // JSON 데이터를 받은 후 input 요소의 value 속성을 변경합니다.
+        const profileUsername = document.getElementById('profile-username')
+        const profileImage = document.getElementById('profile-image');
+        const boardTitle = document.getElementById('board-title')
+        const boardCountry = document.getElementById('board-country');
+        const boardStartDate = document.getElementById('board-start-date');
+        const boardEndDate = document.getElementById('board-end-date');
+
+        if (data) {
+            profileUsername.innerText = data.username;
+            profileImage.src = data.userProfileImage;
+            boardTitle.innerText = data.title;
+            boardCountry.innerText = data.country;
+            boardStartDate.innerText = data.startDate;
+            boardEndDate.innerText = data.endDate;
+        } else {
+            console.error('No data received');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
 document.addEventListener('DOMContentLoaded', function () {
     const createForm = document.getElementById('createForm');
     const createButton = document.getElementById('createButton');

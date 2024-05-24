@@ -18,14 +18,14 @@
         <div class="original-board">
             <a class="href-none" href="#">
                 <div class="original-left">
-                    <img src="/static/images/user-profile-basic.png" alt="원글 작성자 프로필 사진" />
+                    <img src="/" id="profile-image" alt="원글 작성자 프로필 사진" />
                 </div>
                 <div class="original-right">
-                    <div class="original-right-top" th:text="${board.title}"></div>
+                    <div class="original-right-top" id="board-title"></div>
                     <div class="original-right-bottom">
-                        <p>작성자: <span th:text="${board.username}"></span> |</p>
-                        <p>여행지: <span th:text="${board.country}"></span> |</p>
-                        <p>기간: <span th:text="${board.startDate}"></span> ~ <span th:text="${board.endDate}"></span></p>
+                        <p>작성자: <span id="profile-username"></span> |</p>
+                        <p>여행지: <span id="board-country"></span> |</p>
+                        <p>기간: <span id="board-start-date"></span> ~ <span id="board-end-date"></span></p>
                     </div>
                 </div>
             </a>

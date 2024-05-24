@@ -2,6 +2,7 @@ package com.example.domain.boards.service;
 
 import com.example.domain.boardCategories.domain.BoardCategories;
 import com.example.domain.boards.domain.Boards;
+import com.example.domain.boards.dto.response.BoardInfoResponseDto;
 import com.example.domain.country.domain.Country;
 import com.example.global.config.redis.RedisDao;
 import com.example.domain.boards.dto.BoardDto;
@@ -14,6 +15,7 @@ import com.example.domain.users.domain.Users;
 import com.example.domain.users.repository.UsersRepository;
 import com.example.domain.users.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
@@ -98,6 +100,19 @@ public class BoardsService {
 //            dto.setViews(views);
             return dto;
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
+    }
+
+    // 다른 도메인에서 쓰이는 BoardInfo 조회
+    public BoardInfoResponseDto findRequestedBoardInfoDto(Long boardId) {
+        Optional<Boards> boards = boardsRepository.findById(boardId);
+        if (boards.isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        BoardInfoResponseDto requestedBoardInfoDto = new BoardInfoResponseDto();
+        BeanUtils.copyProperties(boards.get(), requestedBoardInfoDto); // 복사할 원본, 복사될 곳
+        requestedBoardInfoDto.setCountry(boards.get().getCountry().getName());
+        requestedBoardInfoDto.setUsername(boards.get().getUser().getUsername());
+        requestedBoardInfoDto.setUserProfileImage("/" + boards.get().getUser().getProfileImg());
+        return requestedBoardInfoDto;
     }
 
     public static long calculateTimeUntilMidnight() {
