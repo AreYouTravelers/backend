@@ -27,7 +27,7 @@ public class AccompanyController {
             @RequestBody AccompanySenderRequestDto dto,
             @PathVariable("boardId") Long boardId,
             HttpServletRequest servRequest
-            ) throws JsonProcessingException {
+    ) throws JsonProcessingException {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(

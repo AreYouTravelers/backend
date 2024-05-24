@@ -34,13 +34,32 @@ fetch(`/api/accompany/sent`, {
                 const itemDiv = document.createElement('div');
                 itemDiv.classList.add('accompany-item');
 
+                // start date 요소 생성 및 추가
+                const startDateElement = document.createElement('span');
+                startDateElement.innerText = item.startDate;
+                itemDiv.appendChild(startDateElement);
+
+                // end date 요소 생성 및 추가
+                const endDateElement = document.createElement('span');
+                endDateElement.innerText = item.endDate;
+                itemDiv.appendChild(endDateElement);
+
                 // status 요소 생성 및 추가
                 const statusElement = document.createElement('p');
                 statusElement.innerText =
-                    item.status == 'PENDING' ? '대기' :
-                        item.status == 'ACCEPTED' ? '수락' :
-                            item.status == 'REJECTED' ? '거절' : '알 수 없음';
+                    item.status === 'PENDING' ? '대기' :
+                        item.status === 'ACCEPTED' ? '수락' :
+                            item.status === 'REJECTED' ? '거절' : '알 수 없음';
                 itemDiv.appendChild(statusElement);
+
+                // country 요소 생성 및 추가
+                const countryElement = document.createElement('span');
+                endDateElement.innerText = item.endDate;
+                itemDiv.appendChild(endDateElement);
+
+                // country image 요소 생성 및 추가
+
+                // board title 요소 생성 및 추가
 
                 // message 요소 생성 및 추가
                 const messageElement = document.createElement('p');

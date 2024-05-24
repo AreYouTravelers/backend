@@ -1,6 +1,7 @@
 package com.example.domain.accompany.dto.response;
 
 import com.example.domain.accompany.domain.AccompanyRequestStatus;
+import com.example.domain.boards.dto.response.BoardInfoResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AccompanySenderResponseDto {
     private Long id;
-    private Long boardId;                   // 원본 게시글ID
+    private BoardInfoResponseDto requestedBoardInfoDto; // 원본 게시글 DTO
     private String message;                 // 동행 메세지
     private AccompanyRequestStatus status;  // 동행 요청상태
     private LocalDateTime createdAt;        // 생성일시
