@@ -166,12 +166,29 @@ footer p {font-weight: 300; font-size: 14px;}
     -webkit-line-clamp: 3;
 }
 
-/* sender */
-.sender .sub-menu-icon {width: 43px;}
-.sender .board-item {min-height: 420px;}
-.sender .board-item .board-item-info {padding-bottom: 0;}
-.sender .board-item .board-item-info .item-contents {margin-top: 2em;}
-.sender .board-item .board-item-info .item-contents p {
+/* 보낸 동행 */
+#accompany-container .board-item {min-height: 400px; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+#accompany-container .board-item .board-item-header {display: flex; justify-content: space-between; padding: 1.2em 1.2em 0 1.2em; font-size: 13px;}
+#accompany-container .board-item .board-item-header .min-num {margin-right: -2px;}
+#accompany-container .board-item .board-item-header .max-num {margin-left: -2px;}
+#accompany-container .board-item .board-item-bg {position: relative;}
+#accompany-container .board-item .board-item-bg .board-item-icon {position: absolute; right: 15px; bottom: 0; padding: 1px 9px 3px 6px; background-color: #3bd0fa; border-radius: 9px; color: #ffffff; font-size: 14px;}
+#accompany-container .board-item .board-item-bg .board-item-icon img {width: 18px;}
+#accompany-container .board-item .board-item-bg .board-item-img {overflow: hidden; height: 170px; border-radius: 17px;}
+#accompany-container .board-item .board-item-bg .board-item-img img {width: 100%;}
+#accompany-container .board-item .board-item-info {padding-bottom: 2rem; text-align: center;}
+#accompany-container .board-item .board-item-info .item-title {margin-bottom: 6px; font-weight: 700;
+    padding: 0 2em;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#accompany-container .board-item .board-item-info .user-name {margin-bottom: 0; font-size: 13px;}
+#accompany-container .board-item .board-item-info .user-profile {margin-bottom: 0; font-size: 13px;}
+#accompany-container .board-item .board-item-info .user-temp {margin-bottom: 14px; font-size: 13px;}
+#accompany-container .board-item .board-item-info .item-contents {min-height: 97px; margin: 0 25px; padding: 1.2rem; border-radius: 19px; font-size: 13px; box-shadow: 0px 0px 11px 3px #5c5c5c21; color: #606060;}
+#accompany-container .board-item .board-item-info .item-contents p {
     overflow: hidden;
     margin-bottom: 0;
     text-overflow: ellipsis;

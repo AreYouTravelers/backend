@@ -6,6 +6,7 @@ import com.example.domain.accompany.dto.request.AccompanySenderRequestDto;
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
 import com.example.domain.accompany.repository.AccompanyRepository;
 import com.example.domain.boards.domain.Boards;
+import com.example.domain.boards.dto.response.BoardInfoResponseDto;
 import com.example.domain.boards.repository.BoardsRepository;
 import com.example.domain.users.service.AuthService;
 import com.fasterxml.jackson.databind.util.BeanUtil;
@@ -51,9 +52,10 @@ public class AccompanyService {
         for (Accompany entity : accompanyRepository.findAllByUserIdOrderByCreatedAtDesc(authService.getUser().getId())) {
             AccompanySenderResponseDto accompanySenderResponseDto = new AccompanySenderResponseDto();
             BeanUtils.copyProperties(entity, accompanySenderResponseDto);
+
+            accompanySenderResponseDto.setRequestedBoardInfoDto(BoardInfoResponseDto.fromEntity(entity.getBoard()));
             accompanySenderResponses.add(accompanySenderResponseDto);
         }
-
         return accompanySenderResponses;
     }
 }

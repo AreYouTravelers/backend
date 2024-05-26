@@ -107,12 +107,8 @@ public class BoardsService {
         Optional<Boards> boards = boardsRepository.findById(boardId);
         if (boards.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        BoardInfoResponseDto requestedBoardInfoDto = new BoardInfoResponseDto();
-        BeanUtils.copyProperties(boards.get(), requestedBoardInfoDto); // 복사할 원본, 복사될 곳
-        requestedBoardInfoDto.setCountry(boards.get().getCountry().getName());
-        requestedBoardInfoDto.setUsername(boards.get().getUser().getUsername());
-        requestedBoardInfoDto.setUserProfileImage("/" + boards.get().getUser().getProfileImg());
-        return requestedBoardInfoDto;
+
+        return BoardInfoResponseDto.fromEntity(boards.get());
     }
 
     public static long calculateTimeUntilMidnight() {

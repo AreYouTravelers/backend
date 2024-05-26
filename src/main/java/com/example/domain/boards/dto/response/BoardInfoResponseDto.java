@@ -1,14 +1,12 @@
 package com.example.domain.boards.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.domain.boards.domain.Boards;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardInfoResponseDto {
@@ -18,4 +16,15 @@ public class BoardInfoResponseDto {
     private String country;                 // 원본 게시글 - 도시
     private LocalDate startDate;            // 원본 게시글 - 시작 날짜
     private LocalDate endDate;              // 원본 게시글 - 종료 날짜
+
+    public static BoardInfoResponseDto fromEntity(Boards entity) {
+        return BoardInfoResponseDto.builder()
+                .username(entity.getUser().getUsername())
+                .userProfileImage("/" + entity.getUser().getProfileImg())
+                .title(entity.getTitle())
+                .country(entity.getCountry().getName())
+                .startDate(entity.getStartDate())
+                .endDate(entity.getEndDate())
+                .build();
+    }
 }
