@@ -6,7 +6,7 @@
     <title>보낸 동행</title>
     <script src="/static/js/accompany-sent.js"></script>
 </head>
-<body class="sender">
+<body>
 <th:block layout:fragment="content">
     <!-- Contents -->
     <div class="container container-wrap justify-content-between">
@@ -63,31 +63,23 @@
                         <a class="href-none">
                             <div class="board-item-header">
                                 <div class="header-left">
-                                    <p class="item-date">
-                                        <span class="start-date" id="start-date"></span>
-                                        <span> ~ </span>
-                                        <span class="end-date" id="end-date"></span>
-                                    </p>
+                                    <p class="item-date"></p>
                                 </div>
                                 <div class="header-right">
-                                    <p id="status"></p>
-<!--                                    <p th:class="|status-${sender.statusMessage == '수락' ? 'true': (sender.statusMessage == '거절' ? 'false' : (sender.statusMessage == '대기' ? 'null' : ''))}|"-->
-<!--                                          th:text="${sender.statusMessage}"></p>-->
+                                    <p id="status" class="status"></p>
                                 </div>
                             </div>
-<!--                            <div class="board-item-bg">-->
-<!--                                <p class="board-item-icon">-->
-<!--                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">-->
-<!--                                    <span id="country"></span>-->
-<!--                                </p>-->
-<!--                                <p class="board-item-img">-->
-<!--                                    <img src="" alt="배경이미지" id="country-image">-->
-<!--                                </p>-->
-<!--                            </div>-->
+                            <div class="board-item-bg">
+                                <p class="board-item-icon">
+                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">
+                                    <span id="country"></span>
+                                </p>
+                                <p class="board-item-img"></p>
+                            </div>
                             <div class="board-item-info">
-<!--                                <p th:text="${board.title}" class="item-title"></p>-->
+                                <p class = "item-title"></p>
                                 <div class="item-contents">
-                                    <p id="message"></p>
+                                    <p id="message" class="message"></p>
                                 </div>
                             </div>
                         </a>

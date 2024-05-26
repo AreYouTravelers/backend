@@ -32,39 +32,105 @@ fetch(`/api/accompany/sent`, {
             data.data.forEach(item => {
                 // 각 데이터 항목을 위한 새로운 div 요소 생성
                 const itemDiv = document.createElement('div');
-                itemDiv.classList.add('accompany-item');
+                itemDiv.classList.add('board-item', 'mx-auto');
 
-                // start date 요소 생성 및 추가
+                const itemLink = document.createElement('a');
+                itemLink.classList.add('href-none');
+
+                // board-item-header 요소 생성
+                const boardItemHeaderDiv = document.createElement('div');
+                boardItemHeaderDiv.classList.add('board-item-header');
+
+                // header-left 요소 생성
+                const headerLeftDiv = document.createElement('div');
+                headerLeftDiv.classList.add('header-left');
+
+                // item-date 요소 생성 및 추가
+                const itemDateP = document.createElement('p');
+                itemDateP.classList.add('item-date');
                 const startDateElement = document.createElement('span');
-                startDateElement.innerText = item.startDate;
-                itemDiv.appendChild(startDateElement);
-
-                // end date 요소 생성 및 추가
+                startDateElement.className = 'start-date';
+                startDateElement.innerText = item.requestedBoardInfoDto.startDate;
                 const endDateElement = document.createElement('span');
-                endDateElement.innerText = item.endDate;
-                itemDiv.appendChild(endDateElement);
+                endDateElement.className = 'end-date';
+                endDateElement.innerText = ' ~ ' + item.requestedBoardInfoDto.endDate;
+                itemDateP.appendChild(startDateElement);
+                itemDateP.appendChild(endDateElement);
+                headerLeftDiv.appendChild(itemDateP);
+
+                // header-right 요소 생성
+                const headerRightDiv = document.createElement('div');
+                headerRightDiv.classList.add('header-right');
 
                 // status 요소 생성 및 추가
                 const statusElement = document.createElement('p');
+                statusElement.className = 'status';
                 statusElement.innerText =
                     item.status === 'PENDING' ? '대기' :
                         item.status === 'ACCEPTED' ? '수락' :
                             item.status === 'REJECTED' ? '거절' : '알 수 없음';
-                itemDiv.appendChild(statusElement);
+                headerRightDiv.appendChild(statusElement);
 
-                // country 요소 생성 및 추가
-                const countryElement = document.createElement('span');
-                endDateElement.innerText = item.endDate;
-                itemDiv.appendChild(endDateElement);
+                // header 요소들을 board-item-header에 추가
+                boardItemHeaderDiv.appendChild(headerLeftDiv);
+                boardItemHeaderDiv.appendChild(headerRightDiv);
 
-                // country image 요소 생성 및 추가
+                // board-item-bg 요소 생성
+                const boardItemBgDiv = document.createElement('div');
+                boardItemBgDiv.classList.add('board-item-bg');
 
-                // board title 요소 생성 및 추가
+                // board-item-icon 요소 생성 및 추가
+                const boardItemIconP = document.createElement('p');
+                boardItemIconP.classList.add('board-item-icon');
+                const iconImg = document.createElement('img');
+                iconImg.src = '/static/images/icon/icon-location.png';
+                iconImg.alt = '지도아이콘';
+                const countrySpan = document.createElement('span');
+                countrySpan.id = 'country';
+                countrySpan.innerText = item.requestedBoardInfoDto.country;
+                boardItemIconP.appendChild(iconImg);
+                boardItemIconP.appendChild(countrySpan);
+                boardItemBgDiv.appendChild(boardItemIconP);
+
+                // board-item-img 요소 생성 및 추가
+                const boardItemImgP = document.createElement('p');
+                boardItemImgP.classList.add('board-item-img');
+                const countryImg = document.createElement('img');
+                countryImg.src = '/static/images/country/' + item.requestedBoardInfoDto.country + '.jpg';
+                boardItemImgP.appendChild(countryImg);
+                boardItemBgDiv.appendChild(boardItemImgP);
+
+                // board-item-info 요소 생성
+                const boardItemInfoDiv = document.createElement('div');
+                boardItemInfoDiv.classList.add('board-item-info');
+
+                // item-title 요소 생성 및 추가
+                const itemTitleP = document.createElement('p');
+                itemTitleP.classList.add('item-title');
+                itemTitleP.innerText = item.requestedBoardInfoDto.title;
+                boardItemInfoDiv.appendChild(itemTitleP);
+
+                // item-contents 요소 생성 및 추가
+                const itemContentsDiv = document.createElement('div');
+                itemContentsDiv.classList.add('item-contents');
 
                 // message 요소 생성 및 추가
                 const messageElement = document.createElement('p');
+                messageElement.id = 'message';
+                messageElement.classList.add('message');
                 messageElement.innerText = item.message;
-                itemDiv.appendChild(messageElement);
+                itemContentsDiv.appendChild(messageElement);
+
+                // board-item-info에 item-contents 추가
+                boardItemInfoDiv.appendChild(itemContentsDiv);
+
+                // itemLink에 board-item-header와 board-item-info 추가
+                itemLink.appendChild(boardItemHeaderDiv);
+                itemLink.appendChild(boardItemBgDiv);
+                itemLink.appendChild(boardItemInfoDiv);
+
+                // itemDiv에 itemLink 추가
+                itemDiv.appendChild(itemLink);
 
                 // 새로운 div 요소를 컨테이너에 추가
                 container.appendChild(itemDiv);
