@@ -19,4 +19,10 @@ public class AccompanyViewController {
     public String accompanySent() {
         return "accompany-sent";
     }
+
+    // 보낸동행 상세조회 페이지
+    @GetMapping("/accompany/sent/{id}")
+    public String accompanySentBySender(@PathVariable("id") Long id) {
+        return "accompany-sent-detail";
+    }
 }

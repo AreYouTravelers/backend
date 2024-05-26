@@ -13,6 +13,7 @@ fetch(`/api/accompany/sent`, {
             return response.json();
         } else {
             alert("보낸동행 조회에 실패했습니다.");
+            throw new Error('서버에서 응답 오류 발생');
         }
     })
     .then(data => {
@@ -22,7 +23,7 @@ fetch(`/api/accompany/sent`, {
 
         if (data && Array.isArray(data.data)) {
             if (data.data.length === 0) {
-                container.innerHTML = '<p>데이터가 없습니다.</p>';
+                container.innerHTML = '<p>보낸 요청이 없습니다.</p>';
                 return;
             }
 
@@ -36,6 +37,7 @@ fetch(`/api/accompany/sent`, {
 
                 const itemLink = document.createElement('a');
                 itemLink.classList.add('href-none');
+                itemLink.href = "/accompany/sent/" + item.id;
 
                 // board-item-header 요소 생성
                 const boardItemHeaderDiv = document.createElement('div');
