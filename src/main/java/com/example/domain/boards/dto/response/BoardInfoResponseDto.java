@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardInfoResponseDto {
+    private Long id;
     private String username;                // 원본 게시글 - 작성자
     private String userProfileImage;        // 원본 게시글 - 작성자 프로필 이미지
     private String title;                   // 원본 게시글 - 타이틀
@@ -19,6 +20,7 @@ public class BoardInfoResponseDto {
 
     public static BoardInfoResponseDto fromEntity(Boards entity) {
         return BoardInfoResponseDto.builder()
+                .id(entity.getId())
                 .username(entity.getUser().getUsername())
                 .userProfileImage("/" + entity.getUser().getProfileImg())
                 .title(entity.getTitle())

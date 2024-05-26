@@ -37,7 +37,7 @@ public class AccompanyController {
                 ));
     }
 
-    // 보낸동행 전체조회 (보낸동행 페이지)
+    // 보낸동행 전체조회 (보낸동행 전체조회 페이지)
     @GetMapping("/accompany/sent")
     public ResponseEntity<ApiSuccessResponse<List<AccompanySenderResponseDto>>> getAllAccompanySenderRequest(
             HttpServletRequest servRequest
@@ -48,6 +48,53 @@ public class AccompanyController {
                         HttpStatus.OK,
                         servRequest.getServletPath(),
                         accompanyService.findAllAccompanySenderRequest()
+                ));
+    }
+
+    // 보낸동행 상세조회 (보낸동행 전체조회 페이지 - 게시글 클릭)
+    @GetMapping("/accompany/sent/{id}")
+    public ResponseEntity<ApiSuccessResponse<AccompanySenderResponseDto>> getAccompanySenderRequest(
+            @PathVariable("id") Long id,
+            HttpServletRequest servRequest
+    ) throws JsonProcessingException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        accompanyService.findAccompanySenderRequest(id)
+                ));
+    }
+
+    // 보낸동행 수정 (보낸동행 상세조회 페이지 - 수정버튼 클릭)
+    @PatchMapping("/accompany/sent/{id}")
+    public ResponseEntity<ApiSuccessResponse<AccompanySenderRequestDto>> updateAccompanySenderRequest(
+            @PathVariable("id") Long id,
+            @RequestBody AccompanySenderRequestDto dto,
+            HttpServletRequest servRequest
+    ) throws JsonProcessingException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        accompanyService.updateAccompanySenderRequest(id, dto)
+                ));
+    }
+
+    // 보낸동행 삭제 (보낸동행 상세조회 페이지 - 삭제버튼 클릭)
+    @DeleteMapping("/accompany/sent/{id}")
+    public ResponseEntity<ApiSuccessResponse<String>> deleteAccompanySenderRequest(
+            @PathVariable("id") Long id,
+            HttpServletRequest servRequest
+    ) throws JsonProcessingException {
+        accompanyService.deleteAccompanySenderRequest(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        ("deleted complete")
                 ));
     }
 }

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>동행 요청 조회</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/styles2.css">
+    <script src="/static/js/accompany-sent-detail.js"></script>
+    <script>
+    </script>
+</head>
+<body class="sender-read">
+<th:block layout:fragment="content">
+    <!-- Contents -->
+    <div class="container container2">
+        <p class="sub-title-icon">
+            <img src="/static/images/icon/icon-sender-requests.png" alt="동행 요청하기">
+        </p>
+        <h2>동행 요청 조회</h2>
+        <h3 class="board-title">현재 게시글</h3>
+        <div class="original-board">
+            <a class="href-none" id="board-link">
+                <div class="original-left">
+                    <img src="/" id ="profile-image" alt="원글 작성자 프로필 사진" />
+                </div>
+                <div class="original-right">
+                    <div class="original-right-top" id="board-title"></div>
+                    <div class="original-right-bottom">
+                        <p>작성자: <span id="profile-username"></span> |</p>
+                        <p>여행지: <span id="board-country"></span> |</p>
+                        <p>기간: <span id="board-start-date"></span> ~ <span id="board-end-date"></span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="board-message">
+            <div class="form-info">
+                <h4 class="board-title">동행 요청 메세지를 작성해주세요.</h4>
+                <button id="edit-button"> <!-- 수정 버튼 -->
+                    <img src="/static/images/icon/icon-edit.png" alt="수정 버튼">
+                </button>
+            </div>
+            <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="put" id="updateForm">
+                <div class="board-message">
+                    <textarea name="message" id="message" rows="8" disabled="disabled"></textarea>
+                </div>
+                <div class="container-wrap justify-content-center mt-5 mb-5">
+                    <button type="button" class="btn btn-secondary" id="cancel-button" style="display: none;">취소</button>
+                    <button type="button" class="btn btn-secondary" id="update-button" style="display: none;">수정</button>
+                </div>
+                <div class="container-wrap justify-content-center mt-5 mb-5">
+                    <button type="button" class="btn btn-secondary" id="list-button">
+                        <a href="/sender-requests">목록</a>
+                    </button>
+                    <button type="button" class="btn btn-danger" id="delete-button">삭제</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

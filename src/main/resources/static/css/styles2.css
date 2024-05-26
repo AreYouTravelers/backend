@@ -208,7 +208,7 @@ footer p {font-weight: 300; font-size: 14px;}
 .sender-rendering .original-board a .original-right .original-right-bottom {display: flex; margin-top: 10px; font-size: 0.9rem;}
 .sender-rendering .original-board a .original-right .original-right-bottom p {margin-bottom: 0; margin-right: 5px; color: #999;}
 
-/* sender-read */
+/* 보낸동행 상세조회 */
 .sender-read .sub-title-icon {margin-top: 13em;}
 .sender-read h2 {margin-bottom: 2.5em; font-size: 1.6rem; text-align: center;}
 .sender-read .board-title {font-weight: 500; margin-bottom: 15px; font-size: 1.1rem; color: #333;}
@@ -217,7 +217,12 @@ footer p {font-weight: 300; font-size: 14px;}
 .sender-read .original-board a .original-left {width: 66px; border-radius: 50%; border: 1px solid #fff; margin-right: 1em;}
 .sender-read .original-board a .original-left img {width: 100%;}
 .sender-read .original-board a .original-right .original-right-bottom {display: flex; margin-top: 10px; font-size: 0.9rem;}
+/*.sender-read #message {caret-color : transparent; pointer-events : none;}*/
 .sender-read .original-board a .original-right .original-right-bottom p {margin-bottom: 0; margin-right: 5px; color: #999;}
+.sender-read .board-message .form-info {display: flex; justify-content: space-between; align-items: flex-start;}
+.sender-read .board-message .form-info button {width: 30px; border: none; background: none;}
+.sender-read .board-message .form-info button img {width: 100%;}
+
 
 /* review-possible */
 .review-possible .sub-menu-icon {width: 48px; margin-top: -5px;}
