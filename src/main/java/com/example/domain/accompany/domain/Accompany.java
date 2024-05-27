@@ -36,6 +36,20 @@ public class Accompany {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
     @Column(name = "rejected_at")
     private LocalDateTime rejectedAt;
+
+    public void updateMessage(String newMessage) {
+        if (newMessage == null || newMessage.trim().isEmpty())
+            throw new IllegalArgumentException("Message cannot be empty");
+
+        this.message = newMessage;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

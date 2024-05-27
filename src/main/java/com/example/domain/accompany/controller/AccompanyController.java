@@ -6,6 +6,7 @@ import com.example.domain.accompany.service.AccompanyService;
 import com.example.global.exception.ApiSuccessResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,8 @@ public class AccompanyController {
 
     // 동행 요청
     @PostMapping("/boards/{boardId}/accompany")
-    public ResponseEntity<ApiSuccessResponse<AccompanySenderRequestDto>> createAccompanySenderRequest(
-            @RequestBody AccompanySenderRequestDto dto,
+    public ResponseEntity<ApiSuccessResponse<AccompanySenderResponseDto>> createAccompanySenderRequest(
+            @RequestBody @Valid AccompanySenderRequestDto dto,
             @PathVariable("boardId") Long boardId,
             HttpServletRequest servRequest
     ) throws JsonProcessingException {
@@ -68,9 +69,9 @@ public class AccompanyController {
 
     // 보낸동행 수정 (보낸동행 상세조회 페이지 - 수정버튼 클릭)
     @PatchMapping("/accompany/sent/{id}")
-    public ResponseEntity<ApiSuccessResponse<AccompanySenderRequestDto>> updateAccompanySenderRequest(
+    public ResponseEntity<ApiSuccessResponse<AccompanySenderResponseDto>> updateAccompanySenderRequest(
+            @RequestBody @Valid AccompanySenderRequestDto dto,
             @PathVariable("id") Long id,
-            @RequestBody AccompanySenderRequestDto dto,
             HttpServletRequest servRequest
     ) throws JsonProcessingException {
         return ResponseEntity
