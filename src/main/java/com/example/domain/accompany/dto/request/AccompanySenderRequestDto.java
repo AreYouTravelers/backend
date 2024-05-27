@@ -1,6 +1,10 @@
 package com.example.domain.accompany.dto.request;
 
 import com.example.domain.accompany.domain.Accompany;
+import com.example.domain.accompany.domain.AccompanyRequestStatus;
+import com.example.domain.boards.domain.Boards;
+import com.example.domain.users.domain.Users;
+
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -10,17 +14,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AccompanySenderRequestDto {
-    private Long id;
-    private Long boardId;               // 원본 게시글ID
-    private String message;             // 동행 메세지
-    private LocalDateTime createdAt;    // 생성일시
+    private String message;     // 동행 메세지
 
-    public static AccompanySenderRequestDto fromEntity(Accompany entity) {
-        return AccompanySenderRequestDto.builder()
-                .id(entity.getId())
-                .boardId(entity.getBoard().getId())
-                .message(entity.getMessage())
+    public static Accompany toEntity(AccompanySenderRequestDto dto, Users users, Boards boards) {
+        return Accompany.builder()
+                .user(users)
+                .board(boards)
+                .message(dto.message)
+                .status(AccompanyRequestStatus.PENDING)
                 .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
     }
 }

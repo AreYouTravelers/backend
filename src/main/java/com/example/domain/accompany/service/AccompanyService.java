@@ -9,7 +9,7 @@ import com.example.domain.boards.domain.Boards;
 import com.example.domain.boards.dto.response.BoardInfoResponseDto;
 import com.example.domain.boards.repository.BoardsRepository;
 import com.example.domain.users.service.AuthService;
-import com.fasterxml.jackson.databind.util.BeanUtil;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -17,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +30,7 @@ public class AccompanyService {
     private final AuthService authService;
 
     // 동행 요청
-    public AccompanySenderRequestDto saveAccompanySenderRequest(Long boardId, AccompanySenderRequestDto dto) {
+    public AccompanySenderResponseDto saveAccompanySenderRequest(Long boardId, AccompanySenderRequestDto dto) {
         // 원본 게시글이 존재하지 않는 경우
         Boards board = boardsRepository.findById(boardId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found."));
@@ -41,28 +40,17 @@ public class AccompanyService {
         if (accompany.isPresent())
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already exists.");
 
-        Accompany newAccompany = Accompany.builder()
-                .user(authService.getUser())
-                .board(board)
-                .message(dto.getMessage())
-                .status(AccompanyRequestStatus.PENDING)
-                .createdAt(LocalDateTime.now())
-                .build();
-        accompanyRepository.save(newAccompany);
-        return dto;
+        Accompany savedAccompany = accompanyRepository.save(AccompanySenderRequestDto.toEntity(dto, authService.getUser(), board));
+        return AccompanySenderResponseDto.fromEntity(savedAccompany);
     }
 
     // 보낸동행 전체조회 (보낸동행 전체조회 페이지)
     public List<AccompanySenderResponseDto> findAllAccompanySenderRequest() {
         List<AccompanySenderResponseDto> accompanySenderResponses = new ArrayList<>();
 
-        for (Accompany entity : accompanyRepository.findAllByUserIdOrderByCreatedAtDesc(authService.getUser().getId())) {
-            AccompanySenderResponseDto accompanySenderResponseDto = new AccompanySenderResponseDto();
-            BeanUtils.copyProperties(entity, accompanySenderResponseDto);
+        for (Accompany accompany : accompanyRepository.findAllByUserIdOrderByCreatedAtDesc(authService.getUser().getId()))
+            accompanySenderResponses.add(AccompanySenderResponseDto.fromEntity(accompany));
 
-            accompanySenderResponseDto.setRequestedBoardInfoDto(BoardInfoResponseDto.fromEntity(entity.getBoard()));
-            accompanySenderResponses.add(accompanySenderResponseDto);
-        }
         return accompanySenderResponses;
     }
 
@@ -72,15 +60,12 @@ public class AccompanyService {
         Accompany accompany = accompanyRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
 
-        AccompanySenderResponseDto accompanySenderResponse = new AccompanySenderResponseDto();
-        BeanUtils.copyProperties(accompany, accompanySenderResponse);
-        accompanySenderResponse.setRequestedBoardInfoDto(BoardInfoResponseDto.fromEntity(accompany.getBoard()));
-
-        return accompanySenderResponse;
+        return AccompanySenderResponseDto.fromEntity(accompany);
     }
 
     // 보낸동행 수정 (보낸동행 상세조회 페이지 - 수정버튼 클릭)
-    public AccompanySenderRequestDto updateAccompanySenderRequest(Long id, AccompanySenderRequestDto dto) {
+    @Transactional
+    public AccompanySenderResponseDto updateAccompanySenderRequest(Long id, AccompanySenderRequestDto dto) {
         // 보낸동행이 존재하지 않는 경우
         Accompany accompany = accompanyRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
@@ -93,10 +78,8 @@ public class AccompanyService {
         if (!accompany.getStatus().equals(AccompanyRequestStatus.PENDING))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already responded.");
 
-        accompany.setMessage(dto.getMessage());
-        accompanyRepository.save(accompany);
-
-        return AccompanySenderRequestDto.fromEntity(accompany);
+        accompany.updateMessage(dto.getMessage());
+        return AccompanySenderResponseDto.fromEntity(accompany);
     }
 
     // 보낸동행 삭제 (보낸동행 상세조회 페이지 - 삭제버튼 클릭)

@@ -31,6 +31,19 @@ fetch(`/api/accompany/sent/${id}`, {
         const boardStartDate = document.getElementById('board-start-date');
         const boardEndDate = document.getElementById('board-end-date');
         const message = document.getElementById('message');
+        const currentTime = document.getElementById('current-time');
+        // data.createdAt을 사용하여 Date 객체로 변환
+        const date = new Date(data.updatedAt);
+
+        // 년, 월, 일, 시, 분 추출
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1 필요
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        // 원하는 형식으로 변환
+        const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
 
         if (data) {
             profileUsername.innerText = data.requestedBoardInfoDto.username;
@@ -40,6 +53,7 @@ fetch(`/api/accompany/sent/${id}`, {
             boardStartDate.innerText = data.requestedBoardInfoDto.startDate;
             boardEndDate.innerText = data.requestedBoardInfoDto.endDate;
             message.innerText = data.message;
+            currentTime.innerText = formattedDate; // 변환된 날짜를 표시
         } else {
             console.error('No data received');
         }
