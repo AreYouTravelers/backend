@@ -6,6 +6,7 @@ import com.example.domain.boardCategories.repository.BoardCategoriesRepository;
 import com.example.domain.country.repository.CountryRepository;
 import com.example.domain.boards.service.BoardsService;
 import com.example.domain.boards.service.MbtiFilter;
+import com.example.domain.users.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -20,15 +21,17 @@ public class BoardsController {
     private final BoardsService boardsService;
     private final CountryRepository countryRepository;
     private final BoardCategoriesRepository boardCategoriesRepository;
+    private final AuthService authService;
 
     @Autowired
     private MbtiFilter mbtiFilter;
 
     @Autowired
-    public BoardsController(BoardsService boardsService, CountryRepository countryRepository, BoardCategoriesRepository boardCategoriesRepository) {
+    public BoardsController(BoardsService boardsService, CountryRepository countryRepository, BoardCategoriesRepository boardCategoriesRepository, AuthService authService) {
         this.boardsService = boardsService;
         this.countryRepository = countryRepository;
         this.boardCategoriesRepository = boardCategoriesRepository;
+        this.authService = authService;
     }
 
     @GetMapping("/write")
@@ -36,7 +39,7 @@ public class BoardsController {
         model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         //여기에 넣어야 html의 option에 매치됨
-        return "boardWrite";
+        return "board-write";
     }
 
     @PostMapping("/write")
@@ -44,7 +47,7 @@ public class BoardsController {
             @RequestBody BoardDto dto, Model model) {
         BoardDto result = boardsService.createBoard(dto);
         model.addAttribute("dto", result);
-        return "redirect:/";
+        return "boards";
 }
 
     @GetMapping("/{id}")
@@ -56,7 +59,8 @@ public class BoardsController {
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("dto", result);
         model.addAttribute("id", id);
-        return "boardDetail";
+        model.addAttribute("writer", result.getUsername().equals("yeoon"));
+        return "board-detail";
     }
 
     @GetMapping
@@ -67,7 +71,7 @@ public class BoardsController {
         model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("boardsPage", boardsPage);
-        return "accompanyHome";
+        return "boards";
     }
 
     @GetMapping("/filter")
@@ -105,7 +109,7 @@ public class BoardsController {
         BoardDto result = boardsService.updateBoard(id, dto);
         model.addAttribute("dto", result);
         model.addAttribute("id", id);
-        return "boardDetail";
+        return "board-detail";
     }
 
     @DeleteMapping("/{id}")
