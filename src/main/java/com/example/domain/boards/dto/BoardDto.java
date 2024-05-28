@@ -50,6 +50,13 @@ public class BoardDto implements Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createdAt;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime updatedAt;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime deletedAt;
 
     private List<CommentsDto> commentsList;
@@ -72,6 +79,7 @@ public class BoardDto implements Serializable {
         dto.setGender(entity.getUser().getGender());
         dto.setTemperature(entity.getUser().getTemperature());
         dto.setCreatedAt(entity.getCreatedAt());
+        dto.setUpdatedAt(entity.getUpdatedAt());
         dto.setDeletedAt(entity.getDeletedAt());
         dto.setCommentsList(CommentsDto.dtoList(entity.getComments()));
         return dto;

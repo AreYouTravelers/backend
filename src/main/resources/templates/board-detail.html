@@ -4,8 +4,7 @@
       layout:decorate="~{layout/default}">
 <head>
     <title th:text="'동행 구하기 | ' + ${dto.title}"></title>
-    <script src="/static/js/board.js"></script>
-</head>
+    <script src="/static/js/board-detail.js"></script></head>
 <body class="board-write">
 <th:block layout:fragment="content">
     <!-- Contents -->
@@ -20,7 +19,7 @@
                 <div class="container-wrap mb-3">
                     <div class="col-md-4 col-lg-4 me-3">
                         <label for="country" class="form-label">여행지</label>
-                        <select class="form-select" id="country" name="country">
+                        <select class="form-select" id="country" name="country" disabled>
                             <option th:each="country : ${countries}"
                                     th:value="${country.id}"
                                     th:text="${country.name}"
@@ -30,7 +29,7 @@
                     </div>
                     <div class="col-md-3 col-lg-3 me-3">
                         <label for="category" class="form-label">카테고리</label>
-                        <select class="form-select" id="category" name="category">
+                        <select class="form-select" id="category" name="category" disabled>
                             <option th:each="category : ${categories}"
                                     th:value="${category.id}"
                                     th:text="${category.category}"
@@ -85,23 +84,37 @@
                         <input type="text" class="form-control" id="title" name="title" th:value="${dto.title}">
                     </div>
                 </div>
+                <div class="container-wrap board-message">
+                    <div class="col-md-10 col-lg-10 form-info">
+                        <label for="message" class="form-label">내용</label>
+                        <button id="edit-button" th:if="${writer}" > <!-- 수정 버튼 -->
+                            <img src="/static/images/icon/icon-edit.png" alt="수정 버튼">
+                        </button>
+                    </div>
+                </div>
                 <div class="container-wrap">
                     <div class="col-md-10 col-lg-10">
-                        <label for="content" class="form-label">내용</label>
-                        <textarea class="form-control" id="content" name="content" rows="8">[[${dto.content}]]</textarea>
+                        <textarea class="form-control" id="message" name="content" rows="8" disabled="disabled">[[${dto.content}]]</textarea>
+                    </div>
+                </div>
+                <div class="container-wrap">
+                    <div class="col-md-10 col-lg-10">
+                        <div class="container-wrap justify-content-center mt-5 mb-5">
+                            <button type="button" class="btn btn-primary" id="cancel-button" style="display: none;">취소</button>
+                            <button type="button" class="btn btn-primary" id="update-button" style="display: none;">수정</button>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="container-wrap col-md-10 col-lg-10 justify-content-between" style="margin: 0 auto;">
-                <a href="/boards" class="btn btn-outline-secondary" style="margin-right: 6px;">목록</a>
-                <a th:href="@{'/boards/' + ${dto.id} + '/comments'}" class="btn btn-outline-secondary" style="margin-right: 6px;">댓글</a>
-                <a th:href="@{'/boards/' + ${dto.id} + '/accompany/write'}" class="btn btn-primary" style="margin-right: auto;">동행 요청하기</a>
+                <a href="/boards" class="btn btn-outline-secondary" id="list-button" style="margin-right: 6px;">목록</a>
+                <a th:href="@{'/boards/' + ${dto.id} + '/comments'}" class="btn btn-outline-secondary" id="comment-button" style="margin-right: 6px;">댓글</a>
+                <a th:href="@{'/boards/' + ${dto.id} + '/accompany/write'}" class="btn btn-primary" id="accompany-button" style="margin-right: auto;">동행 요청하기</a>
                 <!--                <th:block th:if="${user != null and dto.getUsername() == user.getUsername()}">-->
                 <div style="display: flex; justify-content: flex-end;">
-                    <button class="btn btn-primary" id="updateButton" style="margin-right: 6px;">수정</button>
                     <form th:action="@{'/boards/' + ${dto.id}}" th:method="post" id="deleteForm">
                         <input type="hidden" name="_method" value="delete"/>
-                        <button class="btn btn-outline-danger" id="deleteButton">삭제</button>
+                        <button class="btn btn-outline-danger" id="delete-button" th:if="${writer}">삭제</button>
                     </form>
                 </div>
             </div>

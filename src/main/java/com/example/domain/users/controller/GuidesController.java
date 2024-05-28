@@ -34,7 +34,7 @@ public class GuidesController {
         model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         //여기에 넣어야 html의 option에 매치됨
-        return "guideWrite";
+        return "guide-write";
     }
 
     @PostMapping("/write")
@@ -53,7 +53,7 @@ public class GuidesController {
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("dto", result);
         model.addAttribute("id", id);
-        return "guideDetail";
+        return "guide-detail";
     }
 
     @GetMapping
@@ -64,7 +64,7 @@ public class GuidesController {
         model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("boardsPage", boardsPage);
-        return "guideHome";
+        return "guide-home";
     }
 
     @GetMapping("/filter")
@@ -91,7 +91,7 @@ public class GuidesController {
         BoardDto result = boardsService.updateBoard(id, dto);
         model.addAttribute("dto", result);
         model.addAttribute("id", id);
-        return "guideDetail";
+        return "guide-detail";
     }
 
     @DeleteMapping("/{id}")
@@ -99,6 +99,6 @@ public class GuidesController {
             @PathVariable("id") Long id) {
         BoardDto result = boardsService.readBoard(id);
         boardsService.deleteBoard(id);
-        return "guideHome";
+        return "guide-home";
     }
 }

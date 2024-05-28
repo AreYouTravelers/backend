@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@SQLDelete(sql = "UPDATE boards SET deleted_at = current_timestamp WHERE id = ?")
+@SQLDelete(sql = "UPDATE boards SET deleted_at = current_timestamp(6) WHERE id = ?")
 @Where(clause = "deleted_at is null")
 @Entity
 @Getter
@@ -61,6 +61,9 @@ public class Boards {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;

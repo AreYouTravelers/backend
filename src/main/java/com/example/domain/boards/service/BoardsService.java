@@ -74,7 +74,9 @@ public class BoardsService {
                 .status(false)
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
-                .createdAt(LocalDateTime.now()).build();
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
 
         Boards savedBoard = boardsRepository.save(newBoard);
         dto.setId(savedBoard.getId());
@@ -191,7 +193,7 @@ public class BoardsService {
                 boardsEntity.setPeople(dto.getPeople());
                 boardsEntity.setStartDate(dto.getStartDate());
                 boardsEntity.setEndDate(dto.getEndDate());
-                boardsEntity.setCreatedAt(LocalDateTime.now());
+                boardsEntity.setUpdatedAt(LocalDateTime.now());
                 return dto.fromEntity(boardsRepository.save(boardsEntity));
             } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");
         } else throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found");
