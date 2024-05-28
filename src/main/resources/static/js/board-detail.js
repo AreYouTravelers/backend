@@ -21,6 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const cancelButton = document.getElementById('cancel-button');
     const listButton = document.getElementById('list-button');
     const deleteButton = document.getElementById('delete-button');
+    const accompanyButton = document.getElementById('accompany-button');
+    const commentButton = document.getElementById('comment-button');
     const message = document.getElementById('message');
 
     updateCreatedAtField();
@@ -76,6 +78,8 @@ document.addEventListener('DOMContentLoaded', function () {
         cancelButton.style.display = 'block';
         updateButton.style.display = 'block';
         listButton.style.display = 'none';
+        accompanyButton.style.display = 'none';
+        commentButton.style.display = 'none';
         deleteButton.style.display = 'none';
         console.log("editButton clicked");
     });
@@ -90,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function () {
         cancelButton.style.display = 'none';
         updateButton.style.display = 'none';
         listButton.style.display = 'block';
+        accompanyButton.style.display = 'block';
+        commentButton.style.display = 'block';
         deleteButton.style.display = 'block';
     });
 
