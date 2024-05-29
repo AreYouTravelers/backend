@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import jakarta.persistence.Column;
 import lombok.*;
 
 import java.io.Serializable;
@@ -35,7 +36,8 @@ public class BoardDto implements Serializable {
     private Double temperature;
     private String title;
     private String content;
-    private Integer people;
+    private Integer currentPeople;
+    private Integer maxPeople;
     private String status;
     private int views;
 
@@ -68,7 +70,8 @@ public class BoardDto implements Serializable {
         dto.setCategory(entity.getBoardCategory().getCategory());
         dto.setTitle(entity.getTitle());
         dto.setContent(entity.getContent());
-        dto.setPeople(entity.getPeople());
+        dto.setCurrentPeople(entity.getCurrentPeople());
+        dto.setMaxPeople(entity.getMaxPeople());
         if (entity.getStatus() == true) dto.setStatus("모집완료");
         else dto.setStatus("모집중");
         dto.setStartDate(entity.getStartDate());
