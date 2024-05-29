@@ -59,7 +59,7 @@ public class BoardsController {
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("dto", result);
         model.addAttribute("id", id);
-        model.addAttribute("writer", result.getUsername().equals("yeoon"));
+//        model.addAttribute("writer", result.getUsername().equals(authService.getUser().getUsername()));
         return "board-detail";
     }
 
