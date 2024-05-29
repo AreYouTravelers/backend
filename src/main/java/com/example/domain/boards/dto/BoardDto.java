@@ -36,10 +36,10 @@ public class BoardDto implements Serializable {
     private Double temperature;
     private String title;
     private String content;
+    private Integer applicantPeople;
     private Integer currentPeople;
     private Integer maxPeople;
     private String status;
-    private int views;
 
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
@@ -70,6 +70,7 @@ public class BoardDto implements Serializable {
         dto.setCategory(entity.getBoardCategory().getCategory());
         dto.setTitle(entity.getTitle());
         dto.setContent(entity.getContent());
+        dto.setApplicantPeople(entity.getApplicantPeople());
         dto.setCurrentPeople(entity.getCurrentPeople());
         dto.setMaxPeople(entity.getMaxPeople());
         if (entity.getStatus() == true) dto.setStatus("모집완료");

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({"id", "country", "category", "title", "content", "currentPeople", "maxPeople", "status", "startDate", "endDate", "username", "mbti", "age", "gender", "temperature", "createdAt"})
+@JsonPropertyOrder({"id", "country", "category", "title", "content", "applicantPeople", "currentPeople", "maxPeople", "status", "startDate", "endDate", "username", "mbti", "age", "gender", "temperature", "createdAt"})
 public interface BoardsMapping {
     Long getId();
     String getCountry();
@@ -15,6 +15,7 @@ public interface BoardsMapping {
     String getTitle();
     String getContent();
     Integer getCurrentPeople();
+    Integer getApplicantPeople();
     Integer getMaxPeople();
     String getStatus();
     String getUsername();

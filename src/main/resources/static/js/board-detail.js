@@ -23,7 +23,12 @@ document.addEventListener('DOMContentLoaded', function () {
     const deleteButton = document.getElementById('delete-button');
     const accompanyButton = document.getElementById('accompany-button');
     const commentButton = document.getElementById('comment-button');
+    const maxPeople = document.getElementById('maxPeople');
+    const startDate = document.getElementById('startDate');
+    const endDate = document.getElementById('endDate');
+    const title = document.getElementById('title');
     const message = document.getElementById('message');
+
 
     updateCreatedAtField();
     // 작성일 업데이트 간격 설정 (예: 1분마다 업데이트)
@@ -71,6 +76,10 @@ document.addEventListener('DOMContentLoaded', function () {
     editButton.addEventListener('click', function (event) {
         event.preventDefault();
         originalMessage = message.value; // 현재 메시지 값을 저장
+        maxPeople.removeAttribute('disabled');
+        startDate.removeAttribute('disabled');
+        endDate.removeAttribute('disabled');
+        title.removeAttribute('disabled');
         message.removeAttribute('disabled');
         message.style.backgroundColor = ''; // 배경색을 원래대로 되돌림
         message.style.cursor = 'text'; // 커서를 텍스트 입력 가능하도록 변경
@@ -87,6 +96,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // 취소 버튼 클릭 시 입력 비활성화 및 버튼 원래 상태로 복귀
     cancelButton.addEventListener('click', function () {
         event.preventDefault();
+        maxPeople.setAttribute('disabled', 'disabled');
+        startDate.setAttribute('disabled', 'disabled');
+        endDate.setAttribute('disabled', 'disabled');
+        title.setAttribute('disabled', 'disabled');
         message.setAttribute('disabled', 'disabled');
         message.style.backgroundColor = '#e9ecef'; // 회색 배경
         message.value = originalMessage; // 원래 메시지 값으로 복원
@@ -97,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function () {
         accompanyButton.style.display = 'block';
         commentButton.style.display = 'block';
         deleteButton.style.display = 'block';
+
     });
 
     deleteButton.addEventListener("click", function (event) {

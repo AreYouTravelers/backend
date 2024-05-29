@@ -16,9 +16,16 @@
         <h2>동행 상세보기</h2>
         <form th:action="@{'/boards/' + ${dto.id}}" th:method="post" id="updateForm">
             <input type="hidden" name="_method" value="put"/>
+            <div class="container-wrap mb-3 edit">
+                <div class="col-md-10 col-lg-10">
+                    <button id="edit-button"> <!-- 수정 버튼 th:if="${writer}"-->
+                        <img src="/static/images/icon/icon-edit.png" alt="수정 버튼">
+                    </button>
+                </div>
+            </div>
             <div class="board-inner mb-5">
                 <div class="container-wrap mb-3">
-                    <div class="col-md-4 col-lg-4 me-3">
+                    <div class="col-md-3 col-lg-3 me-3">
                         <label for="country" class="form-label">여행지</label>
                         <select class="form-select" id="country" name="country" disabled>
                             <option th:each="country : ${countries}"
@@ -38,19 +45,23 @@
                             </option>
                         </select>
                     </div>
-                    <div class="col-md-3 col-lg-2">
-                        <label for="people" class="form-label">총 인원수</label>
-                        <input type="text" class="form-control" id="people" name="people" th:value="${dto.maxPeople}">
+                    <div class="col-md-3 col-lg-3 me-3">
+                        <label for="currentPeople" class="form-label">모집된 인원</label>
+                        <input type="text" class="form-control" id="currentPeople" name="currentPeople" th:value="${dto.currentPeople}" disabled>
+                    </div>
+                    <div class="col-md-3 col-lg-3 me-3">
+                        <label for="maxPeople" class="form-label">모집 인원</label>
+                        <input type="text" class="form-control" id="maxPeople" name="maxPeople" th:value="${dto.maxPeople}" disabled>
                     </div>
                 </div>
                 <div class="container-wrap mb-3">
                     <div class="col-md-3 col-lg-3 me-3">
                         <label for="startDate" class="form-label">시작일</label>
-                        <input type="date" class="form-control" id="startDate" name="startDate" th:value="${dto.startDate}">
+                        <input type="date" class="form-control" id="startDate" name="startDate" th:value="${dto.startDate}" disabled>
                     </div>
                     <div class="col-md-3 col-lg-3 me-3">
                         <label for="endDate" class="form-label">종료일</label>
-                        <input type="date" class="form-control" id="endDate" name="endDate" th:value="${dto.endDate}">
+                        <input type="date" class="form-control" id="endDate" name="endDate" th:value="${dto.endDate}" disabled>
                     </div>
                     <div class="col-md-3 col-lg-3 me-3">
                         <label for="status" class="form-label">상태</label>
@@ -72,8 +83,8 @@
                                disabled>
                     </div>
                     <div class="col-md-3 col-lg-3">
-                        <label for="views" class="form-label">조회수</label>
-                        <input type="text" class="form-control" id="views" name="views" th:value="${dto.views}"
+                        <label for="applicantPeople" class="form-label">신청 인원</label>
+                        <input type="text" class="form-control" id="applicantPeople" name="applicantPeople" th:value="${dto.applicantPeople}"
                                disabled>
                     </div>
                 </div>
@@ -88,9 +99,6 @@
                 <div class="container-wrap board-message">
                     <div class="col-md-10 col-lg-10 form-info">
                         <label for="message" class="form-label">내용</label>
-                        <button id="edit-button"> <!-- 수정 버튼 th:if="${writer}"-->
-                            <img src="/static/images/icon/icon-edit.png" alt="수정 버튼">
-                        </button>
                     </div>
                 </div>
                 <div class="container-wrap">
