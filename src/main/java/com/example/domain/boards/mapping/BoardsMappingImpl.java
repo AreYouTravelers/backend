@@ -50,8 +50,13 @@ public class BoardsMappingImpl implements BoardsMapping {
     }
 
     @Override
-    public Integer getPeople() {
-        return boards.getPeople();
+    public Integer getCurrentPeople() {
+        return boards.getCurrentPeople();
+    }
+
+    @Override
+    public Integer getMaxPeople() {
+        return boards.getMaxPeople();
     }
 
     @Override

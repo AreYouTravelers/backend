@@ -48,7 +48,10 @@ public class Boards {
     private String content;
 
     @Column(nullable = false)
-    private Integer people;
+    private Integer currentPeople;
+
+    @Column(nullable = false)
+    private Integer maxPeople;
 
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;

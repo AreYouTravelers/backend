@@ -70,7 +70,8 @@ public class BoardsService {
                 .user(userEntity)
                 .title(dto.getTitle())
                 .content(dto.getContent())
-                .people(dto.getPeople())
+                .currentPeople(0)
+                .maxPeople(dto.getMaxPeople())
                 .status(false)
                 .startDate(dto.getStartDate())
                 .endDate(dto.getEndDate())
@@ -190,7 +191,7 @@ public class BoardsService {
                 boardsEntity.setBoardCategory(categoriesEntity);
                 boardsEntity.setTitle(dto.getTitle());
                 boardsEntity.setContent(dto.getContent());
-                boardsEntity.setPeople(dto.getPeople());
+                boardsEntity.setMaxPeople(dto.getMaxPeople());
                 boardsEntity.setStartDate(dto.getStartDate());
                 boardsEntity.setEndDate(dto.getEndDate());
                 boardsEntity.setUpdatedAt(LocalDateTime.now());
