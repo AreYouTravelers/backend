@@ -32,6 +32,9 @@ fetch(`/api/accompany/sent`, {
 
             data.data.forEach(item => {
                 // 각 데이터 항목을 위한 새로운 div 요소 생성
+                const colDiv = document.createElement('div');
+                colDiv.classList.add('col-md-4', 'col-lg-4', 'mb-5'); // 여기에 부트스트랩 그리드 클래스를 추가합니다
+
                 const itemDiv = document.createElement('div');
                 itemDiv.classList.add('board-item', 'mx-auto');
 
@@ -110,6 +113,7 @@ fetch(`/api/accompany/sent`, {
                 const itemTitleP = document.createElement('p');
                 itemTitleP.classList.add('item-title');
                 itemTitleP.innerText = item.requestedBoardInfoDto.title;
+                itemTitleP.style.marginBottom = '18px'; // 인라인 스타일 추가
                 boardItemInfoDiv.appendChild(itemTitleP);
 
                 // item-contents 요소 생성 및 추가
@@ -133,9 +137,10 @@ fetch(`/api/accompany/sent`, {
 
                 // itemDiv에 itemLink 추가
                 itemDiv.appendChild(itemLink);
+                colDiv.appendChild(itemDiv);
 
                 // 새로운 div 요소를 컨테이너에 추가
-                container.appendChild(itemDiv);
+                container.appendChild(colDiv);
             });
         } else {
             console.error('Invalid data format:', data);

@@ -170,23 +170,7 @@ footer p {font-weight: 300; font-size: 14px;}
 }
 
 /* 보낸 동행 */
-#accompany-container .board-item {min-height: 400px; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
-#accompany-container .board-item .board-item-header {display: flex; justify-content: space-between; padding: 1.2em 1.2em 0 1.2em; font-size: 13px;}
-#accompany-container .board-item .board-item-header .min-num {margin-right: -2px;}
-#accompany-container .board-item .board-item-header .max-num {margin-left: -2px;}
-#accompany-container .board-item .board-item-bg {position: relative;}
-#accompany-container .board-item .board-item-bg .board-item-icon {position: absolute; right: 15px; bottom: 0; padding: 1px 9px 3px 6px; background-color: #3bd0fa; border-radius: 9px; color: #ffffff; font-size: 14px;}
-#accompany-container .board-item .board-item-bg .board-item-icon img {width: 18px;}
-#accompany-container .board-item .board-item-bg .board-item-img {overflow: hidden; height: 170px; border-radius: 17px;}
-#accompany-container .board-item .board-item-bg .board-item-img img {width: 100%;}
-#accompany-container .board-item .board-item-info {padding-bottom: 2rem; text-align: center;}
-#accompany-container .board-item .board-item-info .item-title {margin-bottom: 6px; font-weight: 700;
-    padding: 0 2em;
-    display: block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
+#accompany-container .board-item {min-height: 400px;}
 #accompany-container .board-item .board-item-info .user-name {margin-bottom: 0; font-size: 13px;}
 #accompany-container .board-item .board-item-info .user-profile {margin-bottom: 0; font-size: 13px;}
 #accompany-container .board-item .board-item-info .user-temp {margin-bottom: 14px; font-size: 13px;}
@@ -217,7 +201,7 @@ footer p {font-weight: 300; font-size: 14px;}
 .sender-read .board-title {font-weight: 500; margin-bottom: 15px; font-size: 1.1rem; color: #333;}
 .sender-read .original-board {margin-bottom: 4em; padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
 .sender-read .original-board a {display: flex; align-items: center;}
-.sender-read .original-board a .original-left {width: 66px; border-radius: 50%; border: 1px solid #fff; margin-right: 1em;}
+.sender-read .original-board a .original-left {width: 66px; height: 66px; overflow: hidden; border-radius: 50%; border: 1px solid #fff; margin-right: 1em;}
 .sender-read .original-board a .original-left img {width: 100%;}
 .sender-read .original-board a .original-right .original-right-bottom {display: flex; margin-top: 10px; font-size: 0.9rem;}
 /*.sender-read #message {caret-color : transparent; pointer-events : none;}*/
