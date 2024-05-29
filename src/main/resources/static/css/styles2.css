@@ -150,8 +150,8 @@ footer p {font-weight: 300; font-size: 14px;}
 .board-write h2 {margin-bottom: 2.5em; font-size: 1.6rem; text-align: center;}
 .board-write .board-inner {padding: 2em; border-bottom: 1px solid #ddd; border-top: 1px solid #ddd;}
 .board-write .board-message .form-info {display: flex; justify-content: space-between; align-items: flex-start;}
-.board-write .board-message .form-info button {width: 30px; border: none; background: none;}
-.board-write .board-message .form-info button img {width: 100%;}
+.board-write .edit button {width: 30px; border: none; background: none; }
+.board-write .edit button img {width: 100%;}
 
 /* receiver */
 .receiver .sub-menu-icon {width: 43px;}

@@ -48,6 +48,9 @@ public class Boards {
     private String content;
 
     @Column(nullable = false)
+    private Integer applicantPeople;
+
+    @Column(nullable = false)
     private Integer currentPeople;
 
     @Column(nullable = false)
@@ -76,5 +79,9 @@ public class Boards {
 
     @OneToMany(mappedBy = "board")
     private final List<Accompany> accompanies = new ArrayList<>();
+
+    public void updateApplicantPeople() {
+        this.applicantPeople++;
+    }
 
 }

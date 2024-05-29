@@ -50,6 +50,11 @@ public class BoardsMappingImpl implements BoardsMapping {
     }
 
     @Override
+    public Integer getApplicantPeople() {
+        return boards.getApplicantPeople();
+    }
+
+    @Override
     public Integer getCurrentPeople() {
         return boards.getCurrentPeople();
     }

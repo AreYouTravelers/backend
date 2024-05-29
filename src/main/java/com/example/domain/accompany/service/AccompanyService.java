@@ -30,6 +30,7 @@ public class AccompanyService {
     private final AuthService authService;
 
     // 동행 요청
+    @Transactional
     public AccompanySenderResponseDto saveAccompanySenderRequest(Long boardId, AccompanySenderRequestDto dto) {
         // 원본 게시글이 존재하지 않는 경우
         Boards board = boardsRepository.findById(boardId)
@@ -41,6 +42,9 @@ public class AccompanyService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already exists.");
 
         Accompany savedAccompany = accompanyRepository.save(AccompanySenderRequestDto.toEntity(dto, authService.getUser(), board));
+        System.out.println("applicantPeople : " + board.getApplicantPeople());
+        board.updateApplicantPeople();
+        System.out.println("applicantPeople after : " + board.getApplicantPeople());
         return AccompanySenderResponseDto.fromEntity(savedAccompany);
     }
 
