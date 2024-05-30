@@ -123,7 +123,7 @@ public class BoardsService {
     public Page<BoardsMapping> readBoardsAll(Integer pageNumber) {
 //        UsersEntity userEntity = authService.getUser();
         Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").descending());
-        Page<Boards> boardsPage = boardsRepository.findAll(pageable);
+        Page<Boards> boardsPage = boardsRepository.findAllByDeletedAtIsNull(pageable);
         List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
                 .map(this::createBoardsMapping)
                 .collect(Collectors.toList());

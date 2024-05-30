@@ -5,12 +5,10 @@ import com.example.domain.users.domain.Users;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
 @SQLDelete(sql = "UPDATE accompany SET deleted_at = current_timestamp(6) WHERE id = ?")
-@Where(clause = "deleted_at is null")
 @Entity
 @Getter
 @Setter
@@ -37,6 +35,9 @@ public class Accompany {
     @Enumerated(EnumType.STRING)
     private AccompanyRequestStatus status;
 
+    @Column(name = "status_responded_at")
+    private LocalDateTime statusRespondedAt;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -45,9 +46,6 @@ public class Accompany {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
-
-    @Column(name = "rejected_at")
-    private LocalDateTime rejectedAt;
 
     public void updateMessage(String newMessage) {
         if (newMessage == null || newMessage.trim().isEmpty())

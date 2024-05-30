@@ -1,0 +1,29 @@
+package com.example.domain.users.dto.response;
+
+import com.example.domain.users.domain.Users;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class UsersInfoResponseDto {
+    private String username;        // 동행 요청자 - 이름
+    private Integer age;            // 동행 요청자 - 나이
+    private String mbti;            // 동행 요청자 - mbti
+    private String gender;          // 동행 요청자 - 성별
+    private Double temperature;     // 동행 요청자 - 온도
+
+    public static UsersInfoResponseDto fromEntity(Users entity) {
+        return UsersInfoResponseDto.builder()
+                .username(entity.getUsername())
+                .age(entity.getAge())
+                .mbti(entity.getMbti())
+                .gender(entity.getGender())
+                .temperature(entity.getTemperature())
+                .build();
+    }
+}
