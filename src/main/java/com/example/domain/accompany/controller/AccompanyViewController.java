@@ -22,7 +22,7 @@ public class AccompanyViewController {
 
     // 보낸동행 상세조회 페이지
     @GetMapping("/accompany/sent/{id}")
-    public String accompanySentBySender(@PathVariable("id") Long id) {
+    public String accompanySentDetail(@PathVariable("id") Long id) {
         return "accompany-sent-detail";
     }
 
@@ -30,5 +30,11 @@ public class AccompanyViewController {
     @GetMapping("/accompany/received")
     public String accompanyReceived() {
         return "accompany-received";
+    }
+
+    // 받은동행 상세조회 페이지
+    @GetMapping("/accompany/received/{id}")
+    public String accompanyReceivedDetail(@PathVariable("id") Long id) {
+        return "accompany-received-detail";
     }
 }

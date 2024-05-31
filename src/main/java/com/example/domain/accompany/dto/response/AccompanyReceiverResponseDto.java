@@ -17,6 +17,7 @@ public class AccompanyReceiverResponseDto {
     private BoardInfoResponseDto requestedBoardInfoDto; // 원본 게시글 DTO
     private UsersInfoResponseDto requestedUsersInfoDto; // 요청자 DTO
     private String message;                             // 동행 메세지
+    private LocalDateTime createdAt;                    // 동행 요청일
     private AccompanyRequestStatus status;              // 동행 요청상태
     private LocalDateTime statusRespondedAt;            // 동행 요청상태 응답일시
 
@@ -26,6 +27,7 @@ public class AccompanyReceiverResponseDto {
                 .requestedBoardInfoDto(BoardInfoResponseDto.fromEntity(entity.getBoard()))
                 .requestedUsersInfoDto(UsersInfoResponseDto.fromEntity(entity.getUser()))
                 .message(entity.getMessage())
+                .createdAt(entity.getCreatedAt())
                 .status(entity.getStatus())
                 .statusRespondedAt(entity.getStatusRespondedAt())
                 .build();

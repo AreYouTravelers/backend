@@ -113,4 +113,19 @@ public class AccompanyController {
                         accompanyService.findAllAccompanyReceiverRequest()
                 ));
     }
+
+    // 받은동행 상세조회 (받은동행 전체조회 페이지 - 게시글 클릭)
+    @GetMapping("/accompany/received/{id}")
+    public ResponseEntity<ApiSuccessResponse<AccompanyReceiverResponseDto>> getAccompanyReceiverRequest(
+            @PathVariable("id") Long id,
+            HttpServletRequest servRequest
+    ) throws JsonProcessingException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        accompanyService.findAccompanyReceiverRequest(id)
+                ));
+    }
 }
