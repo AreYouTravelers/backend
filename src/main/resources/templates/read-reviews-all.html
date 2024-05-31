@@ -9,49 +9,8 @@
 <th:block layout:fragment="content">
     <!-- Contents -->
     <div class="container container-wrap justify-content-between">
-        <nav id="subNav" class="col-md-2 col-lg-2">
-            <div class="container">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item mx-0 mx-lg-1">마이페이지
-                        <ul class="navbar-nav me-auto">
-                            <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" href="/mypage">프로필</a>
-                            </li>
-                            <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" href="/account">계정 설정</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1">나의 동행
-                        <ul class="navbar-nav me-auto">
-                            <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" href="#">내가 쓴 글</a>
-                            </li>
-                            <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" href="/receiver-requests">받은 동행</a>
-                            </li>
-                            <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" href="/sender-requests">보낸 동행</a>
-                            </li>
-                            <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" href="/boards/review-possible">후기 작성</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item mx-0 mx-lg-1">나의 후기
-                        <ul class="navbar-nav me-auto">
-                            <li class="nav-item mx-0">
-                                <a class="nav-link active py-2 px-0 px-lg-3"
-                                   th:href="@{'/boards/' + ${boardId} + '/reviews'}">받은 후기</a>
-                            </li>
-                            <li class="nav-item mx-0">
-                                <a class="nav-link py-2 px-0 px-lg-3" href="/read-reviews-all-by-sender">보낸 후기</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+        <!-- mypage nav-->
+        <th:block th:replace="~{layout/mypage-nav :: myPageFragment}"></th:block>
         <section class="container-content page-section col-md-9 col-lg-9">
             <!-- Title -->
             <div class="receiver-profile-img">
