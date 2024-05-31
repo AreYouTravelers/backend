@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <meta charset="UTF-8">
+    <title>내가 쓴 글</title>
+</head>
+<body class="my-boards">
+<th:block layout:fragment="content">
+  <!-- Contents -->
+  <div class="container container-wrap justify-content-between">
+    <!-- mypage nav-->
+    <th:block th:replace="~{layout/mypage-nav :: myPageFragment}"></th:block>
+    <section class="container-content page-section col-md-9 col-lg-9">
+      <!-- Title -->
+      <img class="sub-menu-icon" src="/static/images/icon/icon-mypage2.png" alt="계정 설정">
+      <h2 class="page-section-heading text-secondary mb-0 main-menu">내가 쓴 글</h2>
+      <!-- Contents -->
+      준비중입니다.
+    </section>
+  </div>
+</th:block>
+</body>
+</html>

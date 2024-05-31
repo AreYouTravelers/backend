@@ -90,7 +90,9 @@
                                     <span th:class="|temp-${board.temperature >= 30 and board.temperature <= 40 ? '3' : (board.temperature < 30 ? '5' : (board.temperature > 40 ? '4' : ''))}|"
                                           th:text="${board.temperature}"></span>℃
                                 </p>
-                                <p class="item-contents" th:text="${board.content}"></p>
+                                <div class="item-contents">
+                                    <p th:text="${board.content}"></p>
+                                </div>
                             </div>
                         </a>
                     </div>
