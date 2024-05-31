@@ -3,6 +3,7 @@ package com.example.domain.accompany.service;
 import com.example.domain.accompany.domain.Accompany;
 import com.example.domain.accompany.domain.AccompanyRequestStatus;
 import com.example.domain.accompany.dto.request.AccompanySenderRequestDto;
+import com.example.domain.accompany.dto.response.AccompanyReceiverResponseDto;
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
 import com.example.domain.accompany.repository.AccompanyRepository;
 import com.example.domain.boards.domain.Boards;
@@ -101,5 +102,22 @@ public class AccompanyService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already responded.");
 
         accompanyRepository.deleteById(id);
+    }
+
+    // 받은동행 응답 (받은동행 전체조회 페이지)
+    public List<AccompanyReceiverResponseDto> findAllAccompanyReceiverRequest() {
+        List<AccompanyReceiverResponseDto> accompanyReceiverResponses = new ArrayList<>();
+        Long currentUserId = authService.getUser().getId();
+
+        for (Accompany accompany : accompanyRepository.findAllByBoardUserIdOrderByCreatedAtDesc(currentUserId)) {
+            System.out.println(accompany);
+
+            if (!accompany.getBoard().getUser().getId().equals(currentUserId))
+                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access Denied.");
+
+            accompanyReceiverResponses.add(AccompanyReceiverResponseDto.fromEntity(accompany));
+        }
+
+        return accompanyReceiverResponses;
     }
 }

@@ -16,11 +16,11 @@ import java.time.LocalDateTime;
 public class AccompanySenderResponseDto {
     private Long id;
     private BoardInfoResponseDto requestedBoardInfoDto; // 원본 게시글 DTO
-    private String message;                 // 동행 메세지
-    private AccompanyRequestStatus status;  // 동행 요청상태
-    private LocalDateTime createdAt;        // 생성일시
-    private LocalDateTime updatedAt;         // 수정일시
-    private LocalDateTime rejectedAt;       // 거절일시
+    private String message;                             // 동행 메세지
+    private AccompanyRequestStatus status;              // 동행 요청상태
+    private LocalDateTime statusRespondedAt;            // 동행 요청상태 응답일시
+    private LocalDateTime createdAt;                    // 생성일시
+    private LocalDateTime updatedAt;                    // 수정일시
 
     public static AccompanySenderResponseDto fromEntity(Accompany entity) {
         return AccompanySenderResponseDto.builder()
@@ -28,9 +28,9 @@ public class AccompanySenderResponseDto {
                 .requestedBoardInfoDto(BoardInfoResponseDto.fromEntity(entity.getBoard()))
                 .message(entity.getMessage())
                 .status(entity.getStatus())
+                .statusRespondedAt(entity.getStatusRespondedAt())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
-                .rejectedAt(entity.getRejectedAt())
                 .build();
     }
 }

@@ -14,7 +14,7 @@ public class AccompanyViewController {
         return "accompany-write";
     }
 
-    // 보낸동행 조회 페이지
+    // 보낸동행 전체조회 페이지
     @GetMapping("/accompany/sent")
     public String accompanySent() {
         return "accompany-sent";
@@ -24,5 +24,11 @@ public class AccompanyViewController {
     @GetMapping("/accompany/sent/{id}")
     public String accompanySentBySender(@PathVariable("id") Long id) {
         return "accompany-sent-detail";
+    }
+
+    // 받은동행 전체조회 페이지
+    @GetMapping("/accompany/received")
+    public String accompanyReceived() {
+        return "accompany-received";
     }
 }

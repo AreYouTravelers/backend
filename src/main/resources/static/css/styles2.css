@@ -153,36 +153,13 @@ footer p {font-weight: 300; font-size: 14px;}
 .board-write .edit button {width: 30px; border: none; background: none; }
 .board-write .edit button img {width: 100%;}
 
-/* receiver */
-.receiver .sub-menu-icon {width: 43px;}
-.receiver .board-item {min-height: 400px; padding: 2em 0;}
-.receiver .board-item .board-item-profile .board-item-img {overflow: hidden; width: 47%; margin: 0 auto 1em; border: 1px solid #dddddd; border-radius: 50%;}
-.receiver .board-item .board-item-profile .board-item-img img {width: 100%;}
-.receiver .board-item .board-item-profile .board-item-info {padding-bottom: 0;}
-.receiver .board-item .board-item-profile .board-item-info .item-contents {margin-top: 2em;}
-.receiver .board-item .board-item-profile .board-item-info .item-contents p {
-    overflow: hidden;
-    margin-bottom: 0;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-}
-
-/* 보낸 동행 */
+/* 마이페이지 - 받은 동행, 보낸 동행 */
 #accompany-container .board-item {min-height: 400px;}
 #accompany-container .board-item .board-item-info .user-name {margin-bottom: 0; font-size: 13px;}
 #accompany-container .board-item .board-item-info .user-profile {margin-bottom: 0; font-size: 13px;}
 #accompany-container .board-item .board-item-info .user-temp {margin-bottom: 14px; font-size: 13px;}
 #accompany-container .board-item .board-item-info .item-contents {min-height: 97px; margin: 0 25px; padding: 1.2rem; border-radius: 19px; font-size: 13px; box-shadow: 0px 0px 11px 3px #5c5c5c21; color: #606060;}
-#accompany-container .board-item .board-item-info .item-contents p {
-    overflow: hidden;
-    margin-bottom: 0;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-}
+#accompany-container .board-item .board-item-info .item-contents p {overflow: hidden; margin-bottom: 0; text-overflow: ellipsis; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;}
 
 /* sender-rendering */
 .sender-rendering .sub-title-icon {margin-top: 13em;}
@@ -210,7 +187,6 @@ footer p {font-weight: 300; font-size: 14px;}
 .sender-read .board-message .form-info button {width: 30px; border: none; background: none;}
 .sender-read .board-message .form-info button img {width: 100%;}
 .sender-read .current-time {text-align: right; color: #919191; font-size: 14px; margin-top: 11px;}
-
 
 /* review-possible */
 .review-possible .sub-menu-icon {width: 48px; margin-top: -5px;}
