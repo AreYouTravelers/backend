@@ -1,6 +1,7 @@
 package com.example.domain.accompany.controller;
 
 import com.example.domain.accompany.dto.request.AccompanySenderRequestDto;
+import com.example.domain.accompany.dto.response.AccompanyReceiverResponseDto;
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
 import com.example.domain.accompany.service.AccompanyService;
 import com.example.global.exception.ApiSuccessResponse;
@@ -96,6 +97,20 @@ public class AccompanyController {
                         HttpStatus.OK,
                         servRequest.getServletPath(),
                         ("deleted complete")
+                ));
+    }
+
+    // 받은동행 전체조회 (받은동행 전체조회 페이지)
+    @GetMapping("/accompany/received")
+    public ResponseEntity<ApiSuccessResponse<List<AccompanyReceiverResponseDto>>> getAllAccompanyReceiverRequest(
+            HttpServletRequest servRequest
+    ) throws JsonProcessingException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        accompanyService.findAllAccompanyReceiverRequest()
                 ));
     }
 }

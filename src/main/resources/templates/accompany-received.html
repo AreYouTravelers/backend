@@ -4,6 +4,7 @@
       layout:decorate="~{layout/default}">
 <head>
     <title>받은 동행</title>
+    <script src="/static/js/accompany-received.js"></script>
 </head>
 <body class="receiver">
 <th:block layout:fragment="content">
@@ -57,26 +58,39 @@
             <h2 class="page-section-heading text-secondary mb-0 main-menu">받은 동행</h2>
             <!-- Grid Items -->
             <div class="row justify-content-start">
-                <div class="col-md-4 col-lg-4 col-lg-4-2 mb-5" th:each="request, requestIdx : ${receiverRequestsList}">
-                    <div th:with="sender=${senderList[requestIdx.index]}">
+                <div class="row justify-content-start" id="accompany-container">
                     <div class="board-item mx-auto">
-                        <a class="href-none" th:href="@{'/boards/' + ${request.boardId} + '/receiver-requests/' + ${request.senderId}}">
-                            <div class="board-item-profile">
-                                <p class="board-item-img">
-                                    <img th:src="'/' + ${sender.profileImg}" alt="프로필 이미지">
+                        <a class="href-none">
+                            <div class="board-item-header">
+                                <div class="header-left">
+                                    <p class="item-date"></p>
+                                </div>
+                                <div class="header-right">
+                                    <p id="status" class="status"></p>
+                                </div>
+                            </div>
+                            <div class="board-item-bg">
+                                <p class="board-item-icon">
+                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">
+                                    <span id="country"></span>
                                 </p>
-                                <div class="board-item-info">
-                                    <p th:text="${sender.username}" class="user-name"></p>
-                                    <p class="user-profile">
-                                        <span th:text="${sender.mbti}" class="user-mbti"></span>
-                                        <span class="--bs-gray-500">·</span>
-                                        <span th:text="${sender.gender}" class="user-gender"></span>
-                                        <span class="--bs-gray-500">·</span>
-                                        <span class="temp-3" th:text="${sender.temperature} + '℃'"></span>
-                                    </p>
-                                    <div class="item-contents">
-                                        <p th:text="${request.message}"></p>
-                                    </div>
+                                <p class="board-item-img"></p>
+                            </div>
+                            <div class="board-item-info">
+                                <p class = "item-title"></p>
+                                <p class = "user-name"></p>
+                                <p class = "user-profile">
+                                    <span class = "user-age"></span>
+                                    <span class = "--bs-gray-500">·</span>
+                                    <span class = "user-mbti"></span>
+                                    <span class = "--bs-gray-500">·</span>
+                                    <span class = "user-gender"></span>
+                                </p>
+                                <p class = "user-temp">
+                                    <span class = "temp-3"></span>
+                                </p>
+                                <div class="item-contents">
+                                    <p id="message" class="message"></p>
                                 </div>
                             </div>
                         </a>

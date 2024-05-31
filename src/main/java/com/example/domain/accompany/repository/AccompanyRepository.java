@@ -9,8 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccompanyRepository extends JpaRepository<Accompany, Long> {
-    @Query("SELECT a FROM Accompany a WHERE a.user.id = :userId AND a.board.deletedAt IS NULL ORDER BY a.createdAt DESC")
-    List<Accompany> findAllByUserIdOrderByCreatedAtDesc(@Param("userId") Long userId);
+    List<Accompany> findAllByUserIdOrderByCreatedAtDesc(Long userId);
 
     Optional<Accompany> findByBoardIdAndUserId(Long boardId, Long userId);
+
+    @Query("SELECT a FROM Accompany a WHERE a.board.user.id = :userId ORDER BY a.createdAt DESC")
+    List<Accompany> findAllByBoardUserIdOrderByCreatedAtDesc(@Param("userId") Long userId);
 }
