@@ -120,4 +120,13 @@ public class AccompanyService {
 
         return accompanyReceiverResponses;
     }
+
+    // 받은동행 상세조회 (받은동행 전체조회 페이지 - 게시글 클릭)
+    public AccompanyReceiverResponseDto findAccompanyReceiverRequest(Long id) {
+        // 받은동행이 존재하지 않는 경우
+        Accompany accompany = accompanyRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
+
+        return AccompanyReceiverResponseDto.fromEntity(accompany);
+    }
 }

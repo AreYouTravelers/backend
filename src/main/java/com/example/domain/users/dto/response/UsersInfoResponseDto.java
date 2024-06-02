@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UsersInfoResponseDto {
     private String username;        // 동행 요청자 - 이름
+    private String profileImage;    // 동행 요청자 - 프로필 이미지
     private Integer age;            // 동행 요청자 - 나이
     private String mbti;            // 동행 요청자 - mbti
     private String gender;          // 동행 요청자 - 성별
@@ -20,6 +21,7 @@ public class UsersInfoResponseDto {
     public static UsersInfoResponseDto fromEntity(Users entity) {
         return UsersInfoResponseDto.builder()
                 .username(entity.getUsername())
+                .profileImage("/" + entity.getProfileImg())
                 .age(entity.getAge())
                 .mbti(entity.getMbti())
                 .gender(entity.getGender())

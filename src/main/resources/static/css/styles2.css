@@ -14,7 +14,7 @@ body {overflow-x: hidden;}
 .sub-menu-icon {width: 40px; margin-right: 7px; margin-bottom: 2em; vertical-align: top;}
 .sub-title-icon {width: 50px; margin: 0 auto 7px;}
 .sub-title-icon img {width: 100%;}
-textarea {width: 100%; padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+textarea {width: 100%; padding: 1em 2em; border: none; border-radius: 12px; background-color: #ffffff; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
 textarea:focus-visible {
     border: 2px solid #5bc7ffc2;
     outline: 0;
@@ -154,39 +154,56 @@ footer p {font-weight: 300; font-size: 14px;}
 .board-write .edit button img {width: 100%;}
 
 /* 마이페이지 - 받은 동행, 보낸 동행 */
-#accompany-container .board-item {min-height: 400px;}
+#accompany-.board-item {min-height: 400px;}
 #accompany-container .board-item .board-item-info .user-name {margin-bottom: 0; font-size: 13px;}
 #accompany-container .board-item .board-item-info .user-profile {margin-bottom: 0; font-size: 13px;}
 #accompany-container .board-item .board-item-info .user-temp {margin-bottom: 14px; font-size: 13px;}
 #accompany-container .board-item .board-item-info .item-contents {min-height: 97px; margin: 0 25px; padding: 1.2rem; border-radius: 19px; font-size: 13px; box-shadow: 0px 0px 11px 3px #5c5c5c21; color: #606060;}
 #accompany-container .board-item .board-item-info .item-contents p {overflow: hidden; margin-bottom: 0; text-overflow: ellipsis; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3;}
 
-/* sender-rendering */
-.sender-rendering .sub-title-icon {margin-top: 13em;}
-.sender-rendering h2 {margin-bottom: 2.5em; font-size: 1.6rem; text-align: center;}
-.sender-rendering .board-title {font-weight: 500; margin-bottom: 15px; font-size: 1.1rem; color: #333;}
-.sender-rendering .original-board {margin-bottom: 4em; padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
-.sender-rendering .original-board a {display: flex; align-items: center;}
-.sender-rendering .original-board a .original-left {width: 66px; border-radius: 50%; border: 1px solid #fff; margin-right: 1em;}
-.sender-rendering .original-board a .original-left img {width: 100%;}
-.sender-rendering .original-board a .original-right .original-right-bottom {display: flex; margin-top: 10px; font-size: 0.9rem;}
-.sender-rendering .original-board a .original-right .original-right-bottom p {margin-bottom: 0; margin-right: 5px; color: #999;}
-
-/* 보낸동행 상세조회 */
+/* 마이페이지 - 보낸 동행 상세페이지 */
 .sender-read .sub-title-icon {margin-top: 13em;}
 .sender-read h2 {margin-bottom: 2.5em; font-size: 1.6rem; text-align: center;}
 .sender-read .board-title {font-weight: 500; margin-bottom: 15px; font-size: 1.1rem; color: #333;}
+.sender-read .title-container {display: flex; justify-content: space-between; position: relative;}
+.sender-read .title-container button {position: absolute; right: 0; bottom: 20%; padding: 0.3em 0.7em; border-radius: 20px;}
 .sender-read .original-board {margin-bottom: 4em; padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
 .sender-read .original-board a {display: flex; align-items: center;}
 .sender-read .original-board a .original-left {width: 66px; height: 66px; overflow: hidden; border-radius: 50%; border: 1px solid #fff; margin-right: 1em;}
 .sender-read .original-board a .original-left img {width: 100%;}
 .sender-read .original-board a .original-right .original-right-bottom {display: flex; margin-top: 10px; font-size: 0.9rem;}
-/*.sender-read #message {caret-color : transparent; pointer-events : none;}*/
 .sender-read .original-board a .original-right .original-right-bottom p {margin-bottom: 0; margin-right: 5px; color: #999;}
 .sender-read .board-message .form-info {display: flex; justify-content: space-between; align-items: flex-start;}
 .sender-read .board-message .form-info button {width: 30px; border: none; background: none;}
 .sender-read .board-message .form-info button img {width: 100%;}
 .sender-read .current-time {text-align: right; color: #919191; font-size: 14px; margin-top: 11px;}
+.sender-read #list-button {padding: 0;}
+.sender-read #list-button a {display: block; padding: 0.375rem 0.75rem;}
+
+/* 마이페이지 - 받은 동행 상세페이지 */
+.receiver-read .sub-title-icon {margin-top: 13em;}
+.receiver-read h2 {margin-bottom: 2.5em; font-size: 1.6rem; text-align: center;}
+.receiver-read .board-title {font-weight: 500; margin-bottom: 15px; font-size: 1.1rem; color: #333;}
+.receiver-read #board-link {padding: 4px 11px; border-radius: 9px; color: #333; font-size: 15px; box-shadow: 0px 0px 9px 1px #e2e2e2; transition: all 0.3s;}
+.receiver-read #board-link:hover {box-shadow: 0px 0px 9px 1px #4cb7ef57;}
+.receiver-read #country-image {display: flex; justify-content: center; position: relative; height: 500px; margin-top: 1em; padding-top: 7em; background-size: cover; background-position: center; background-repeat: no-repeat;}
+.receiver-read #country-image::before {position: absolute; top: 0; left: 0; width: 100%; height: 100%; content: "";  background-color: rgba(255, 255, 255, 0.75); pointer-events: none; z-index: 1;}
+.receiver-read .profile-info-container {width: 20%; margin-right: 3%; height: 250px; position: relative; z-index: 9;}
+.receiver-read .profile-info-container .profile-info {min-height: 224px; padding-top: 33px; background-color: #ffffff; border-radius: 12px; text-align: center; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+.receiver-read .profile-info-container .profile-info .profile-image {overflow: hidden; width: 85px; height: 85px; margin: 0 auto 10px; border-radius: 50px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+.receiver-read .profile-info-container .profile-info .profile-image img {width: 100%;}
+.receiver-read .profile-info-container .profile-info #profile-username,
+.receiver-read .profile-info-container .profile-info .user-profile,
+.receiver-read .profile-info-container .profile-info #profile-temp {margin-bottom: 0; font-size: 15px;}
+.receiver-read .board-message {width: 60%; position: relative; z-index: 9;}
+.receiver-read .board-message .form-info {display: flex; justify-content: space-between;}
+.receiver-read .board-message .form-info .response-button {position: relative; width: 50%;}
+.receiver-read .board-message .form-info .response-button button {position: absolute; bottom: 30%; padding: 0.4em 0.8em; border-radius: 20px;}
+.receiver-read .board-message .form-info .response-button button#accept-button {right: 15%;}
+.receiver-read .board-message .form-info .response-button button#reject-button {right: 0%;}
+.receiver-read #list-button {padding: 0;}
+.receiver-read #list-button a {display: block; padding: 0.375rem 0.75rem;}
+.receiver-read .created-at {text-align: right; color: #333333; font-size: 14px; margin-top: 6px;}
 
 /* review-possible */
 .review-possible .sub-menu-icon {width: 48px; margin-top: -5px;}
