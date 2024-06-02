@@ -70,6 +70,7 @@ public class BoardsService {
                 .user(userEntity)
                 .title(dto.getTitle())
                 .content(dto.getContent())
+                .applicantPeople(0)
                 .currentPeople(0)
                 .maxPeople(dto.getMaxPeople())
                 .status(false)
