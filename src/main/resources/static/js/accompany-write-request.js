@@ -26,6 +26,7 @@ fetch(`/api/boards/${boardId}/info`, {
         const boardCountry = document.getElementById('board-country');
         const boardStartDate = document.getElementById('board-start-date');
         const boardEndDate = document.getElementById('board-end-date');
+        const originalBoard = document.getElementById('original-board');
 
         if (data) {
             profileUsername.innerText = data.username;
@@ -34,6 +35,7 @@ fetch(`/api/boards/${boardId}/info`, {
             boardCountry.innerText = data.country;
             boardStartDate.innerText = data.startDate;
             boardEndDate.innerText = data.endDate;
+            originalBoard.href = "/boards/" + data.id;
         } else {
             console.error('No data received');
         }
