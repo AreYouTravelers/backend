@@ -9,6 +9,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -84,4 +86,9 @@ public class Boards {
         this.applicantPeople++;
     }
 
+    public void updateCurrentPeople() {
+        if (this.maxPeople <= this.currentPeople)
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Exceeded maximum capacity.");
+        this.currentPeople++;
+    }
 }

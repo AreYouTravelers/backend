@@ -3,6 +3,7 @@ package com.example.domain.accompany.service;
 import com.example.domain.accompany.domain.Accompany;
 import com.example.domain.accompany.domain.AccompanyRequestStatus;
 import com.example.domain.accompany.dto.request.AccompanySenderRequestDto;
+import com.example.domain.accompany.dto.request.AccompanyStatusRequestDto;
 import com.example.domain.accompany.dto.response.AccompanyReceiverResponseDto;
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
 import com.example.domain.accompany.repository.AccompanyRepository;
@@ -127,6 +128,22 @@ public class AccompanyService {
         Accompany accompany = accompanyRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
 
+        return AccompanyReceiverResponseDto.fromEntity(accompany);
+    }
+
+    // 받은동행 응답 (받은동행 상세조회 페이지 - 수락/거절 버튼 클릭)
+    @Transactional
+    public AccompanyReceiverResponseDto updateAccompanyReceiverRequest(Long id, AccompanyStatusRequestDto dto) {
+        // 받은동행이 존재하지 않는 경우
+        Accompany accompany = accompanyRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
+
+        // 원본 게시글의 작성자가 아닌 경우
+        if (!accompany.getBoard().getUser().getId().equals(authService.getUser().getId()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
+
+        accompany.updateStatus(dto.getStatus());
+        accompany.getBoard().updateCurrentPeople();
         return AccompanyReceiverResponseDto.fromEntity(accompany);
     }
 }

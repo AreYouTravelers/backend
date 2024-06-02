@@ -54,4 +54,14 @@ public class Accompany {
         this.message = newMessage;
         this.updatedAt = LocalDateTime.now();
     }
+
+    public void updateStatus(String newStatus) {
+        if (newStatus.equals("수락"))
+            this.status = AccompanyRequestStatus.ACCEPTED;
+        else if (newStatus.equals("거절"))
+            this.status = AccompanyRequestStatus.REJECTED;
+        else this.status = AccompanyRequestStatus.PENDING;
+
+        this.statusRespondedAt = LocalDateTime.now();
+    }
 }

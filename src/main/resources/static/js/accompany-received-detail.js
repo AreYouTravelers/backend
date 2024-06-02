@@ -78,61 +78,46 @@ fetch(`/api/accompany/received/${id}`, {
         console.error('에러:', error);
     });
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     const updateForm = document.getElementById('updateForm');
-//     const acceptButton = document.getElementById('acceptButton');
-//     const rejectButton = document.getElementById('rejectButton');
-//
-//     acceptButton.addEventListener('click', function (event) {
-//         event.preventDefault();
-//         const formData = new FormData(updateForm);
-//         if (confirm("동행 요청을 수락 하시겠습니까?")) {
-//             fetch(`/boards/${boardId}/receiver-requests/${senderId}?status=accept`, {
-//                 method: 'PUT',
-//                 headers: {
-//                     'Authorization': 'Bearer ' + accessToken,
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify(Object.fromEntries(formData.entries()))
-//             })
-//                 .then(response => {
-//                     if (response.ok) {
-//                         alert('동행 요청을 수락했습니다.');
-//                         window.location.href = '/sender-requests';
-//                         // location.reload();
-//                     } else {
-//                         alert('이미 응답하였습니다.');
-//                     }
-//                 })
-//                 .catch(error => {
-//                     console.error('Network error:', error);
-//                 });
-//         }
-//     });
-//
-//     rejectButton.addEventListener("click", function (event) {
-//         event.preventDefault();
-//         if (confirm("동행 요청을 거절 하시겠습니까?")) {
-//             fetch(`/boards/${boardId}/receiver-requests/${senderId}?status=reject`, {
-//                 method: 'PUT',
-//                 headers: {
-//                     'Authorization': 'Bearer ' + accessToken,
-//                     'Content-Type': 'application/json'
-//                 }
-//             })
-//                 .then(response => {
-//                     if (response.ok) {
-//                         alert("동행 요청이 거절되었습니다.");
-//                         window.location.href = `/sender-requests`;
-//                     } else {
-//                         alert("이미 응답하였습니다.");
-//                     }
-//                 })
-//                 .catch(error => {
-//                     console.error('Network error:', error);
-//                 });
-//         } else {
-//             alert("동행 요청 거절이 취소되었습니다.");
-//         }
-//     });
-// });
+document.addEventListener('DOMContentLoaded', function () {
+    // 수락 버튼 요소를 가져옴
+    const acceptButton = document.getElementById('accept-button');
+    // 거절 버튼 요소를 가져옴
+        const declineButton = document.getElementById('reject-button');
+
+    // 공통으로 사용할 클릭 이벤트 핸들러 함수
+    function handleButtonClick(event) {
+        // 기본 동작을 막음
+        event.preventDefault();
+
+        // 클릭된 버튼의 value 값 가져오기
+        const buttonValue = event.target.value;
+
+        // 서버에 보낼 데이터
+        const data = {
+            status: buttonValue
+        };
+
+        // fetch 요청 보내기
+        fetch(`/api/accompany/received/${id}`, { // 서버 URL을 여기에 입력
+            method: 'PATCH',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) // JSON 문자열로 변환하여 body에 포함
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert("동행 요청을 " + buttonValue + "하였습니다.");
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                alert("동행 요청에 실패하였습니다.");
+                console.error('Error:', error);
+            });
+        }
+
+    // 각 버튼에 클릭 이벤트 리스너 추가
+    acceptButton.addEventListener('click', handleButtonClick);
+    declineButton.addEventListener('click', handleButtonClick);
+});
