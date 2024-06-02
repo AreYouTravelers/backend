@@ -21,7 +21,7 @@ public class UsersInfoResponseDto {
     public static UsersInfoResponseDto fromEntity(Users entity) {
         return UsersInfoResponseDto.builder()
                 .username(entity.getUsername())
-                .profileImage(entity.getProfileImg())
+                .profileImage("/" + entity.getProfileImg())
                 .age(entity.getAge())
                 .mbti(entity.getMbti())
                 .gender(entity.getGender())
