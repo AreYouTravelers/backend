@@ -54,7 +54,7 @@ public class AccompanyService {
     public List<AccompanySenderResponseDto> findAllAccompanySenderRequest() {
         List<AccompanySenderResponseDto> accompanySenderResponses = new ArrayList<>();
 
-        for (Accompany accompany : accompanyRepository.findAllByUserIdOrderByCreatedAtDesc(authService.getUser().getId()))
+        for (Accompany accompany : accompanyRepository.findAllByUserIdAndBoardDeletedAtIsNullAndDeletedAtIsNullOrderByCreatedAtDesc(authService.getUser().getId()))
             accompanySenderResponses.add(AccompanySenderResponseDto.fromEntity(accompany));
 
         return accompanySenderResponses;
@@ -101,7 +101,7 @@ public class AccompanyService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
 
         // 이미 동행 응답이 된 경우
-        if (!accompany.getStatus().equals(AccompanyRequestStatus.PENDING))
+        if (accompany.getStatus().equals(AccompanyRequestStatus.ACCEPTED))
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already responded.");
 
         accompanyRepository.deleteById(id);

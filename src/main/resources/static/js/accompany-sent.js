@@ -119,9 +119,11 @@ fetch(`/api/accompany/sent`, {
                 // item-contents 요소 생성 및 추가
                 const itemContentsDiv = document.createElement('div');
                 itemContentsDiv.classList.add('item-contents');
+                itemContentsDiv.style.minHeight = '158px';
 
                 // message 요소 생성 및 추가
                 const messageElement = document.createElement('p');
+                messageElement.style.webkitLineClamp = '6';
                 messageElement.id = 'message';
                 messageElement.classList.add('message');
                 messageElement.innerText = item.message;
