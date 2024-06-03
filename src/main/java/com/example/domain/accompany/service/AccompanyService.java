@@ -144,8 +144,25 @@ public class AccompanyService {
         if (!accompany.getBoard().getUser().getId().equals(authService.getUser().getId()))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
 
-        accompany.updateStatus(dto.getStatus());
-        accompany.getBoard().updateCurrentPeople();
+        // 변경될 값(응답)이 "수락"일 때
+        if (dto.getStatus().equals("수락")) {
+            // 현재상태가 "대기"or"거절"일 경우
+            if (((accompany.getStatus() == AccompanyRequestStatus.PENDING) || (accompany.getStatus() == AccompanyRequestStatus.REJECTED))) {
+                accompany.getBoard().updateCurrentPeople(dto.getStatus()); // 모집된 인원 수 증가
+                accompany.updateStatus(dto.getStatus()); // 현재상태 변경
+            }
+        }
+
+        // 변경될 값(응답)이 "거절"일 때 && 현재상태가 거절이 아닌 경우(== 현재상태가 대기 또는 수락)
+        if ((dto.getStatus().equals("거절")) && (accompany.getStatus() != AccompanyRequestStatus.REJECTED)) {
+            System.out.println("상태" + accompany.getStatus());
+
+            if (accompany.getStatus() == AccompanyRequestStatus.ACCEPTED) // 현재상태가 수락인 경우
+                accompany.getBoard().updateCurrentPeople(dto.getStatus()); // 모집된 인원 수 감소
+
+            accompany.updateStatus(dto.getStatus()); // 현재상태 변경
+        }
+
         return AccompanyReceiverResponseDto.fromEntity(accompany);
     }
 }
