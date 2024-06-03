@@ -13,6 +13,6 @@ public interface AccompanyRepository extends JpaRepository<Accompany, Long> {
 
     Optional<Accompany> findByBoardIdAndUserId(Long boardId, Long userId);
 
-    @Query("SELECT a FROM Accompany a WHERE a.board.user.id = :userId ORDER BY a.createdAt DESC")
-    List<Accompany> findAllByBoardUserIdOrderByCreatedAtDesc(@Param("userId") Long userId);
+    @Query("SELECT a FROM Accompany a WHERE a.board.user.id = :userId AND a.board.deletedAt IS NULL ORDER BY a.createdAt DESC")
+    List<Accompany> findAllByBoardUserIdAndBoardDeletedAtIsNullOrderByCreatedAtDesc(@Param("userId") Long userId);
 }

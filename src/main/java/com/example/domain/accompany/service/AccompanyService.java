@@ -72,9 +72,11 @@ public class AccompanyService {
     // 보낸동행 수정 (보낸동행 상세조회 페이지 - 수정버튼 클릭)
     @Transactional
     public AccompanySenderResponseDto updateAccompanySenderRequest(Long id, AccompanySenderRequestDto dto) {
-        // 보낸동행이 존재하지 않는 경우
+        // 원본게시글이 존재하지 않는 경우
         Accompany accompany = accompanyRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
+        if (boardsRepository.findByIdAndDeletedAtIsNull(accompany.getBoard().getId()).isEmpty())
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The board has been deleted.");
 
         // 본인이 작성한 동행 요청이 아닐 경우
         if (!accompany.getUser().getId().equals(authService.getUser().getId()))
@@ -110,7 +112,7 @@ public class AccompanyService {
         List<AccompanyReceiverResponseDto> accompanyReceiverResponses = new ArrayList<>();
         Long currentUserId = authService.getUser().getId();
 
-        for (Accompany accompany : accompanyRepository.findAllByBoardUserIdOrderByCreatedAtDesc(currentUserId)) {
+        for (Accompany accompany : accompanyRepository.findAllByBoardUserIdAndBoardDeletedAtIsNullOrderByCreatedAtDesc(currentUserId)) {
             System.out.println(accompany);
 
             if (!accompany.getBoard().getUser().getId().equals(currentUserId))

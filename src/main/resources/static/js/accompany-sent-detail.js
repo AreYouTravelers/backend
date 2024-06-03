@@ -19,12 +19,11 @@ fetch(`/api/accompany/sent/${id}`, {
     })
     .then(responseData => {
         const data = responseData.data;
-
         const boardLink = document.getElementById('board-link');
-        boardLink.href = "/boards/" + data.requestedBoardInfoDto.id;
 
         // JSON 데이터를 받은 후 input 요소의 value 속성을 변경합니다.
-        const profileUsername = document.getElementById('profile-username')
+        const originalBoard = document.getElementById('original-board');
+        const profileUsername = document.getElementById('profile-username');
         const profileImage = document.getElementById('profile-image');
         const boardTitle = document.getElementById('board-title')
         const boardCountry = document.getElementById('board-country');
@@ -32,7 +31,7 @@ fetch(`/api/accompany/sent/${id}`, {
         const boardEndDate = document.getElementById('board-end-date');
         const message = document.getElementById('message');
         const currentTime = document.getElementById('current-time');
-        // data.createdAt을 사용하여 Date 객체로 변환
+        // data.updatedAt을 사용하여 Date 객체로 변환
         const date = new Date(data.updatedAt);
 
         // 년, 월, 일, 시, 분 추출
@@ -46,6 +45,15 @@ fetch(`/api/accompany/sent/${id}`, {
         const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
 
         if (data) {
+            if (data.requestedBoardInfoDto.deletedAt == null) {
+                boardLink.href = "/boards/" + data.requestedBoardInfoDto.id;
+            } else {
+                originalBoard.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
+                const deletedMessage = document.createElement('p'); // 삭제된 게시글 문구 추가
+                deletedMessage.className = 'deleted-message'; // 클래스 이름 추가
+                deletedMessage.textContent = '삭제된 게시글입니다'; // 삭제된 게시글 문구 설정
+                originalBoard.appendChild(deletedMessage); // 삭제된 게시글 문구를 원본 게시글 div에 추가
+            }
             profileUsername.innerText = data.requestedBoardInfoDto.username;
             profileImage.src = data.requestedBoardInfoDto.userProfileImage;
             boardTitle.innerText = data.requestedBoardInfoDto.title;

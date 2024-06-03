@@ -22,5 +22,5 @@ public interface BoardsRepository extends JpaRepository<Boards, Long> {
 
     Page<Boards> findAllByUser(Optional<Users> usersEntity, Pageable pageable);
 
-
+    Optional<Boards> findByIdAndDeletedAtIsNull(Long id);
 }
