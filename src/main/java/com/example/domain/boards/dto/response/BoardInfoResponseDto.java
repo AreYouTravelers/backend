@@ -4,6 +4,7 @@ import com.example.domain.boards.domain.Boards;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Builder
@@ -17,6 +18,7 @@ public class BoardInfoResponseDto {
     private String country;                 // 원본 게시글 - 도시
     private LocalDate startDate;            // 원본 게시글 - 시작 날짜
     private LocalDate endDate;              // 원본 게시글 - 종료 날짜
+    private LocalDateTime deletedAt;        // 원본 게시글 - 삭제일시
 
     public static BoardInfoResponseDto fromEntity(Boards entity) {
         return BoardInfoResponseDto.builder()
@@ -27,6 +29,7 @@ public class BoardInfoResponseDto {
                 .country(entity.getCountry().getName())
                 .startDate(entity.getStartDate())
                 .endDate(entity.getEndDate())
+                .deletedAt(entity.getDeletedAt())
                 .build();
     }
 }

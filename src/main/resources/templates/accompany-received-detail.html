@@ -45,14 +45,12 @@
                 <div class="form-info">
                     <h4 class="board-title">동행 요청 메세지</h4>
                     <div class="response-button">
-                        <button type="button" class="btn btn-primary" id="accept-button">수락</button>
-                        <button type="button" class="btn btn-danger" id="reject-button">거절</button>
+                        <button type="button" class="btn btn-primary" id="accept-button" value="수락">수락</button>
+                        <button type="button" class="btn btn-danger" id="reject-button" value="거절">거절</button>
                     </div>
                 </div>
-                <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="put" id="updateForm">
-                    <textarea name="message" id="message" rows="8" disabled="disabled"></textarea>
-                    <p class="created-at">받은 요청일 : <span id="created-at"></span></p>
-                </form>
+                <textarea name="message" id="message" rows="8" disabled="disabled"></textarea>
+                <p class="created-at">받은 요청일 : <span id="created-at"></span></p>
             </div>
         </div>
         <div class="container-wrap justify-content-center mt-5 mb-5">

@@ -167,12 +167,13 @@ footer p {font-weight: 300; font-size: 14px;}
 .sender-read .board-title {font-weight: 500; margin-bottom: 15px; font-size: 1.1rem; color: #333;}
 .sender-read .title-container {display: flex; justify-content: space-between; position: relative;}
 .sender-read .title-container button {position: absolute; right: 0; bottom: 20%; padding: 0.3em 0.7em; border-radius: 20px;}
-.sender-read .original-board {margin-bottom: 4em; padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
+.sender-read .original-board {position: relative; margin-bottom: 4em; padding: 1em 2em; border: none; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
 .sender-read .original-board a {display: flex; align-items: center;}
 .sender-read .original-board a .original-left {width: 66px; height: 66px; overflow: hidden; border-radius: 50%; border: 1px solid #fff; margin-right: 1em;}
 .sender-read .original-board a .original-left img {width: 100%;}
 .sender-read .original-board a .original-right .original-right-bottom {display: flex; margin-top: 10px; font-size: 0.9rem;}
 .sender-read .original-board a .original-right .original-right-bottom p {margin-bottom: 0; margin-right: 5px; color: #999;}
+.sender-read .original-board .deleted-message {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 1.5em; text-align: center;}
 .sender-read .board-message .form-info {display: flex; justify-content: space-between; align-items: flex-start;}
 .sender-read .board-message .form-info button {width: 30px; border: none; background: none;}
 .sender-read .board-message .form-info button img {width: 100%;}
