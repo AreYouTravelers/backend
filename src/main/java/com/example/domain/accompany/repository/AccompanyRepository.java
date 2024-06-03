@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccompanyRepository extends JpaRepository<Accompany, Long> {
-    List<Accompany> findAllByUserIdOrderByCreatedAtDesc(Long userId);
+    List<Accompany> findAllByUserIdAndBoardDeletedAtIsNullAndDeletedAtIsNullOrderByCreatedAtDesc(Long userId);
 
     Optional<Accompany> findByBoardIdAndUserId(Long boardId, Long userId);
 
