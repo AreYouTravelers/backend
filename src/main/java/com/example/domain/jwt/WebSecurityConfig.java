@@ -55,6 +55,7 @@ public class WebSecurityConfig {
                                         "/sender-requests",
                                         "/receiver-requests",
                                         "/boards/{boardId}/reviews/sender/{id}",
+                                        "/review/**",
                                         "/error"
 //                                        "/boards/reviews/receiver"
                                 )

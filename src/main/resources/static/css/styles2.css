@@ -209,23 +209,15 @@ footer p {font-weight: 300; font-size: 14px;}
 .receiver-read #list-button a {display: block; padding: 0.375rem 0.75rem;}
 .receiver-read .created-at {text-align: right; color: #333333; font-size: 14px; margin-top: 6px;}
 
-/* review-possible */
-.review-possible .sub-menu-icon {width: 48px; margin-top: -5px;}
-.review-possible .board-item .board-item-info {padding-bottom: 0;}
-.review-possible .board-item .board-item-info .item-contents {margin-top: 2em;}
-.review-possible .board-item .board-item-info .item-contents p {
-    overflow: hidden;
-    margin-bottom: 0;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-}
-.review-possible .board-item .board-item-review {margin-top: 1.5em; text-align: center;}
-.review-possible .board-item .board-item-review button {width: 45%; padding: 0.5em; border: none; border-radius: 9px; font-size: 0.9rem; color: #ffffff;}
-.review-possible .board-item .board-item-review button.possible {background-color: #3BD0FA;}
-.review-possible .board-item .board-item-review button.impossible {background-color: #B0B0B0; pointer-events: none; cursor: default;}
-.review-possible .board-item .board-item-review button.impossible a {pointer-events: none; cursor: default;}
+/* review-write-detail 후기 작성하기 상세 조회 페이지 */
+.review-write-detail .original-board {margin-bottom: 3em;}
+.review-write-detail .rating {margin-bottom: 1em;}
+.review-write-detail .rating-container {display: flex; align-items: flex-start; margin-bottom: 10px;}
+.review-write-detail .rating-container h3 {margin: 2px 8px 5px 0px;}
+.review-write-detail .rating-info {display: flex; justify-content: space-between;}
+.review-write-detail .rating-info .form-range {width: 65%;}
+.review-write-detail .rating-info .rating-bad,
+.review-write-detail .rating-info .rating-good {color: #555;}
 
 /* read-reviews-all */
 .read-reviews-all .receiver-profile-img {overflow: hidden; display: inline-block; width: 80px; margin-right: 1em; margin-top: -8px; border: 1px solid #fff; border-radius: 50%; vertical-align: middle;}

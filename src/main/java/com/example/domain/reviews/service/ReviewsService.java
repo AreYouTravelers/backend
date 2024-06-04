@@ -1,42 +1,56 @@
-//package com.example.domain.reviews.service;
-//
-//import com.example.domain.blackList.domain.Blacklist;
-//import com.example.domain.dto.*;
-//import com.example.domain.boards.repository.BoardsRepository;
-//import com.example.domain.users.dto.UserProfileDto;
-//import com.example.domain.users.domain.Users;
-//import com.example.domain.users.repository.UsersRepository;
-//import com.example.domain.reviews.dto.ReviewsDto;
-//import com.example.domain.reviews.domain.Reviews;
+package com.example.domain.reviews.service;
+
+import com.example.domain.accompany.domain.Accompany;
+import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
+import com.example.domain.accompany.repository.AccompanyRepository;
+import com.example.domain.boards.domain.Boards;
+import com.example.domain.boards.dto.response.BoardInfoResponseDto;
+import com.example.domain.boards.repository.BoardsRepository;
+import com.example.domain.users.repository.UsersRepository;
 //import com.example.domain.reviews.repository.ReviewsRepository;
-//import com.example.domain.users.service.AuthService;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.stereotype.Service;
-//import org.springframework.web.server.ResponseStatusException;
-//
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Optional;
-//
-//@Slf4j
-//@Service
-////@RequiredArgsConstructor
-//public class ReviewsService {
+import com.example.domain.users.service.AuthService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class ReviewsService {
 //    private final ReviewsRepository repository;
-//    private final BoardsRepository boardsRepository;
-//    private final UsersRepository usersRepository;
-//    private final AuthService authService;
-//
-//    @Autowired
-//    public ReviewsService(ReviewsRepository repository, BoardsRepository boardsRepository, UsersRepository usersRepository, AuthService authService) {
-//        this.repository = repository;
-//        this.boardsRepository = boardsRepository;
-//        this.usersRepository = usersRepository;
-//        this.authService = authService;
-//    }
+    private final AccompanyRepository accompanyRepository;
+    private final BoardsRepository boardsRepository;
+    private final UsersRepository usersRepository;
+    private final AuthService authService;
+
+    // 후기 작성하기 전체 조회 페이지
+    public List<AccompanySenderResponseDto> findAllReviewWrite() {
+        List<AccompanySenderResponseDto> accompanySenderResponses = new ArrayList<>();
+
+        for (Accompany accompany : accompanyRepository.findAllByUserIdAndBoardEndDateBefore(authService.getUser().getId(), LocalDate.now()))
+            accompanySenderResponses.add(AccompanySenderResponseDto.fromEntity(accompany));
+
+        return accompanySenderResponses;
+    }
+
+    // 후기 작성하기 상세 조회 페이지
+    public BoardInfoResponseDto findReviewWrite(Long boardId) {
+        // 원본 게시글이 존재하지 않는 경우
+        Boards board = boardsRepository.findById(boardId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found."));
+
+        return BoardInfoResponseDto.fromEntity(board);
+    }
+
 //
 ////    @Transactional
 //    public ReviewsDto createReview(Long boardId, ReviewsDto dto) {
@@ -183,4 +197,5 @@
 //        Double change = (temperature - 3) * 2;
 //        return change;
 //    }
-//}
+//
+}

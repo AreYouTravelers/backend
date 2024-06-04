@@ -52,7 +52,7 @@ public class ViewController {
 
     @GetMapping("/reviews-possible")
     public String reviewPossible() {
-        return "reviews-possible";
+        return "review-write";
     }
 
 //    @GetMapping("/createReview")

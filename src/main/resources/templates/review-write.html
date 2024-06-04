@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>후기 작성</title>
+    <script src="/static/js/mypage-nav.js"></script>
+    <script src="/static/js/review-write.js"></script>
+</head>
+<body class="review-write">
+<th:block layout:fragment="content">
+    <!-- Contents -->
+    <div class="container container-wrap justify-content-between">
+        <!-- mypage nav-->
+        <th:block th:replace="~{layout/mypage-nav :: myPageFragment}"></th:block>
+        <section class="container-content page-section portfolio col-md-9 col-lg-9" id="portfolio">
+            <!-- Menu -->
+            <img class="sub-menu-icon" src="/static/images/icon/icon-review.png" alt="후기 작성하기">
+            <h2 class="page-section-heading text-secondary mb-0 main-menu">후기 작성하기</h2>
+            <!-- Grid Items -->
+            <div class="row justify-content-start">
+                <div class="row justify-content-start" id="accompany-container">
+                    <div class="board-item mx-auto">
+                        <a class="href-none">
+                            <div class="board-item-header">
+                                <div class="header-left">
+                                    <p class="item-date"></p>
+                                </div>
+                                <div class="header-right">
+                                    <p id="status" class="status"></p>
+                                </div>
+                            </div>
+                            <div class="board-item-bg">
+                                <p class="board-item-icon">
+                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">
+                                    <span id="country"></span>
+                                </p>
+                                <p class="board-item-img"></p>
+                            </div>
+                            <div class="board-item-info">
+                                <p class = "item-title"></p>
+                                <div class="item-contents">
+                                    <p id="message" class="message"></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</th:block>
+</body>
+</html>
