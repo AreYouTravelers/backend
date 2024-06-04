@@ -54,7 +54,7 @@ public class AccompanyService {
     public List<AccompanySenderResponseDto> findAllAccompanySenderRequest() {
         List<AccompanySenderResponseDto> accompanySenderResponses = new ArrayList<>();
 
-        for (Accompany accompany : accompanyRepository.findAllByUserIdAndBoardDeletedAtIsNullAndDeletedAtIsNullOrderByCreatedAtDesc(authService.getUser().getId()))
+        for (Accompany accompany : accompanyRepository.findAllByUserId(authService.getUser().getId()))
             accompanySenderResponses.add(AccompanySenderResponseDto.fromEntity(accompany));
 
         return accompanySenderResponses;
@@ -112,7 +112,7 @@ public class AccompanyService {
         List<AccompanyReceiverResponseDto> accompanyReceiverResponses = new ArrayList<>();
         Long currentUserId = authService.getUser().getId();
 
-        for (Accompany accompany : accompanyRepository.findAllByBoardUserIdAndBoardDeletedAtIsNullOrderByCreatedAtDesc(currentUserId)) {
+        for (Accompany accompany : accompanyRepository.findAllByBoardUserId(currentUserId)) {
             System.out.println(accompany);
 
             if (!accompany.getBoard().getUser().getId().equals(currentUserId))

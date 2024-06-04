@@ -5,59 +5,64 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>동행 후기 작성</title>
-    <link rel="stylesheet" href="/static/css/reviews.css">
-    <script src="/static/js/reviews.js"></script>
+    <title>후기 작성하기</title>
+    <script src="/static/js/review-write-detail.js"></script>
 </head>
-<body>
+<body class="sender-read review-write-detail">
 <th:block layout:fragment="content">
-    <div class="content">
-        <h2>동행 후기 작성</h2>
-        <div class="original-board">
-            <a class="href-none" href="#">
-                <span class="original-left">
-                    <p><img src="/static/images/user-profile1.jpg" alt="원글 작성자 프로필 사진"></p>
-                </span>
-                <span class="original-right">
-                    <span class="original-right-top" th:text="${board.title}">
-                        원글 제목
-                    </span>
-                    <br>
-                    <span class="original-right-bottom">
-                        <span th:text="${board.username}">원글 작성자</span>
-                        <span>·</span>
-                        <span th:text="${board.country}">여행지</span>
-                    </span>
-                </span>
+    <!-- Contents -->
+    <div class="container container2">
+        <p class="sub-title-icon">
+            <img src="/static/images/icon/icon-review.png" alt="후기 작성하기">
+        </p>
+        <h2 style="margin-bottom: 2.5em;">후기 작성하기</h2>
+        <div class="title-container">
+            <h3 class="board-title">현재 게시글</h3>
+        </div>
+        <div class="original-board" id="original-board">
+            <a class="href-none" id="board-link">
+                <div class="original-left">
+                    <img src="/" id ="profile-image" alt="원글 작성자 프로필 사진" />
+                </div>
+                <div class="original-right">
+                    <div class="original-right-top" id="board-title"></div>
+                    <div class="original-right-bottom">
+                        <p>작성자: <span id="profile-username"></span> |</p>
+                        <p>여행지: <span id="board-country"></span> |</p>
+                        <p>기간: <span id="board-start-date"></span> ~ <span id="board-end-date"></span></p>
+                    </div>
+                </div>
             </a>
         </div>
         <br>
-<!--        <form th:action="@{'/boards/' + ${boardId} + '/reviews/write'}" th:method="post" id="createForm">-->
-        <form id="createForm">
+        <form id="createForm" method="post">
             <div class="rating">
-                <h4>여행은 어떠셨나요 ?</h4>
-                <span>별로였어요</span>
-                <br>
-                <input type="range" class="form-range" id="customRange1" min="1" max="5" value="3" step=0.5 onchange="range_change(this)">
-                <input type="text" id="rating" name="rating" value="3">
+                <div class="rating-container">
+                    <h3 class="board-title">여행은 어떠셨나요?</h3>
+                    <span id="rating" name="rating">3</span>
+                    <span>/5</span>
+                </div>
+                <div class="rating-info">
+                    <span class="rating-bad">아쉬웠어요😑</span>
+                    <input type="range" class="form-range" id="form-range" min="1" max="5" value="3" step=0.5 onchange="range_change(this)">
+                    <span class="rating-good">좋았어요😊</span>
+                </div>
                 <script>
                     function range_change(obj) {
-                        document.getElementById('rating').value=obj.value;
+                        document.getElementById('rating').innerText = obj.value;
                     }
                 </script>
-                <br>
-                <span>좋았어요 !</span>
             </div>
             <br>
-            <div>
-                <h4>후기를 남겨주세요</h4>
-                <div class="mb-3 review-board-update">
-                    <textarea class="review-content" id="exampleFormControlTextarea1" name="content" rows="7" cols="92"></textarea>
-                </div>
-                <div class="form-button">
-                    <button type="submit" class="btn btn-light" id="createButton">등록</button>
-                    <button type="button" class="btn btn-secondary">취소</button>
-                </div>
+            <div class="board-message">
+                <h4 class="board-title">후기를 작성해주세요.</h4>
+                    <textarea id="messages" name="message" rows="8" placeholder="예시) 안녕하세요. 28살 남자입니다. 저는 현지의 음식과 문화를 즐기는 것을 좋아해요. 같이 동행하면 좋을 것 같습니다 :-)"></textarea>
+                    <div class="container-wrap justify-content-center gap-3 mt-5 mb-5">
+                        <button type="button" class="btn btn-light" style="padding: 0">
+                            <a href="/review/write" class="href-none" style="display: block; padding: 0.375rem 0.75rem;">취소</a>
+                        </button>
+                        <button type="submit" class="btn btn-secondary" id="createButton">요청</button>
+                    </div>
             </div>
         </form>
     </div>

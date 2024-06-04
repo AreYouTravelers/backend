@@ -1,35 +1,65 @@
-//package com.example.domain.reviews.controller;
-//
-//import com.example.domain.boards.dto.BoardDto;
-//import com.example.domain.dto.*;
-//import com.example.domain.jwt.JwtTokenUtils;
-//import com.example.domain.users.dto.UserProfileDto;
-//import com.example.domain.users.repository.UsersRepository;
-//import com.example.domain.reviews.dto.ReviewsDto;
-//import com.example.domain.reviews.dto.ReviewsReceiverResponseDto;
-//import com.example.domain.reviews.service.ReviewsService;
-//import com.example.domain.users.service.AuthService;
-//import com.example.domain.boards.service.BoardsService;
-//import lombok.RequiredArgsConstructor;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.*;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//@Slf4j
-////@Controller
-//@RestController
-//@RequiredArgsConstructor
-//public class ReviewsController {
-//    private final ReviewsService service;
-//    private final BoardsService boardsService;
-//    private final AuthService authService;
-//    private final UsersRepository usersRepository;
-//    private final JwtTokenUtils jwtTokenUtils;
-//
+package com.example.domain.reviews.controller;
+
+import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
+import com.example.domain.boards.dto.response.BoardInfoResponseDto;
+import com.example.domain.jwt.JwtTokenUtils;
+import com.example.domain.users.repository.UsersRepository;
+import com.example.domain.reviews.service.ReviewsService;
+import com.example.domain.users.service.AuthService;
+import com.example.domain.boards.service.BoardsService;
+import com.example.global.exception.ApiSuccessResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Slf4j
+@RestController
+@RequestMapping("/api")
+@RequiredArgsConstructor
+public class ReviewsController {
+    private final BoardsService boardsService;
+    private final AuthService authService;
+    private final UsersRepository usersRepository;
+    private final JwtTokenUtils jwtTokenUtils;
+    private final ReviewsService reviewsService;
+
+    // 후기 작성하기 전체 조회 페이지
+    @GetMapping("/review/write")
+    public ResponseEntity<ApiSuccessResponse<List<AccompanySenderResponseDto>>> getAllReviewWrite(
+            HttpServletRequest servRequest
+    ) throws JsonProcessingException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        reviewsService.findAllReviewWrite()
+                ));
+    }
+
+    // 후기 작성하기 상세 조회 페이지
+    @GetMapping("/review/write/{boardId}")
+    public ResponseEntity<ApiSuccessResponse<BoardInfoResponseDto>> getReviewWrite(
+            HttpServletRequest servRequest,
+            @PathVariable("boardId") Long boardId
+    ) throws JsonProcessingException {
+        System.out.println("error 1");
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        reviewsService.findReviewWrite(boardId)
+                ));
+    }
+
 //    @GetMapping("/boards/{boardId}/reviews/write")
 //    public String createReview(
 //            @PathVariable("boardId") Long boardId,
@@ -84,20 +114,6 @@
 //        model.addAttribute("boardId", boardId);
 //        model.addAttribute("reviewId", id);
 //        return "read-receiver-reviews";
-//    }
-//
-//    // 후기 전체 조회
-//    @GetMapping("/boards/{boardId}/reviews")
-//    public String readAll(
-//            @PathVariable("boardId") Long boardId,
-//            Model model
-//    ) {
-//        List<ReviewsDto> list = service.readReviewsAll(boardId);
-//        model.addAttribute("reviewList", list);
-//        model.addAttribute("receiver", UserProfileDto.fromEntity(usersRepository.findById(list.get(1).getId()).get()));
-//        model.addAttribute("board", boardsService.readBoard(boardId));
-//        model.addAttribute("boardId", boardId);
-//        return "read-reviews-all";
 //    }
 //
 //    @GetMapping("/boards/reviews/sender")
@@ -178,4 +194,4 @@
 //    ) {
 //        return ResponseEntity.ok(service.deleteReview(boardId, id));
 //    }
-//}
+}
