@@ -1,9 +1,8 @@
 // accessToken 불러오기
 let accessToken = localStorage.getItem('accessToken');
-console.log(window.location.pathname);
-const boardId = window.location.pathname.split("/")[3];
+const accompanyId = window.location.pathname.split("/")[3];
 
-fetch(`/api/review/write/${boardId}`, {
+fetch(`/api/review/write/${accompanyId}`, {
     method: 'GET',
     headers: {
         'Authorization': 'Bearer ' + accessToken,
@@ -31,7 +30,7 @@ fetch(`/api/review/write/${boardId}`, {
 
         if (data) {
             if (data.deletedAt == null) {
-                boardLink.href = "/boards/" + data.id;
+                boardLink.href = "/boards/" + data.requestedBoardInfoDto.id;
             } else {
                 originalBoard.style.backgroundColor = 'rgba(0, 0, 0, 0.7)';
                 const deletedMessage = document.createElement('p'); // 삭제된 게시글 문구 추가
@@ -39,13 +38,13 @@ fetch(`/api/review/write/${boardId}`, {
                 deletedMessage.textContent = '삭제된 게시글입니다'; // 삭제된 게시글 문구 설정
                 originalBoard.appendChild(deletedMessage); // 삭제된 게시글 문구를 원본 게시글 div에 추가
             }
-            profileUsername.innerText = data.username;
-            profileImage.src = data.userProfileImage;
-            boardTitle.innerText = data.title;
-            boardCountry.innerText = data.country;
-            boardStartDate.innerText = data.startDate;
-            boardEndDate.innerText = data.endDate;
-            originalBoard.href = "/boards/" + data.id;
+            profileUsername.innerText = data.requestedBoardInfoDto.username;
+            profileImage.src = data.requestedBoardInfoDto.userProfileImage;
+            boardTitle.innerText = data.requestedBoardInfoDto.title;
+            boardCountry.innerText = data.requestedBoardInfoDto.country;
+            boardStartDate.innerText = data.requestedBoardInfoDto.startDate;
+            boardEndDate.innerText = data.requestedBoardInfoDto.endDate;
+            originalBoard.href = "/boards/" + data.requestedBoardInfoDto.id;
         } else {
             console.error('No data received');
         }
@@ -63,12 +62,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const formData = new FormData(createForm);
 
         const messageValue = document.getElementById('messages').value;
-        const ratingValue = document.getElementById('rating').value;
-        formData.append('boardId', boardId);
+        const ratingValue = document.getElementById('rating').innerText;
+        formData.append('accompanyId', accompanyId);
         formData.append('message', messageValue);
         formData.append('rating', ratingValue);
 
-        fetch(`/api/review/write/`, {
+        fetch(`/api/review/write/${accompanyId}`, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + accessToken,

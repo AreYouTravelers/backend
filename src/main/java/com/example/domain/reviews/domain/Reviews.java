@@ -21,6 +21,10 @@ public class Reviews {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private Users user;
+
     @OneToOne
     @JoinColumn(name = "accompany_id", nullable = false)
     private Accompany accompany;
@@ -29,11 +33,14 @@ public class Reviews {
     private Double rating;
 
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String content;
+    private String message;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @Column(name = "rejected_at")
-    private LocalDateTime rejectedAt;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 }

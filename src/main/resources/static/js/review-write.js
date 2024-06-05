@@ -23,7 +23,7 @@ fetch(`/api/review/write`, {
 
         if (data && Array.isArray(data.data)) {
             if (data.data.length === 0) {
-                container.innerHTML = '<p>보낸 요청이 없습니다.</p>';
+                container.innerHTML = '<p>작성 가능한 후기가 없습니다.</p>';
                 return;
             }
 
@@ -139,7 +139,7 @@ fetch(`/api/review/write`, {
                 reviewWriteButton.style.color = '#fff';
                 reviewWriteButton.style.padding = '0.5em 2em';
                 reviewWriteButton.style.borderRadius = '30px';
-                reviewWriteButton.href = "/review/write/" + item.requestedBoardInfoDto.id;
+                reviewWriteButton.href = "/review/write/" + item.id;
 
                 // board-item-info에 item-contents 추가
                 boardItemInfoDiv.appendChild(itemContentsDiv);
