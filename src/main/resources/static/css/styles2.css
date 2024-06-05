@@ -219,6 +219,20 @@ footer p {font-weight: 300; font-size: 14px;}
 .review-write-detail .rating-info .rating-bad,
 .review-write-detail .rating-info .rating-good {color: #555;}
 
+/* review-sent 보낸 후기 전체 조회 */
+.review-sent .header-right {margin-top: -5px;}
+.review-sent .title-container {display: flex; align-items: center; margin-bottom: 3em;}
+.review-sent .title-text {margin-right: 6px;}
+.review-sent #sender-username {font-size: 2em; margin-top: -14px;}
+.review-sent .img-container {border-radius: 50%; width: 66px; height: 66px; overflow: hidden; margin-right: 10px;}
+.review-sent .img-container img {width: 100%; margin-bottom: 0;}
+.review-sent .stars {display: inline-block;}
+.review-sent .stars span {font-size: 17px;}
+.review-sent .full-star {color: gold;}
+.review-sent .half-star {position: relative; display: inline-block; color: gold;}
+.review-sent .half-star::before {content: '★'; position: absolute; color: gold; width: 50%; overflow: hidden;}
+.empty-star {color: gold;}
+
 /* read-reviews-all */
 .read-reviews-all .receiver-profile-img {overflow: hidden; display: inline-block; width: 80px; margin-right: 1em; margin-top: -8px; border: 1px solid #fff; border-radius: 50%; vertical-align: middle;}
 .read-reviews-all h2 {font-size: 1.8rem;}

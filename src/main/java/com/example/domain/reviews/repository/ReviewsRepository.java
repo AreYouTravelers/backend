@@ -6,8 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,4 +26,7 @@ public interface ReviewsRepository extends JpaRepository<Reviews, Long> {
 //    Page<Reviews> findAllByReceiver(Optional<Users> user, Pageable pageable);
 
     Optional<Reviews> findByAccompanyIdAndUserId(Long accompanyId, Long id);
+
+    @Query("SELECT a FROM Reviews a WHERE a.user.id = :userId AND a.deletedAt IS NULL ORDER BY a.createdAt DESC")
+    List<Reviews> findAllByUserIdOrderByDesc(@Param("userId") Long userId);
 }

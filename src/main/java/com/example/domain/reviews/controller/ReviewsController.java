@@ -10,6 +10,7 @@ import com.example.domain.users.service.AuthService;
 import com.example.domain.boards.service.BoardsService;
 import com.example.global.exception.ApiSuccessResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -74,6 +75,21 @@ public class ReviewsController {
                         reviewsService.saveReivew(accompanyId, dto)
                 ));
     }
+
+    // 보낸 후기 전체 조회
+    @GetMapping("/review/sent")
+    public ResponseEntity<ApiSuccessResponse<List<ReviewSenderResponseDto>>> getAllSenderReview (
+            HttpServletRequest servRequest
+    ) throws JsonProcessingException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        reviewsService.findAllSenderReview()
+                ));
+    }
+
 
 //    @GetMapping("/boards/{boardId}/reviews/write")
 //    public String createReview(
