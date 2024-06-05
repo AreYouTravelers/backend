@@ -61,10 +61,21 @@ public class ReviewsService {
         // 후기 작성 중복 방지
         Optional<Reviews> review = reviewsRepository.findByAccompanyIdAndUserId(accompanyId, authService.getUser().getId());
         if (review.isPresent())
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already exists.");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Review request already exists.");
 
         Reviews savedReview = reviewsRepository.save(ReviewSenderRequestDto.toEntity(dto, accompany, authService.getUser()));
         return ReviewSenderResponseDto.fromEntity(savedReview);
+    }
+
+    // 보낸 후기 전체 조회
+    public List<ReviewSenderResponseDto> findAllSenderReview() {
+        List<ReviewSenderResponseDto> reviewSenderResponses = new ArrayList<>();
+
+        for (Reviews review : reviewsRepository.findAllByUserIdOrderByDesc(authService.getUser().getId()))
+            reviewSenderResponses.add(ReviewSenderResponseDto.fromEntity(review));
+
+        return reviewSenderResponses;
+
     }
 
 //

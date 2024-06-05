@@ -3,54 +3,54 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-    <title>후기 전체 조회</title>
+    <title>보낸 후기</title>
+    <script src="/static/js/review-sent.js"></script>
+    <script src="/static/js/mypage-nav.js"></script>
 </head>
-<body class="read-reviews-all">
+<body class="review-sent">
 <th:block layout:fragment="content">
     <!-- Contents -->
     <div class="container container-wrap justify-content-between">
         <!-- mypage nav-->
         <th:block th:replace="~{layout/mypage-nav :: myPageFragment}"></th:block>
-        <section class="container-content page-section col-md-9 col-lg-9">
-            <!-- Title -->
-            <!--            <img th:src="'/' + ${receiver.profileImg}" alt="사용자 프로필 사진"/>-->
-            <img src="/static/images/user-profile2.jpg" alt="원글 작성자 프로필 사진"  style="width: 55px; margin-right: 10px; border-radius: 50%;"/>
-            <h2 class="page-section-heading text-secondary mb-0 main-menu"
-                th:text="${sender.username} + '님이 보낸 후기'">
-            </h2>
-            <!-- Contents -->
-            <div class="container">
-                <h3 class="board-title" th:text="${sender.username} + '님의 여행 온도'"></h3>
-                <p class="board-temperature user-temp">
-                    <span th:class="|temp-${sender.temperature >= 30 and sender.temperature <= 40 ? '3' : (sender.temperature < 30 ? '5' : (sender.temperature > 40 ? '4' : ''))}|"
-                          th:text="${sender.temperature}"></span><span style="font-weight: 400; color: #6b6b6b; font-size: 22px; margin-left: 4px;">℃</span>
-                </p>
-                <!-- Grid Items -->
-                <div class="container read-reviews-all-wrap">
-                    <div class="review-list" th:each="review, idx : ${reviewList}">
-                        <a class="href-none" th:href="@{'/boards/' + ${review.boardId} + '/reviews/sender/' + ${review.id}}">
-                            <div class="review-top">
-                                <p class="review-top-left">
-                                    <span class="review-requests-profile">
-                                        <img src="/static/images/user-profile2.jpg" alt="원글 작성자 프로필 사진">
-                                    </span>
-                                    <span th:text="${review.senderUsername} + '님이 보낸 후기'"></span>
-                                </p>
-                                <p class="review-top-right">
-                                    <span th:text="${review.rating}"></span>
-                                </p>
-                            </div>
-                            <div class="review-middle" th:with="board=${boardList[idx.index]}">
-                                <div class="middle-left">
-                                    <img th:src="@{'/static/images/country/' + ${board.country} + '.jpg'}" alt="배경이미지">
+        <section class="container-content page-section portfolio col-md-9 col-lg-9" id="portfolio">
+            <!-- Menu -->
+            <div class="title-container">
+                <span class="img-container">
+                    <img class="sub-menu-icon" src="" id="sender-profileImg" alt="보낸 후기">
+                </span>
+                <div class="temp-container">
+                    <h2 class="page-section-heading text-secondary mb-0 main-menu" id="sender-username">보낸 후기</h2>
+                    <span class="title-text">님이 보낸 후기</span>
+                    <span id="user-temp"></span>
+                    <span>℃</span>
+                </div>
+            </div>
+            <!-- Grid Items -->
+            <div class="row justify-content-start">
+                <div class="row justify-content-start" id="accompany-container">
+                    <div class="board-item mx-auto">
+                        <a class="href-none">
+                            <div class="board-item-header">
+                                <div class="header-left">
+                                    <p class="item-date"></p>
                                 </div>
-                                <div class="middle-right">
-                                    <p th:text="${board.title}" class="item-title"></p>
-                                    <p th:text="${board.content}"></p>
+                                <div class="header-right">
+                                    <p id="status" class="status"></p>
                                 </div>
                             </div>
-                            <div class="review-bottom">
-                                <span th:text="${review.content}">후기 내용</span>
+                            <div class="board-item-bg">
+                                <p class="board-item-icon">
+                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">
+                                    <span id="country"></span>
+                                </p>
+                                <p class="board-item-img"></p>
+                            </div>
+                            <div class="board-item-info">
+                                <p class = "item-title"></p>
+                                <div class="item-contents">
+                                    <p id="message" class="message"></p>
+                                </div>
                             </div>
                         </a>
                     </div>
