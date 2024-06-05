@@ -44,9 +44,7 @@ public class AccompanyService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already exists.");
 
         Accompany savedAccompany = accompanyRepository.save(AccompanySenderRequestDto.toEntity(dto, authService.getUser(), board));
-        System.out.println("applicantPeople : " + board.getApplicantPeople());
         board.updateApplicantPeople();
-        System.out.println("applicantPeople after : " + board.getApplicantPeople());
         return AccompanySenderResponseDto.fromEntity(savedAccompany);
     }
 

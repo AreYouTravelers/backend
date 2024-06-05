@@ -3,9 +3,11 @@ package com.example.domain.reviews.service;
 import com.example.domain.accompany.domain.Accompany;
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
 import com.example.domain.accompany.repository.AccompanyRepository;
-import com.example.domain.boards.domain.Boards;
-import com.example.domain.boards.dto.response.BoardInfoResponseDto;
 import com.example.domain.boards.repository.BoardsRepository;
+import com.example.domain.reviews.domain.Reviews;
+import com.example.domain.reviews.dto.request.ReviewSenderRequestDto;
+import com.example.domain.reviews.dto.response.ReviewSenderResponseDto;
+import com.example.domain.reviews.repository.ReviewsRepository;
 import com.example.domain.users.repository.UsersRepository;
 //import com.example.domain.reviews.repository.ReviewsRepository;
 import com.example.domain.users.service.AuthService;
@@ -17,7 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,13 +27,13 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ReviewsService {
-//    private final ReviewsRepository repository;
+    private final ReviewsRepository reviewsRepository;
     private final AccompanyRepository accompanyRepository;
     private final BoardsRepository boardsRepository;
     private final UsersRepository usersRepository;
     private final AuthService authService;
 
-    // 후기 작성하기 전체 조회 페이지
+    // 후기 작성하기 전체 조회
     public List<AccompanySenderResponseDto> findAllReviewWrite() {
         List<AccompanySenderResponseDto> accompanySenderResponses = new ArrayList<>();
 
@@ -42,13 +43,28 @@ public class ReviewsService {
         return accompanySenderResponses;
     }
 
-    // 후기 작성하기 상세 조회 페이지
-    public BoardInfoResponseDto findReviewWrite(Long boardId) {
-        // 원본 게시글이 존재하지 않는 경우
-        Boards board = boardsRepository.findById(boardId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found."));
+    // 후기 작성 상세 조회
+    public AccompanySenderResponseDto findReviewWrite(Long accompanyId) {
+        // 동행 요청이 존재하지 않는 경우
+        Accompany accompany = accompanyRepository.findById(accompanyId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
 
-        return BoardInfoResponseDto.fromEntity(board);
+        return AccompanySenderResponseDto.fromEntity(accompany);
+    }
+
+    // 후기 작성 요청 (상세 조회 페이지)
+    public ReviewSenderResponseDto saveReivew(Long accompanyId, ReviewSenderRequestDto dto) {
+        // 동행 요청이 존재하지 않는 경우
+        Accompany accompany = accompanyRepository.findById(accompanyId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
+
+        // 후기 작성 중복 방지
+        Optional<Reviews> review = reviewsRepository.findByAccompanyIdAndUserId(accompanyId, authService.getUser().getId());
+        if (review.isPresent())
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already exists.");
+
+        Reviews savedReview = reviewsRepository.save(ReviewSenderRequestDto.toEntity(dto, accompany, authService.getUser()));
+        return ReviewSenderResponseDto.fromEntity(savedReview);
     }
 
 //
