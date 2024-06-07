@@ -6,6 +6,7 @@ import com.example.domain.accompany.repository.AccompanyRepository;
 import com.example.domain.boards.repository.BoardsRepository;
 import com.example.domain.reviews.domain.Reviews;
 import com.example.domain.reviews.dto.request.ReviewSenderRequestDto;
+import com.example.domain.reviews.dto.response.ReviewReceiverResponseDto;
 import com.example.domain.reviews.dto.response.ReviewSenderResponseDto;
 import com.example.domain.reviews.repository.ReviewsRepository;
 import com.example.domain.users.repository.UsersRepository;
@@ -118,6 +119,16 @@ public class ReviewsService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
 
         reviewsRepository.deleteById(id);
+    }
+
+    // 받은 후기 전체 조회
+    public List<ReviewReceiverResponseDto> findAllReceiverReview() {
+        List<ReviewReceiverResponseDto> reviewReceiverResponses = new ArrayList<>();
+
+        for (Reviews review : reviewsRepository.findAllByBoardUserId(authService.getUser().getId()))
+            reviewReceiverResponses.add(ReviewReceiverResponseDto.fromEntity(review));
+
+        return reviewReceiverResponses;
     }
 
 //

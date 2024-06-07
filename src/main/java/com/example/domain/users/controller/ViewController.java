@@ -34,7 +34,7 @@ public class ViewController {
 
     @GetMapping("/boards/reviews/receiver")
     public String readAllByReceiver() {
-        return "read-reviews-all-receiver";
+        return "review-received";
     }
 
 //    @GetMapping("/boards")
