@@ -44,6 +44,8 @@ fetch(`/api/review/sent/${id}`, {
         const boardStartDate = document.getElementById('board-start-date');
         const boardEndDate = document.getElementById('board-end-date');
         const message = document.getElementById('message');
+        const rating = document.getElementById('rating');
+        const formRange = document.getElementById('form-range');
         const currentTime = document.getElementById('current-time');
 
         if (data) {
@@ -63,6 +65,8 @@ fetch(`/api/review/sent/${id}`, {
             boardStartDate.innerText = data.requestedBoardInfoDto.startDate;
             boardEndDate.innerText = data.requestedBoardInfoDto.endDate;
             message.innerText = data.message;
+            rating.innerText = data.rating;
+            formRange.value = data.rating;
             currentTime.innerText = formatDate(data.updatedAt); // 변환된 날짜를 표시
         } else {
             console.error('No data received');
@@ -78,6 +82,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const updateButton = document.getElementById('update-button');
     const listButton = document.getElementById('list-button');
     const deleteButton = document.getElementById('delete-button');
+    const rating = document.getElementById('rating');
+    const formRange = document.getElementById('form-range');
 
     const updateForm = document.getElementById('updateForm');
 
@@ -87,10 +93,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 원래 메시지 값을 저장할 변수
     let originalMessage = message.value;
+    let originalRating = formRange.value;
 
     // 수정 버튼 클릭 시 입력 활성화
     editButton.addEventListener('click', function () {
         originalMessage = message.value; // 현재 메시지 값을 저장
+        originalRating = formRange.value; // 현재 별점을 저장
+        formRange.removeAttribute('disabled');
         message.removeAttribute('disabled');
         message.style.backgroundColor = ''; // 배경색을 원래대로 되돌림
         message.style.cursor = 'text'; // 커서를 텍스트 입력 가능하도록 변경
@@ -103,9 +112,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 취소 버튼 클릭 시 입력 비활성화 및 버튼 원래 상태로 복귀
     cancelButton.addEventListener('click', function () {
+        formRange.setAttribute('disabled', 'disabled');
         message.setAttribute('disabled', 'disabled');
         message.style.backgroundColor = '#e9ecef'; // 회색 배경
         message.value = originalMessage; // 원래 메시지 값으로 복원
+        rating.innerText = originalRating; // 원래 별점으로 복원
+        formRange.value = originalRating; // 원래 별점으로 복원
         editButton.style.display = 'block';
         cancelButton.style.display = 'none';
         updateButton.style.display = 'none';
@@ -116,9 +128,11 @@ document.addEventListener('DOMContentLoaded', function () {
     updateButton.addEventListener('click', function (event) {
         event.preventDefault();
         const formData = new FormData(updateForm);
-        const messageValue = formData.get('message');
 
-        fetch(`/api/accompany/sent/${id}`, {
+        const rating = document.getElementById('rating').innerText;
+        formData.append("rating", rating);
+
+        fetch(`/api/review/sent/${id}`, {
             method: 'PATCH',
             headers: {
                 'Authorization': 'Bearer ' + accessToken,
@@ -128,10 +142,10 @@ document.addEventListener('DOMContentLoaded', function () {
         })
             .then(response => {
                 if (response.ok) {
-                    alert('동행 요청이 업데이트되었습니다.');
-                    window.location.href = `/accompany/sent/${id}`;
+                    alert('후기가 업데이트되었습니다.');
+                    window.location.href = `/review/sent/${id}`;
                 } else {
-                    alert('동행 요청 수정에 실패했습니다.');
+                    alert('후기 수정에 실패했습니다.');
                 }
             })
             .catch(error => {
@@ -141,8 +155,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     deleteButton.addEventListener("click", function (event) {
         event.preventDefault();
-        if (confirm("동행 요청을 삭제하시겠습니까?")) {
-            fetch(`/api/accompany/sent/${id}`, {
+        if (confirm("후기를 삭제하시겠습니까?")) {
+            fetch(`/api/review/sent/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Bearer ' + accessToken,
@@ -151,17 +165,17 @@ document.addEventListener('DOMContentLoaded', function () {
             })
                 .then(response => {
                     if (response.ok) {
-                        alert("동행 요청이 삭제되었습니다.");
-                        window.location.href = `/accompany/sent`;
+                        alert("후기가 삭제되었습니다.");
+                        window.location.href = `/review/sent`;
                     } else {
-                        alert("동행 요청 삭제에 실패했습니다.");
+                        alert("후기 삭제에 실패했습니다.");
                     }
                 })
                 .catch(error => {
                     console.error('Network error:', error);
                 });
         } else {
-            alert("동행 요청 삭제가 취소되었습니다.");
+            alert("후기 삭제가 취소되었습니다.");
         }
     });
 });

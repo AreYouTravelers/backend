@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/static/css/styles2.css">
     <script src="/static/js/review-sent-detail.js"></script>
 </head>
-<body class="sender-read">
+<body class="sender-read review-write-detail">
 <th:block layout:fragment="content">
     <!-- Contents -->
     <div class="container container2">
@@ -36,13 +36,29 @@
             </a>
         </div>
         <div class="board-message">
-            <div class="form-info">
-                <h4 class="board-title">후기를 작성해주세요.</h4>
+            <div class="form-info" style="float: right;">
                 <button id="edit-button"> <!-- 수정 버튼 -->
                     <img src="/static/images/icon/icon-edit.png" alt="수정 버튼">
                 </button>
             </div>
             <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="put" id="updateForm">
+                <div class="rating">
+                    <div class="rating-container">
+                        <h3 class="board-title">여행은 어떠셨나요?</h3>
+                        <span id="rating" name="rating">3</span>
+                        <span>/5</span>
+                    </div>
+                    <div class="rating-info">
+                        <span class="rating-bad">아쉬웠어요😑</span>
+                        <input type="range" class="form-range" id="form-range" min="1" max="5" value="3" step=0.5 onchange="range_change(this)" disabled>
+                        <span class="rating-good">좋았어요😊</span>
+                    </div>
+                    <script>
+                        function range_change(obj) {
+                            document.getElementById('rating').innerText = obj.value;
+                        }
+                    </script>
+                </div>
                 <textarea name="message" id="message" rows="8" disabled="disabled"></textarea>
                 <p class="current-time">최근 작성일 : <span id="current-time"></span></p>
                 <div class="container-wrap justify-content-center mt-5 mb-5">

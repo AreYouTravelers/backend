@@ -3,6 +3,7 @@ package com.example.domain.reviews.domain;
 import com.example.domain.accompany.domain.Accompany;
 import com.example.domain.blackList.domain.Blacklist;
 import com.example.domain.country.domain.Country;
+import com.example.domain.reviews.dto.request.ReviewSenderRequestDto;
 import com.example.domain.users.domain.Users;
 import jakarta.persistence.*;
 import lombok.*;
@@ -43,4 +44,23 @@ public class Reviews {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void updateMessage(String newMessage) {
+        if (newMessage == null || newMessage.trim().isEmpty())
+            throw new IllegalArgumentException("Message cannot be empty");
+
+        this.message = newMessage;
+    }
+
+    public void updateRating(Double newRating) {
+        if (newRating == null)
+            throw new IllegalArgumentException("Rating cannot be empty");
+
+        this.rating = newRating;
+    }
 }
