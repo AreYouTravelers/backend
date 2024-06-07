@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>보낸 후기</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/styles2.css">
+    <script src="/static/js/review-sent-detail.js"></script>
+</head>
+<body class="sender-read">
+<th:block layout:fragment="content">
+    <!-- Contents -->
+    <div class="container container2">
+        <p class="sub-title-icon">
+            <img src="/static/images/icon/icon-review.png" alt="보낸 후기">
+        </p>
+        <h2>보낸 후기</h2>
+        <div class="title-container">
+            <h3 class="board-title">현재 게시글</h3>
+            <button type="button" class="btn btn-danger" id="delete-button">삭제</button>
+        </div>
+        <div class="original-board" id="original-board">
+            <a class="href-none" id="board-link">
+                <div class="original-left">
+                    <img src="/" id ="profile-image" alt="원글 작성자 프로필 사진" />
+                </div>
+                <div class="original-right">
+                    <div class="original-right-top" id="board-title"></div>
+                    <div class="original-right-bottom">
+                        <p>작성자: <span id="profile-username"></span> |</p>
+                        <p>여행지: <span id="board-country"></span> |</p>
+                        <p>기간: <span id="board-start-date"></span> ~ <span id="board-end-date"></span></p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="board-message">
+            <div class="form-info">
+                <h4 class="board-title">후기를 작성해주세요.</h4>
+                <button id="edit-button"> <!-- 수정 버튼 -->
+                    <img src="/static/images/icon/icon-edit.png" alt="수정 버튼">
+                </button>
+            </div>
+            <form th:action="@{'/boards/' + ${boardId} + '/sender-requests'}" th:method="put" id="updateForm">
+                <textarea name="message" id="message" rows="8" disabled="disabled"></textarea>
+                <p class="current-time">최근 작성일 : <span id="current-time"></span></p>
+                <div class="container-wrap justify-content-center mt-5 mb-5">
+                    <button type="button" class="btn btn-light" id="cancel-button" style="display: none; margin-right: 1em;">취소</button>
+                    <button type="button" class="btn btn-secondary" id="update-button" style="display: none;">수정</button>
+                    <button type="button" class="btn btn-light" id="list-button">
+                        <a href="/review/sent" class="href-none">목록</a>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

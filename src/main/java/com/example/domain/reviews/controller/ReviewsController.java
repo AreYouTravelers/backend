@@ -90,6 +90,23 @@ public class ReviewsController {
                 ));
     }
 
+    // 보낸 후기 상세 조회
+    @GetMapping("/review/sent/{id}")
+    public ResponseEntity<ApiSuccessResponse<ReviewSenderResponseDto>> getSenderReview (
+            @PathVariable("id") Long id,
+            HttpServletRequest servRequest
+    ) throws JsonProcessingException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        reviewsService.findSenderReview(id)
+                ));
+    }
+
+
+
 
 //    @GetMapping("/boards/{boardId}/reviews/write")
 //    public String createReview(
