@@ -25,6 +25,50 @@ function getStarRating(rating) {
     return starContainer;
 }
 
+
+// 발신자 정보 받아오기
+fetch(`/users/my-profile`, {
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer ' + accessToken,
+        'Content-Type': 'application/json'
+    }
+})
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error('발신자 정보 조회에 실패했습니다.');
+        }
+    })
+    .then(data => {
+        const senderProfileImg = document.getElementById('sender-profileImg');
+        const username = document.getElementById('sender-username');
+        const userTemp = document.getElementById('user-temp');
+
+        senderProfileImg.src = '/' + data.profileImg;
+        username.innerText = data.username;
+
+        const temp = data.temperature;
+        userTemp.innerText = temp;
+
+        let tempClass;
+        if (temp >= 30 && temp <= 39) {
+            tempClass = 'temp-3';
+        } else if (temp >= 40 && temp <= 49) {
+            tempClass = 'temp-4';
+        } else if (temp >= 50) {
+            tempClass = 'temp-5';
+        }
+        userTemp.className = tempClass;
+    })
+    .catch(error => {
+        console.error('발신자 정보 오류:', error);
+        alert('발신자 정보를 불러오는데 실패했습니다.');
+    });
+
+
+// 보낸 후기 리스트 요청
 fetch(`/api/review/sent`, {
     method: 'GET',
     headers: {
@@ -44,27 +88,6 @@ fetch(`/api/review/sent`, {
         console.log('Fetched data:', data); // 데이터를 로그에 출력하여 형식을 확인합니다.
 
         const container = document.getElementById('accompany-container'); // 데이터를 추가할 컨테이너 요소
-
-        const senderProfileImg = document.getElementById('sender-profileImg');
-        senderProfileImg.src = data.data[0].requestedUserInfoDto.profileImage;
-        const username = document.getElementById('sender-username');
-        username.innerText = data.data[0].requestedUserInfoDto.username;
-        // user-temp 요소 생성 및 추가
-        const userTemp = document.getElementById('user-temp');
-        userTemp.classList.add('temp-3');
-        userTemp.innerText = data.data[0].requestedUserInfoDto.temperature;
-        const temp = userTemp.innerText;
-
-        // 온도에 따라 클래스 변경
-        let tempClass;
-        if (temp >= 30 && temp <= 39) {
-            tempClass = 'temp-3';
-        } else if (temp >= 40 && temp <= 49) {
-            tempClass = 'temp-4';
-        } else if (temp >= 50) {
-            tempClass = 'temp-5';
-        }
-        userTemp.className = tempClass;
 
         if (data && Array.isArray(data.data)) {
             if (data.data.length === 0) {
