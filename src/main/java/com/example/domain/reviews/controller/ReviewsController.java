@@ -3,6 +3,7 @@ package com.example.domain.reviews.controller;
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
 import com.example.domain.jwt.JwtTokenUtils;
 import com.example.domain.reviews.dto.request.ReviewSenderRequestDto;
+import com.example.domain.reviews.dto.response.ReviewReceiverResponseDto;
 import com.example.domain.reviews.dto.response.ReviewSenderResponseDto;
 import com.example.domain.users.repository.UsersRepository;
 import com.example.domain.reviews.service.ReviewsService;
@@ -134,6 +135,20 @@ public class ReviewsController {
                         HttpStatus.OK,
                         servRequest.getServletPath(),
                         ("deleted complete")
+                ));
+    }
+
+    // 받은 후기 전체 조회
+    @GetMapping("/review/received")
+    public ResponseEntity<ApiSuccessResponse<List<ReviewReceiverResponseDto>>> getAllReceiverReview (
+            HttpServletRequest servRequest
+    ) throws JsonProcessingException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        reviewsService.findAllReceiverReview()
                 ));
     }
 

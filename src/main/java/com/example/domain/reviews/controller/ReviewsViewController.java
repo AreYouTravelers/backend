@@ -20,7 +20,7 @@ public class ReviewsViewController {
         return "review-write-detail";
     }
 
-    // 후기 작성 요청 (상세 조회 페이지)
+    // 보낸 후기 조회
     @GetMapping("/review/sent")
     public String reviewSent() {
         return "review-sent";
@@ -30,5 +30,11 @@ public class ReviewsViewController {
     @GetMapping("/review/sent/{id}")
     public String reviewSentDetail() {
         return "review-sent-detail";
+    }
+
+    // 받은 후기 조회
+    @GetMapping("/review/received")
+    public String reviewReceived() {
+        return "review-received";
     }
 }

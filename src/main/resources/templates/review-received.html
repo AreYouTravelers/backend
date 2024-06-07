@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>받은 후기</title>
+    <script src="/static/js/review-received.js"></script>
+    <script src="/static/js/mypage-nav.js"></script>
+</head>
+<body class="review-sent receiver">
+<th:block layout:fragment="content">
+    <!-- Contents -->
+    <div class="container container-wrap justify-content-between">
+        <!-- mypage nav-->
+        <th:block th:replace="~{layout/mypage-nav :: myPageFragment}"></th:block>
+        <section class="container-content page-section portfolio col-md-9 col-lg-9" id="portfolio">
+            <!-- Menu -->
+            <div class="title-container">
+                <span class="img-container">
+                    <img class="sub-menu-icon" src="" id="sender-profileImg" alt="받은 후기">
+                </span>
+                <div class="temp-container">
+                    <h2 class="page-section-heading text-secondary mb-0 main-menu" id="sender-username">받은 후기</h2>
+                    <span class="title-text">님이 받은 후기</span>
+                    <span id="user-temp"></span>
+                    <span>℃</span>
+                </div>
+            </div>
+            <!-- Grid Items -->
+            <div class="row justify-content-start">
+                <div class="row justify-content-start" id="accompany-container">
+                    <div class="board-item mx-auto">
+                        <a class="href-none">
+                            <div class="board-item-header">
+                                <div class="header-left">
+                                    <p class="item-date"></p>
+                                </div>
+                                <div class="header-right">
+                                    <p id="status" class="status"></p>
+                                </div>
+                            </div>
+                            <div class="board-item-bg">
+                                <p class="board-item-icon">
+                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">
+                                    <span id="country"></span>
+                                </p>
+                                <p class="board-item-img"></p>
+                            </div>
+                            <div class="board-item-info">
+                                <p class = "item-title"></p>
+                                <div class="item-contents">
+                                    <p id="message" class="message"></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</th:block>
+</body>
+</html>
