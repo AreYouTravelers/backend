@@ -62,22 +62,8 @@ fetch(`/api/review/write`, {
                 itemDateP.appendChild(endDateElement);
                 headerLeftDiv.appendChild(itemDateP);
 
-                // header-right 요소 생성
-                const headerRightDiv = document.createElement('div');
-                headerRightDiv.classList.add('header-right');
-
-                // status 요소 생성 및 추가
-                const statusElement = document.createElement('p');
-                statusElement.className = 'status';
-                statusElement.innerText =
-                    item.status === 'PENDING' ? '대기' :
-                        item.status === 'ACCEPTED' ? '수락' :
-                            item.status === 'REJECTED' ? '거절' : '알 수 없음';
-                headerRightDiv.appendChild(statusElement);
-
                 // header 요소들을 board-item-header에 추가
                 boardItemHeaderDiv.appendChild(headerLeftDiv);
-                boardItemHeaderDiv.appendChild(headerRightDiv);
 
                 // board-item-bg 요소 생성
                 const boardItemBgDiv = document.createElement('div');
