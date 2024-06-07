@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 
@@ -37,8 +38,10 @@ public class ReviewsService {
     public List<AccompanySenderResponseDto> findAllReviewWrite() {
         List<AccompanySenderResponseDto> accompanySenderResponses = new ArrayList<>();
 
-        for (Accompany accompany : accompanyRepository.findAllByUserIdAndBoardEndDateBefore(authService.getUser().getId(), LocalDate.now()))
-            accompanySenderResponses.add(AccompanySenderResponseDto.fromEntity(accompany));
+        for (Accompany accompany : accompanyRepository.findAllByUserIdAndBoardEndDateBefore(authService.getUser().getId(), LocalDate.now())) {
+            if (reviewsRepository.findByAccompanyId(accompany.getId()).isEmpty())
+                accompanySenderResponses.add(AccompanySenderResponseDto.fromEntity(accompany));
+        }
 
         return accompanySenderResponses;
     }
@@ -76,6 +79,45 @@ public class ReviewsService {
 
         return reviewSenderResponses;
 
+    }
+
+    // 보낸 후기 상세 조회
+    public ReviewSenderResponseDto findSenderReview(Long id) {
+        // 보낸후기가 존재하지 않는 경우
+        Reviews review = reviewsRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found."));
+
+        return ReviewSenderResponseDto.fromEntity(review);
+    }
+
+    // 보낸 후기 수정
+    @Transactional
+    public ReviewSenderResponseDto updateSenderReview(Long id, ReviewSenderRequestDto dto) {
+        // 후기가 존재하지 않는 경우
+        Reviews review = reviewsRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found."));
+
+        // 본인이 작성한 후기가 아닐 경우
+        if (!review.getUser().getId().equals(authService.getUser().getId()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
+
+        review.updateMessage(dto.getMessage());
+        review.updateRating(dto.getRating());
+
+        return ReviewSenderResponseDto.fromEntity(review);
+    }
+
+    // 보낸 후기 삭제
+    public void deleteSenderReview(Long id) {
+        // 보낸 후기가 존재하지 않는 경우
+        Reviews review = reviewsRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found."));
+
+        // 본인이 작성한 후기가 아닐 경우
+        if (!review.getUser().getId().equals(authService.getUser().getId()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
+
+        reviewsRepository.deleteById(id);
     }
 
 //

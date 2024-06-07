@@ -29,4 +29,6 @@ public interface ReviewsRepository extends JpaRepository<Reviews, Long> {
 
     @Query("SELECT a FROM Reviews a WHERE a.user.id = :userId AND a.deletedAt IS NULL ORDER BY a.createdAt DESC")
     List<Reviews> findAllByUserIdOrderByDesc(@Param("userId") Long userId);
+
+    Optional<Reviews> findByAccompanyId(Long id);
 }

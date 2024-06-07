@@ -25,4 +25,10 @@ public class ReviewsViewController {
     public String reviewSent() {
         return "review-sent";
     }
+
+    // 보낸 후기 상세 조회
+    @GetMapping("/review/sent/{id}")
+    public String reviewSentDetail() {
+        return "review-sent-detail";
+    }
 }
