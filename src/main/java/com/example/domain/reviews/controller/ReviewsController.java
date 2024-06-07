@@ -121,5 +121,21 @@ public class ReviewsController {
                 ));
     }
 
+    // 보낸 후기 삭제
+    @DeleteMapping("/review/sent/{id}")
+    public ResponseEntity<ApiSuccessResponse<String>> deleteSenderReview (
+            @PathVariable("id") Long id,
+            HttpServletRequest servRequest
+    ) throws JsonProcessingException {
+        reviewsService.deleteSenderReview(id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        ("deleted complete")
+                ));
+    }
+
 
 }

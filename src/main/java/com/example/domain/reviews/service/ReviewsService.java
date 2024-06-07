@@ -38,8 +38,10 @@ public class ReviewsService {
     public List<AccompanySenderResponseDto> findAllReviewWrite() {
         List<AccompanySenderResponseDto> accompanySenderResponses = new ArrayList<>();
 
-        for (Accompany accompany : accompanyRepository.findAllByUserIdAndBoardEndDateBefore(authService.getUser().getId(), LocalDate.now()))
-            accompanySenderResponses.add(AccompanySenderResponseDto.fromEntity(accompany));
+        for (Accompany accompany : accompanyRepository.findAllByUserIdAndBoardEndDateBefore(authService.getUser().getId(), LocalDate.now())) {
+            if (reviewsRepository.findByAccompanyId(accompany.getId()).isEmpty())
+                accompanySenderResponses.add(AccompanySenderResponseDto.fromEntity(accompany));
+        }
 
         return accompanySenderResponses;
     }
@@ -103,6 +105,19 @@ public class ReviewsService {
         review.updateRating(dto.getRating());
 
         return ReviewSenderResponseDto.fromEntity(review);
+    }
+
+    // 보낸 후기 삭제
+    public void deleteSenderReview(Long id) {
+        // 보낸 후기가 존재하지 않는 경우
+        Reviews review = reviewsRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found."));
+
+        // 본인이 작성한 후기가 아닐 경우
+        if (!review.getUser().getId().equals(authService.getUser().getId()))
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
+
+        reviewsRepository.deleteById(id);
     }
 
 //

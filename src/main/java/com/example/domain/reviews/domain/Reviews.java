@@ -7,9 +7,11 @@ import com.example.domain.reviews.dto.request.ReviewSenderRequestDto;
 import com.example.domain.users.domain.Users;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
 
 import java.time.LocalDateTime;
 
+@SQLDelete(sql = "UPDATE reviews SET deleted_at = current_timestamp(6) WHERE id = ?")
 @Entity
 @Getter
 @Setter
