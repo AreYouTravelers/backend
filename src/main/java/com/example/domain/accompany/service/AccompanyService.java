@@ -96,8 +96,8 @@ public class AccompanyService {
         if (!accompany.getUser().getId().equals(authService.getUser().getId()))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
 
-        // 이미 동행 응답이 된 경우
-        if (accompany.getStatus().equals(AccompanyRequestStatus.ACCEPTED))
+        // 이미 동행 응답이 된 경우 && 보낸 동행의 원본 게시글이 삭제되지 않은 경우
+        if (accompany.getStatus().equals(AccompanyRequestStatus.ACCEPTED) && accompany.getBoard().getDeletedAt() == null)
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already responded.");
 
         accompanyRepository.deleteById(id);
