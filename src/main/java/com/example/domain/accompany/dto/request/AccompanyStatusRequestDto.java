@@ -1,6 +1,5 @@
 package com.example.domain.accompany.dto.request;
 
-import com.example.domain.accompany.domain.AccompanyRequestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
