@@ -11,7 +11,7 @@ function updateCreatedAtField() {
     var hours = String(currentDateTime.getHours()).padStart(2, "0");
     var minutes = String(currentDateTime.getMinutes()).padStart(2, "0");
     var formattedDateTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes;
-    createdAtField.value = formattedDateTime;
+    createdAtField.innerText = formattedDateTime;
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -77,13 +77,11 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         originalMessage = message.value; // 현재 메시지 값을 저장
         maxPeople.removeAttribute('disabled');
-        startDate.removeAttribute('disabled');
-        endDate.removeAttribute('disabled');
         title.removeAttribute('disabled');
         message.removeAttribute('disabled');
         message.style.backgroundColor = ''; // 배경색을 원래대로 되돌림
         message.style.cursor = 'text'; // 커서를 텍스트 입력 가능하도록 변경
-        editButton.style.display = 'none';
+        editButton.style.visibility = 'hidden';
         cancelButton.style.display = 'block';
         updateButton.style.display = 'block';
         listButton.style.display = 'none';
@@ -94,16 +92,14 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // 취소 버튼 클릭 시 입력 비활성화 및 버튼 원래 상태로 복귀
-    cancelButton.addEventListener('click', function () {
+    cancelButton.addEventListener('click', function (event) {
         event.preventDefault();
         maxPeople.setAttribute('disabled', 'disabled');
-        startDate.setAttribute('disabled', 'disabled');
-        endDate.setAttribute('disabled', 'disabled');
         title.setAttribute('disabled', 'disabled');
         message.setAttribute('disabled', 'disabled');
         message.style.backgroundColor = '#e9ecef'; // 회색 배경
         message.value = originalMessage; // 원래 메시지 값으로 복원
-        editButton.style.display = 'block';
+        editButton.style.visibility = 'visible';
         cancelButton.style.display = 'none';
         updateButton.style.display = 'none';
         listButton.style.display = 'block';
