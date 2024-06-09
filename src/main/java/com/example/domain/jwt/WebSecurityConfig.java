@@ -45,19 +45,16 @@ public class WebSecurityConfig {
                                         "/signup",
                                         "/admin",
                                         "/mypage",
+                                        "/my-boards",
                                         "/account",
-                                        "/accompany",
-                                        "/accompany/**",
                                         "/boards/**",
                                         "/boards/{boardId}",
                                         "/token/reissue",
                                         "/reports/write",
-                                        "/sender-requests",
-                                        "/receiver-requests",
-                                        "/boards/{boardId}/reviews/sender/{id}",
+                                        "/accompany",
+                                        "/accompany/**",
                                         "/review/**",
                                         "/error"
-//                                        "/boards/reviews/receiver"
                                 )
                                 .permitAll() // 모든 사용자 허용
                                 .requestMatchers(
@@ -70,7 +67,6 @@ public class WebSecurityConfig {
                                         "/users/mbti",
                                         "/users/deactivate",
                                         "/admin/deactivate",
-//                                        "/boards/**",
                                         "/boards/categories"
                                 )
                                 .authenticated() // 인증된 사용자만 접근 허용
