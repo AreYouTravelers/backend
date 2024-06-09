@@ -2,7 +2,6 @@ package com.example.domain.accompany.dto.response;
 
 import com.example.domain.accompany.domain.Accompany;
 import com.example.domain.accompany.domain.AccompanyRequestStatus;
-import com.example.domain.boards.domain.Boards;
 import com.example.domain.boards.dto.response.BoardInfoResponseDto;
 import lombok.*;
 
