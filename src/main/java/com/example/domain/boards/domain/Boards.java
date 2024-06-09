@@ -87,11 +87,13 @@ public class Boards {
     }
 
     public void updateCurrentPeople(String newStatus) {
-        if (this.maxPeople <= this.currentPeople)
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Exceeded maximum capacity.");
-        if (newStatus.equals("수락"))
-            this.currentPeople++;
-        else if (newStatus.equals("거절"))
+        if (newStatus.equals("수락")) {
+            if (this.maxPeople <= this.currentPeople)
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Exceeded maximum capacity.");
+            else
+                this.currentPeople++;
+        }
+        if (newStatus.equals("거절"))
             this.currentPeople--;
     }
 }

@@ -106,13 +106,22 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify(data) // JSON 문자열로 변환하여 body에 포함
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else if (response.status === 409) {
+                    alert("동행 요청을 수락할 수 없습니다. 최대 인원을 초과했습니다.");
+                    throw new Error('Maximum capacity exceeded');
+                } else {
+                    alert("동행 요청 처리에 실패했습니다.");
+                    throw new Error('Server response error');
+                }
+            })
             .then(data => {
                 alert("동행 요청을 " + buttonValue + "하였습니다.");
                 console.log('Success:', data);
             })
             .catch((error) => {
-                alert("동행 요청에 실패하였습니다.");
                 console.error('Error:', error);
             });
         }
