@@ -159,6 +159,8 @@ public class AccompanyService {
             accompany.updateStatus(dto.getStatus()); // 현재상태 변경
         }
 
+        accompany.getBoard().updateStatus();
+
         return AccompanyReceiverResponseDto.fromEntity(accompany);
     }
 }
