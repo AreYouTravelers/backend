@@ -91,11 +91,11 @@ public class BoardsController {
         return "accompany";
     }
 
-    @GetMapping("/myboard")
-    public Page<BoardsMapping> readAllByUser(
-            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
-        return boardsService.readBoardsAllByUser(pageNumber);
-    }
+//    @GetMapping("/myboard")
+//    public Page<BoardsMapping> readAllByUser(
+//            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
+//        return boardsService.readBoardsAllByUser(pageNumber);
+//    }
 
     @GetMapping("/filtered")
     public List<BoardDto> getFilteredBoards(@RequestParam(value = "mbti") String mbtiCriteria) {

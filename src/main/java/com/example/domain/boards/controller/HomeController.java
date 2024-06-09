@@ -28,6 +28,11 @@ public class HomeController {
         return "index";
     }
 
+    @GetMapping("/my-boards")
+    public String myBoards() {
+        return "my-boards";
+    }
+
 //    @PostMapping("/")
 //    public String postSomething() {
 //        // POST 요청에 대한 처리
