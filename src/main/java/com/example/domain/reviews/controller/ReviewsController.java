@@ -152,5 +152,18 @@ public class ReviewsController {
                 ));
     }
 
-
+    // 받은 후기 상세 조회
+    @GetMapping("/review/received/{id}")
+    public ResponseEntity<ApiSuccessResponse<ReviewReceiverResponseDto>> getReceiverReview (
+            @PathVariable("id") Long id,
+            HttpServletRequest servRequest
+    ) throws JsonProcessingException {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiSuccessResponse.of(
+                        HttpStatus.OK,
+                        servRequest.getServletPath(),
+                        reviewsService.findReceiverReview(id)
+                ));
+    }
 }

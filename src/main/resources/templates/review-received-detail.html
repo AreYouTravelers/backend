@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+<head>
+    <title>받은 후기</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/styles2.css">
+    <script src="/static/js/review-received-detail.js"></script>
+</head>
+<body class="receiver-read receiver-review-detail review-sent">
+<th:block layout:fragment="content">
+    <!-- Contents -->
+    <div class="container">
+        <p class="sub-title-icon">
+            <img src="/static/images/icon/icon-receiver.png" alt="동행 요청하기">
+        </p>
+        <h2>받은 후기</h2>
+        <a class="href-none" id="board-link">
+            <span id="board-title"></span>
+        </a>
+        <div id="country-image">
+            <div class="profile-info-container">
+                <div class="form-info">
+                    <h4 class="board-title">후기 작성자</h4>
+                </div>
+                <div class="profile-info">
+                    <p class="profile-image">
+                        <img src="" id="profile-image" alt="프로필 이미지">
+                    </p>
+                    <p id="profile-username"></p>
+                    <p class="user-profile">
+                        <span id="profile-age"></span>
+                        <span class="--bs-gray-500">·</span>
+                        <span id="profile-mbti"></span>
+                        <span class="--bs-gray-500">·</span>
+                        <span id="profile-gender"></span>
+                    </p>
+                    <p id="profile-temp">
+                        <span class="temp-3"></span>
+                    </p>
+                </div>
+            </div>
+            <div class="board-message">
+                <div class="form-info">
+                    <h4 class="board-title">후기 메세지</h4>
+                    <div class="response-button rating-container">
+                        <span id="rating" class="stars"></span>
+                    </div>
+                </div>
+                <textarea name="message" id="message" rows="8" disabled="disabled"></textarea>
+                <p class="created-at">후기 작성일 : <span id="created-at"></span></p>
+            </div>
+        </div>
+        <div class="container-wrap justify-content-center mt-5 mb-5">
+            <button type="button" class="btn btn-light" id="list-button">
+                <a href="/review/received" class="href-none">목록</a>
+            </button>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>

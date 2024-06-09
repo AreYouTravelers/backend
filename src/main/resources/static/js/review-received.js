@@ -108,7 +108,7 @@ fetch(`/api/review/received`, {
 
                 const itemLink = document.createElement('a');
                 itemLink.classList.add('href-none');
-                itemLink.href = "/review/sent/" + item.id;
+                itemLink.href = "/review/received/" + item.id;
 
                 // board-item-header 요소 생성
                 const boardItemHeaderDiv = document.createElement('div');

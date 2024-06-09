@@ -37,4 +37,10 @@ public class ReviewsViewController {
     public String reviewReceived() {
         return "review-received";
     }
+
+    // 받은 후기 상세 조회
+    @GetMapping("/review/received/{id}")
+    public String reviewReceivedDetail() {
+        return "review-received-detail";
+    }
 }

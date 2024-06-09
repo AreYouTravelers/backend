@@ -131,6 +131,15 @@ public class ReviewsService {
         return reviewReceiverResponses;
     }
 
+    // 받은 후기 상세 조회
+    public ReviewReceiverResponseDto findReceiverReview(Long id) {
+        // 받은후기가 존재하지 않는 경우
+        Reviews review = reviewsRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found."));
+
+        return ReviewReceiverResponseDto.fromEntity(review);
+    }
+
 //
 ////    @Transactional
 //    public ReviewsDto createReview(Long boardId, ReviewsDto dto) {
