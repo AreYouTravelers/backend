@@ -93,4 +93,11 @@ public class Users {
             return null; // Handle the case where birthDate is null
         }
     }
+
+    public void updateTemperature(Double rating) {
+        // 평점이 3일 때는 온도 변화가 없으며,
+        // 평점이 3보다 크면 온도가 증가하고,
+        // 평점이 3보다 작으면 온도가 감소함
+        this.temperature += (rating - 3) * 1.5;
+    }
 }

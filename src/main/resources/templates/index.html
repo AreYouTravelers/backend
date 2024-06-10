@@ -59,7 +59,7 @@
                                     <span class="user-gender" th:text="${board.gender}"></span>
                                 </p>
                                 <p class="user-temp">
-                                    <span th:class="|temp-${board.temperature >= 30 and board.temperature <= 40 ? '3' : (board.temperature < 30 ? '5' : (board.temperature > 40 ? '4' : ''))}|"
+                                    <span th:class="|temp-${board.temperature <= 39 ? '3' : (board.temperature <= 49 ? '4' : (board.temperature > 49 ? '5' : ''))}|"
                                           th:text="${board.temperature}"></span>℃
                                 </p>
                                 <div class="item-contents">

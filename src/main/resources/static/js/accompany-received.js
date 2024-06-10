@@ -147,20 +147,19 @@ fetch(`/api/accompany/received`, {
                 const userTempP = document.createElement('p');
                 userTempP.classList.add('user-temp');
                 const tempSpan = document.createElement('span');
-                tempSpan.classList.add('temp-3');
                 tempSpan.innerText = item.requestedUsersInfoDto.temperature;
 
                 // 온도에 따라 클래스 변경
-                const temperature = item.requestedUsersInfoDto.temperature;
+                let temperature = item.requestedUsersInfoDto.temperature;
                 let tempClass;
-                if (temperature >= 30 && temperature <= 39) {
+                if (temperature <= 39) {
                     tempClass = 'temp-3';
-                } else if (temperature >= 40 && temperature <= 49) {
+                } else if (temperature <= 49) {
                     tempClass = 'temp-4';
-                } else if (temperature >= 50) {
+                } else if (temperature > 49) {
                     tempClass = 'temp-5';
                 }
-                tempSpan.className = tempClass;
+                tempSpan.className = tempClass; // 클래스 설정
 
                 // "℃" 기호와 함께 추가
                 const degreeSpan = document.createElement('span');

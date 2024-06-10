@@ -57,6 +57,7 @@ public class ReviewsService {
     }
 
     // 후기 작성 요청 (상세 조회 페이지)
+    @Transactional
     public ReviewSenderResponseDto saveReivew(Long accompanyId, ReviewSenderRequestDto dto) {
         // 동행 요청이 존재하지 않는 경우
         Accompany accompany = accompanyRepository.findById(accompanyId)
@@ -68,6 +69,8 @@ public class ReviewsService {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Review request already exists.");
 
         Reviews savedReview = reviewsRepository.save(ReviewSenderRequestDto.toEntity(dto, accompany, authService.getUser()));
+        // 저장된 평점으로 온도 조절
+        accompany.getBoard().getUser().updateTemperature(dto.getRating());
         return ReviewSenderResponseDto.fromEntity(savedReview);
     }
 
@@ -104,6 +107,8 @@ public class ReviewsService {
 
         review.updateMessage(dto.getMessage());
         review.updateRating(dto.getRating());
+        // 수정된 평점으로 온도 조절
+        review.getAccompany().getBoard().getUser().updateTemperature(dto.getRating());
 
         return ReviewSenderResponseDto.fromEntity(review);
     }
