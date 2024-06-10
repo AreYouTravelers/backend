@@ -183,18 +183,12 @@ public class BoardsService {
         if (board.isPresent()) {
             Country countryEntity = countryRepository.findById(dto.getCountryId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Country not found"));
-            BoardCategories categoriesEntity = boardCategoriesRepository.findById(dto.getCategoryId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "BoardCategory not found"));
             Users userEntity = authService.getUser();
             if (board.get().getUser().getId().equals(userEntity.getId())) {
                 Boards boardsEntity = board.get();
-                boardsEntity.setCountry(countryEntity);
-                boardsEntity.setBoardCategory(categoriesEntity);
                 boardsEntity.setTitle(dto.getTitle());
                 boardsEntity.setContent(dto.getContent());
                 boardsEntity.setMaxPeople(dto.getMaxPeople());
-                boardsEntity.setStartDate(dto.getStartDate());
-                boardsEntity.setEndDate(dto.getEndDate());
                 boardsEntity.setUpdatedAt(LocalDateTime.now());
                 return dto.fromEntity(boardsRepository.save(boardsEntity));
             } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "본인의 게시물이 아닙니다.");

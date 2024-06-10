@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const title = document.getElementById('title');
     const message = document.getElementById('message');
 
-
     updateCreatedAtField();
     // 작성일 업데이트 간격 설정 (예: 1분마다 업데이트)
     setInterval(updateCreatedAtField, 60000); // 60000 밀리초 = 1분
@@ -41,16 +40,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // 선택된 값을 Long 형으로 파싱
         const selectedCountry = document.getElementById("country").value;
         const countryId = parseInt(selectedCountry);
-        const selectedCategory = document.getElementById("category").value;
-        const categoryId = parseInt(selectedCategory);
-
-        console.log("Selected Country ID:", countryId);
-        console.log("Selected Category ID:", categoryId);
 
         // FormData에 Long 형식의 'country' 값을 추가
         formData.append('countryId', countryId);
-        formData.append('categoryId', categoryId);;
-
 
         fetch(`/boards/${boardId}`, {
             method: 'PUT',
