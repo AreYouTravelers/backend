@@ -49,15 +49,15 @@ fetch(`/users/my-profile`, {
         senderProfileImg.src = '/' + data.profileImg;
         username.innerText = data.username;
 
-        const temp = data.temperature;
-        userTemp.innerText = temp;
+        const temperature = data.temperature;
+        userTemp.innerText = temperature;
 
         let tempClass;
-        if (temp >= 30 && temp <= 39) {
+        if (temperature <= 39) {
             tempClass = 'temp-3';
-        } else if (temp >= 40 && temp <= 49) {
+        } else if (temperature <= 49) {
             tempClass = 'temp-4';
-        } else if (temp >= 50) {
+        } else if (temperature > 49) {
             tempClass = 'temp-5';
         }
         userTemp.className = tempClass;

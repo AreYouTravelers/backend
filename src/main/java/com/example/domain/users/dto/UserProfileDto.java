@@ -4,6 +4,8 @@ import com.example.domain.users.domain.Users;
 import com.example.domain.users.domain.UsersRole;
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -32,7 +34,9 @@ public class UserProfileDto {
         dto.setGender(entity.getGender());
         dto.setRole(entity.getRole());
         dto.setFullName(entity.getFullName());
-        dto.setTemperature(entity.getTemperature());
+        BigDecimal temperature = BigDecimal.valueOf(entity.getTemperature());
+        temperature = temperature.setScale(1, RoundingMode.HALF_UP);
+        dto.setTemperature(temperature.doubleValue());
         dto.setBirthDate(entity.getBirthDate());
         dto.setCreatedAt(entity.getCreatedAt());
         return dto;

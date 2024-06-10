@@ -34,6 +34,16 @@ fetch('/users/my-profile', {
         profileFullname.innerText = data.fullName;
         infoMbti.innerText = data.mbti;
         infoTemp.innerText = data.temperature;
+        let tempClass;
+        if (data.temperature <= 39) {
+            tempClass = 'temp-3';
+        } else if (data.temperature <= 49) {
+            tempClass = 'temp-4';
+        } else if (data.temperature > 49) {
+            tempClass = 'temp-5';
+        }
+        console.log(tempClass);
+        infoTemp.className = tempClass;
         infoGender.innerText = data.gender;
 
         fullNameInput.value = data.fullName;

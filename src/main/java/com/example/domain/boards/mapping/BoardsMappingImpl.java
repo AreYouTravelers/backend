@@ -3,6 +3,8 @@ package com.example.domain.boards.mapping;
 import com.example.domain.boards.domain.Boards;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -91,7 +93,11 @@ public class BoardsMappingImpl implements BoardsMapping {
     public String getGender() { return boards.getUser().getGender(); }
 
     @Override
-    public Double getTemperature() { return boards.getUser().getTemperature(); }
+    public Double getTemperature() {
+        BigDecimal temperature = BigDecimal.valueOf(boards.getUser().getTemperature());
+        temperature = temperature.setScale(1, RoundingMode.HALF_UP);
+        return temperature.doubleValue();
+    }
 
     @Override
     public String getMbti() { return boards.getUser().getMbti(); }

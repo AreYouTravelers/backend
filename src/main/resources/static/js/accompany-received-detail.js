@@ -56,13 +56,13 @@ fetch(`/api/accompany/received/${id}`, {
             profileGender.innerText = data.requestedUsersInfoDto.gender;
             profileTemp.innerHTML = `<span>${data.requestedUsersInfoDto.temperature}</span>℃`;
 
-            const tempValue = data.requestedUsersInfoDto.temperature;
-            let tempClass = '';
-            if (tempValue >= 30 && tempValue <= 39) {
+            const temperature = data.requestedUsersInfoDto.temperature;
+            let tempClass;
+            if (temperature <= 39) {
                 tempClass = 'temp-3';
-            } else if (tempValue >= 40 && tempValue <= 49) {
+            } else if (temperature <= 49) {
                 tempClass = 'temp-4';
-            } else if (tempValue >= 50) {
+            } else if (temperature > 49) {
                 tempClass = 'temp-5';
             }
             profileTemp.querySelector('span').className = tempClass;
