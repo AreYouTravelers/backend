@@ -68,7 +68,7 @@ fetch(`/api/accompany/received/${id}`, {
             profileTemp.querySelector('span').className = tempClass;
 
             boardTitle.innerText = '< ' + data.requestedBoardInfoDto.title;
-            message.innerText = data.message;
+            message.value = data.message;
             createdAt.innerText = formattedDate;
         } else {
             console.error('No data received');

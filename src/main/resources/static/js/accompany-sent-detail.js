@@ -47,6 +47,8 @@ fetch(`/api/accompany/sent/${id}`, {
         const boardEndDate = document.getElementById('board-end-date');
         const message = document.getElementById('message');
         const currentTime = document.getElementById('current-time');
+        let responseStatusP = document.querySelector('.response-status');
+        let responseStatusTitleSpan = document.getElementById('status-title');
 
         if (data) {
             if (data.requestedBoardInfoDto.deletedAt == null) {
@@ -62,14 +64,19 @@ fetch(`/api/accompany/sent/${id}`, {
                 data.status === 'PENDING' ? '대기' :
                     data.status === 'ACCEPTED' ? '수락' :
                         data.status === 'REJECTED' ? '거절' : '알 수 없음';
-            statusTime.innerText = formatDate(data.statusRespondedAt);
+            if (data.status !== 'PENDING')
+                statusTime.innerText = formatDate(data.statusRespondedAt);
+            else {
+                responseStatusP.style.width = '11%';
+                responseStatusTitleSpan.style.paddingRight = '0';
+            }
             profileUsername.innerText = data.requestedBoardInfoDto.username;
             profileImage.src = data.requestedBoardInfoDto.userProfileImage;
             boardTitle.innerText = data.requestedBoardInfoDto.title;
             boardCountry.innerText = data.requestedBoardInfoDto.country;
             boardStartDate.innerText = data.requestedBoardInfoDto.startDate;
             boardEndDate.innerText = data.requestedBoardInfoDto.endDate;
-            message.innerText = data.message;
+            message.value = data.message;
             currentTime.innerText = formatDate(data.updatedAt); // 변환된 날짜를 표시
         } else {
             console.error('No data received');
