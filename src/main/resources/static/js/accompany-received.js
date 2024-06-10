@@ -23,7 +23,7 @@ fetch(`/api/accompany/received`, {
 
         if (data && Array.isArray(data.data)) {
             if (data.data.length === 0) {
-                container.innerHTML = '<p>보낸 요청이 없습니다.</p>';
+                container.innerHTML = '<p>받은 요청이 없습니다.</p>';
                 return;
             }
 

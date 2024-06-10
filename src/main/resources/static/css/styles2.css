@@ -164,8 +164,8 @@ footer p {font-weight: 300; font-size: 14px;}
 /* 마이페이지 - 보낸 동행 상세페이지 */
 .sender-read .sub-title-icon {margin-top: 13em;}
 .sender-read h2 {margin-bottom: 0.5em; font-size: 1.6rem; text-align: center;}
-.sender-read .response-status {display: inline-block; padding: 0.5em 1em; background-color: #ffffff; border: 2px solid #f0f0f0; border-radius: 30px; margin: 0.5em 0 4em 17em; font-size: 15px; box-shadow: 0 0 8px 1px #ebebeb;}
-.sender-read .response-status #status-title {padding-right: 8px; color: #333;}
+.sender-read .response-status {display: block; width: 30%; margin: 18px auto; text-align: center; padding: 0.5em 1em; background-color: #ffffff; border: 2px solid #f0f0f0; border-radius: 30px; font-size: 15px; box-shadow: 0 0 8px 1px #ebebeb;}
+.sender-read .response-status #status-title {color: #333; padding-right: 8px;}
 .sender-read .response-status #status-time {color: #4f4f4f;}
 .sender-read .board-title {font-weight: 500; margin-bottom: 15px; font-size: 1.1rem; color: #333;}
 .sender-read .title-container {display: flex; justify-content: space-between; position: relative;}
