@@ -41,12 +41,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json(); // 응답을 JSON으로 파싱
             })
             .then(data => {
-                const boardContainer = document.querySelector('.row.justify-content-center');
+                const boardContainer = document.querySelector('.row.justify-content-start');
                 boardContainer.innerHTML = '';
 
                 data.content.forEach(board => {
-                    const boardItem = `
-                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
+                    const boardItem = `<div class="col-md-6 col-lg-3 col-lg-3-2 mb-5">
                     <h3>${board.title}</h3>
                     <p>${board.content}</p>
                     <!-- 필요한 다른 필드들도 여기에 추가 가능 -->
