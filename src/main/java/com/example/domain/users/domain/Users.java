@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SQLDelete(sql = "UPDATE users SET deleted_at = current_timestamp WHERE id = ?")
-@Where(clause = "deleted_at is null")
+//@Where(clause = "deleted_at is null")
 @Entity
 @Getter
 @Setter

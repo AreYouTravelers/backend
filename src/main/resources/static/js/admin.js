@@ -20,6 +20,8 @@ function fetchUserList(page, size) {
             userList.innerHTML = '';
             pagination.innerHTML = '';
 
+            console.log(data);
+
             data.content.forEach(user => {
                 // 날짜 및 시간 형식 변경
                 const createdAtDate = new Date(user.createdAt);
@@ -30,6 +32,7 @@ function fetchUserList(page, size) {
                 row.innerHTML = `
                     <td>${user.fullName}</td>
                     <td>${user.username}</td>
+                    <td>${user.role}</td>
                     <td>${user.email}</td>
                     <td>${user.mbti}</td>
                     <td>${user.temperature}℃</td>
@@ -46,6 +49,7 @@ function fetchUserList(page, size) {
                 const link = document.createElement('a');
                 link.href = '#';
                 link.style = 'margin-right : 5px';
+                link.style.color ='#4Cb7ef';
                 link.innerText = i;
                 link.addEventListener('click', () => fetchUserList(i, size));
                 li.appendChild(link);
