@@ -20,11 +20,13 @@ public interface ReviewsRepository extends JpaRepository<Reviews, Long> {
 
     Optional<Reviews> findByAccompanyId(Long id);
 
-    @Query("SELECT a FROM Reviews a WHERE a.user.id = :userId AND a.deletedAt IS NULL ORDER BY a.createdAt DESC")
+    @Query("SELECT a FROM Reviews a WHERE a.user.id = :userId AND a.deletedAt IS NULL " +
+            "AND a.accompany.board.user.deletedAt IS NULL " +
+            "ORDER BY a.createdAt DESC")
     List<Reviews> findAllByUserIdOrderByDesc(@Param("userId") Long userId);
 
-    @Query("SELECT a FROM Reviews a WHERE a.deletedAt IS NULL AND " +
-            "a.accompany.board.user.id = :userId AND a.accompany.board.deletedAt IS NULL " +
+    @Query("SELECT a FROM Reviews a WHERE a.deletedAt IS NULL AND a.user.deletedAt IS NULL " +
+            "AND a.accompany.board.user.id = :userId AND a.accompany.board.deletedAt IS NULL " +
             "ORDER BY a.createdAt DESC")
     List<Reviews> findAllByBoardUserId(@Param("userId") Long userId);
 }

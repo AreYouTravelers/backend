@@ -109,19 +109,22 @@ public class UsersService {
     // 회원 정보 리스트 조회 (관리자용)
     public Page<UserProfileDto> getProfileList(int page, int size) {
         // 관리자 인지 검증
+        log.info("서비스 실행 시작");
         Users currentUser = authService.getUser();
         UsersRole currentUserRole = currentUser.getRole();
+        log.info("현재 로그인한 유저 권한 받아옴");
 
         if (!currentUserRole.equals(UsersRole.ADMIN))
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "관리자만 사용 가능합니다.");
+        log.info("ADMIN 권한 비교 완료");
 
         // 회원, 가이드만 조회되도록 리스트 추가
-        List<String> allowedRolesList = Arrays.asList("회원", "가이드");
+        List<UsersRole> allowedRolesList = Arrays.asList(UsersRole.MEMBER, UsersRole.GUIDE);
 
         Pageable pageable = PageRequest.of(page, size,
                 Sort.by("id")
         );
-        return usersRepository.findAllByRoleIn(allowedRolesList, pageable)
+        return usersRepository.findAllByDeletedAtIsNullAndRoleIn(allowedRolesList, pageable)
                 .map(UserProfileDto::fromEntity);
     }
 
