@@ -124,7 +124,7 @@ public class BoardsService {
     public Page<BoardsMapping> readBoardsAll(Integer pageNumber) {
 //        UsersEntity userEntity = authService.getUser();
         Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").descending());
-        Page<Boards> boardsPage = boardsRepository.findAllByDeletedAtIsNull(pageable);
+        Page<Boards> boardsPage = boardsRepository.findAllByDeletedAtIsNullAndUserDeletedAtIsNull(pageable);
         List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
                 .map(this::createBoardsMapping)
                 .collect(Collectors.toList());
@@ -137,7 +137,7 @@ public class BoardsService {
             Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").descending());
 
             // 메서드 이름 및 매개변수 수정
-            Page<Boards> boardsPage = boardsRepository.findAllByCountryIdAndBoardCategoryIdAndUser_MbtiIn(countryId, categoryId, mbtiList, pageable);
+            Page<Boards> boardsPage = boardsRepository.findAllByCountryIdAndBoardCategoryIdAndUserDeletedAtIsNullAndUser_MbtiIn(countryId, categoryId, mbtiList, pageable);
 
             List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
                     .map(this::createBoardsMapping)

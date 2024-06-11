@@ -16,9 +16,9 @@ public interface BoardsRepository extends JpaRepository<Boards, Long> {
 //    Page<BoardsEntity> findAllByCountryIdAndBoardCategoryIdAndUser_MbtiContaining(Long countryId, Long categoryId, String mbtiCriteria, Pageable pageable);
     Page<Boards> findAllByCountryIdAndBoardCategoryId(Long countryId, Long categoryId, Pageable pageable);
 
-    Page<Boards> findAllByCountryIdAndBoardCategoryIdAndUser_MbtiIn(Long countryId, Long categoryId, List<String> mbtiList, Pageable pageable);
+    Page<Boards> findAllByCountryIdAndBoardCategoryIdAndUserDeletedAtIsNullAndUser_MbtiIn(Long countryId, Long categoryId, List<String> mbtiList, Pageable pageable);
 
-    Page<Boards> findAllByDeletedAtIsNull(Pageable pageable);
+    Page<Boards> findAllByDeletedAtIsNullAndUserDeletedAtIsNull(Pageable pageable);
 
     Page<Boards> findAllByUser(Optional<Users> usersEntity, Pageable pageable);
 
