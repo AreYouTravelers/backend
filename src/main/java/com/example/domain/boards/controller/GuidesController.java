@@ -1,4 +1,4 @@
-package com.example.domain.users.controller;
+package com.example.domain.boards.controller;
 
 import com.example.domain.boards.dto.BoardDto;
 import com.example.domain.boards.mapping.BoardsMapping;
@@ -42,7 +42,7 @@ public class GuidesController {
             @RequestBody BoardDto dto, Model model) {
         BoardDto result = boardsService.createBoard(dto);
         model.addAttribute("dto", result);
-        return "redirect:/";
+        return "guide-filter";
     }
 
     @GetMapping("/{id}")
@@ -64,7 +64,7 @@ public class GuidesController {
         model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("boardsPage", boardsPage);
-        return "guide-home";
+        return "guide";
     }
 
     @GetMapping("/filter")
@@ -81,7 +81,7 @@ public class GuidesController {
         // 호출한 서비스 결과를 "boardsPage"라는 이름으로 모델에 추가
         Page<BoardsMapping> boardsPage = boardsService.readBoardsAllByCountryAndCategoryAndMbti(countryId, categoryId, mbtiCriteria, pageNumber);
         model.addAttribute("boardsPage", boardsPage);
-        return "guide";
+        return "guide-filter";
     }
 
     @PutMapping("/{id}")
@@ -99,6 +99,6 @@ public class GuidesController {
             @PathVariable("id") Long id) {
         BoardDto result = boardsService.readBoard(id);
         boardsService.deleteBoard(id);
-        return "guide-home";
+        return "guide";
     }
 }
