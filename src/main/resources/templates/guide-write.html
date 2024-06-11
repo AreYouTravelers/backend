@@ -3,9 +3,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-    <title>가이드 신청하기</title>
+    <title>가이드 구하기</title>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> <!--    mixed content 해결 -->
-    <script src="/static/js/guideWrite.js"></script>
+    <script src="/static/js/guide-write.js"></script>
 </head>
 <body class="board-write">
 <th:block layout:fragment="content">
@@ -14,11 +14,22 @@
         <p class="sub-title-icon">
             <img src="/static/images/icon/icon-guide.png" alt="가이드 신청하기">
         </p>
-        <h2>가이드 신청하기</h2>
+        <h2>가이드 구하기</h2>
         <form th:action="@{'/boards/guide/write'}" th:method="post" id="postForm">
             <div class="board-inner mb-5">
+                <div class="col-md-12 col-lg-12" style="display: none;">
+                    <label for="category" class="form-label">카테고리</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="" disabled>카테고리를 선택하세요</option>
+                        <option th:each="category : ${categories}"
+                                th:value="${category.id}"
+                                th:text="${category.category}"
+                                th:selected="${category.category} == 가이드" disabled>
+                        </option>
+                    </select>
+                </div>
                 <div class="container-wrap mb-3">
-                    <div class="col-md-4 col-lg-4 me-3">
+                    <div class="col-md-3 col-lg-3 me-3">
                         <label for="country" class="form-label">여행지</label>
                         <select class="form-select" id="country" name="country" required>
                             <option value="">여행지</option>
@@ -29,23 +40,6 @@
                         </select>
                     </div>
                     <div class="col-md-3 col-lg-3 me-3">
-                        <label for="category" class="form-label">카테고리</label>
-                        <select class="form-select" id="category" name="category" required>
-                            <option value="" disabled>카테고리를 선택하세요</option>
-                            <option th:each="category : ${categories}"
-                                    th:value="${category.id}"
-                                    th:text="${category.category}"
-                                    th:selected="${category.category} == 가이드" disabled>
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 col-lg-2">
-                        <label for="people" class="form-label">총 인원수</label>
-                        <input type="text" class="form-control" id="people" name="people" required>
-                    </div>
-                </div>
-                <div class="container-wrap mb-3">
-                    <div class="col-md-3 col-lg-3 me-3">
                         <label for="startDate" class="form-label">시작일</label>
                         <input type="date" class="form-control" id="startDate" name="startDate" required>
                     </div>
@@ -53,33 +47,52 @@
                         <label for="endDate" class="form-label">종료일</label>
                         <input type="date" class="form-control" id="endDate" name="endDate" required>
                     </div>
-                    <div class="col-md-3 col-lg-3 me-3">
-                        <label for="status" class="form-label">상태</label>
-                        <input type="text" class="form-control" id="status" name="status" value="모집중" disabled>
-                    </div>
-                    <div class="col-md-3 col-lg-3">
-                        <label for="createdAt" class="form-label">작성일</label>
-                        <input type="text" class="form-control" id="createdAt" name="createdAt" disabled>
+                    <div class="col-md-3 col-lg-2">
+                        <label for="maxPeople" class="form-label">여행 인원</label>
+                        <input type="text" class="form-control" id="maxPeople" name="maxPeople" required>
                     </div>
                 </div>
             </div>
             <div class="mb-5">
                 <div class="container-wrap mb-3">
-                    <div class="col-md-10 col-lg-10">
+                    <div class="col-md-10 col-lg-10 mb-3">
                         <label for="title" class="form-label">제목</label>
-                        <input type="text" class="form-control" id="title" name="title" required  placeholder="예시) 겨울 파리 여행 가이드 구합니다!" style="padding: 1em; border: none; box-shadow: 0px 3px 12px 2px #7a7a7a54;">
+                        <input type="text" class="form-control" id="title" name="title" required  placeholder="예시) 🌟바르셀로나 여행 가이드 구합니다!🌟" style="padding: 1em; border: none; box-shadow: 0px 3px 12px 2px #7a7a7a54;">
                     </div>
                 </div>
                 <div class="container-wrap">
                     <div class="col-md-10 col-lg-10">
                         <label for="content" class="form-label">내용</label>
-                        <textarea class="form-control" id="content" name="content" rows="8" placeholder="예시) 안녕하세요. 23살 여자입니다. 파리 여행 가이드 구해요..!" required style="padding: 1em; border: none; box-shadow: 0px 3px 12px 2px #7a7a7a54;"></textarea>
+                        <textarea class="form-control" id="content" name="content" rows="8" placeholder="예시) 안녕하세요!
+
+다가오는 여름, 활기차고 매력적인 바르셀로나로 여행을 계획 중인 20대 직장인 여성입니다. 바르셀로나의 역사와 문화를 깊이 체험하고자 현지 가이드를 찾고 있어요.
+
+여행 기간: 7월 10일 ~ 7월 17일 (조정 가능)
+
+🌈 찾고 있는 가이드의 조건
+- 현지 지식 풍부: 바르셀로나의 역사, 문화, 건축에 대해 깊이 있는 지식을 가지고 계신 분
+- 언어 능력: 영어 또는 한국어로 유창하게 소통 가능한 분
+- 유연한 일정: 저희 일정에 맞추어 유연하게 투어 일정을 조정할 수 있는 분
+- 다양한 경험 제공: 주요 관광지뿐만 아니라 숨겨진 명소와 로컬 맛집 등을 소개해 주실 수 있는 분
+
+🗺️ 희망하는 여행 일정
+- 가우디 투어: 사그라다 파밀리아, 카사 밀라, 파르크 구엘 등 가우디의 걸작들을 깊이 있게 탐방하고 싶습니다.
+- 고딕 지구 산책: 고딕 지구와 바르셀로나 대성당, 람블라스 거리 등을 걸으며 중세 도시의 매력에 빠져보기.
+- 미식 투어: 현지 타파스 바와 레스토랑을 방문해 바르셀로나의 다양한 맛을 체험하고 싶습니다.
+- 해변과 야경: 바르셀로네타 해변에서의 여유로운 시간과 몬주익 언덕에서 야경 감상.
+- 문화 체험: 미술관, 박물관 방문 및 현지 공연 관람으로 바르셀로나의 문화를 느껴보고 싶습니다.
+
+저는 여유롭고 자유로운 여행을 좋아하며, 새로운 경험을 즐기는 성격입니다. 바르셀로나에서 함께 잊지 못할 추억을 만들고, 즐거운 시간을 보낼 수 있는 분과 함께하고 싶습니다.
+
+함께 바르셀로나의 매력을 탐험하고, 소중한 추억을 만들어 갈 분들의 많은 연락 기다립니다! 이 도시에서의 모험이 기대됩니다. 부담 없이 연락 주세요!
+
+감사합니다 😊" required style="padding: 1em; border: none; box-shadow: 0px 3px 12px 2px #7a7a7a54;"></textarea>
                     </div>
                 </div>
             </div>
-            <div class="container-wrap col-md-10 col-lg-10 justify-content-between" style="margin: 0 auto;">
-                <a href="/boards/guide" class="btn btn-outline-secondary">목록</a>
-                <button class="btn btn-primary" id="postButton">글쓰기</button>
+            <div class="container-wrap col-md-10 col-lg-10 justify-content-center" style="margin: 0 auto;">
+                <a href="/boards/guide" class="btn btn-light" style="margin-right: 1em;">목록</a>
+                <button class="btn btn-secondary" id="postButton">글쓰기</button>
             </div>
         </form>
     </div>
