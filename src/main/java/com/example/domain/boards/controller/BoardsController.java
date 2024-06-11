@@ -88,7 +88,7 @@ public class BoardsController {
         // 호출한 서비스 결과를 "boardsPage"라는 이름으로 모델에 추가
         Page<BoardsMapping> boardsPage = boardsService.readBoardsAllByCountryAndCategoryAndMbti(countryId, categoryId, mbtiCriteria, pageNumber);
         model.addAttribute("boardsPage", boardsPage);
-        return "accompany";
+        return "boards-filter";
     }
 
 //    @GetMapping("/myboard")
@@ -118,6 +118,6 @@ public class BoardsController {
             @PathVariable("id") Long id) {
         BoardDto result = boardsService.readBoard(id);
         boardsService.deleteBoard(id);
-        return "accompany";
+        return "boards-filter";
     }
 }

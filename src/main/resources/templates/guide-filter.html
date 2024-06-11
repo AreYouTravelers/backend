@@ -11,7 +11,7 @@
   <section class="page-section portfolio" id="portfolio">
     <div class="container">
       <!-- Main Menu -->
-      <img class="main-menu-icon" src="/static/images/icon/icon-guide.png" alt="가이드 신청하기">
+      <img class="main-menu-icon" src="/static/images/icon/icon-guide.png" alt="가이드 구하기">
       <h2 class="page-section-heading text-secondary mb-0 main-menu">가이드 구하기</h2>
       <!-- Main Grid Items -->
       <form th:action="@{'/boards/guide/filter'}" th:method="get" id="getForm" class="row gy-2 gx-3 align-items-center">
@@ -61,9 +61,7 @@
                 </div>
                 <div class="header-right">
                   <p class="item-ing">
-                    <span class="min-num">1</span>
-                    <span>/</span>
-                    <span class="max-num" th:text="${board.people}">3</span>
+                    <span class="status" th:text="${board.status}"></span>
                   </p>
                 </div>
               </div>
@@ -87,10 +85,12 @@
                   <span class="user-gender" th:text="${board.gender}"></span>
                 </p>
                 <p class="user-temp">
-                  <span th:class="|temp-${board.temperature >= 30 and board.temperature <= 40 ? '3' : (board.temperature < 30 ? '5' : (board.temperature > 40 ? '4' : ''))}|"
-                        th:text="${board.temperature}"></span>℃
+                                    <span th:class="|temp-${board.temperature >= 30 and board.temperature <= 40 ? '3' : (board.temperature < 30 ? '5' : (board.temperature > 40 ? '4' : ''))}|"
+                                          th:text="${board.temperature}"></span>℃
                 </p>
-                <p class="item-contents" th:text="${board.content}"></p>
+                <div class="item-contents">
+                  <p th:text="${board.content}"></p>
+                </div>
               </div>
             </a>
           </div>
