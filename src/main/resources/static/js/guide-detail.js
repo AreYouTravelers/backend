@@ -1,6 +1,6 @@
 // accessToken 불러오기
 let accessToken = localStorage.getItem('accessToken');
-const boardId = window.location.pathname.split("/")[2];
+const boardId = window.location.pathname.split("/")[3];
 
 document.addEventListener('DOMContentLoaded', function () {
     const editButton = document.getElementById('edit-button');
@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const cancelButton = document.getElementById('cancel-button');
     const listButton = document.getElementById('list-button');
     const deleteButton = document.getElementById('delete-button');
-    const accompanyButton = document.getElementById('accompany-button');
+    const guideButton = document.getElementById('guide-button');
     const commentButton = document.getElementById('comment-button');
     const maxPeople = document.getElementById('maxPeople');
     const title = document.getElementById('title');
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // FormData에 Long 형식의 'country' 값을 추가
         formData.append('countryId', countryId);
 
-        fetch(`/boards/${boardId}`, {
+        fetch(`/boards/guide/${boardId}`, {
             method: 'PUT',
             headers: {
                 'Authorization': 'Bearer ' + accessToken,
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(response => {
                 if (response.ok) {
                     alert('게시물이 업데이트되었습니다.');
-                    window.location.href = `/boards/${boardId}`;
+                    window.location.href = `/boards/guide/${boardId}`;
                 } else {
                     alert('게시물 업데이트에 실패했습니다.');
                 }
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
         cancelButton.style.display = 'block';
         updateButton.style.display = 'block';
         listButton.style.display = 'none';
-        accompanyButton.style.display = 'none';
+        guideButton.style.display = 'none';
         commentButton.style.display = 'none';
         deleteButton.style.display = 'none';
         console.log("editButton clicked");
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
         cancelButton.style.display = 'none';
         updateButton.style.display = 'none';
         listButton.style.display = 'block';
-        accompanyButton.style.display = 'block';
+        guideButton.style.display = 'block';
         commentButton.style.display = 'block';
         deleteButton.style.display = 'block';
     });
@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
     deleteButton.addEventListener("click", function (event) {
         event.preventDefault();
         if (confirm("게시물을 삭제하시겠습니까?")) {
-            fetch(`/boards/${boardId}`, {
+            fetch(`/boards/guide/${boardId}`, {  // <-- dto.id를 boardId로 변경했습니다.
                 method: 'DELETE',
                 headers: {
                     'Authorization': 'Bearer ' + accessToken,
@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => {
                     if (response.ok) {
                         alert("게시물이 삭제되었습니다.");
-                        window.location.href = '/boards';
+                        window.location.href = '/boards/guide';
                     } else {
                         alert("게시물 삭제를 실패했습니다.");
                     }
