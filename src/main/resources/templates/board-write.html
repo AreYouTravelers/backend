@@ -17,8 +17,19 @@
         <h2>동행 구하기</h2>
         <form th:action="@{'/boards/write'}" th:method="post" id="postForm">
             <div class="board-inner mb-5">
+                <div class="col-md-12 col-lg-12" style="display: none;">
+                    <label for="category" class="form-label">카테고리</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="">카테고리</option>
+                        <option th:each="category : ${categories}"
+                                th:value="${category.id}"
+                                th:text="${category.category}"
+                                th:selected="${category.category} == 여행" disabled>
+                        </option>
+                    </select>
+                </div>
                 <div class="container-wrap mb-3">
-                    <div class="col-md-4 col-lg-4 me-3">
+                    <div class="col-md-3 col-lg-3 me-3">
                         <label for="country" class="form-label">여행지</label>
                         <select class="form-select" id="country" name="country" required>
                             <option value="">여행지</option>
@@ -29,23 +40,6 @@
                         </select>
                     </div>
                     <div class="col-md-3 col-lg-3 me-3">
-                        <label for="category" class="form-label">카테고리</label>
-                        <select class="form-select" id="category" name="category" required>
-                            <option value="">카테고리</option>
-                            <option th:each="category : ${categories}"
-                                    th:value="${category.id}"
-                                    th:text="${category.category}"
-                                    th:selected="${category.category} == 여행" disabled>
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-md-3 col-lg-2">
-                        <label for="maxPeople" class="form-label">총 인원수</label>
-                        <input type="text" class="form-control" id="maxPeople" name="maxPeople" required>
-                    </div>
-                </div>
-                <div class="container-wrap mb-3">
-                    <div class="col-md-3 col-lg-3 me-3">
                         <label for="startDate" class="form-label">시작일</label>
                         <input type="date" class="form-control" id="startDate" name="startDate" required>
                     </div>
@@ -53,33 +47,41 @@
                         <label for="endDate" class="form-label">종료일</label>
                         <input type="date" class="form-control" id="endDate" name="endDate" required>
                     </div>
-                    <div class="col-md-3 col-lg-3 me-3">
-                        <label for="status" class="form-label">상태</label>
-                        <input type="text" class="form-control" id="status" name="status" value="모집중" disabled>
-                    </div>
-                    <div class="col-md-3 col-lg-3">
-                        <label for="createdAt" class="form-label">작성일</label>
-                        <input type="text" class="form-control" id="createdAt" name="createdAt" disabled>
+                    <div class="col-md-3 col-lg-2">
+                        <label for="maxPeople" class="form-label">모집 인원</label>
+                        <input type="text" class="form-control" id="maxPeople" name="maxPeople" required>
                     </div>
                 </div>
             </div>
             <div class="mb-5">
                 <div class="container-wrap mb-3">
-                    <div class="col-md-10 col-lg-10">
+                    <div class="col-md-10 col-lg-10 mb-3">
                         <label for="title" class="form-label">제목</label>
-                        <input type="text" class="form-control" id="title" name="title" required placeholder="예시) 겨울 파리 여행 동행 구합니다!" style="padding: 1em; border: none; box-shadow: 0px 3px 12px 2px #7a7a7a54;">
+                        <input type="text" class="form-control" id="title" name="title" required placeholder="예시) 🗼도쿄 여행 동행자 구합니다🌸" style="padding: 1em; border: none; box-shadow: 0px 3px 12px 2px #7a7a7a54;">
                     </div>
                 </div>
                 <div class="container-wrap">
                     <div class="col-md-10 col-lg-10">
                         <label for="content" class="form-label">내용</label>
-                        <textarea class="form-control" id="content" name="content" rows="8" placeholder="예시) 안녕하세요. 23살 여자입니다. 같이 에펠탑 보러 가실 분 구해요~" required style="padding: 1em; border: none; box-shadow: 0px 3px 12px 2px #7a7a7a54;"></textarea>
+                        <textarea class="form-control" id="content" name="content" rows="8"
+                                  placeholder="예시) 👋🏻 안녕하세요
+저는 유연하고 자유로운 여행을 즐기는 성격입니다. 계획은 세세하게 잡되, 현지에서의 변동에도 여유롭게 대응할 수 있는 유연함을 지향해요. 새로운 사람들과의 만남과 다양한 경험을 좋아하며, 함께하는 동안 서로 배려하고 즐거운 시간을 보낼 수 있기를 바랍니다.
+
+🗼계획 중인 활동
+- 쇼핑과 패션 탐방: 시부야와 하라주쿠 거리에서 최신 유행을 따라잡고, 독특한 패션을 구경해요. 오모테산도 거리의 세련된 상점들도 함께 둘러봐요.
+- 전통 문화 체험: 아사쿠사에서 센소지 절을 방문하고, 일본 전통의 매력을 느껴봐요. 메이지 신궁도 꼭 가보고 싶습니다.
+- 미식 탐험: 츠키지 외곽 시장에서 신선한 해산물을 맛보고, 도쿄의 다양한 맛집에서 라멘, 스시 등 일본 음식을 즐겨요.
+- 테마파크 즐기기: 도쿄 디즈니랜드에서 동심으로 돌아가 하루 종일 신나게 놀아요.
+- 예술과 창의성: 팀랩 보더리스에서 현대 미술의 경이로움을 체험하고, 도쿄의 다양한 갤러리를 방문해요.
+- 도시의 야경: 도쿄 타워와 스카이트리에서 도시의 야경을 감상하고, 도쿄의 밤을 만끽해요.
+
+도쿄의 숨겨진 매력을 함께 발견하고, 잊지 못할 추억을 만들고 싶다면 부담 없이 연락 주세요! 함께 도쿄의 멋진 순간들을 만들어 봅시다." required style="padding: 1em; border: none; box-shadow: 0px 3px 12px 2px #7a7a7a54;"></textarea>
                     </div>
                 </div>
             </div>
-            <div class="container-wrap col-md-10 col-lg-10 justify-content-between" style="margin: 0 auto;">
-                <a href="/boards" class="btn btn-outline-secondary">목록</a>
-                <button class="btn btn-primary" id="postButton">글쓰기</button>
+            <div class="container-wrap col-md-10 col-lg-10 justify-content-center" style="margin: 0 auto;">
+                <a href="/boards" class="btn btn-light" style="margin-right: 1em;">목록</a>
+                <button class="btn btn-secondary" id="postButton">글쓰기</button>
             </div>
         </form>
     </div>
