@@ -2,18 +2,6 @@
 let accessToken = localStorage.getItem('accessToken');
 const boardId = window.location.pathname.split("/")[2];
 
-function updateCreatedAtField() {
-    var createdAtField = document.getElementById("createdAt");
-    var currentDateTime = new Date();
-    var year = currentDateTime.getFullYear();
-    var month = String(currentDateTime.getMonth() + 1).padStart(2, "0");
-    var day = String(currentDateTime.getDate()).padStart(2, "0");
-    var hours = String(currentDateTime.getHours()).padStart(2, "0");
-    var minutes = String(currentDateTime.getMinutes()).padStart(2, "0");
-    var formattedDateTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes;
-    createdAtField.innerText = formattedDateTime;
-}
-
 document.addEventListener('DOMContentLoaded', function () {
     const editButton = document.getElementById('edit-button');
     const updateForm = document.getElementById('updateForm');
@@ -28,10 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const endDate = document.getElementById('endDate');
     const title = document.getElementById('title');
     const message = document.getElementById('message');
-
-    updateCreatedAtField();
-    // 작성일 업데이트 간격 설정 (예: 1분마다 업데이트)
-    setInterval(updateCreatedAtField, 60000); // 60000 밀리초 = 1분
 
     updateButton.addEventListener('click', function (event) {
         event.preventDefault();
