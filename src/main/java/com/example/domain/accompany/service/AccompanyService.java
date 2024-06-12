@@ -6,9 +6,14 @@ import com.example.domain.accompany.dto.request.AccompanySenderRequestDto;
 import com.example.domain.accompany.dto.request.AccompanyStatusRequestDto;
 import com.example.domain.accompany.dto.response.AccompanyReceiverResponseDto;
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
+import com.example.domain.accompany.exception.AccompanyNotFoundException;
+import com.example.domain.accompany.exception.AccompanyRequestConflictException;
+import com.example.domain.accompany.exception.AccompanyRequestExistsException;
 import com.example.domain.accompany.repository.AccompanyRepository;
 import com.example.domain.boards.domain.Boards;
+import com.example.domain.boards.exception.BoardNotFoundException;
 import com.example.domain.boards.repository.BoardsRepository;
+import com.example.domain.users.exception.AccessDeniedException;
 import com.example.domain.users.service.AuthService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -34,12 +39,12 @@ public class AccompanyService {
     public AccompanySenderResponseDto saveAccompanySenderRequest(Long boardId, AccompanySenderRequestDto dto) {
         // 원본 게시글이 존재하지 않는 경우
         Boards board = boardsRepository.findById(boardId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Board not found."));
+                .orElseThrow(BoardNotFoundException::new);
 
-        // 동행 요청 중복 방지
+        // 같은 게시글에 동행 요청을 이미 한 경우
         Optional<Accompany> accompany = accompanyRepository.findByBoardIdAndUserId(boardId, authService.getUser().getId());
         if (accompany.isPresent())
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already exists.");
+            throw new AccompanyRequestExistsException();
 
         Accompany savedAccompany = accompanyRepository.save(AccompanySenderRequestDto.toEntity(dto, authService.getUser(), board));
         board.updateApplicantPeople();
@@ -60,7 +65,7 @@ public class AccompanyService {
     public AccompanySenderResponseDto findAccompanySenderRequest(Long id) {
         // 보낸동행이 존재하지 않는 경우
         Accompany accompany = accompanyRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
+                .orElseThrow(AccompanyNotFoundException::new);
 
         return AccompanySenderResponseDto.fromEntity(accompany);
     }
@@ -68,19 +73,21 @@ public class AccompanyService {
     // 보낸동행 수정 (보낸동행 상세조회 페이지 - 수정버튼 클릭)
     @Transactional
     public AccompanySenderResponseDto updateAccompanySenderRequest(Long id, AccompanySenderRequestDto dto) {
-        // 원본게시글이 존재하지 않는 경우
+        // 보낸동행이 존재하지 않는 경우
         Accompany accompany = accompanyRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
+                .orElseThrow(AccompanyNotFoundException::new);
+
+        // 원본 게시글이 존재하지 않는 경우
         if (boardsRepository.findByIdAndDeletedAtIsNull(accompany.getBoard().getId()).isEmpty())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "The board has been deleted.");
+            throw new AccompanyNotFoundException();
 
         // 본인이 작성한 동행 요청이 아닐 경우
         if (!accompany.getUser().getId().equals(authService.getUser().getId()))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
+            throw new AccessDeniedException();
 
-        // 이미 동행 응답이 된 경우
+        // 보낸 동행에 이미 응답이 된 경우
         if (!accompany.getStatus().equals(AccompanyRequestStatus.PENDING))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already responded.");
+            throw new AccompanyRequestConflictException();
 
         accompany.updateMessage(dto.getMessage());
         return AccompanySenderResponseDto.fromEntity(accompany);
@@ -90,15 +97,15 @@ public class AccompanyService {
     public void deleteAccompanySenderRequest(Long id) {
         // 보낸동행이 존재하지 않는 경우
         Accompany accompany = accompanyRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
+                .orElseThrow(AccompanyNotFoundException::new);
 
         // 본인이 작성한 동행 요청이 아닐 경우
         if (!accompany.getUser().getId().equals(authService.getUser().getId()))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
+            throw new AccessDeniedException();
 
-        // 이미 동행 응답이 된 경우 && 보낸 동행의 원본 게시글이 삭제되지 않은 경우
+        // 보낸 동행에 이미 응답이 된 경우 && 보낸 동행의 원본 게시글이 삭제되지 않은 경우
         if (accompany.getStatus().equals(AccompanyRequestStatus.ACCEPTED) && accompany.getBoard().getDeletedAt() == null)
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Accompany request already responded.");
+            throw new AccompanyRequestConflictException();
 
         accompanyRepository.deleteById(id);
     }
@@ -109,10 +116,9 @@ public class AccompanyService {
         Long currentUserId = authService.getUser().getId();
 
         for (Accompany accompany : accompanyRepository.findAllByBoardUserId(currentUserId)) {
-            System.out.println(accompany);
 
             if (!accompany.getBoard().getUser().getId().equals(currentUserId))
-                throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access Denied.");
+                throw new AccessDeniedException();
 
             accompanyReceiverResponses.add(AccompanyReceiverResponseDto.fromEntity(accompany));
         }
@@ -124,7 +130,7 @@ public class AccompanyService {
     public AccompanyReceiverResponseDto findAccompanyReceiverRequest(Long id) {
         // 받은동행이 존재하지 않는 경우
         Accompany accompany = accompanyRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
+                .orElseThrow(AccompanyNotFoundException::new);
 
         return AccompanyReceiverResponseDto.fromEntity(accompany);
     }
@@ -134,11 +140,11 @@ public class AccompanyService {
     public AccompanyReceiverResponseDto updateAccompanyReceiverRequest(Long id, AccompanyStatusRequestDto dto) {
         // 받은동행이 존재하지 않는 경우
         Accompany accompany = accompanyRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
+                .orElseThrow(AccompanyNotFoundException::new);
 
         // 원본 게시글의 작성자가 아닌 경우
         if (!accompany.getBoard().getUser().getId().equals(authService.getUser().getId()))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
+            throw new AccessDeniedException();
 
         // 변경될 값(응답)이 "수락"일 때
         if (dto.getStatus().equals("수락")) {
@@ -151,7 +157,6 @@ public class AccompanyService {
 
         // 변경될 값(응답)이 "거절"일 때 && 현재상태가 거절이 아닌 경우(== 현재상태가 대기 또는 수락)
         if ((dto.getStatus().equals("거절")) && (accompany.getStatus() != AccompanyRequestStatus.REJECTED)) {
-            System.out.println("상태" + accompany.getStatus());
 
             if (accompany.getStatus() == AccompanyRequestStatus.ACCEPTED) // 현재상태가 수락인 경우
                 accompany.getBoard().updateCurrentPeople(dto.getStatus()); // 모집된 인원 수 감소
