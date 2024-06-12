@@ -1,7 +1,7 @@
 package com.example.domain.reviews.controller;
 
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
-import com.example.domain.jwt.JwtTokenUtils;
+import com.example.global.config.jwt.JwtTokenUtils;
 import com.example.domain.reviews.dto.request.ReviewSenderRequestDto;
 import com.example.domain.reviews.dto.response.ReviewReceiverResponseDto;
 import com.example.domain.reviews.dto.response.ReviewSenderResponseDto;
@@ -9,9 +9,8 @@ import com.example.domain.users.repository.UsersRepository;
 import com.example.domain.reviews.service.ReviewsService;
 import com.example.domain.users.service.AuthService;
 import com.example.domain.boards.service.BoardsService;
-import com.example.global.exception.ApiSuccessResponse;
+import com.example.global.dto.ApiSuccessResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

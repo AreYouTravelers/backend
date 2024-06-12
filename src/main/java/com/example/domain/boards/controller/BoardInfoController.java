@@ -2,7 +2,7 @@ package com.example.domain.boards.controller;
 
 import com.example.domain.boards.dto.response.BoardInfoResponseDto;
 import com.example.domain.boards.service.BoardsService;
-import com.example.global.exception.ApiSuccessResponse;
+import com.example.global.dto.ApiSuccessResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

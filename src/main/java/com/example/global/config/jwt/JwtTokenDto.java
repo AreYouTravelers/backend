@@ -1,4 +1,4 @@
-package com.example.domain.jwt;
+package com.example.global.config.jwt;
 
 import lombok.Data;
 
