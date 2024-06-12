@@ -1,4 +1,4 @@
-package com.example.domain.jwt;
+package com.example.global.config.jwt;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

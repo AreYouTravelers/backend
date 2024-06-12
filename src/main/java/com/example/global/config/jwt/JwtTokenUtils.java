@@ -1,4 +1,4 @@
-package com.example.domain.jwt;
+package com.example.global.config.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;

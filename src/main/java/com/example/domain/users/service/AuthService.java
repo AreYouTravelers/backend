@@ -1,7 +1,7 @@
 package com.example.domain.users.service;
 
 import com.example.domain.users.domain.Users;
-import com.example.domain.jwt.JwtTokenUtils;
+import com.example.global.config.jwt.JwtTokenUtils;
 import com.example.domain.users.repository.UsersRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;

@@ -1,6 +1,6 @@
 package com.example.domain.users.controller;
 
-import com.example.domain.jwt.JwtTokenDto;
+import com.example.global.config.jwt.JwtTokenDto;
 import com.example.domain.users.dto.*;
 import com.example.domain.users.service.UsersService;
 import jakarta.servlet.http.HttpServletRequest;
