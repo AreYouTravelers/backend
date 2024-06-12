@@ -2,13 +2,17 @@ package com.example.domain.reviews.service;
 
 import com.example.domain.accompany.domain.Accompany;
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
+import com.example.domain.accompany.exception.AccompanyNotFoundException;
 import com.example.domain.accompany.repository.AccompanyRepository;
 import com.example.domain.boards.repository.BoardsRepository;
 import com.example.domain.reviews.domain.Reviews;
 import com.example.domain.reviews.dto.request.ReviewSenderRequestDto;
 import com.example.domain.reviews.dto.response.ReviewReceiverResponseDto;
 import com.example.domain.reviews.dto.response.ReviewSenderResponseDto;
+import com.example.domain.reviews.exception.ReviewNotFountException;
+import com.example.domain.reviews.exception.ReviewRequestExistsException;
 import com.example.domain.reviews.repository.ReviewsRepository;
+import com.example.domain.users.exception.AccessDeniedException;
 import com.example.domain.users.repository.UsersRepository;
 //import com.example.domain.reviews.repository.ReviewsRepository;
 import com.example.domain.users.service.AuthService;
@@ -31,11 +35,9 @@ import java.util.Optional;
 public class ReviewsService {
     private final ReviewsRepository reviewsRepository;
     private final AccompanyRepository accompanyRepository;
-    private final BoardsRepository boardsRepository;
-    private final UsersRepository usersRepository;
     private final AuthService authService;
 
-    // 후기 작성하기 전체 조회
+    // 후기 작성하기 페이지 전체 조회
     public List<AccompanySenderResponseDto> findAllReviewWrite() {
         List<AccompanySenderResponseDto> accompanySenderResponses = new ArrayList<>();
 
@@ -47,28 +49,29 @@ public class ReviewsService {
         return accompanySenderResponses;
     }
 
-    // 후기 작성 상세 조회
+    // 후기 작성하기 페이지 상세 조회
     public AccompanySenderResponseDto findReviewWrite(Long accompanyId) {
         // 동행 요청이 존재하지 않는 경우
         Accompany accompany = accompanyRepository.findById(accompanyId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
+                .orElseThrow(AccompanyNotFoundException::new);
 
         return AccompanySenderResponseDto.fromEntity(accompany);
     }
 
-    // 후기 작성 요청 (상세 조회 페이지)
+    // 후기 작성 요청
     @Transactional
     public ReviewSenderResponseDto saveReivew(Long accompanyId, ReviewSenderRequestDto dto) {
         // 동행 요청이 존재하지 않는 경우
         Accompany accompany = accompanyRepository.findById(accompanyId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Accompany not found."));
+                .orElseThrow(AccompanyNotFoundException::new);
 
         // 후기 작성 중복 방지
         Optional<Reviews> review = reviewsRepository.findByAccompanyIdAndUserId(accompanyId, authService.getUser().getId());
         if (review.isPresent())
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Review request already exists.");
+            throw new ReviewRequestExistsException();
 
         Reviews savedReview = reviewsRepository.save(ReviewSenderRequestDto.toEntity(dto, accompany, authService.getUser()));
+
         // 저장된 평점으로 온도 조절
         accompany.getBoard().getUser().updateTemperature(dto.getRating());
         return ReviewSenderResponseDto.fromEntity(savedReview);
@@ -89,7 +92,7 @@ public class ReviewsService {
     public ReviewSenderResponseDto findSenderReview(Long id) {
         // 보낸후기가 존재하지 않는 경우
         Reviews review = reviewsRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found."));
+                .orElseThrow(ReviewNotFountException::new);
 
         return ReviewSenderResponseDto.fromEntity(review);
     }
@@ -99,14 +102,15 @@ public class ReviewsService {
     public ReviewSenderResponseDto updateSenderReview(Long id, ReviewSenderRequestDto dto) {
         // 후기가 존재하지 않는 경우
         Reviews review = reviewsRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found."));
+                .orElseThrow(ReviewNotFountException::new);
 
         // 본인이 작성한 후기가 아닐 경우
         if (!review.getUser().getId().equals(authService.getUser().getId()))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
+            throw new AccessDeniedException();
 
         review.updateMessage(dto.getMessage());
         review.updateRating(dto.getRating());
+
         // 수정된 평점으로 온도 조절
         review.getAccompany().getBoard().getUser().updateTemperature(dto.getRating());
 
@@ -117,11 +121,11 @@ public class ReviewsService {
     public void deleteSenderReview(Long id) {
         // 보낸 후기가 존재하지 않는 경우
         Reviews review = reviewsRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found."));
+                .orElseThrow(ReviewNotFountException::new);
 
         // 본인이 작성한 후기가 아닐 경우
         if (!review.getUser().getId().equals(authService.getUser().getId()))
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied.");
+            throw new AccessDeniedException();
 
         reviewsRepository.deleteById(id);
     }
@@ -140,7 +144,7 @@ public class ReviewsService {
     public ReviewReceiverResponseDto findReceiverReview(Long id) {
         // 받은후기가 존재하지 않는 경우
         Reviews review = reviewsRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Review not found."));
+                .orElseThrow(ReviewNotFountException::new);
 
         return ReviewReceiverResponseDto.fromEntity(review);
     }

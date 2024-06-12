@@ -12,6 +12,7 @@ import com.example.domain.boards.service.BoardsService;
 import com.example.global.dto.ApiSuccessResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class ReviewsController {
     @GetMapping("/review/write")
     public ResponseEntity<ApiSuccessResponse<List<AccompanySenderResponseDto>>> getAllReviewWrite(
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -50,7 +51,7 @@ public class ReviewsController {
     public ResponseEntity<ApiSuccessResponse<AccompanySenderResponseDto>> getReviewWrite(
             @PathVariable("accompanyId") Long accompanyId,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -63,10 +64,10 @@ public class ReviewsController {
     // 후기 작성 요청 (상세 조회 페이지)
     @PostMapping("/review/write/{accompanyId}")
     public ResponseEntity<ApiSuccessResponse<ReviewSenderResponseDto>> createReview (
+            @Valid @RequestBody ReviewSenderRequestDto dto,
             @PathVariable("accompanyId") Long accompanyId,
-            @RequestBody ReviewSenderRequestDto dto,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -80,7 +81,7 @@ public class ReviewsController {
     @GetMapping("/review/sent")
     public ResponseEntity<ApiSuccessResponse<List<ReviewSenderResponseDto>>> getAllSenderReview (
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -95,7 +96,7 @@ public class ReviewsController {
     public ResponseEntity<ApiSuccessResponse<ReviewSenderResponseDto>> getSenderReview (
             @PathVariable("id") Long id,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -108,10 +109,10 @@ public class ReviewsController {
     // 보낸 후기 수정
     @PatchMapping("/review/sent/{id}")
     public ResponseEntity<ApiSuccessResponse<ReviewSenderResponseDto>> updateSenderReview (
-            @RequestBody ReviewSenderRequestDto dto,
+            @Valid @RequestBody ReviewSenderRequestDto dto,
             @PathVariable("id") Long id,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -126,7 +127,7 @@ public class ReviewsController {
     public ResponseEntity<ApiSuccessResponse<String>> deleteSenderReview (
             @PathVariable("id") Long id,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         reviewsService.deleteSenderReview(id);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -141,7 +142,7 @@ public class ReviewsController {
     @GetMapping("/review/received")
     public ResponseEntity<ApiSuccessResponse<List<ReviewReceiverResponseDto>>> getAllReceiverReview (
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -156,7 +157,7 @@ public class ReviewsController {
     public ResponseEntity<ApiSuccessResponse<ReviewReceiverResponseDto>> getReceiverReview (
             @PathVariable("id") Long id,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
