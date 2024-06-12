@@ -5,9 +5,10 @@ import com.example.domain.accompany.dto.request.AccompanyStatusRequestDto;
 import com.example.domain.accompany.dto.response.AccompanyReceiverResponseDto;
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
 import com.example.domain.accompany.service.AccompanyService;
-import com.example.global.exception.ApiSuccessResponse;
+import com.example.global.dto.ApiSuccessResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,10 +27,10 @@ public class AccompanyController {
     // 동행 요청
     @PostMapping("/boards/{boardId}/accompany")
     public ResponseEntity<ApiSuccessResponse<AccompanySenderResponseDto>> createAccompanySenderRequest(
-            @RequestBody AccompanySenderRequestDto dto,
+            @Valid @RequestBody AccompanySenderRequestDto dto,
             @PathVariable("boardId") Long boardId,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -43,7 +44,7 @@ public class AccompanyController {
     @GetMapping("/accompany/sent")
     public ResponseEntity<ApiSuccessResponse<List<AccompanySenderResponseDto>>> getAllAccompanySenderRequest(
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -58,7 +59,7 @@ public class AccompanyController {
     public ResponseEntity<ApiSuccessResponse<AccompanySenderResponseDto>> getAccompanySenderRequest(
             @PathVariable("id") Long id,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -71,10 +72,10 @@ public class AccompanyController {
     // 보낸동행 수정 (보낸동행 상세조회 페이지 - 수정버튼 클릭)
     @PatchMapping("/accompany/sent/{id}")
     public ResponseEntity<ApiSuccessResponse<AccompanySenderResponseDto>> updateAccompanySenderRequest(
-            @RequestBody AccompanySenderRequestDto dto,
+            @Valid @RequestBody AccompanySenderRequestDto dto,
             @PathVariable("id") Long id,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -89,7 +90,7 @@ public class AccompanyController {
     public ResponseEntity<ApiSuccessResponse<String>> deleteAccompanySenderRequest(
             @PathVariable("id") Long id,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         accompanyService.deleteAccompanySenderRequest(id);
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -104,7 +105,7 @@ public class AccompanyController {
     @GetMapping("/accompany/received")
     public ResponseEntity<ApiSuccessResponse<List<AccompanyReceiverResponseDto>>> getAllAccompanyReceiverRequest(
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -119,7 +120,7 @@ public class AccompanyController {
     public ResponseEntity<ApiSuccessResponse<AccompanyReceiverResponseDto>> getAccompanyReceiverRequest(
             @PathVariable("id") Long id,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
@@ -132,10 +133,10 @@ public class AccompanyController {
     // 받은동행 응답 (받은동행 상세조회 페이지 - 수락/거절 버튼 클릭)
     @PatchMapping("/accompany/received/{id}")
     public ResponseEntity<ApiSuccessResponse<AccompanyReceiverResponseDto>> updateAccompanyReceiverRequest(
-            @RequestBody AccompanyStatusRequestDto dto,
+            @Valid @RequestBody AccompanyStatusRequestDto dto,
             @PathVariable("id") Long id,
             HttpServletRequest servRequest
-    ) throws JsonProcessingException {
+    ) {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(ApiSuccessResponse.of(
