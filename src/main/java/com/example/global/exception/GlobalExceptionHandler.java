@@ -1,10 +1,12 @@
 package com.example.global.exception;
 
 import com.example.global.dto.ApiErrorResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -33,6 +35,74 @@ public class GlobalExceptionHandler {
                         exception,
                         code,
                         errorCode
+                ));
+    }
+
+    @ExceptionHandler(JsonProcessingException.class)
+    public ResponseEntity<ApiErrorResponse> handleJsonProcessingException(HttpServletRequest request, JsonProcessingException e) {
+        String exception = e.getClass().getSimpleName();
+        String code = "JSON_PROCESSING_ERROR";
+        String message = e.getOriginalMessage();
+
+        log.error(LOG_FORMAT, HttpStatus.BAD_REQUEST, exception, code, message);
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ApiErrorResponse.of(
+                        HttpStatus.BAD_REQUEST,
+                        request.getServletPath(),
+                        exception,
+                        code,
+                        new ErrorCode() {
+                            @Override
+                            public HttpStatus getStatus() {
+                                return HttpStatus.BAD_REQUEST;
+                            }
+
+                            @Override
+                            public String getMessage() {
+                                return message;
+                            }
+
+                            @Override
+                            public String getCode() {
+                                return code;
+                            }
+                        }
+                ));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiErrorResponse> handleValidationExceptions(HttpServletRequest request, MethodArgumentNotValidException e) {
+        String exception = e.getClass().getSimpleName();
+        String code = "VALIDATION_ERROR";
+        String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+
+        log.error(LOG_FORMAT, HttpStatus.BAD_REQUEST, exception, code, message);
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ApiErrorResponse.of(
+                        HttpStatus.BAD_REQUEST,
+                        request.getServletPath(),
+                        exception,
+                        code,
+                        new ErrorCode() {
+                            @Override
+                            public HttpStatus getStatus() {
+                                return HttpStatus.BAD_REQUEST;
+                            }
+
+                            @Override
+                            public String getMessage() {
+                                return message;
+                            }
+
+                            @Override
+                            public String getCode() {
+                                return code;
+                            }
+                        }
                 ));
     }
 }

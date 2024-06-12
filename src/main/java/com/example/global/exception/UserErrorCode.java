@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
-public enum AccompanyErrorCode implements ErrorCode {
-    ACCOMPANY_NOT_FOUND(HttpStatus.NOT_FOUND, "동행 요청을 찾을 수 없습니다."),
-    ACCOMPANY_REQUEST_EXISTS(HttpStatus.CONFLICT, "동행 요청이 이미 존재합니다."),
-    ACCOMPANY_REQUEST_CONFLICT(HttpStatus.CONFLICT, "동행 요청에 응답을 받아 새로운 요청을 반영할 수 없습니다.");
+public enum UserErrorCode implements ErrorCode  {
+    ACCESS_DENIED(HttpStatus.FORBIDDEN, "접근 권한이 없습니다.");
 
     private final HttpStatus status;
     private final String message;
