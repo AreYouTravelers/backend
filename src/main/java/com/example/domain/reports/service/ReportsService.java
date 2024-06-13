@@ -1,5 +1,6 @@
 package com.example.domain.reports.service;
 
+import com.example.domain.users.domain.UsersRole;
 import com.example.domain.users.dto.MessageResponseDto;
 import com.example.domain.reports.dto.ReportsDto;
 import com.example.domain.reports.domain.Reports;
@@ -48,7 +49,7 @@ public class ReportsService {
         Optional<Reports> report = reportsRepository.findById(id);
         if (report.isPresent()) {
             if (report.get().getUser().getId().equals(userEntity.getId())
-                    || userEntity.getRole().equals("관리자")) {
+                    || userEntity.getRole() == UsersRole.ADMIN) {
                 ReportsDto dto = ReportsDto.fromEntity(report.get());
                 return dto;
             } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "권한이 없습니다.");
@@ -58,7 +59,7 @@ public class ReportsService {
     public Page<ReportsDto> readReportsAll(Integer pageNumber) {
         Users userEntity = authService.getUser();
         Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
-        if (userEntity.getRole().equals("관리자")) {
+        if (userEntity.getRole() == UsersRole.ADMIN) {
             return reportsRepository.findAll(pageable).map(ReportsDto::fromEntity);
         } else throw new ResponseStatusException(HttpStatus.FORBIDDEN, "권한이 없습니다.");
     }
@@ -85,7 +86,7 @@ public class ReportsService {
         Optional<Reports> report = reportsRepository.findById(id);
         if (report.isPresent()) {
             if (report.get().getUser().getId().equals(userEntity.getId())
-                    || userEntity.getRole().equals("관리자")) {
+                    || userEntity.getRole() == UsersRole.ADMIN) {
                 Reports reportsEntity = report.get();
                 reportsRepository.delete(reportsEntity);
                 return new MessageResponseDto("유저 신고를 삭제했습니다.");
