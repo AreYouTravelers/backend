@@ -9,6 +9,7 @@ import com.example.domain.boards.service.MbtiFilter;
 import com.example.domain.users.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -91,11 +92,11 @@ public class BoardsController {
         return "boards-filter";
     }
 
-//    @GetMapping("/myboard")
-//    public Page<BoardsMapping> readAllByUser(
-//            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
-//        return boardsService.readBoardsAllByUser(pageNumber);
-//    }
+    @GetMapping("/myboard")
+    public ResponseEntity<Page<BoardsMapping>> readAllByUser(
+            @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
+        return ResponseEntity.ok(boardsService.readBoardsAllByUser(pageNumber));
+    }
 
     @GetMapping("/filtered")
     public List<BoardDto> getFilteredBoards(@RequestParam(value = "mbti") String mbtiCriteria) {
