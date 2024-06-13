@@ -1,6 +1,7 @@
 package com.example.domain.reviews.service;
 
 import com.example.domain.accompany.domain.Accompany;
+import com.example.domain.accompany.domain.AccompanyRequestStatus;
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
 import com.example.domain.accompany.exception.AccompanyNotFoundException;
 import com.example.domain.accompany.repository.AccompanyRepository;
@@ -41,7 +42,7 @@ public class ReviewsService {
     public List<AccompanySenderResponseDto> findAllReviewWrite() {
         List<AccompanySenderResponseDto> accompanySenderResponses = new ArrayList<>();
 
-        for (Accompany accompany : accompanyRepository.findAllByUserIdAndBoardEndDateBefore(authService.getUser().getId(), LocalDate.now())) {
+        for (Accompany accompany : accompanyRepository.findAllByUserIdAndBoardEndDateBefore(authService.getUser().getId(), AccompanyRequestStatus.ACCEPTED , LocalDate.now())) {
             if (reviewsRepository.findByAccompanyId(accompany.getId()).isEmpty())
                 accompanySenderResponses.add(AccompanySenderResponseDto.fromEntity(accompany));
         }
