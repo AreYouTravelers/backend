@@ -1,6 +1,10 @@
 package com.example.domain.comments.dto;
 
 import com.example.domain.comments.domain.Comments;
+import com.example.global.config.LocalDateTimeSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,12 +19,17 @@ public class CommentsDto {
     private Long id;
     private String content;
     private Boolean status;
-    private LocalDateTime createdAt;
-    private LocalDateTime deletedAt;
     private Long boardId;
     private String username;
     private Long parentCommentId;
 
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime createdAt;
+
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime deletedAt;
 
     public static CommentsDto fromEntity(Comments entity) {
         CommentsDto dto = new CommentsDto();
