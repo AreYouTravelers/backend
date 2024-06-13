@@ -9,6 +9,7 @@ import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
 import com.example.domain.accompany.exception.AccompanyNotFoundException;
 import com.example.domain.accompany.exception.AccompanyRequestConflictException;
 import com.example.domain.accompany.exception.AccompanyRequestExistsException;
+import com.example.domain.accompany.exception.AccompanyRequestFromAuthorException;
 import com.example.domain.accompany.repository.AccompanyRepository;
 import com.example.domain.boards.domain.Boards;
 import com.example.domain.boards.exception.BoardNotFoundException;
@@ -45,6 +46,10 @@ public class AccompanyService {
         Optional<Accompany> accompany = accompanyRepository.findByBoardIdAndUserId(boardId, authService.getUser().getId());
         if (accompany.isPresent())
             throw new AccompanyRequestExistsException();
+
+        // 내 게시글에 동행 요청을 한 경우
+        if (board.getUser().getId().equals(authService.getUser().getId()))
+            throw new AccompanyRequestFromAuthorException();
 
         Accompany savedAccompany = accompanyRepository.save(AccompanySenderRequestDto.toEntity(dto, authService.getUser(), board));
         board.updateApplicantPeople();
@@ -110,7 +115,7 @@ public class AccompanyService {
         accompanyRepository.deleteById(id);
     }
 
-    // 받은동행 응답 (받은동행 전체조회 페이지)
+    // 받은동행 전체조회 (받은동행 전체조회 페이지)
     public List<AccompanyReceiverResponseDto> findAllAccompanyReceiverRequest() {
         List<AccompanyReceiverResponseDto> accompanyReceiverResponses = new ArrayList<>();
         Long currentUserId = authService.getUser().getId();
