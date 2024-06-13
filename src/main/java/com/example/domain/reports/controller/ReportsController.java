@@ -30,15 +30,15 @@ public class ReportsController {
     }
 
     @GetMapping("/{id}")
-    public ReportsDto read(
+    public ResponseEntity<ReportsDto> read(
             @PathVariable("id") Long id) {
-        return reportsService.readReport(id);
+        return ResponseEntity.ok(reportsService.readReport(id));
     }
 
     @GetMapping
-    public Page<ReportsDto> readAll(
+    public ResponseEntity<Page<ReportsDto>> readAll(
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber) {
-        return reportsService.readReportsAll(pageNumber);
+        return ResponseEntity.ok(reportsService.readReportsAll(pageNumber));
     }
 
     @PutMapping("/{id}")
