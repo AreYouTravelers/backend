@@ -142,8 +142,9 @@ footer p {font-weight: 300; font-size: 14px;}
 .account .profile2 .profile2-box button {display: block;}
 .account .profile2 h4 {margin-top: 2em; color: #dc3545;}
 
-/* board */
+/* 동행 구하기 상세 페이지 */
 .board-write .container2 {max-width: 800px;}
+.board-write .container2 .bottom-left i {margin-right: 3px;}
 .board-write .container-wrap {justify-content: center;}
 .board-write .sub-title-icon {margin-top: 13em;}
 .board-write h2 {margin-bottom: 2.5em; font-size: 1.6rem; text-align: center;}
@@ -151,6 +152,63 @@ footer p {font-weight: 300; font-size: 14px;}
 .board-write .board-message .form-info {display: flex; justify-content: space-between; align-items: flex-start;}
 .board-write .edit button {width: 30px; border: none; background: none; }
 .board-write .edit button img {width: 100%;}
+.board-write .bottom-container1 {display: flex; justify-content: center; width: 100%;}
+.board-write .bottom-container2 {display: flex; justify-content: space-between; width: 100%;}
+/* 동행 구하기 상세 페이지 - 댓글 */
+.board-write .comment-form-list-container {
+    padding-top: 2.5em;
+    border-top: 1px solid #ddd;
+    overflow: hidden;
+    transition: all 0.5s;
+    max-height: 2000px; /* 적절한 최대 높이 값으로 설정 */
+    opacity: 1;
+    margin-top: 2em;
+}
+
+.board-write .comment-form-list-container.collapsed {
+    max-height: 0;
+    opacity: 0;
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+}
+.board-write .comment-section .comment-list {display: block; margin: 0 auto; box-shadow: none; padding: 0; list-style: none;}
+.board-write .comment-section .comment-list .comment-text {color: #555; font-size: 1.1em;}
+.board-write .comment-section .comment-list .comment-text i {margin-right: 7px;}
+.board-write .comment-section .comment-list textarea {padding: 1em 1.3em; box-shadow: 0 3px 12px 2px #7a7a7a54; border-radius: 12px;}
+.board-write .comment-section .comment-list input {display: block; margin-left: auto;}
+/* 동행 구하기 상세 페이지 - 댓글 리스트 */
+.board-write .comment-section .comment-list .parent-comment {margin-bottom: 1.5em; border-radius: 12px;}
+.board-write .comment-section .comment-list .comment-header {display: flex;}
+.board-write .comment-section .comment-list .comment-header > img {width: 50px; height: 50px;}
+.board-write .comment-section .comment-list .comment-header .comment-header-left {margin-left: 1em;}
+.board-write .comment-section .comment-list .comment-header .comment-header-left p {margin-bottom: 0; font-weight: bold; font-size: 1.1em;}
+.board-write .comment-section .comment-list .comment-header .comment-header-left span {font-size: 0.9em; color: #999;}
+.board-write .comment-section .comment-list .comment-header .comment-header-right button {border-radius: 20px; padding: 0.4em 0.8em;}
+.board-write .comment-section .comment-list .comment-contents {width: 90%; margin-top: 1em; margin-left: auto; margin-bottom: 10px;}
+.board-write .comment-section .comment-list .comment-contents .edit-content {border: 0; margin-bottom: 5px;}
+.board-write .comment-section .comment-list .comment-contents .reply-edit-content {border: 0; margin-bottom: 5px;}
+.board-write .comment-section .comment-list .comment-footer {display: flex; justify-content: space-between; width: 90%; margin-left: auto;}
+.board-write .comment-section .comment-list .parent-comment button {padding: 0.2em 0.7em 0.3em; border: none; color: #fff; border-radius: 25px; font-size: 0.9em;}
+.board-write .comment-section .comment-list .parent-comment button.reply-button {background-color: #a4a4a4;}
+.board-write .comment-section .comment-list .parent-comment button.cancel-button {background-color: #a4a4a4;}
+.board-write .comment-section .comment-list .parent-comment button.confirm-button {background-color: #4cb7ef;}
+.board-write .comment-section .comment-list .parent-comment button.edit-button {background-color: #007acc;}
+.board-write .comment-section .comment-list .parent-comment button.delete-button {background-color: #dc3545;}
+.board-write .comment-section .comment-list .parent-comment .reply-form {width: 75%; margin-left: auto;}
+.board-write .comment-section .comment-list .parent-comment .reply-form textarea {margin-bottom: 10px;}
+.board-write .comment-section .comment-list .parent-comment .reply-form-button {display: flex; justify-content: flex-end;}
+.board-write .comment-section .comment-list .parent-comment button.reply-cancel-button {background-color: #a4a4a4; margin-right: 5px;}
+.board-write .comment-section .comment-list .parent-comment button.reply-post-button {background-color: #4cb7ef; display: block;}
+.board-write .child-comment-container .child-comment .comment-header {width: 80%; margin-left: auto;}
+.board-write .child-comment-container .child-comment .comment-header > img {width: 50px; height: 50px;}
+.board-write .child-comment-container .child-comment .comment-contents {width: 80%;}
+.board-write .child-comment-container .child-comment button {padding: 0.2em 0.7em 0.3em; border: none; color: #fff; border-radius: 25px; font-size: 0.9em;}
+.board-write .child-comment-container .child-comment button.reply-cancel-button {background-color: #a4a4a4; display: block;}
+.board-write .child-comment-container .child-comment button.reply-confirm-button {background-color: #4cb7ef; display: block;}
+.board-write .child-comment-container .child-comment button.reply-edit-button {background-color: #007acc; display: block;}
+.board-write .child-comment-container .child-comment button.reply-delete-button {background-color: #dc3545; display: block;}
+.board-write .child-comment-container {width: 93%; margin-left: auto; padding-left: 0; list-style: none;}
 
 /* 마이페이지 - 받은 동행, 보낸 동행 */
 #accompany-.board-item {min-height: 400px;}
@@ -233,7 +291,7 @@ footer p {font-weight: 300; font-size: 14px;}
 .empty-star {color: gold;}
 
 /* review-received-detail 받은 후기 상세 조회 */
-.receiver-review-detail .rating-container {text-align: right; background-color: #ffffff78; display: inline-block; width: auto!important; box-shadow: 0px 0px 9px 1px #e2e2e2; border-radius: 8px; padding: 1px 10px 0; margin-bottom: 6px;}
+.receiver-review-detail .rating-container {text-align: right; background-color: #ffffff; display: inline-block; width: auto!important; box-shadow: 0px 0px 9px 1px #e2e2e2; border-radius: 8px; padding: 1px 10px 0; margin-bottom: 6px;}
 
 /* 저장 버튼 스타일 */
 #save-mbti-button, #save-email-button {
