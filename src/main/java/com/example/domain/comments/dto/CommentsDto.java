@@ -1,6 +1,7 @@
 package com.example.domain.comments.dto;
 
 import com.example.domain.comments.domain.Comments;
+import com.example.domain.users.dto.response.UsersInfoResponseDto;
 import com.example.global.config.LocalDateTimeSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -15,12 +16,13 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class CommentsDto {
     private Long id;
     private String content;
     private Boolean status;
     private Long boardId;
-    private String username;
+    private UsersInfoResponseDto requestedUsersInfoDto;
     private Long parentCommentId;
 
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -32,16 +34,16 @@ public class CommentsDto {
     private LocalDateTime deletedAt;
 
     public static CommentsDto fromEntity(Comments entity) {
-        CommentsDto dto = new CommentsDto();
-        dto.setId(entity.getId());
-        dto.setContent(entity.getContent());
-        dto.setStatus(entity.getStatus());
-        dto.setCreatedAt(entity.getCreatedAt());
-        dto.setDeletedAt(entity.getDeletedAt());
-        dto.setParentCommentId(entity.getParentCommentId());
-        dto.setBoardId(entity.getBoard().getId());
-        dto.setUsername(entity.getUser().getUsername());
-        return dto;
+        return CommentsDto.builder()
+                .id(entity.getId())
+                .content(entity.getContent())
+                .status(entity.getStatus())
+                .createdAt(entity.getCreatedAt())
+                .deletedAt(entity.getDeletedAt())
+                .parentCommentId(entity.getParentCommentId())
+                .boardId(entity.getBoard().getId())
+                .requestedUsersInfoDto(UsersInfoResponseDto.fromEntity(entity.getUser())) // 사용자 정보 설정
+                .build();
     }
 
     public static List<CommentsDto> dtoList(List<Comments> entityList) {

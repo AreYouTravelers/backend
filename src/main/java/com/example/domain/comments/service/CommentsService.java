@@ -4,6 +4,7 @@ import com.example.domain.boards.domain.Boards;
 import com.example.domain.comments.dto.CommentsDto;
 import com.example.domain.users.dto.MessageResponseDto;
 import com.example.domain.comments.domain.Comments;
+import com.example.domain.users.dto.response.UsersInfoResponseDto;
 import com.example.domain.users.service.AuthService;
 import com.example.domain.users.domain.Users;
 import com.example.domain.boards.repository.BoardsRepository;
@@ -41,6 +42,7 @@ public class CommentsService {
         }
     }
 
+    // 댓글 작성
     public CommentsDto createComment(CommentsDto commentsDto) {
         Users currentUser = authService.getUser();
 
@@ -60,7 +62,8 @@ public class CommentsService {
 
         return CommentsDto.fromEntity(savedComment);
     }
-//  특정 게시글에 있는 모든 댓글 불러오기
+
+    //  특정 게시글에 있는 모든 댓글 불러오기
     public List<CommentsDto> getCommentsByBoardId(Long boardId) {
         List<Comments> commentsEntities = commentsRepository.findByBoardId(boardId);
 
@@ -69,7 +72,12 @@ public class CommentsService {
         } // 댓글이 없어도 403이 아닌 빈 객체를 반환하도록
 
         return commentsEntities.stream()
-                .map(CommentsDto::fromEntity)
+                .map(comment -> {
+                    UsersInfoResponseDto userInfo = UsersInfoResponseDto.fromEntity(comment.getUser());
+                    CommentsDto dto = CommentsDto.fromEntity(comment);
+                    dto.setRequestedUsersInfoDto(userInfo);
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
@@ -78,7 +86,9 @@ public class CommentsService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "없는 게시글입니다."));
         Comments commentEntity = commentsRepository.findByIdAndBoard(commentId, board)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다."));
-        return CommentsDto.fromEntity(commentEntity);
+        CommentsDto dto = CommentsDto.fromEntity(commentEntity);
+        dto.setRequestedUsersInfoDto(UsersInfoResponseDto.fromEntity(commentEntity.getUser()));
+        return dto;
     }
 
     public CommentsDto updateComment(Long boardId, Long commentId, CommentsDto commentsDto) {
@@ -94,7 +104,9 @@ public class CommentsService {
 
         commentEntity.setContent(commentsDto.getContent());
         Comments updatedComment = commentsRepository.save(commentEntity);
-        return CommentsDto.fromEntity(updatedComment);
+        CommentsDto dto = CommentsDto.fromEntity(updatedComment);
+        dto.setRequestedUsersInfoDto(UsersInfoResponseDto.fromEntity(updatedComment.getUser()));
+        return dto;
     }
 
     public MessageResponseDto deleteComment(Long boardId, Long commentId) {
@@ -113,6 +125,7 @@ public class CommentsService {
         commentsRepository.delete(commentEntity);
         return new MessageResponseDto("댓글을 삭제했습니다.");
     }
+
     public boolean isCommentRelatedToBoard(Long boardId, Long commentId) {
         return commentsRepository.existsByIdAndBoardId(commentId, boardId);
     }

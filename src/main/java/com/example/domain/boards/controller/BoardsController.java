@@ -3,6 +3,8 @@ package com.example.domain.boards.controller;
 import com.example.domain.boards.dto.BoardDto;
 import com.example.domain.boards.mapping.BoardsMapping;
 import com.example.domain.boardCategories.repository.BoardCategoriesRepository;
+import com.example.domain.comments.dto.CommentsDto;
+import com.example.domain.comments.service.CommentsService;
 import com.example.domain.country.repository.CountryRepository;
 import com.example.domain.boards.service.BoardsService;
 import com.example.domain.boards.service.MbtiFilter;
@@ -20,6 +22,7 @@ import java.util.List;
 @RequestMapping("/boards")
 public class BoardsController {
     private final BoardsService boardsService;
+    private final CommentsService commentsService;
     private final CountryRepository countryRepository;
     private final BoardCategoriesRepository boardCategoriesRepository;
     private final AuthService authService;
@@ -28,8 +31,9 @@ public class BoardsController {
     private MbtiFilter mbtiFilter;
 
     @Autowired
-    public BoardsController(BoardsService boardsService, CountryRepository countryRepository, BoardCategoriesRepository boardCategoriesRepository, AuthService authService) {
+    public BoardsController(BoardsService boardsService, CommentsService commentsService, CountryRepository countryRepository, BoardCategoriesRepository boardCategoriesRepository, AuthService authService) {
         this.boardsService = boardsService;
+        this.commentsService = commentsService;
         this.countryRepository = countryRepository;
         this.boardCategoriesRepository = boardCategoriesRepository;
         this.authService = authService;
@@ -56,9 +60,11 @@ public class BoardsController {
     public String read(
                     @PathVariable("id") Long id, Model model) {
         BoardDto result = boardsService.readBoard(id);
+        List<CommentsDto> comments = commentsService.getCommentsByBoardId(id); // 댓글 불러오기
         model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("dto", result);
+        model.addAttribute("comments", comments);
         model.addAttribute("id", id);
 //        model.addAttribute("writer", result.getUsername().equals(authService.getUser().getUsername()));
         return "board-detail";
