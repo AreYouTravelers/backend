@@ -178,9 +178,10 @@ footer p {font-weight: 300; font-size: 14px;}
 .board-write .comment-section .comment-list textarea {padding: 1em 1.3em; box-shadow: 0 3px 12px 2px #7a7a7a54; border-radius: 12px;}
 .board-write .comment-section .comment-list input {display: block; margin-left: auto;}
 /* 동행 구하기 상세 페이지 - 댓글 리스트 */
-.board-write .comment-section .comment-list .parent-comment {margin-bottom: 1.5em; border-radius: 12px;}
+.board-write .comment-section .comment-list .parent-comment {margin-bottom: 2em; border-radius: 12px;}
 .board-write .comment-section .comment-list .comment-header {display: flex;}
-.board-write .comment-section .comment-list .comment-header > img {width: 50px; height: 50px;}
+.board-write .comment-section .comment-list .comment-header .user-profile-img {position: relative; width: 50px; height: 50px; overflow: hidden; border-radius: 50%;}
+.board-write .comment-section .comment-list .comment-header .user-profile-img img {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%;}
 .board-write .comment-section .comment-list .comment-header .comment-header-left {margin-left: 1em;}
 .board-write .comment-section .comment-list .comment-header .comment-header-left p {margin-bottom: 0; font-weight: bold; font-size: 1.1em;}
 .board-write .comment-section .comment-list .comment-header .comment-header-left span {font-size: 0.9em; color: #999;}
@@ -195,14 +196,14 @@ footer p {font-weight: 300; font-size: 14px;}
 .board-write .comment-section .comment-list .parent-comment button.confirm-button {background-color: #4cb7ef;}
 .board-write .comment-section .comment-list .parent-comment button.edit-button {background-color: #007acc;}
 .board-write .comment-section .comment-list .parent-comment button.delete-button {background-color: #dc3545;}
-.board-write .comment-section .comment-list .parent-comment .reply-form {width: 75%; margin-left: auto;}
+.board-write .comment-section .comment-list .parent-comment .reply-form {width: 80%; margin-left: auto;}
 .board-write .comment-section .comment-list .parent-comment .reply-form textarea {margin-bottom: 10px;}
 .board-write .comment-section .comment-list .parent-comment .reply-form-button {display: flex; justify-content: flex-end;}
 .board-write .comment-section .comment-list .parent-comment button.reply-cancel-button {background-color: #a4a4a4; margin-right: 5px;}
 .board-write .comment-section .comment-list .parent-comment button.reply-post-button {background-color: #4cb7ef; display: block;}
-.board-write .child-comment-container .child-comment .comment-header {width: 80%; margin-left: auto;}
+.board-write .child-comment-container .child-comment .comment-header {width: 97%; margin-left: auto;}
 .board-write .child-comment-container .child-comment .comment-header > img {width: 50px; height: 50px;}
-.board-write .child-comment-container .child-comment .comment-contents {width: 80%;}
+.board-write .child-comment-container .child-comment .comment-contents {width: 86%;}
 .board-write .child-comment-container .child-comment button {padding: 0.2em 0.7em 0.3em; border: none; color: #fff; border-radius: 25px; font-size: 0.9em;}
 .board-write .child-comment-container .child-comment button.reply-cancel-button {background-color: #a4a4a4; display: block;}
 .board-write .child-comment-container .child-comment button.reply-confirm-button {background-color: #4cb7ef; display: block;}

@@ -128,7 +128,9 @@
                         <!-- 메인 댓글 -->
                         <article class="parent-comment">
                             <div class="comment-header">
-                                <img th:src="${comment.requestedUsersInfoDto.profileImage}" alt="댓글 작성자 프로필" class="rounded-circle">
+                                <div class="user-profile-img">
+                                    <img th:src="${comment.requestedUsersInfoDto.profileImage}" alt="댓글 작성자 프로필">
+                                </div>
                                 <div class="comment-header-left">
                                     <p th:text="${comment.requestedUsersInfoDto.username}"></p>
                                     <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
@@ -165,7 +167,9 @@
                             <li th:each="reply : ${comments}" th:if="${reply.parentCommentId == comment.id}">
                                 <article class="child-comment">
                                     <div class="comment-header">
-                                        <img th:src="${reply.requestedUsersInfoDto.profileImage}" alt="답글 작성자 프로필" class="rounded-circle">
+                                        <div class="user-profile-img">
+                                            <img th:src="${reply.requestedUsersInfoDto.profileImage}" alt="답글 작성자 프로필">
+                                        </div>
                                         <div class="comment-header-left">
                                             <p th:text="${reply.requestedUsersInfoDto.username}"></p>
                                             <span th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
