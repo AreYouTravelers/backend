@@ -6,7 +6,6 @@ import com.example.domain.accompany.dto.response.AccompanyReceiverResponseDto;
 import com.example.domain.accompany.dto.response.AccompanySenderResponseDto;
 import com.example.domain.accompany.service.AccompanyService;
 import com.example.global.dto.ApiSuccessResponse;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

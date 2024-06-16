@@ -37,7 +37,6 @@ public class CommentsDto {
         return CommentsDto.builder()
                 .id(entity.getId())
                 .content(entity.getContent())
-                .status(entity.getStatus())
                 .createdAt(entity.getCreatedAt())
                 .deletedAt(entity.getDeletedAt())
                 .parentCommentId(entity.getParentCommentId())

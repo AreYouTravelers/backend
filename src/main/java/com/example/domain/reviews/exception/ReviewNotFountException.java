@@ -1,6 +1,6 @@
 package com.example.domain.reviews.exception;
 
-import com.example.global.exception.ReviewErrorCode;
+import com.example.global.exception.domainErrorCode.ReviewErrorCode;
 import com.example.global.exception.TravelersException;
 
 public class ReviewNotFountException extends TravelersException {
