@@ -203,7 +203,7 @@ footer p {font-weight: 300; font-size: 14px;}
 .board-write .comment-section .comment-list .parent-comment button.reply-post-button {background-color: #4cb7ef; display: block;}
 .board-write .child-comment-container .child-comment .comment-header {width: 97%; margin-left: auto;}
 .board-write .child-comment-container .child-comment .comment-header > img {width: 50px; height: 50px;}
-.board-write .child-comment-container .child-comment .comment-contents {width: 86%;}
+.board-write .child-comment-container .child-comment .comment-contents {width: 86.5%;}
 .board-write .child-comment-container .child-comment button {padding: 0.2em 0.7em 0.3em; border: none; color: #fff; border-radius: 25px; font-size: 0.9em;}
 .board-write .child-comment-container .child-comment button.reply-cancel-button {background-color: #a4a4a4; display: block;}
 .board-write .child-comment-container .child-comment button.reply-confirm-button {background-color: #4cb7ef; display: block;}
