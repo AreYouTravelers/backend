@@ -123,7 +123,7 @@
             <section class="container-wrap justify-content-center comment-section">
                 <ul class="comment-list col-md-10 col-lg-10">
                     <p class="comment-text"><i class="fa-solid fa-comments "style="color: #4cb7ef;"></i> 댓글</p>
-                    <p th:if="${comments.size()} == 0" style="color: #777">작성된 댓글이 없습니다.</p>
+                    <p th:if="${comments == null or comments.size() == 0 or comments.content == ''}" style="color: #777">작성된 댓글이 없습니다.</p>
                     <li th:each="comment : ${comments}" th:if="${comment.parentCommentId == null}">
                         <!-- 메인 댓글 -->
                         <article class="parent-comment">
