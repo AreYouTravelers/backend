@@ -1,5 +1,6 @@
-package com.example.global.exception;
+package com.example.global.exception.domainErrorCode;
 
+import com.example.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 

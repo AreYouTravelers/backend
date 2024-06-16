@@ -1,7 +1,7 @@
 package com.example.domain.users.exception;
 
 import com.example.global.exception.TravelersException;
-import com.example.global.exception.UserErrorCode;
+import com.example.global.exception.domainErrorCode.UserErrorCode;
 
 public class AccessDeniedException extends TravelersException {
     public AccessDeniedException() {

@@ -38,9 +38,6 @@ public class Comments {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
-    @Column(columnDefinition = "TINYINT(1)")
-    private Boolean status;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

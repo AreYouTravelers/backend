@@ -1,11 +1,13 @@
-package com.example.global.exception;
+package com.example.global.exception.domainErrorCode;
 
+import com.example.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 @RequiredArgsConstructor
-public enum BoardErrorCode implements ErrorCode {
-    BOARD_NOT_FOUND(HttpStatus.NOT_FOUND, "게시글을 찾을 수 없습니다.");
+public enum ReviewErrorCode implements ErrorCode {
+    REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "후기를 찾을 수 없습니다."),
+    REVIEW_REQUEST_EXISTS(HttpStatus.CONFLICT, "작성된 후기가 존재합니다.");
 
     private final HttpStatus status;
     private final String message;
