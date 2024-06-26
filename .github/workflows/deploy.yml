@@ -82,9 +82,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Verify zip file
+        run: |
+          echo "현재 디렉토리 내용 (deploy 단계):"
+          pwd
+          ls -la
+          echo "areyoutravelers.zip 파일 내용 (deploy 단계):"
+          unzip -l areyoutravelers.zip  # zip 파일 내용 출력
+
       # 9) S3 업로드
       - name: Upload to S3
         run: |
           aws s3 cp \
             --region ${{ env.AWS_REGION }} \
-            $GITHUB_WORKSPACE/areyoutravelers.zip s3://${{ env.S3_BUCKET_NAME }}
+            areyoutravelers.zip s3://${{ env.S3_BUCKET_NAME }}
