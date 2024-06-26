@@ -61,6 +61,11 @@ jobs:
           mkdir deploy
           cp ./build/libs/*.jar ./deploy/
           zip -r -qq -j ./areyoutravelers.zip ./deploy  # zip 파일 생성
+          echo "현재 디렉토리 내용:"
+          pwd
+          ls -la  # 현재 디렉토리 내용 출력
+          echo "deploy 디렉토리 내용:"
+          ls -la deploy  # deploy 디렉토리 내용 출력
 
   deploy:
     name: Deploy
@@ -82,4 +87,4 @@ jobs:
         run: |
           aws s3 cp \
             --region ${{ env.AWS_REGION }} \
-            ~/backend/areyoutravelers.zip s3://${{ env.S3_BUCKET_NAME }}
+            /backend/areyoutravelers.zip s3://${{ env.S3_BUCKET_NAME }}
