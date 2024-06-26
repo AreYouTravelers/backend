@@ -84,4 +84,4 @@ jobs:
         run: |
           aws s3 cp \
             --region ${{ env.AWS_REGION }} \
-            areyoutravelers.zip s3://${{ env.S3_BUCKET_NAME }}
+            backend/areyoutravelers.zip s3://${{ env.S3_BUCKET_NAME }}
