@@ -8,6 +8,8 @@ on:
 env:
   AWS_REGION: ap-northeast-2  # 리전
   S3_BUCKET_NAME: areyoutravelers-bucket  # S3 bucket 이름
+  CODE_DEPLOY_APPLICATION_NAME: areyoutravelers-deploy  # CodeDeploy app 이름
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: travelers-deploy-group  # CodeDeploy 배포 그룹 이름
 
 permissions:
   contents: read # 리포지토리 콘텐츠 읽기 권한
@@ -58,14 +60,13 @@ jobs:
       # 7) zip 파일 생성
       - name: Make zip file
         run: |
-          mkdir deploy
+          mkdir -p deploy
+          cp ./appspec.yml ./deploy/
+          cp ./deploy.sh ./deploy/
+          cp ./docker-compose.yml ./deploy/
+          cp ./Dockerfile ./deploy/
           cp ./build/libs/*.jar ./deploy/
           zip -r -qq -j ./areyoutravelers.zip ./deploy  # zip 파일 생성
-          echo "현재 디렉토리 내용:"
-          pwd
-          ls -la  # 현재 디렉토리 내용 출력
-          echo "deploy 디렉토리 내용:"
-          ls -la deploy  # deploy 디렉토리 내용 출력
 
       # 8) AWS 자격 증명 설정
       - name: Configure AWS credentials
@@ -75,17 +76,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-      - name: Verify zip file
-        run: |
-          echo "현재 디렉토리 내용 (deploy 단계):"
-          pwd
-          ls -la
-          echo "areyoutravelers.zip 파일 내용 (deploy 단계):"
-          unzip -l areyoutravelers.zip  # zip 파일 내용 출력
-
       # 9) S3 업로드
       - name: Upload to S3
         run: |
           aws s3 cp \
             --region ${{ env.AWS_REGION }} \
             areyoutravelers.zip s3://${{ env.S3_BUCKET_NAME }}
+
+      # 10) CodeDeploy를 통한 배포
+      - name: Code Deploy
+        run: |
+          aws deploy create-deployment \
+            --application-name ${{ env.CODE_DEPLOY_APPLICATION_NAME }} \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --deployment-group-name ${{ env.CODE_DEPLOY_DEPLOYMENT_GROUP_NAME }} \
+            --s3-location bucket=${{ env.S3_BUCKET_NAME }},bundleType=zip,key=areyoutravelers.zip
