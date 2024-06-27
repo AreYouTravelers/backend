@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# 대한민국 타임존 설정
-TZ='Asia/Seoul'
-
 # 로그 디렉토리 및 백업 디렉토리 생성
 mkdir -p /home/ubuntu/deploy/log/backup
 
@@ -14,31 +11,30 @@ BACKUP_LOG_DIR="$PROJECT_ROOT/log/backup"
 
 # 기존 로그 파일 백업
 if [ -f "$DEPLOY_LOG" ]; then
-  mv "$DEPLOY_LOG" "$BACKUP_LOG_DIR/deploy.log.$(date +%Y%m%d_%H%M%S -d "$TZ")"
+  mv "$DEPLOY_LOG" "$BACKUP_LOG_DIR/deploy.log.$(date +%Y%m%d_%H%M%S)"
 fi
 
 # 7일 이상된 백업 로그 파일 삭제
 find "$BACKUP_LOG_DIR" -name "deploy.log.*" -type f -mtime +7 -exec rm -f {} \;
 
-
 # 현재 실행중인 컨테이너 중지/삭제
 {
   echo "========================================"
-  echo "[$(date -d "$TZ")] 현재 실행중인 Docker 컨테이너 확인"
+  echo "[$(date)] 현재 실행중인 Docker 컨테이너 확인"
 
   CURRENT_CONTAINERS=$(sudo docker ps --format "{{.ID}} {{.Names}}")
 
   if [ -z "$CURRENT_CONTAINERS" ]; then
-    echo "[$(date -d "$TZ")] 현재 실행중인 Docker 컨테이너가 없으므로 종료하지 않습니다."
+    echo "[$(date)] 현재 실행중인 Docker 컨테이너가 없으므로 종료하지 않습니다."
   else
     echo "$CURRENT_CONTAINERS" | while read -r PID NAME; do
-      echo "[$(date -d "$TZ")] docker stop $NAME $PID"
+      echo "[$(date)] docker stop $NAME $PID"
       sudo docker stop "$PID"
-      echo "[$(date -d "$TZ")] docker rm $NAME $PID"
+      echo "[$(date)] docker rm $NAME $PID"
       sudo docker rm "$PID"
     done
     sleep 5
-    echo "[$(date -d "$TZ")] 모든 Docker 컨테이너가 중지 및 제거되었습니다."
+    echo "[$(date)] 모든 Docker 컨테이너가 중지 및 제거되었습니다."
   fi
 
   echo "========================================"
@@ -50,13 +46,13 @@ sudo docker-compose -f docker-compose.yml up -d
 
 # 새로운 컨테이너 시작
 {
-  echo "[$(date -d "$TZ")] 새로운 Docker 컨테이너가 시작되었습니다."
+  echo "[$(date)] 새로운 Docker 컨테이너가 시작되었습니다."
   NEW_CONTAINERS=$(sudo docker ps --format "{{.ID}} {{.Names}}")
   echo "$NEW_CONTAINERS" |
   while
     read -r PID NAME;
   do
-    echo "[$(date -d "$TZ")] docker run $NAME $PID"
+    echo "[$(date)] docker run $NAME $PID"
   done
   echo "========================================"
 } >> "$DEPLOY_LOG"
