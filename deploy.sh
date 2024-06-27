@@ -1,6 +1,8 @@
 #!/bin/bash
 
-PROJECT_ROOT="/home/ubuntu/backend"
+mkdir -p /home/ubuntu/deploy/log
+
+PROJECT_ROOT="/home/ubuntu/deploy"
 APP_LOG="$PROJECT_ROOT/log/application.log"
 ERROR_LOG="$PROJECT_ROOT/log/error.log"
 DEPLOY_LOG="$PROJECT_ROOT/log/deploy.log"
@@ -18,5 +20,5 @@ else
   sleep 5
 fi
 
-cd /home/ubuntu/backend
+cd /home/ubuntu/deploy
 docker-compose -f docker-compose.yml up
