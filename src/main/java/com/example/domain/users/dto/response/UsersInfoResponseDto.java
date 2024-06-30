@@ -26,7 +26,7 @@ public class UsersInfoResponseDto {
         temperature = temperature.setScale(1, RoundingMode.HALF_UP);
         return UsersInfoResponseDto.builder()
                 .username(entity.getUsername())
-                .profileImage("/" + entity.getProfileImg())
+                .profileImage(entity.getProfileImg())
                 .age(entity.getAge())
                 .mbti(entity.getMbti())
                 .gender(entity.getGender())

@@ -37,7 +37,10 @@ public class S3Service {
     }
 
     public String uploadFile(String key, MultipartFile multipartFile) throws IOException {
-        Path tempFile = Files.createTempFile(key, null);
+        // 임시 파일 생성 시 접미사를 설정
+        String suffix = "-" + multipartFile.getOriginalFilename();
+
+        Path tempFile = Files.createTempFile(key, suffix);
         multipartFile.transferTo(tempFile);
 
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
