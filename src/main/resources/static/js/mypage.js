@@ -29,7 +29,9 @@ fetch('/users/my-profile', {
         const mbtiInput = document.getElementById('mbti');
         const emailInput = document.getElementById('email');
 
-        profileImage.src = data.profileImg;
+        // 프로필 사진 존재 시 실행. 없는 경우 기본 이미지
+        if (data.profileImg)
+            profileImage.src = data.profileImg;
         profileUsername.innerText = data.username;
         profileFullname.innerText = data.fullName;
         infoMbti.innerText = data.mbti;
@@ -42,7 +44,6 @@ fetch('/users/my-profile', {
         } else if (data.temperature > 49) {
             tempClass = 'temp-5';
         }
-        console.log(tempClass);
         infoTemp.className = tempClass;
         infoGender.innerText = data.gender;
 
