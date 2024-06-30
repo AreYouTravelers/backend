@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   areyoutravelers:
-    image: areyoutravelers
-    build: .
+    image: areyoutravelers:latest
     container_name: areyoutravelers
     ports:
       - "8080:8080"
