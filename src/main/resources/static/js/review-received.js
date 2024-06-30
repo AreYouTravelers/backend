@@ -46,7 +46,7 @@ fetch(`/users/my-profile`, {
         const username = document.getElementById('sender-username');
         const userTemp = document.getElementById('user-temp');
 
-        senderProfileImg.src = '/' + data.profileImg;
+        senderProfileImg.src = data.profileImg;
         username.innerText = data.username;
 
         const temperature = data.temperature;

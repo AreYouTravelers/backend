@@ -5,6 +5,7 @@
 <head>
     <title th:text="'가이드 구하기 | ' + ${dto.title}"></title>
     <script src="/static/js/guide-detail.js"></script>
+    <script src="https://kit.fontawesome.com/0c69fdf2c0.js" crossorigin="anonymous"></script>
 </head>
 <body class="board-write sender-read">
 <th:block layout:fragment="content">
@@ -75,24 +76,114 @@
                 </div>
                 <div class="container-wrap">
                     <div class="col-md-10 col-lg-10">
-                        <div class="container-wrap justify-content-center mt-4 mb-5">
-                            <button type="button" class="btn btn-light" id="cancel-button" style="display: none; margin-right: 1em;">취소</button>
-                            <button type="button" class="btn btn-secondary" id="update-button" style="display: none;">수정</button>
-                            <button type="button" class="btn btn-secondary" id="comment-button">
-                                <a th:href="@{'/boards/' + ${dto.id} + '/comments'}" class="href-none">댓글</a>
-                            </button>
-                            <button type="button" class="btn btn-light" id="list-button" style="margin: 0 20em 0 1em">
-                                <a href="/boards/guide" class="href-none">목록</a>
-                            </button>
-                            <button type="button" class="btn btn-primary" id="guide-button" style="margin-right: 1em;">
-                                <a th:href="@{'/boards/' + ${dto.id} + '/guide/write'}" class="href-none">가이드 신청하기</a>
-                            </button>
-                            <button type="button" class="btn btn-danger" id="delete-button">삭제</button>
+                        <div class="container-wrap justify-content-center mt-4">
+                            <div class="bottom-container1" style="display: none;">
+                                <button type="button" class="btn btn-light" id="cancel-button" style="margin-right: 1em; display: none;">취소</button>
+                                <button type="button" class="btn btn-secondary" id="update-button" style="display: none;">수정</button>
+                            </div>
+                            <div class="bottom-container2">
+                                <div class="bottom-left">
+                                    <button type="button" class="btn btn-secondary" id="comment-button" style="margin-right: 8px;"><i class="fa-solid fa-angle-down" id="comment-icon"></i>댓글</button>
+                                    <button type="button" class="btn btn-light" id="list-button">
+                                        <a href="/boards/guide" class="href-none">목록</a>
+                                    </button>
+                                </div>
+                                <div class="bottom-right">
+                                    <button type="button" class="btn btn-primary" id="guide-button" style="margin-right: 8px;">
+                                        <a th:href="@{'/boards/' + ${dto.id} + '/guide/write'}" class="href-none">동행 요청하기</a>
+                                    </button>
+                                    <button type="button" class="btn btn-danger" id="delete-button">삭제</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </form>
+        <div class="comment-form-list-container collapsed">
+            <!-- 댓글 작성 폼 -->
+            <section class="container-wrap justify-content-center comment-section mb-3">
+                <form method="post" class="comment-list col-md-10 col-lg-10" th:action="@{'/boards/' + ${id} + '/comments'}">
+                    <p class="comment-text"><i class="fa-solid fa-comment" style="color: #4cb7ef;"></i>댓글 작성하기</p>
+                    <textarea class="mb-3" name="commentContent" rows="3" placeholder="댓글을 작성해주세요."></textarea>
+                    <input type="submit" class="btn btn-secondary mb-2" value="작성">
+                </form>
+            </section>
+            <!-- 댓글 리스트 -->
+            <section class="container-wrap justify-content-center comment-section">
+                <ul class="comment-list col-md-10 col-lg-10">
+                    <p class="comment-text"><i class="fa-solid fa-comments "style="color: #4cb7ef;"></i> 댓글</p>
+                    <p th:if="${comments == null or comments.size() == 0}" style="color: #777">작성된 댓글이 없습니다.</p>
+                    <li th:each="comment : ${comments}" th:if="${comment.parentCommentId == null}">
+                        <!-- 메인 댓글 -->
+                        <article class="parent-comment">
+                            <div class="comment-header">
+                                <div class="user-profile-img">
+                                    <img th:src="${comment.requestedUsersInfoDto.profileImage}" alt="댓글 작성자 프로필">
+                                </div>
+                                <div class="comment-header-left">
+                                    <p th:text="${comment.requestedUsersInfoDto.username}"></p>
+                                    <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                                    <span> · </span>
+                                    <span class="relative-time" th:data-created-at="${comment.createdAt}"></span>
+                                </div>
+                            </div>
+                            <div class="comment-contents">
+                                <textarea th:text="${comment.content}" class="comment-content" rows="2" disabled></textarea>
+                                <textarea class="edit-content" rows="2" style="display: none;">[[${comment.content}]]</textarea>
+                            </div>
+                            <div class="comment-footer">
+                                <div class="comment-footer-left">
+                                    <button class="reply-button" style="display: inline-block;">답글쓰기</button>
+                                </div>
+                                <div class="comment-footer-right">
+                                    <button class="cancel-button" style="display: none;">취소</button>
+                                    <button class="confirm-button" th:data-comment-id="${comment.id}" style="display: none;">저장</button>
+                                    <button class="edit-button" th:data-comment-id="${comment.id}">수정</button>
+                                    <button class="delete-button" th:data-comment-id="${comment.id}">삭제</button>
+                                </div>
+                            </div>
+                            <!-- 답글 작성 폼 -->
+                            <div class="reply-form" style="display:none;">
+                                <textarea class="reply-content" rows="2" placeholder="답글을 작성해주세요."></textarea>
+                                <div class="reply-form-button">
+                                    <button class="reply-cancel-button">취소</button>
+                                    <button class="reply-post-button" th:data-parent-id="${comment.id}">저장</button>
+                                </div>
+                            </div>
+                        </article>
+                        <!-- 답글 -->
+                        <ul class="child-comment-container">
+                            <li th:each="reply : ${comments}" th:if="${reply.parentCommentId == comment.id}">
+                                <article class="child-comment">
+                                    <div class="comment-header">
+                                        <div class="user-profile-img">
+                                            <img th:src="${reply.requestedUsersInfoDto.profileImage}" alt="답글 작성자 프로필">
+                                        </div>
+                                        <div class="comment-header-left">
+                                            <p th:text="${reply.requestedUsersInfoDto.username}"></p>
+                                            <span th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                                            <span> · </span>
+                                            <span class="relative-time" th:data-created-at="${reply.createdAt}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="comment-contents">
+                                        <textarea th:text="${reply.content}" class="reply-comment-content" rows="2" disabled></textarea>
+                                        <textarea class="reply-edit-content" rows="2" style="display: none;">[[${reply.content}]]</textarea>
+                                    </div>
+                                    <div class="comment-footer" style="justify-content: flex-end;">
+                                        <button class="reply-cancel-button" style="display: none; margin-right: 5px;">취소</button>
+                                        <button class="reply-confirm-button" th:data-comment-id="${reply.id}" style="display: none;">저장</button>
+                                        <button class="reply-edit-button" th:data-comment-id="${reply.id}" style="margin-right: 5px;">수정</button>
+                                        <button class="reply-delete-button" th:data-comment-id="${reply.id}">삭제</button>
+                                    </div>
+                                </article>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+        </div>
     </div>
 </th:block>
 </body>
