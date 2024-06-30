@@ -46,6 +46,13 @@ cd /home/ubuntu/deploy
 # Docker Compose를 사용하여 새로운 컨테이너 시작 및 이미지 빌드
 sudo docker-compose -f docker-compose.yml up --build -d
 
+# 사용되지 않는 Docker 이미지 삭제
+{
+  echo "[$(date)] 사용되지 않는 Docker 이미지를 삭제합니다."
+  sudo docker image prune -f
+  echo "========================================"
+} >> "$DEPLOY_LOG"
+
 # 새로운 컨테이너 시작
 {
   echo "[$(date)] 새로운 Docker 컨테이너가 시작되었습니다."
