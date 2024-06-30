@@ -103,9 +103,9 @@ footer p {font-weight: 300; font-size: 14px;}
 .my-page .page-section {padding-bottom: 0;}
 .my-page .page-section > .container > .div {margin-top: 1em;}
 .my-page .profile {max-height: 457px; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
-.my-page .profile .profile-image {overflow: hidden; position: relative;}
-.my-page .profile .profile-image .profile-image-inner {border-radius: 50%; border: 1px solid #ddd; width: 50%; height: 50%; margin: 3.7em auto 0;}
-.my-page .profile .profile-image .profile-image-inner .profile-image-circle img {width: 100%;}
+.my-page .profile .profile-image {position: relative;}
+.my-page .profile .profile-image .profile-image-inner {overflow: hidden; position: relative; width: 150px; height: 150px; margin: 3.5rem auto 0; border-radius: 50%;}
+.my-page .profile .profile-image .profile-image-inner img {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%;}
 .my-page .profile .profile-image button {position: absolute; bottom: 0; right: 50px; transform: translate(-50%, -50%); width: 37px; height: 37px; border: 0; border-radius: 50%;}
 .my-page .profile .profile-image button img {width: 100%; padding: 2px; margin-top: -6px; margin-left: 1px;}
 .my-page .profile .profile-name {margin-top: 1em; margin-bottom: 2.5em; text-align: center;}
