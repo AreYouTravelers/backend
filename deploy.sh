@@ -42,7 +42,9 @@ find "$BACKUP_LOG_DIR" -name "deploy.log.*" -type f -mtime +7 -exec rm -f {} \;
 
 # 새로운 컨테이너 시작 경로 설정
 cd /home/ubuntu/deploy
-sudo docker-compose -f docker-compose.yml up -d
+
+# Docker Compose를 사용하여 새로운 컨테이너 시작 및 이미지 빌드
+sudo docker-compose -f docker-compose.yml up --build -d
 
 # 새로운 컨테이너 시작
 {
