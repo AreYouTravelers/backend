@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   areyoutravelers:
+    build: .
     image: areyoutravelers:latest
     container_name: areyoutravelers
     ports:
