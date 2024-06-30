@@ -24,7 +24,7 @@ public class BoardInfoResponseDto {
         return BoardInfoResponseDto.builder()
                 .id(entity.getId())
                 .username(entity.getUser().getUsername())
-                .userProfileImage("/" + entity.getUser().getProfileImg())
+                .userProfileImage(entity.getUser().getProfileImg())
                 .title(entity.getTitle())
                 .country(entity.getCountry().getName())
                 .startDate(entity.getStartDate())
