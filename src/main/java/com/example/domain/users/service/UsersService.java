@@ -7,6 +7,7 @@ import com.example.global.config.jwt.JwtTokenDto;
 import com.example.global.config.jwt.JwtTokenUtils;
 import com.example.domain.users.repository.UsersRepository;
 import com.example.domain.users.dto.CustomUserDetails;
+import com.example.global.config.s3.S3Service;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,7 @@ public class UsersService {
     private final PasswordEncoder passwordEncoder;
     private final JpaUserDetailsManager manager;
     private final AuthService authService;
+    private final S3Service s3Service;
 
     // 로그인 기능
     public JwtTokenDto loginUser(LoginRequestDto loginRequestDto) {
@@ -131,33 +133,24 @@ public class UsersService {
     // 프로필 이미지 업로드 기능
     public MessageResponseDto uploadProfileImage(MultipartFile multipartFile) {
         Users userEntity = authService.getUser();
+        String imageUrl;
 
-        String profileDir = String.format("/static/images/profile/%d/", userEntity.getId());
-
-        try {
-            Files.createDirectories(Path.of(profileDir));
-        } catch (IOException e) {
-            log.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-
-        String originalFilename = multipartFile.getOriginalFilename();
-        String[] fileNameSplit = originalFilename.split("\\.");
-        String extension = fileNameSplit[fileNameSplit.length - 1];
-        String profileFilename = "image." + extension;
-        String profilePath = profileDir + profileFilename;
+        // 파일 경로 생성
+        String key = String.format("profile/%d/%s", userEntity.getId(), multipartFile.getOriginalFilename());
 
         try {
-            multipartFile.transferTo(Path.of(profilePath));
+            // 파일 업로드 및 URL 생성
+            imageUrl = s3Service.uploadFile(key, multipartFile);
         } catch (IOException e) {
-            log.error(e.getMessage());
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Failed to upload image", e);
         }
 
-        userEntity.setProfileImg(profilePath);
+        // 데이터베이스에 URL 저장
+        userEntity.setProfileImg(imageUrl);
         usersRepository.save(userEntity);
 
-        return new MessageResponseDto("이미지가 등록되었습니다.");
+        // 응답 반환
+        return new MessageResponseDto("Image uploaded successfully");
     }
 
     // 사용자 정보 Password 수정 PUT 엔드포인트
