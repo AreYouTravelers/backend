@@ -230,7 +230,7 @@ public class UsersService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "관리자만 사용 가능합니다.");
         }
 
-        Optional<Users> targetEntity = usersRepository.findByUsername(deleteUserByAdminDto.getUsername());
+        Optional<Users> targetEntity = usersRepository.findByUsernameAndDeletedAtIsNull(deleteUserByAdminDto.getUsername());
         if (targetEntity.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "삭제하려는 User가 존재하지 않습니다.");
         }

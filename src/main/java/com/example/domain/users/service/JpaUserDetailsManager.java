@@ -57,7 +57,7 @@ public class JpaUserDetailsManager implements UserDetailsManager {
     // 사용자 이름에 해당하는 사용자를 찾을 수 없는 경우 예외 발생
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Users> optionalUser = userRepository.findByUsername(username);
+        Optional<Users> optionalUser = userRepository.findByUsernameAndDeletedAtIsNull(username);
         if (optionalUser.isEmpty())
             throw new UsernameNotFoundException(username);
         return CustomUserDetails.fromEntity(optionalUser.get());
