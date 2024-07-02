@@ -3,6 +3,8 @@ package com.example.domain.boards.controller;
 import com.example.domain.boards.dto.BoardDto;
 import com.example.domain.boards.mapping.BoardsMapping;
 import com.example.domain.boardCategories.repository.BoardCategoriesRepository;
+import com.example.domain.comments.dto.CommentsDto;
+import com.example.domain.comments.service.CommentsService;
 import com.example.domain.country.repository.CountryRepository;
 import com.example.domain.boards.service.BoardsService;
 import com.example.domain.boards.service.MbtiFilter;
@@ -12,10 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/boards/guide")
 public class GuidesController {
     private final BoardsService boardsService;
+    private final CommentsService commentsService;
     private final CountryRepository countryRepository;
     private final BoardCategoriesRepository boardCategoriesRepository;
 
@@ -23,8 +28,9 @@ public class GuidesController {
     private MbtiFilter mbtiFilter;
 
     @Autowired
-    public GuidesController(BoardsService boardsService, CountryRepository countryRepository, BoardCategoriesRepository boardCategoriesRepository) {
+    public GuidesController(BoardsService boardsService, CommentsService commentsService, CountryRepository countryRepository, BoardCategoriesRepository boardCategoriesRepository) {
         this.boardsService = boardsService;
+        this.commentsService = commentsService;
         this.countryRepository = countryRepository;
         this.boardCategoriesRepository = boardCategoriesRepository;
     }
@@ -49,9 +55,11 @@ public class GuidesController {
     public String read(
             @PathVariable("id") Long id, Model model) {
         BoardDto result = boardsService.readBoard(id);
+        List<CommentsDto> comments = commentsService.getCommentsByBoardId(id); // 댓글 불러오기
         model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("dto", result);
+        model.addAttribute("comments", comments);
         model.addAttribute("id", id);
         return "guide-detail";
     }

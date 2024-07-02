@@ -16,7 +16,7 @@
         </p>
         <h2>동행 구하기</h2>
         <p class="response-status" style="width: 40%;">
-            <span th:text="${dto.status}" id="status-title"></span>
+            <span th:text="${dto.status}" id="status-title" th:data-status-value="${dto.status}"></span>
             <span th:text="${#temporals.format(dto.startDate, 'yyyy-MM-dd')}"></span> ~
             <span th:text="${#temporals.format(dto.endDate, 'yyyy-MM-dd')}"></span>
         </p>
