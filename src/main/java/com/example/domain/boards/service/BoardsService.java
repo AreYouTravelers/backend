@@ -147,7 +147,7 @@ public class BoardsService {
 
     public Page<BoardsMapping> readBoardsAllByCountryAndCategory(Long countryId, Long categoryId, Integer pageNumber) {
         Users userEntity = authService.getUser();
-        Optional<Users> user = usersRepository.findByUsername(userEntity.getUsername());
+        Optional<Users> user = usersRepository.findByUsernameAndDeletedAtIsNull(userEntity.getUsername());
         if (user.isPresent()) {
             Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").ascending());
             Page<Boards> boardsPage = boardsRepository.findAllByCountryIdAndBoardCategoryId(countryId, categoryId, pageable);
@@ -161,7 +161,7 @@ public class BoardsService {
 
     public Page<BoardsMapping> readBoardsAllByUser(Integer pageNumber) {
         Users userEntity = authService.getUser();
-        Optional<Users> user = usersRepository.findByUsername(userEntity.getUsername());
+        Optional<Users> user = usersRepository.findByUsernameAndDeletedAtIsNull(userEntity.getUsername());
         if (user.isPresent()) {
             Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").descending());
             Page<Boards> boardsPage = boardsRepository.findAllByUser(user, pageable);

@@ -27,7 +27,7 @@ public class ReportsService {
     private final AuthService authService;
 
     public ReportsDto createReport(ReportsDto dto) {
-        Users reportedUser = usersRepository.findByUsername(dto.getReportedUser())
+        Users reportedUser = usersRepository.findByUsernameAndDeletedAtIsNull(dto.getReportedUser())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ReportedUser not found"));
 
         Reports newReport = Reports.builder()

@@ -35,7 +35,7 @@ public class AuthService {
 
         // 토큰을 해석하여 사용자명 추출
         String username = jwtTokenUtils.parseClaims(token).getSubject();
-        return usersRepository.findByUsername(username)
+        return usersRepository.findByUsernameAndDeletedAtIsNull(username)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
