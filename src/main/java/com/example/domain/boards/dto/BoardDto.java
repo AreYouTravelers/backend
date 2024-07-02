@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -73,9 +74,11 @@ public class BoardDto implements Serializable {
         dto.setApplicantPeople(entity.getApplicantPeople());
         dto.setCurrentPeople(entity.getCurrentPeople());
         dto.setMaxPeople(entity.getMaxPeople());
-        if (entity.getStatus()) dto.setStatus("모집완료");
+        if (entity.getStatus()) dto.setStatus("모집마감");
         else dto.setStatus("모집중");
         dto.setStartDate(entity.getStartDate());
+        if (entity.getStartDate().isBefore(LocalDate.now())) dto.setStatus("모집마감");
+        else dto.setStatus("모집중");
         dto.setEndDate(entity.getEndDate());
         dto.setUsername(entity.getUser().getUsername());
         dto.setAge(entity.getUser().getAge());

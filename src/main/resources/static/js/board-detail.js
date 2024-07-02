@@ -122,6 +122,19 @@ document.addEventListener('DOMContentLoaded', function () {
         bottomContainer2.style.display = 'flex';
     });
 
+    // 모집 마감시 동행 요청하기 버튼 비활성화
+    accompanyButton.addEventListener('click', function (event) {
+        let statusTitle = document.getElementById('status-title');
+        let statusValue = statusTitle.getAttribute('data-status-value');
+
+        if (statusValue === '모집마감') {
+            event.preventDefault(); // 기본 동작 막기
+            alert('모집이 마감되었습니다.');
+        } else {
+            window.location.href = document.querySelector('#accompany-button a').href;
+        }
+    });
+
     // 게시글 삭제
     deleteButton.addEventListener("click", function (event) {
         event.preventDefault();
