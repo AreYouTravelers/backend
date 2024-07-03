@@ -87,20 +87,21 @@ document.addEventListener('DOMContentLoaded', function () {
     // 연필 모양 아이콘 클릭
     editButton.addEventListener('click', function (event) {
         event.preventDefault();
-        originalMessage = message.value; // 현재 메시지 값을 저장
+        originalMessage = message.value;
         maxPeople.removeAttribute('disabled');
         title.removeAttribute('disabled');
         message.removeAttribute('disabled');
-        message.style.backgroundColor = ''; // 배경색을 원래대로 되돌림
-        message.style.cursor = 'text'; // 커서를 텍스트 입력 가능하도록 변경
+        message.style.backgroundColor = '';
+        message.style.cursor = 'text';
         editButton.style.visibility = 'hidden';
         cancelButton.style.display = 'block';
         updateButton.style.display = 'block';
-        listButton.style.display = 'none';
-        guideButton.style.display = 'none';
-        commentButton.style.display = 'none';
-        deleteButton.style.display = 'none';
-        console.log("editButton clicked");
+        bottomContainer1.style.display = 'flex';
+        listButton.style.visibility = 'hidden';
+        deleteButton.style.visibility = 'hidden';
+        guideButton.style.visibility = 'hidden';
+        commentButton.style.visibility = 'hidden';
+        bottomContainer2.style.display = 'none';
     });
 
     // 취소 버튼 클릭 시 입력 비활성화 및 버튼 원래 상태로 복귀

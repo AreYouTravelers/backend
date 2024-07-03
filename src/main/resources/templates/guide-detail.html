@@ -14,7 +14,7 @@
         <p class="sub-title-icon">
             <img src="/static/images/icon/icon-guide.png" alt="가이드 구하기">
         </p>
-        <h2>가이드 상세보기</h2>
+        <h2>가이드 구하기</h2>
         <p class="response-status" style="width: 40%;">
             <span th:text="${dto.status}" id="status-title"></span>
             <span th:text="${#temporals.format(dto.startDate, 'yyyy-MM-dd')}"></span> ~
@@ -90,7 +90,7 @@
                                 </div>
                                 <div class="bottom-right">
                                     <button type="button" class="btn btn-primary" id="guide-button" style="margin-right: 8px;">
-                                        <a th:href="@{'/boards/' + ${dto.id} + '/guide/write'}" class="href-none">동행 요청하기</a>
+                                        <a th:href="@{'/boards/' + ${dto.id} + '/guide/write'}" class="href-none">가이드 신청하기</a>
                                     </button>
                                     <button type="button" class="btn btn-danger" id="delete-button">삭제</button>
                                 </div>
