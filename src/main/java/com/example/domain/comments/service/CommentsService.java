@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +39,7 @@ public class CommentsService {
         Comments commentEntity = Comments.builder()
                 .content(commentsDto.getContent())
                 .parentCommentId(commentsDto.getParentCommentId())
-                .createdAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
                 .board(board)
                 .user(authService.getUser())
                 .build();
