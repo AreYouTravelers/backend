@@ -39,7 +39,7 @@ public class CommentsService {
         Comments commentEntity = Comments.builder()
                 .content(commentsDto.getContent())
                 .parentCommentId(commentsDto.getParentCommentId())
-                .createdAt(LocalDateTime.now(ZoneId.of("Asia/Seoul")))
+                .createdAt(LocalDateTime.now())
                 .board(board)
                 .user(authService.getUser())
                 .build();
