@@ -30,7 +30,9 @@ fetch(`/api/boards/${boardId}/info`, {
 
         if (data) {
             profileUsername.innerText = data.username;
-            profileImage.src = data.userProfileImage;
+            if (data.userProfileImage)
+                profileImage.src = data.userProfileImage;
+            else profileImage.src = "/static/images/user-profile-basic.png";
             boardTitle.innerText = data.title;
             boardCountry.innerText = data.country;
             boardStartDate.innerText = data.startDate;
