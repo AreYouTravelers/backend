@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# 한국 시간으로 설정
-sudo timedatectl set-timezone Asia/Seoul
-sudo timedatectl set-ntp true
-
 # 로그 디렉토리 및 백업 디렉토리 생성
 mkdir -p /home/ubuntu/deploy/log/backup
 
