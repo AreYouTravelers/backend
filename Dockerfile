@@ -3,6 +3,11 @@
 # 베이스 이미지 생성
 FROM openjdk:17-jdk-alpine
 
+# tzdata 패키지 설치 및 시간대 설정
+RUN apk add --no-cache tzdata \
+    && cp /usr/share/zoneinfo/Asia/Seoul /etc/localtime \
+    && echo "Asia/Seoul" > /etc/timezone
+
 # 작업 디렉토리 설정
 WORKDIR /app
 
