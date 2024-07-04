@@ -39,7 +39,9 @@ fetch(`/api/review/write/${accompanyId}`, {
                 originalBoard.appendChild(deletedMessage); // 삭제된 게시글 문구를 원본 게시글 div에 추가
             }
             profileUsername.innerText = data.requestedBoardInfoDto.username;
-            profileImage.src = data.requestedBoardInfoDto.userProfileImage;
+            if (data.requestedBoardInfoDto.userProfileImage)
+                profileImage.src = data.requestedBoardInfoDto.userProfileImage;
+            else profileImage.src = "/static/images/user-profile-basic.png";
             boardTitle.innerText = data.requestedBoardInfoDto.title;
             boardCountry.innerText = data.requestedBoardInfoDto.country;
             boardStartDate.innerText = data.requestedBoardInfoDto.startDate;

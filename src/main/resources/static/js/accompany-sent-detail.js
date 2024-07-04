@@ -71,7 +71,9 @@ fetch(`/api/accompany/sent/${id}`, {
                 responseStatusTitleSpan.style.paddingRight = '0';
             }
             profileUsername.innerText = data.requestedBoardInfoDto.username;
-            profileImage.src = data.requestedBoardInfoDto.userProfileImage;
+            if (data.requestedBoardInfoDto.userProfileImage)
+                profileImage.src = data.requestedBoardInfoDto.userProfileImage;
+            else profileImage.src = "/static/images/user-profile-basic.png";
             boardTitle.innerText = data.requestedBoardInfoDto.title;
             boardCountry.innerText = data.requestedBoardInfoDto.country;
             boardStartDate.innerText = data.requestedBoardInfoDto.startDate;
