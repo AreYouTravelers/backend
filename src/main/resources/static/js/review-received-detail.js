@@ -50,7 +50,9 @@ fetch(`/api/review/received/${id}`, {
 
         if (data) {
             countryImage.style.backgroundImage = 'url(/static/images/country/' + data.requestedBoardInfoDto.country + '.jpg)';
-            profileImage.src = data.requestedUserInfoDto.profileImage;
+            if (data.requestedUserInfoDto.profileImage)
+                profileImage.src = data.requestedUserInfoDto.profileImage;
+            else profileImage.src = "/static/images/user-profile-basic.png";
             profileUsername.innerText = data.requestedUserInfoDto.username;
             profileAge.innerText = data.requestedUserInfoDto.age;
             profileMbti.innerText = data.requestedUserInfoDto.mbti;
