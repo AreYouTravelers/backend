@@ -75,7 +75,7 @@ public class BoardDto implements Serializable {
         dto.setCurrentPeople(entity.getCurrentPeople());
         dto.setMaxPeople(entity.getMaxPeople());
         dto.setStartDate(entity.getStartDate());
-        if (entity.getStatus() || entity.getStartDate().isBefore(LocalDate.now()))
+        if (entity.getStatus() || !entity.getStartDate().isAfter(LocalDate.now()))
             dto.setStatus("모집마감");
         else dto.setStatus("모집중");
         dto.setEndDate(entity.getEndDate());
