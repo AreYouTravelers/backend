@@ -3,101 +3,117 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 <head>
-  <title>가이드 구하기</title>
+    <title>가이드 구하기</title>
 </head>
 <body class="accompany">
 <th:block layout:fragment="content">
-  <!-- Contents -->
-  <section class="page-section portfolio" id="portfolio">
-    <div class="container">
-      <!-- Main Menu -->
-      <img class="main-menu-icon" src="/static/images/icon/icon-guide.png" alt="가이드 신청하기">
-      <h2 class="page-section-heading text-secondary mb-0 main-menu">가이드 구하기</h2>
-      <!-- Main Grid Items -->
-      <form th:action="@{'/boards/guide/filter'}" th:method="get" id="getForm" class="row gy-2 gx-3 align-items-center">
-        <div class="col-auto">
-          <label class="visually-hidden" for="country">Preference</label>
-          <select class="form-select" id="country" name="country" required>
-            <option value="">여행지</option>
-            <option th:each="country : ${countries}"
-                    th:value="${country.id}"
-                    th:text="${country.name}">
-            </option>
-          </select>
-        </div>
-        <div class="col-auto">
-          <label class="visually-hidden" for="category">Preference</label>
-          <select class="form-select" id="category" name="category" required>
-            <option value="" disabled>카테고리</option>
-            <option th:each="category : ${categories}"
-                    th:value="${category.id}"
-                    th:text="${category.category}"
-                    th:selected="${category.category} == 가이드" disabled>
-            </option>
-          </select>
-        </div>
-        <div class="col-3">
-          <label class="visually-hidden" for="mbti">Name</label>
-          <input type="text" class="form-control" id="mbti" name="mbti" placeholder="선호하는 MBTI을 입력하세요. ex) EJ, FP " required>
-        </div>
-        <div class="col-auto">
-          <button class="btn btn-outline-secondary" id="getButton" style="margin-right: 6px;">검색</button>
-          <a href="/boards/guide/write" class="btn btn-secondary" style="margin-right: auto;">글쓰기</a>
-        </div>
-      </form>
-      <div class="row justify-content-start">
-        <!-- 게시물 목록을 반복하며 게시물 정보 출력 -->
-        <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5" th:each="board : ${boardsPage != null ? boardsPage.content : {}}"
-             th:if="${board.category} == 가이드">
-          <div class="board-item mx-auto">
-            <a class="href-none" th:href="@{'/boards/guide/' + ${board.id}}">
-              <div class="board-item-header">
-                <div class="header-left">
-                  <p class="item-date">
-                    <span class="start-date" th:text="${board.startDate}"></span>
-                    <span> ~ </span>
-                    <span class="end-date" th:text="${board.endDate}"></span>
-                  </p>
+    <!-- Contents -->
+    <section class="page-section portfolio" id="portfolio">
+        <div class="container">
+            <!-- Main Menu -->
+            <img class="main-menu-icon" src="/static/images/icon/icon-guide.png" alt="가이드 신청하기">
+            <h2 class="page-section-heading text-secondary mb-0 main-menu">가이드 구하기</h2>
+            <!-- Main Grid Items -->
+            <form th:action="@{'/boards/guide/filter'}" th:method="get" id="getForm"
+                  class="row gy-2 gx-3 align-items-center">
+                <div class="col-auto">
+                    <label class="visually-hidden" for="country">Preference</label>
+                    <select class="form-select" id="country" name="country" required>
+                        <option value="">여행지</option>
+                        <option th:each="country : ${countries}"
+                                th:value="${country.id}"
+                                th:text="${country.name}">
+                        </option>
+                    </select>
                 </div>
-                <div class="header-right">
-                  <p class="item-ing">
-                    <span class="status" th:text="${board.status}"></span>
-                  </p>
+                <div class="col-auto">
+                    <label class="visually-hidden" for="category">Preference</label>
+                    <select class="form-select" id="category" name="category" required>
+                        <option value="" disabled>카테고리</option>
+                        <option th:each="category : ${categories}"
+                                th:value="${category.id}"
+                                th:text="${category.category}"
+                                th:selected="${category.category} == 가이드" disabled>
+                        </option>
+                    </select>
                 </div>
-              </div>
-              <div class="board-item-bg">
-                <p class="board-item-icon">
-                  <img src="/static/images/icon/icon-location.png" alt="지도아이콘">
-                  <span th:text="${board.country}"></span>
-                </p>
-                <p class="board-item-img">
-                  <img th:src="@{'/static/images/country/' + ${board.country} + '.jpg'}" alt="배경이미지">
-                </p>
-              </div>
-              <div class="board-item-info">
-                <p class="item-title" th:text="${board.title}"></p>
-                <p class="user-name" th:text="${board.username}"></p>
-                <p class="user-profile">
-                  <span class="user-age" th:text="${board.age}"></span>
-                  <span class="--bs-gray-500">·</span>
-                  <span class="user-mbti" th:text="${board.mbti}"></span>
-                  <span class="--bs-gray-500">·</span>
-                  <span class="user-gender" th:text="${board.gender}"></span>
-                </p>
-                <p class="user-temp">
+                <div class="col-3">
+                    <label class="visually-hidden" for="mbti">Name</label>
+                    <input type="text" class="form-control" id="mbti" name="mbti"
+                           placeholder="선호하는 MBTI을 입력하세요. ex) EJ, FP " required>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-outline-secondary" id="getButton" style="margin-right: 6px;">검색</button>
+                    <a href="/boards/guide/write" class="btn btn-secondary" style="margin-right: auto;">글쓰기</a>
+                </div>
+            </form>
+            <div class="row justify-content-start">
+                <!-- 게시물 목록을 반복하며 게시물 정보 출력 -->
+                <div class="col-md-6 col-lg-3 col-lg-3-2 mb-5"
+                     th:each="board : ${boardsPage != null ? boardsPage.content : {}}"
+                     th:if="${board.category} == 가이드">
+                    <div class="board-item mx-auto">
+                        <a class="href-none" th:href="@{'/boards/guide/' + ${board.id}}">
+                            <div class="board-item-header">
+                                <div class="header-left">
+                                    <p class="item-date">
+                                        <span class="start-date" th:text="${board.startDate}"></span>
+                                        <span> ~ </span>
+                                        <span class="end-date" th:text="${board.endDate}"></span>
+                                    </p>
+                                </div>
+                                <div class="header-right">
+                                    <p class="item-ing">
+                                        <span class="status" th:text="${board.status}"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="board-item-bg">
+                                <p class="board-item-icon">
+                                    <img src="/static/images/icon/icon-location.png" alt="지도아이콘">
+                                    <span th:text="${board.country}"></span>
+                                </p>
+                                <p class="board-item-img">
+                                    <img th:src="@{'/static/images/country/' + ${board.country} + '.jpg'}" alt="배경이미지">
+                                </p>
+                            </div>
+                            <div class="board-item-info">
+                                <p class="item-title" th:text="${board.title}"></p>
+                                <p class="user-name" th:text="${board.username}"></p>
+                                <p class="user-profile">
+                                    <span class="user-age" th:text="${board.age}"></span>
+                                    <span class="--bs-gray-500">·</span>
+                                    <span class="user-mbti" th:text="${board.mbti}"></span>
+                                    <span class="--bs-gray-500">·</span>
+                                    <span class="user-gender" th:text="${board.gender}"></span>
+                                </p>
+                                <p class="user-temp">
                                     <span th:class="|temp-${board.temperature >= 30 and board.temperature <= 40 ? '3' : (board.temperature < 30 ? '5' : (board.temperature > 40 ? '4' : ''))}|"
                                           th:text="${board.temperature}"></span>℃
-                </p>
-                <div class="item-contents">
-                  <p th:text="${board.content}"></p>
+                                </p>
+                                <div class="item-contents">
+                                    <p th:text="${board.content}"></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-              </div>
-            </a>
-          </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+        <!-- Pagination -->
+        <div class="pagination mt-5" th:if="${boardsPage != null and boardsPage.totalPages > 1}">
+            <span th:if="${boardsPage.hasPrevious()}">
+                <a th:href="@{'/boards/guide?page=' + ${boardsPage.number - 1}}">&laquo;</a>
+            </span>
+            <span th:each="i : ${#numbers.sequence(0, boardsPage.totalPages - 1)}">
+                <a th:href="@{'/boards/guide?page=' + ${i}}" th:text="${i + 1}"
+                   th:classappend="${boardsPage.number == i} ? ' active' : ''"></a>
+            </span>
+            <span th:if="${boardsPage.hasNext()}">
+                <a th:href="@{'/boards/guide?page=' + ${boardsPage.number + 1}}">&raquo;</a>
+            </span>
+        </div>
+    </section>
 </th:block>
 </body>
 </html>

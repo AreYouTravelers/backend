@@ -74,7 +74,7 @@ public class BoardsController {
     public String readAll(
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber,
             Model model) {
-        Page<BoardsMapping> boardsPage = boardsService.readBoardsAll(pageNumber);
+        Page<BoardsMapping> boardsPage = boardsService.readAccompanyBoards(pageNumber);
         model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("boardsPage", boardsPage);

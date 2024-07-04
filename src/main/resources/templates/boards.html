@@ -99,6 +99,18 @@
                 </div>
             </div>
         </div>
+        <!-- Pagination -->
+        <div class="pagination mt-5" th:if="${boardsPage != null and boardsPage.totalPages > 1}">
+            <span th:if="${boardsPage.hasPrevious()}">
+                <a th:href="@{'/boards?page=' + ${boardsPage.number - 1}}">&laquo;</a>
+            </span>
+            <span th:each="i : ${#numbers.sequence(0, boardsPage.totalPages - 1)}">
+                    <a th:href="@{'/boards?page=' + ${i}}" th:text="${i + 1}" th:classappend="${boardsPage.number == i} ? ' active' : ''"></a>
+            </span>
+            <span th:if="${boardsPage.hasNext()}">
+                    <a th:href="@{'/boards?page=' + ${boardsPage.number + 1}}">&raquo;</a>
+            </span>
+        </div>
     </section>
 </th:block>
 </body>

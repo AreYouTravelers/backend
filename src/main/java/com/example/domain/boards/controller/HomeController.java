@@ -22,7 +22,7 @@ public class HomeController {
     public String home(
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber,
             Model model) {
-        Page<BoardsMapping> boardsPage = boardsService.readBoardsAll(pageNumber);
+        Page<BoardsMapping> boardsPage = boardsService.readAccompanyBoards(pageNumber);
         model.addAttribute("boardsPage", boardsPage);
         model.addAttribute("message", "Hello from Thymeleaf!");
         return "index";

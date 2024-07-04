@@ -62,6 +62,38 @@ footer p {font-weight: 300; font-size: 14px;}
 .signup .signup-inner a {display: block; color: #5D9EE2; text-align: center;}
 .signup .signup-inner .form-control {width: 70%; margin: 0 auto; padding: 1em; border: 1px solid #dddddd; border-radius: 5px; font-size: 0.9em;}
 
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #4cb7ef;
+    background-color: #f9f9f9;
+    border: 1px solid #f9f9f9;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #4cb7ef;
+    color: #ffffff;
+    border-radius: 50%;
+    border: 1px solid #4cb7ef;
+}
+
+.pagination a.active {
+    background-color: #4cb7ef;
+    color: #ffffff;
+    border: 1px solid #4cb7ef;
+    border-radius: 50%;
+}
+
+
 /* main */
 .board-item {min-height: 469px; border-radius: 12px; box-shadow: 0px 3px 12px 2px #7a7a7a54;}
 .board-item-header {display: flex; justify-content: space-between; padding: 1.2em 1.2em 0 1.2em; font-size: 13px;}
@@ -71,7 +103,7 @@ footer p {font-weight: 300; font-size: 14px;}
 .board-item-bg .board-item-icon {position: absolute; right: 15px; bottom: 0; padding: 1px 9px 3px 6px; background-color: #3bd0fa; border-radius: 9px; color: #ffffff; font-size: 14px;}
 .board-item-bg .board-item-icon img {width: 18px;}
 .board-item-bg .board-item-img {overflow: hidden; height: 170px; border-radius: 17px;}
-.board-item-bg .board-item-img img {width: 100%;}
+.board-item-bg .board-item-img img {width: 100%; min-height: 100%;}
 .board-item-info {padding-bottom: 2rem; text-align: center;}
 .board-item-info .item-title {margin-bottom: 6px; font-weight: 700;
     padding: 0 2em;
@@ -94,7 +126,7 @@ footer p {font-weight: 300; font-size: 14px;}
 }
 
 /* accompany */
-.accompany .page-section {padding-top: 10rem;}
+.accompany .page-section {padding-top: 12rem; margin-bottom: -3rem;}
 .accompany form {margin-top: 1rem; margin-bottom: 2rem;}
 .accompany form button {padding-left: 1.2em; padding-right: 1.2em;}
 
