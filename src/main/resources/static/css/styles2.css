@@ -126,7 +126,7 @@ footer p {font-weight: 300; font-size: 14px;}
 }
 
 /* accompany */
-.accompany .page-section {padding-top: 10rem;}
+.accompany .page-section {padding-top: 12rem; margin-bottom: -3rem;}
 .accompany form {margin-top: 1rem; margin-bottom: 2rem;}
 .accompany form button {padding-left: 1.2em; padding-right: 1.2em;}
 

@@ -121,14 +121,23 @@ public class BoardsService {
         return ChronoUnit.SECONDS.between(now, midnight);
     } //현재 시간을 기준으로 00시까지의 시간을 계산
 
-    public Page<BoardsMapping> readBoardsAll(Integer pageNumber) {
-//        UsersEntity userEntity = authService.getUser();
-        Pageable pageable = PageRequest.of(pageNumber, 25, Sort.by("id").descending());
-        Page<Boards> boardsPage = boardsRepository.findAllByDeletedAtIsNullAndUserDeletedAtIsNull(pageable);
+    public Page<BoardsMapping> readBoardsAllByCategory(Long categoryId, Integer pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, 12, Sort.by("id").descending());
+        Page<Boards> boardsPage = boardsRepository.findAllByBoardCategoryIdAndDeletedAtIsNullAndUserDeletedAtIsNull(categoryId, pageable);
         List<BoardsMapping> boardsMappings = boardsPage.getContent().stream()
                 .map(this::createBoardsMapping)
                 .collect(Collectors.toList());
         return new PageImpl<>(boardsMappings, pageable, boardsPage.getTotalElements());
+    }
+
+    public Page<BoardsMapping> readAccompanyBoards(Integer pageNumber) {
+        Long accompanyCategoryId = 1L;
+        return readBoardsAllByCategory(accompanyCategoryId, pageNumber);
+    }
+
+    public Page<BoardsMapping> readGuideBoards(Integer pageNumber) {
+        Long guideCategoryId = 2L;
+        return readBoardsAllByCategory(guideCategoryId, pageNumber);
     }
 
     public Page<BoardsMapping> readBoardsAllByCountryAndCategoryAndMbti(Long countryId, Long categoryId, String mbtiCriteria, Integer pageNumber) {

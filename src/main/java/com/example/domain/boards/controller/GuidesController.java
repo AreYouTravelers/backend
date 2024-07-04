@@ -68,7 +68,7 @@ public class GuidesController {
     public String readAll(
             @RequestParam(value = "page", defaultValue = "0") Integer pageNumber,
             Model model) {
-        Page<BoardsMapping> boardsPage = boardsService.readBoardsAll(pageNumber);
+        Page<BoardsMapping> boardsPage = boardsService.readGuideBoards(pageNumber);
         model.addAttribute("countries", countryRepository.findAll());
         model.addAttribute("categories", boardCategoriesRepository.findAll());
         model.addAttribute("boardsPage", boardsPage);
