@@ -170,7 +170,9 @@
                                 <article class="child-comment">
                                     <div class="comment-header">
                                         <div class="user-profile-img">
-                                            <img th:src="${reply.requestedUsersInfoDto.profileImage}" alt="답글 작성자 프로필">
+                                            <img th:src="${comment.requestedUsersInfoDto.profileImage != null ? comment.requestedUsersInfoDto.profileImage : '/static/images/user-profile-basic.png'}"
+                                                 id="profileImage2"
+                                                 alt="댓글 작성자 프로필">
                                         </div>
                                         <div class="comment-header-left">
                                             <p th:text="${reply.requestedUsersInfoDto.username}"></p>
